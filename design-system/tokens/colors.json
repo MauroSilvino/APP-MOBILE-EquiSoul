@@ -1,16 +1,22 @@
 {
-  "_comment": "Placeholder. Substitua pelos valores exatos do Claude Design assim que as telas forem sincronizadas.",
-  "primary": "#5B4EFF",
-  "secondary": "#2ED6C4",
-  "background": "#FFFFFF",
-  "surface": "#F5F5F7",
+  "_comment": "Fonte: design-system/Prototipagem EquiSoul/design_handoff_equisoul/tokens.md (opcao '1b - Social Instagram').",
+  "background": "#FBF9F4",
+  "surfaceDark": "#2B2924",
+  "canvasOutOfApp": "#EDE8DE",
   "text": {
-    "primary": "#111114",
-    "secondary": "#6B6B76",
-    "inverse": "#FFFFFF"
+    "primary": "#2B2924",
+    "secondary": "#6b6558",
+    "tertiary": "#a39c8a",
+    "inverse": "#FBF9F4"
   },
-  "border": "#E4E4E8",
-  "success": "#2FB86E",
-  "warning": "#E8A33D",
-  "error": "#E5484D"
+  "accent": {
+    "gold": "#C9A15A",
+    "olive": "#6B7353",
+    "moss": "#4F5D45",
+    "leather": "#8A6E4B"
+  },
+  "error": "#B85C4C",
+  "placeholder": {
+    "background": "#EAE4D6"
+  }
 }

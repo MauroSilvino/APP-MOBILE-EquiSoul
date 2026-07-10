@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#EDE8DE;font-family:'Nunito',sans-serif;-webkit-font-smoothing:antialiased}
+  .placeholder{background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.06) 0px,rgba(0,0,0,.06) 2px,transparent 2px,transparent 12px);background-color:#EAE4D6}
+  .ph-label{font:600 10px ui-monospace,Menlo,monospace;letter-spacing:.02em;text-transform:uppercase;text-align:center;padding:0 30px}
+  input::placeholder, textarea::placeholder{color:#a39c8a}
+  input, textarea{font-family:'Nunito',sans-serif;outline:none;box-sizing:border-box}
+  a{color:#6B7353}
+  a:hover{color:#4F5D45}
+  ::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:56px 20px;font-family:'Nunito',sans-serif">
+
+  <div style="display:flex;align-items:center;gap:22px">
+
+    <div onClick="{{ goBack }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+
+    <div style="width:390px;height:844px;background:#FBF9F4;position:relative;overflow:hidden;box-shadow:0 30px 70px rgba(43,41,36,.22);flex:none">
+
+      <!-- BARRA SUPERIOR PERSISTENTE -->
+      <div style="position:absolute;top:0;left:0;right:0;height:54px;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:rgba(251,249,244,.94);backdrop-filter:blur(4px)">
+        <div onClick="{{ openMenu }}" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="#2B2924" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </div>
+        <div style="font:700 10px ui-monospace,Menlo,monospace;color:#6b6558">Modo: {{ modoAtivoLabel }}</div>
+        <div style="width:30px;height:30px"></div>
+      </div>
+
+      <!-- MENU DE MODOS -->
+      <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeMenu }}" style="position:absolute;inset:0;z-index:30;background:rgba(43,41,36,.35)">
+          <div onClick="{{ stopClick }}" style="position:absolute;top:0;left:0;bottom:0;width:230px;background:#FBF9F4;box-shadow:4px 0 24px rgba(43,41,36,.2);overflow-y:auto;padding:20px 14px">
+            <div style="font:800 15px 'Nunito',sans-serif;color:#2B2924;padding:0 8px 12px;border-bottom:1px solid rgba(43,41,36,.08)">Modos do portal</div>
+            <div style="display:flex;flex-direction:column;gap:2px;margin-top:8px">
+              <sc-for list="{{ modosList }}" as="m" hint-placeholder-count="4">
+                <div onClick="{{ m.onClick }}" style="padding:12px 8px;border-radius:10px;background:{{ m.bg }};font:700 13px 'Nunito',sans-serif;color:{{ m.color }};cursor:pointer">{{ m.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- MODAL DE CONFIRMAÇÃO -->
+      <sc-if value="{{ confirm }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:40;background:rgba(43,41,36,.4);display:flex;align-items:center;justify-content:center;padding:24px">
+          <div style="width:100%;border-radius:20px;background:#FBF9F4;padding:20px;box-shadow:0 20px 50px rgba(43,41,36,.3)">
+            <div style="font:800 15px 'Nunito',sans-serif;color:#2B2924">{{ confirm.title }}</div>
+            <div style="margin-top:8px;font:500 12.5px/1.5 'Nunito',sans-serif;color:#6b6558">{{ confirm.message }}</div>
+            <div style="margin-top:18px;display:flex;gap:10px">
+              <div onClick="{{ closeConfirm }}" style="flex:1;height:44px;border-radius:22px;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;font:800 12px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Cancelar</div>
+              <div onClick="{{ runConfirm }}" style="flex:1;height:44px;border-radius:22px;background:#2B2924;display:flex;align-items:center;justify-content:center;font:800 12px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">{{ confirm.confirmLabel }}</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- CHECK-IN MANUAL -->
+      <sc-if value="{{ checkinManualOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:30;background:#FBF9F4;padding:54px 20px 40px;overflow-y:auto">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924">Check-in manual</div>
+            <div onClick="{{ fecharCheckinManual }}" style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Fechar</div>
+          </div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ checkinManualPendentes }}" as="p" hint-placeholder-count="4">
+              <div onClick="{{ p.onCheckin }}" style="display:flex;align-items:center;justify-content:space-between;border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:12px 14px;cursor:pointer">
+                <div><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ p.nome }}</div><div style="margin-top:1px;font:500 10px 'Nunito',sans-serif;color:#6b6558">{{ p.categoria }}</div></div>
+                <div style="font:700 10px 'Nunito',sans-serif;color:#8A6E4B">Fazer check-in</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 0 DASHBOARD PROFISSIONAL -->
+      <sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:48px;height:48px;border-radius:50%;flex:none" class="placeholder"></div>
+            <div><div style="font:800 16px 'Nunito',sans-serif;color:#2B2924">Dra. Marina Kist</div><div style="margin-top:2px;font:700 11px 'Nunito',sans-serif;color:#8A6E4B">Veterinária · Verificada</div></div>
+          </div>
+          <div style="margin-top:16px;border-radius:18px;background:rgba(201,161,90,.12);padding:14px 16px">
+            <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#2B2924">Hoje você possui três atendimentos confirmados e dois novos pedidos de orçamento.</div>
+          </div>
+          <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <sc-for list="{{ profDashboardCards }}" as="c" hint-placeholder-count="7">
+              <div onClick="{{ c.onClick }}" style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px;cursor:pointer">
+                <div style="font:800 18px 'Nunito',sans-serif;color:#2B2924">{{ c.valor }}</div>
+                <div style="margin-top:2px;font:600 11px 'Nunito',sans-serif;color:#6b6558">{{ c.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Serviços mais vendidos</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ servicosMaisVendidos }}" as="s" hint-placeholder-count="3">
+              <div style="display:flex;justify-content:space-between;font:600 12px 'Nunito',sans-serif;border-radius:12px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:10px 13px"><span style="color:#2B2924">{{ s.nome }}</span><span style="color:#8A6E4B">{{ s.qtd }}x</span></div>
+            </sc-for>
+          </div>
+          <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <sc-for list="{{ profModuloAtalhos }}" as="m" hint-placeholder-count="12">
+              <div onClick="{{ m.onClick }}" style="border-radius:12px;background:rgba(43,41,36,.05);padding:10px 12px;font:700 11px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">{{ m.label }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 1 AGENDA PROFISSIONAL -->
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Agenda</div>
+          <div style="margin-top:14px;display:flex;gap:8px">
+            <sc-for list="{{ agendaVisChips }}" as="c" hint-placeholder-count="4">
+              <div onClick="{{ c.onClick }}" style="padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ atendimentosList }}" as="a" hint-placeholder-count="4">
+              <div style="border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px 16px">
+                <div style="display:flex;justify-content:space-between">
+                  <div style="font:800 13px 'Nunito',sans-serif;color:#2B2924">{{ a.hora }} · {{ a.servico }}</div>
+                  <div style="padding:4px 10px;border-radius:10px;background:{{ a.bg }};color:{{ a.color }};font:700 10px 'Nunito',sans-serif">{{ a.status }}</div>
+                </div>
+                <div style="margin-top:4px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ a.cliente }} · {{ a.cavalo }} · {{ a.local }}</div>
+                <sc-if value="{{ a.acaoFeita }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:10px;font:700 10px 'Nunito',sans-serif;color:#4F5D45">{{ a.acaoFeita }}</div>
+                </sc-if>
+                <div style="margin-top:10px;display:flex;gap:6px;flex-wrap:wrap">
+                  <sc-for list="{{ a.acoesChips }}" as="ac" hint-placeholder-count="4">
+                    <div onClick="{{ ac.onClick }}" style="padding:6px 11px;border-radius:10px;background:rgba(43,41,36,.06);color:#2B2924;font:700 10px 'Nunito',sans-serif;cursor:pointer">{{ ac.label }}</div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 2 CLIENTES -->
+      <sc-if value="{{ s2 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Clientes</div>
+          <div style="margin-top:14px;display:flex;align-items:center;gap:10px;border-radius:16px;background:rgba(43,41,36,.05);padding:10px 14px">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6b6558" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input value="{{ clienteQuery }}" onChange="{{ onClienteQuery }}" placeholder="Buscar cliente" style="flex:1;border:none;background:transparent;font:500 13px 'Nunito',sans-serif;color:#2B2924"/>
+          </div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ clientesList }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px;cursor:pointer">
+                <div style="width:44px;height:44px;border-radius:50%;flex:none" class="placeholder"></div>
+                <div style="flex:1;min-width:0">
+                  <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ c.nome }}</div>
+                  <div style="margin-top:2px;font:500 11px 'Nunito',sans-serif;color:#6b6558">{{ c.cidade }} · {{ c.cavalos }} cavalo(s) · último em {{ c.ultimo }}</div>
+                </div>
+                <div style="font:700 11px 'Nunito',sans-serif;color:#8A6E4B;flex:none">★ {{ c.avaliacao }}</div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ clientesVazio }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align:center;padding:24px 0;font:600 12px 'Nunito',sans-serif;color:#a39c8a">Nenhum cliente encontrado.</div>
+            </sc-if>
+            <sc-if value="{{ clientesTemMais }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ carregarMaisClientes }}" style="margin-top:4px;text-align:center;padding:12px;border-radius:14px;background:rgba(43,41,36,.05);font:700 12px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Carregar mais</div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 3 DETALHE DO CLIENTE -->
+      <sc-if value="{{ s3 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:56px;height:56px;border-radius:50%;flex:none" class="placeholder"></div>
+            <div><div style="font:800 16px 'Nunito',sans-serif;color:#2B2924">{{ clienteDetalhe.nome }}</div><div style="margin-top:2px;font:600 12px 'Nunito',sans-serif;color:#6b6558">{{ clienteDetalhe.cidade }} · {{ clienteDetalhe.cavalos }} cavalo(s)</div></div>
+          </div>
+          <div style="margin-top:16px;display:flex;gap:8px;overflow-x:auto">
+            <sc-for list="{{ clienteAbaChips }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ clienteHistorico }}" as="h" hint-placeholder-count="4">
+              <div style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px">
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ h.titulo }}</div>
+                <div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ h.data }} · {{ h.valor }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 4 CAVALOS ATENDIDOS -->
+      <sc-if value="{{ s4 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Cavalos atendidos</div>
+          <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Histórico visível conforme autorização do proprietário.</div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ cavalosAtendidosList }}" as="c" hint-placeholder-count="6">
+              <div style="display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px">
+                <div style="width:44px;height:44px;border-radius:12px;flex:none" class="placeholder"></div>
+                <div style="flex:1;min-width:0">
+                  <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ c.nome }} · {{ c.raca }}</div>
+                  <div style="margin-top:2px;font:500 11px 'Nunito',sans-serif;color:#6b6558">{{ c.idade }} · tutor: {{ c.proprietario }} · último em {{ c.ultimo }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 5 SERVICOS -->
+      <sc-if value="{{ s5 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Serviços</div>
+            <div onClick="{{ abrirNovoServico }}" style="width:36px;height:36px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></div>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ servicosList }}" as="s" hint-placeholder-count="6">
+              <div style="border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05)">
+                <div style="height:70px" class="placeholder"></div>
+                <div style="padding:12px 14px">
+                  <div style="display:flex;justify-content:space-between"><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ s.nome }}</div><div style="font:800 13px 'Nunito',sans-serif;color:#8A6E4B">{{ s.preco }}</div></div>
+                  <div style="margin-top:2px;font:500 11px 'Nunito',sans-serif;color:#6b6558">{{ s.categoria }} · {{ s.duracao }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 6 RESERVAS -->
+      <sc-if value="{{ s6 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Reservas</div>
+          <div style="margin-top:14px;display:flex;gap:7px;overflow-x:auto">
+            <sc-for list="{{ reservaFiltroChips }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:8px 13px;border-radius:16px;background:{{ c.bg }};color:{{ c.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ reservasList }}" as="r" hint-placeholder-count="5">
+              <div style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="flex:1;min-width:0"><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ r.cliente }}</div><div style="margin-top:2px;font:500 11px 'Nunito',sans-serif;color:#6b6558">{{ r.servico }} · {{ r.data }}</div></div>
+                  <div style="padding:4px 9px;border-radius:9px;background:{{ r.bg }};color:{{ r.color }};font:700 9px 'Nunito',sans-serif;flex:none">{{ r.status }}</div>
+                </div>
+                <sc-if value="{{ r.isPendente }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:10px;display:flex;gap:6px">
+                    <div onClick="{{ r.onAceitar }}" style="flex:1;text-align:center;padding:7px 0;border-radius:10px;background:#2B2924;color:#C9A15A;font:700 10px 'Nunito',sans-serif;cursor:pointer">Aceitar</div>
+                    <div onClick="{{ r.onRecusar }}" style="flex:1;text-align:center;padding:7px 0;border-radius:10px;background:rgba(196,90,60,.12);color:#a1503a;font:700 10px 'Nunito',sans-serif;cursor:pointer">Recusar</div>
+                  </div>
+                </sc-if>
+                <div style="margin-top:10px;display:flex;align-items:center;gap:4px">
+                  <sc-for list="{{ r.fluxoChips }}" as="f" hint-placeholder-count="5">
+                    <div style="font:700 8.5px 'Nunito',sans-serif;color:{{ f.color }};text-align:center">{{ f.label }}</div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 7 FINANCEIRO PROFISSIONAL -->
+      <sc-if value="{{ s7 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Financeiro</div>
+          <div style="margin-top:14px;display:flex;gap:8px">
+            <sc-for list="{{ financeiroPeriodoChips }}" as="c" hint-placeholder-count="4">
+              <div onClick="{{ c.onClick }}" style="padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;border-radius:20px;background:#fff;box-shadow:0 4px 16px rgba(43,41,36,.06);padding:18px">
+            <div style="font:600 11px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">Receita no período</div>
+            <div style="margin-top:4px;font:800 24px 'Nunito',sans-serif;color:#2B2924">{{ financeiroReceita }}</div>
+            <svg viewBox="0 0 200 70" width="100%" height="70" style="margin-top:10px" preserveAspectRatio="none"><polyline points="0,55 30,50 60,42 90,44 120,30 150,34 180,18 200,22" fill="none" stroke="#C9A15A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:8px">
+            <div onClick="{{ exportarCsv }}" style="flex:1;height:44px;border-radius:22px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 11px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Exportar CSV</div>
+            <div onClick="{{ exportarPdf }}" style="flex:1;height:44px;border-radius:22px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 11px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Exportar PDF</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 8 AVALIACOES -->
+      <sc-if value="{{ s8 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Avaliações</div>
+          <div style="margin-top:14px;border-radius:18px;background:rgba(201,161,90,.12);padding:14px 16px">
+            <div style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">Resumo da IA</div>
+            <div style="margin-top:6px;font:500 13px/1.7 'Nunito',sans-serif;color:#2B2924">Clientes elogiam a pontualidade e o cuidado durante os atendimentos. A comunicação clara é um ponto recorrente.</div>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ avaliacoesList }}" as="a" hint-placeholder-count="5">
+              <div style="border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px 16px">
+                <div style="display:flex;justify-content:space-between"><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ a.nome }}</div><div style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B">★ {{ a.nota }}</div></div>
+                <div style="margin-top:6px;font:500 12px/1.6 'Nunito',sans-serif;color:#6b6558">{{ a.comentario }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 9 ANALYTICS PROFISSIONAL -->
+      <sc-if value="{{ s9 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Analytics</div>
+          <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <sc-for list="{{ profAnalyticsIndicadores }}" as="i" hint-placeholder-count="6">
+              <div style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px;text-align:center">
+                <div style="font:800 18px 'Nunito',sans-serif;color:#2B2924">{{ i.valor }}</div>
+                <div style="margin-top:2px;font:600 11px 'Nunito',sans-serif;color:#6b6558">{{ i.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 10 PERFIL PUBLICO -->
+      <sc-if value="{{ s10 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto">
+          <div style="height:150px;position:relative" class="placeholder">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">capa · perfil profissional</div>
+          </div>
+          <div style="padding:0 20px 40px">
+            <div style="margin-top:-36px;width:72px;height:72px;border-radius:50%;border:3px solid #FBF9F4" class="placeholder"></div>
+            <div style="margin-top:10px;font:800 18px 'Nunito',sans-serif;color:#2B2924">Dra. Marina Kist</div>
+            <div style="margin-top:2px;font:700 12px 'Nunito',sans-serif;color:#8A6E4B">Veterinária Equina · São Paulo, SP</div>
+            <div style="margin-top:10px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Mais de 12 anos cuidando da saúde e bem-estar de cavalos atletas e de lazer.</div>
+            <div style="margin-top:14px;display:flex;gap:8px">
+              <div onClick="{{ toPortfolio }}" style="flex:1;height:44px;border-radius:22px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 12px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Agendar</div>
+              <div style="flex:1;height:44px;border-radius:22px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 12px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Mensagem</div>
+            </div>
+            <div style="margin-top:16px;display:flex;gap:8px">
+              <sc-for list="{{ perfilPublicoAbaChips }}" as="c" hint-placeholder-count="5">
+                <div onClick="{{ c.onClick }}" style="padding:8px 13px;border-radius:16px;background:{{ c.bg }};color:{{ c.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 11 PORTFOLIO -->
+      <sc-if value="{{ s11 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Portfólio</div>
+          <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <sc-for list="{{ portfolioItens }}" as="p" hint-placeholder-count="8">
+              <div style="border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05)">
+                <div style="height:90px" class="placeholder"></div>
+                <div style="padding:8px 10px;font:700 11px 'Nunito',sans-serif;color:#2B2924">{{ p }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 12 CONTEUDO -->
+      <sc-if value="{{ s12 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Conteúdo</div>
+          <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Publicações que constroem sua autoridade.</div>
+          <div style="margin-top:14px;display:flex;gap:8px;overflow-x:auto">
+            <sc-for list="{{ conteudoTipoChips }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ conteudoList }}" as="c" hint-placeholder-count="4">
+              <div style="border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05)">
+                <div style="height:80px" class="placeholder"></div>
+                <div style="padding:12px 14px"><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ c.titulo }}</div><div style="margin-top:2px;font:600 11px 'Nunito',sans-serif;color:#8A6E4B">{{ c.tipo }}</div></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 13 PORTAL ORGANIZADOR (dashboard) -->
+      <sc-if value="{{ s13 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Portal do organizador</div>
+          <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <sc-for list="{{ organizadorCards }}" as="c" hint-placeholder-count="7">
+              <div onClick="{{ c.onClick }}" style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px;cursor:pointer">
+                <div style="font:800 18px 'Nunito',sans-serif;color:#2B2924">{{ c.valor }}</div>
+                <div style="margin-top:2px;font:600 11px 'Nunito',sans-serif;color:#6b6558">{{ c.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 14 GESTAO DE EVENTOS (criar) -->
+      <sc-if value="{{ s14 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Criar evento</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <input value="{{ novoEvento.titulo }}" onChange="{{ onEventoTitulo }}" placeholder="Nome do evento" style="height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            <textarea value="{{ novoEvento.descricao }}" onChange="{{ onEventoDescricao }}" placeholder="Descrição" rows="3" style="border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:12px 14px;font:500 13px 'Nunito',sans-serif;color:#2B2924;resize:none"></textarea>
+            <div style="display:flex;gap:10px">
+              <input value="{{ novoEvento.inicio }}" onChange="{{ onEventoInicio }}" placeholder="Data início" style="flex:1;min-width:0;height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+              <input value="{{ novoEvento.fim }}" onChange="{{ onEventoFim }}" placeholder="Data fim" style="flex:1;min-width:0;height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+            <input value="{{ novoEvento.local }}" onChange="{{ onEventoLocal }}" placeholder="Local" style="height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            <input value="{{ novoEvento.capacidade }}" onChange="{{ onEventoCapacidade }}" placeholder="Capacidade" style="height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+          </div>
+          <div style="margin-top:16px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Categoria</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ eventoCategoriaChips }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div onClick="{{ publicarEvento }}" style="margin-top:18px;height:52px;border-radius:26px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Publicar evento</div>
+        </div>
+      </sc-if>
+
+      <!-- 15 PARTICIPANTES -->
+      <sc-if value="{{ s15 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Participantes</div>
+          <div style="margin-top:14px;display:flex;gap:7px;overflow-x:auto">
+            <sc-for list="{{ participanteFiltroChips }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:8px 13px;border-radius:16px;background:{{ c.bg }};color:{{ c.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ participantesList }}" as="p" hint-placeholder-count="6">
+              <div onClick="{{ p.onCheckin }}" style="display:flex;align-items:center;gap:10px;border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:10px 12px;cursor:pointer">
+                <div style="width:36px;height:36px;border-radius:50%;flex:none" class="placeholder"></div>
+                <div style="flex:1;min-width:0"><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ p.nome }}</div><div style="margin-top:1px;font:500 10px 'Nunito',sans-serif;color:#6b6558">{{ p.categoria }}</div></div>
+                <div style="padding:4px 9px;border-radius:9px;background:{{ p.bg }};color:{{ p.color }};font:700 9px 'Nunito',sans-serif;flex:none">{{ p.status }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 16 CHECK-IN -->
+      <sc-if value="{{ s16 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px;text-align:center">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924;text-align:left">Check-in</div>
+          <div style="margin-top:20px;width:220px;height:220px;margin:20px auto 0;border-radius:24px;background:#2B2924;display:flex;align-items:center;justify-content:center">
+            <svg viewBox="0 0 24 24" width="90" height="90" fill="none" stroke="#C9A15A" stroke-width="1.4"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3zM19 14h2v2h-2zM14 19h2v2h-2zM19 19h2v2h-2z"/></svg>
+          </div>
+          <div style="margin-top:14px;font:600 13px 'Nunito',sans-serif;color:#6b6558">Escaneie o QR Code do participante</div>
+          <div style="margin-top:20px;display:flex;justify-content:space-around;text-align:center">
+            <div><div style="font:800 20px 'Nunito',sans-serif;color:#2B2924">184</div><div style="font:600 11px 'Nunito',sans-serif;color:#6b6558">check-ins</div></div>
+            <div><div style="font:800 20px 'Nunito',sans-serif;color:#2B2924">56</div><div style="font:600 11px 'Nunito',sans-serif;color:#6b6558">pendentes</div></div>
+          </div>
+          <div onClick="{{ abrirCheckinManual }}" style="margin-top:20px;height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Check-in manual</div>
+        </div>
+      </sc-if>
+
+      <!-- 17 CERTIFICADOS (organizador) -->
+      <sc-if value="{{ s17 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Certificados</div>
+          <div style="margin-top:16px;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 4px 16px rgba(43,41,36,.06)">
+            <div style="height:130px" class="placeholder"><div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">template · certificado com QR</div></div>
+            <div style="padding:14px 16px"><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">Template · Copa Nacional de Salto</div><div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">Assinatura digital + QR de verificação</div></div>
+          </div>
+          <div style="margin-top:16px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Emitidos</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ certificadosOrganizadorList }}" as="c" hint-placeholder-count="4">
+              <div style="display:flex;justify-content:space-between;font:600 12px 'Nunito',sans-serif;border-radius:12px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:10px 13px"><span style="color:#2B2924">{{ c.nome }}</span><span style="color:#6b6558">{{ c.data }}</span></div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 18 MARKETPLACE ADMIN (painel geral) -->
+      <sc-if value="{{ s18 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Minha loja</div>
+          <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <sc-for list="{{ lojaCards }}" as="c" hint-placeholder-count="7">
+              <div onClick="{{ c.onClick }}" style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px;cursor:pointer">
+                <div style="font:800 18px 'Nunito',sans-serif;color:#2B2924">{{ c.valor }}</div>
+                <div style="margin-top:2px;font:600 11px 'Nunito',sans-serif;color:#6b6558">{{ c.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 19 GESTAO DE PRODUTOS -->
+      <sc-if value="{{ s19 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Produtos</div>
+            <div onClick="{{ abrirNovoProduto }}" style="width:36px;height:36px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></div>
+          </div>
+          <div style="margin-top:14px;display:flex;align-items:center;gap:10px;border-radius:16px;background:rgba(201,161,90,.12);padding:12px 14px">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#8A6E4B" stroke-width="1.8"><path d="M12 3a9 9 0 100 18 9 9 0 000-18z"/><path d="M12 8v4l2.5 2.5"/></svg>
+            <div style="font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">A IA pode sugerir descrição, SEO e categorias para novos produtos.</div>
+          </div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ produtosList }}" as="p" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:10px 12px">
+                <div style="width:44px;height:44px;border-radius:10px;flex:none" class="placeholder"></div>
+                <div style="flex:1;min-width:0"><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ p.nome }}</div><div style="margin-top:1px;font:500 10px 'Nunito',sans-serif;color:#6b6558">{{ p.categoria }} · SKU {{ p.sku }}</div></div>
+                <div style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;flex:none">{{ p.preco }}</div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ produtosTemMais }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ carregarMaisProdutos }}" style="margin-top:4px;text-align:center;padding:12px;border-radius:14px;background:rgba(43,41,36,.05);font:700 12px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Carregar mais</div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 20 PEDIDOS -->
+      <sc-if value="{{ s20 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Pedidos</div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ pedidosList }}" as="p" hint-placeholder-count="5">
+              <div onClick="{{ p.onClick }}" style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px;cursor:pointer">
+                <div style="display:flex;justify-content:space-between"><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">Pedido #{{ p.numero }}</div><div style="font:800 13px 'Nunito',sans-serif;color:#8A6E4B">{{ p.valor }}</div></div>
+                <div style="margin-top:4px;font:500 11px 'Nunito',sans-serif;color:#6b6558">{{ p.cliente }}</div>
+                <div style="margin-top:8px;display:flex;gap:6px;overflow-x:auto">
+                  <sc-for list="{{ p.timeline }}" as="t" hint-placeholder-count="5">
+                    <div style="flex:none;padding:4px 9px;border-radius:9px;background:{{ t.bg }};color:{{ t.color }};font:700 9px 'Nunito',sans-serif">{{ t.label }}</div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ pedidosTemMais }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ carregarMaisPedidos }}" style="margin-top:4px;text-align:center;padding:12px;border-radius:14px;background:rgba(43,41,36,.05);font:700 12px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Carregar mais</div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 21 ESTOQUE -->
+      <sc-if value="{{ s21 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Estoque</div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ estoqueList }}" as="e" hint-placeholder-count="6">
+              <div style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px">
+                <div style="display:flex;justify-content:space-between"><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ e.nome }}</div><div style="font:700 12px 'Nunito',sans-serif;color:{{ e.color }}">{{ e.qtd }} un.</div></div>
+                <div style="margin-top:8px;height:6px;border-radius:3px;background:rgba(43,41,36,.06);overflow:hidden"><div style="height:100%;width:{{ e.percent }}%;border-radius:3px;background:{{ e.color }}"></div></div>
+                <sc-if value="{{ e.baixo }}" hint-placeholder-val="{{ false }}">
+                  <div onClick="{{ e.onRepor }}" style="margin-top:8px;display:inline-block;padding:6px 12px;border-radius:10px;background:#2B2924;color:#C9A15A;font:700 10px 'Nunito',sans-serif;cursor:pointer">Repor estoque</div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 22 PROMOCOES -->
+      <sc-if value="{{ s22 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Promoções</div>
+            <div onClick="{{ abrirNovaPromocao }}" style="width:36px;height:36px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></div>
+          </div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ promocoesList }}" as="p" hint-placeholder-count="4">
+              <div style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px">
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ p.nome }}</div>
+                <div style="margin-top:3px;font:500 11px 'Nunito',sans-serif;color:#6b6558">{{ p.tipo }} · válida até {{ p.validade }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 23 RELATORIOS MARKETPLACE -->
+      <sc-if value="{{ s23 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Relatórios</div>
+          <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <sc-for list="{{ relatoriosIndicadores }}" as="i" hint-placeholder-count="6">
+              <div style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px;text-align:center">
+                <div style="font:800 18px 'Nunito',sans-serif;color:#2B2924">{{ i.valor }}</div>
+                <div style="margin-top:2px;font:600 11px 'Nunito',sans-serif;color:#6b6558">{{ i.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Produtos mais vendidos</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ relatoriosMaisVendidos }}" as="p" hint-placeholder-count="3">
+              <div style="display:flex;justify-content:space-between;font:600 12px 'Nunito',sans-serif;border-radius:12px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:10px 13px"><span style="color:#2B2924">{{ p.nome }}</span><span style="color:#8A6E4B">{{ p.qtd }} vendidos</span></div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 24 NOVO SERVICO -->
+      <sc-if value="{{ s24 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Novo serviço</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <input value="{{ novoServico.nome }}" onChange="{{ onServicoNome }}" placeholder="Nome do serviço" style="height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            <input value="{{ novoServico.categoria }}" onChange="{{ onServicoCategoria }}" placeholder="Categoria" style="height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            <div style="display:flex;gap:10px">
+              <input value="{{ novoServico.duracao }}" onChange="{{ onServicoDuracao }}" placeholder="Duração" style="flex:1;min-width:0;height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+              <input value="{{ novoServico.preco }}" onChange="{{ onServicoPreco }}" placeholder="Preço" style="flex:1;min-width:0;height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+          </div>
+          <div onClick="{{ salvarServico }}" style="margin-top:20px;height:52px;border-radius:26px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Salvar serviço</div>
+        </div>
+      </sc-if>
+
+      <!-- 25 NOVO PRODUTO -->
+      <sc-if value="{{ s25 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Novo produto</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <input value="{{ novoProduto.nome }}" onChange="{{ onProdutoNome }}" placeholder="Nome do produto" style="height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            <input value="{{ novoProduto.categoria }}" onChange="{{ onProdutoCategoria }}" placeholder="Categoria" style="height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            <div style="display:flex;gap:10px">
+              <input value="{{ novoProduto.sku }}" onChange="{{ onProdutoSku }}" placeholder="SKU" style="flex:1;min-width:0;height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+              <input value="{{ novoProduto.preco }}" onChange="{{ onProdutoPreco }}" placeholder="Preço" style="flex:1;min-width:0;height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+          </div>
+          <div onClick="{{ salvarProduto }}" style="margin-top:20px;height:52px;border-radius:26px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Salvar produto</div>
+        </div>
+      </sc-if>
+
+      <!-- 26 NOVA PROMOCAO -->
+      <sc-if value="{{ s26 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Nova promoção</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <input value="{{ novaPromocao.nome }}" onChange="{{ onPromocaoNome }}" placeholder="Nome da promoção" style="height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            <input value="{{ novaPromocao.tipo }}" onChange="{{ onPromocaoTipo }}" placeholder="Tipo (Frete, Combo, Cupom...)" style="height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            <input value="{{ novaPromocao.validade }}" onChange="{{ onPromocaoValidade }}" placeholder="Válida até" style="height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+          </div>
+          <div onClick="{{ salvarPromocao }}" style="margin-top:20px;height:52px;border-radius:26px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Salvar promoção</div>
+        </div>
+      </sc-if>
+
+      <!-- 27 DETALHE DO PEDIDO -->
+      <sc-if value="{{ s27 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Pedido #{{ pedidoDetalhe.numero }}</div>
+          <div style="margin-top:4px;font:600 12px 'Nunito',sans-serif;color:#6b6558">{{ pedidoDetalhe.cliente }} · {{ pedidoDetalhe.valor }}</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ pedidoTimeline }}" as="t" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;gap:10px">
+                <div style="width:9px;height:9px;border-radius:50%;background:{{ t.color }};flex:none"></div>
+                <div style="font:700 12px 'Nunito',sans-serif;color:{{ t.color }}">{{ t.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ pedidoEtapaFinal }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:20px;text-align:center;font:700 12px 'Nunito',sans-serif;color:#4F5D45">Pedido entregue ✓</div>
+          </sc-if>
+          <sc-if value="{{ pedidoNaoFinal }}" hint-placeholder-val="{{ true }}">
+            <div onClick="{{ avancarEtapaPedido }}" style="margin-top:20px;height:50px;border-radius:25px;background:#2B2924;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">Avançar para próxima etapa</div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <div onClick="{{ next }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+
+  </div>
+
+  <div style="display:flex;align-items:center;gap:16px;font:600 12px ui-monospace,Menlo,monospace;color:#6b6558">
+    <span>{{ screenLabel }} · tela {{ screenDisplay }} / {{ totalScreens }}</span>
+    <span onClick="{{ toDashboard }}" style="cursor:pointer;text-decoration:underline">início</span>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    screen: 0,
+    historyStack: [],
+    menuOpen: false,
+    confirm: null,
+    agendaVis: 'Dia',
+    reservaFiltro: 'Hoje',
+    reservasOverride: {},
+    financeiroPeriodo: 'Mensal',
+    perfilPublicoAba: 'Agenda',
+    conteudoTipo: 'Artigos',
+    eventoCategoria: 'Salto',
+    novoEvento: { titulo: '', descricao: '', inicio: '', fim: '', local: '', capacidade: '' },
+    eventosCriados: 0,
+    participanteFiltro: 'Confirmados',
+    participantesOverride: {},
+    clienteAba: 'Histórico',
+    clienteQuery: '',
+    clientesVisiveis: 4,
+    selectedCliente: 0,
+    novoServico: { nome: '', categoria: '', duracao: '', preco: '' },
+    servicosCriados: [],
+    novoProduto: { nome: '', categoria: '', sku: '', preco: '' },
+    produtosCriados: [],
+    produtosVisiveis: 4,
+    novaPromocao: { nome: '', tipo: '', validade: '' },
+    promocoesCriadas: [],
+    selectedPedido: 0,
+    pedidosOverride: {},
+    pedidosVisiveis: 3,
+    estoqueOverride: {},
+    checkinManualOpen: false,
+  };
+
+  goTo = (n, push = true) => {
+    const cur = this.state.screen;
+    const target = Math.max(0, Math.min(27, n));
+    if (push && cur !== target) {
+      this.setState(s => ({ screen: target, historyStack: [...s.historyStack, cur], menuOpen: false }));
+    } else {
+      this.setState({ screen: target, menuOpen: false });
+    }
+  };
+  next = () => this.goTo(this.state.screen + 1);
+  goBack = () => {
+    const stack = [...this.state.historyStack];
+    const prev = stack.pop();
+    if (prev != null) this.setState({ screen: prev, historyStack: stack });
+    else this.goTo(0, false);
+  };
+  setVal(key, value) { return () => this.setState({ [key]: value }); }
+  setField(stateKey, field, value) { this.setState(s => ({ [stateKey]: { ...s[stateKey], [field]: value } })); }
+  buildChips(options, isSelected, onToggle) {
+    return options.map(label => ({
+      label,
+      bg: isSelected(label) ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: isSelected(label) ? '#C9A15A' : '#2B2924',
+      onClick: onToggle(label),
+    }));
+  }
+  askConfirm(title, message, confirmLabel, onConfirm) {
+    return () => this.setState({ confirm: { title, message, confirmLabel, onConfirm } });
+  }
+  closeConfirm = () => this.setState({ confirm: null });
+  runConfirm = () => {
+    const fn = this.state.confirm && this.state.confirm.onConfirm;
+    this.setState({ confirm: null });
+    if (fn) fn();
+  };
+  setReservaStatus(i, status, bg, color) { return () => this.setState(s => ({ reservasOverride: { ...s.reservasOverride, [i]: { status, bg, color } } })); }
+  setParticipanteStatus(i, status, bg, color) { return () => this.setState(s => ({ participantesOverride: { ...s.participantesOverride, [i]: { status, bg, color } } })); }
+  setPedidoAtual(i, atual) { return () => this.setState(s => ({ pedidosOverride: { ...s.pedidosOverride, [i]: atual } })); }
+  reporEstoque(i) { return () => this.setState(s => ({ estoqueOverride: { ...s.estoqueOverride, [i]: true } })); }
+  publicarEvento = () => {
+    const ev = this.state.novoEvento;
+    if (!ev.titulo.trim()) return;
+    this.setState(s => ({ eventosCriados: s.eventosCriados + 1, novoEvento: { titulo: '', descricao: '', inicio: '', fim: '', local: '', capacidade: '' } }));
+    this.goTo(13, false);
+  };
+  publicarServico = () => {
+    const sv = this.state.novoServico;
+    if (!sv.nome.trim()) return;
+    this.setState(s => ({ servicosCriados: [...s.servicosCriados, { ...sv }], novoServico: { nome: '', categoria: '', duracao: '', preco: '' } }));
+    this.goTo(5, false);
+  };
+  publicarProduto = () => {
+    const p = this.state.novoProduto;
+    if (!p.nome.trim()) return;
+    this.setState(s => ({ produtosCriados: [...s.produtosCriados, { ...p }], novoProduto: { nome: '', categoria: '', sku: '', preco: '' } }));
+    this.goTo(19, false);
+  };
+  publicarPromocao = () => {
+    const p = this.state.novaPromocao;
+    if (!p.nome.trim()) return;
+    this.setState(s => ({ promocoesCriadas: [...s.promocoesCriadas, { ...p }], novaPromocao: { nome: '', tipo: '', validade: '' } }));
+    this.goTo(22, false);
+  };
+
+  renderVals() {
+    const s = this.state;
+    const screenIs = {};
+    for (let i = 0; i <= 27; i++) screenIs['s' + i] = s.screen === i;
+    const jump = (n) => () => this.goTo(n);
+
+    const screenNames = ['Dashboard profissional','Agenda profissional','Clientes','Detalhe do cliente','Cavalos atendidos','Serviços','Reservas','Financeiro','Avaliações','Analytics','Perfil público','Portfólio','Conteúdo','Portal do organizador','Criar evento','Participantes','Check-in','Certificados','Marketplace admin','Gestão de produtos','Pedidos','Estoque','Promoções','Relatórios','Novo serviço','Novo produto','Nova promoção','Detalhe do pedido'];
+
+    const modosList = [
+      { label: 'Profissional', onClick: jump(0), active: [0,1,2,3,4,5,6,7,8,9].includes(s.screen) },
+      { label: 'Perfil público', onClick: jump(10), active: [10,11,12].includes(s.screen) },
+      { label: 'Organizador', onClick: jump(13), active: [13,14,15,16,17].includes(s.screen) },
+      { label: 'Minha loja', onClick: jump(18), active: [18,19,20,21,22,23,25,26,27].includes(s.screen) },
+    ].map(m => ({ ...m, bg: m.active ? 'rgba(201,161,90,.16)' : 'transparent', color: m.active ? '#8A6E4B' : '#2B2924' }));
+    const modoAtivoLabel = modosList.find(m => m.active) ? modosList.find(m => m.active).label : 'Profissional';
+    const stopClick = (e) => e.stopPropagation();
+
+    const profDashboardCardsDefs = [
+      ['3', 'Agenda de hoje', 1], ['2', 'Novas reservas', 6], ['5', 'Mensagens', null], ['R$ 8.420', 'Receita do mês', 7],
+      ['4.9 ★', 'Avaliação média', 8], ['62', 'Clientes ativos', 2], ['1', 'Eventos', 13],
+    ];
+    const profDashboardCards = profDashboardCardsDefs.map(([valor, label, target]) => ({ valor, label, onClick: target != null ? jump(target) : () => {} }));
+    const servicosMaisVendidos = [{ nome: 'Consulta de rotina', qtd: 18 }, { nome: 'Ferrageamento', qtd: 12 }, { nome: 'Fisioterapia', qtd: 9 }];
+    const profModuloAtalhosDefs = ['Agenda', 'Clientes', 'Cavalos', 'Serviços', 'Reservas', 'Financeiro', 'Avaliações', 'Analytics', 'Perfil público', 'Portfólio', 'Conteúdo', 'Minha loja'];
+    const profModuloTargets = [1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 18];
+    const profModuloAtalhos = profModuloAtalhosDefs.map((label, i) => ({ label, onClick: jump(profModuloTargets[i]) }));
+
+    const agendaVisOptions = ['Dia', 'Semana', 'Mês', 'Lista'];
+    const agendaVisChips = this.buildChips(agendaVisOptions, l => s.agendaVis === l, l => this.setVal('agendaVis', l));
+    const acaoFeitaLabel = { Confirmar: 'Confirmado ✓', Reagendar: 'Reagendamento solicitado ✓', Cancelar: 'Cancelado ✓', 'Enviar mensagem': 'Mensagem enviada ✓', 'Abrir navegação': 'Navegação aberta ✓' };
+    const atendimentosDefsBase = [
+      { hora: '09:00', servico: 'Consulta de rotina', cliente: 'Mauro Andrade', cavalo: 'Bela', local: 'Haras Boa Vista', status: 'Confirmado', bg: 'rgba(107,115,83,.15)', color: '#4F5D45', acoes: ['Enviar mensagem', 'Abrir navegação'] },
+      { hora: '11:30', servico: 'Avaliação ortopédica', cliente: 'Carlos Melo', cavalo: 'Trovão', local: 'Clínica Hípica SP', status: 'Pendente', bg: 'rgba(201,161,90,.16)', color: '#8A6E4B', acoes: ['Confirmar', 'Reagendar', 'Cancelar'] },
+      { hora: '15:00', servico: 'Vacinação', cliente: 'Helena Ribeiro', cavalo: 'Luna', local: 'Haras Vale Verde', status: 'Confirmado', bg: 'rgba(107,115,83,.15)', color: '#4F5D45', acoes: ['Enviar mensagem'] },
+    ];
+    const atendimentosList = atendimentosDefsBase.map((a, i) => {
+      const done = s.reservasOverride['at' + i];
+      return {
+        ...a,
+        acaoFeita: done ? acaoFeitaLabel[done] : null,
+        acoesChips: a.acoes.map(ac => ({
+          label: ac,
+          onClick: this.askConfirm(`${ac}?`, `Confirmar "${ac}" para o atendimento de ${a.cliente} às ${a.hora}?`, ac, () => this.setState(st => ({ reservasOverride: { ...st.reservasOverride, ['at' + i]: ac } }))),
+        })),
+      };
+    });
+
+    const clientesDefsBase = [
+      { nome: 'Mauro Andrade', cidade: 'São Paulo, SP', cavalos: 1, ultimo: 'jun/2026', avaliacao: '5.0' },
+      { nome: 'Carlos Melo', cidade: 'Belo Horizonte, MG', cavalos: 2, ultimo: 'mai/2026', avaliacao: '4.8' },
+      { nome: 'Helena Ribeiro', cidade: 'Curitiba, PR', cavalos: 1, ultimo: 'jul/2026', avaliacao: '5.0' },
+      { nome: 'Ana Ferraz', cidade: 'Porto Alegre, RS', cavalos: 1, ultimo: 'abr/2026', avaliacao: '4.6' },
+      { nome: 'João Ferrador', cidade: 'Ribeirão Preto, SP', cavalos: 1, ultimo: 'mai/2026', avaliacao: '4.9' },
+      { nome: 'Renata Souza', cidade: 'Florianópolis, SC', cavalos: 2, ultimo: 'fev/2026', avaliacao: '5.0' },
+    ];
+    const clientesDefs = clientesDefsBase.map((c, i) => ({ ...c, id: i }));
+    const cq = s.clienteQuery.trim().toLowerCase();
+    const clientesFiltrados = clientesDefs.filter(c => !cq || c.nome.toLowerCase().includes(cq) || c.cidade.toLowerCase().includes(cq));
+    const clientesList = clientesFiltrados.slice(0, s.clientesVisiveis).map(c => ({ ...c, onClick: () => { this.setState({ selectedCliente: c.id }); this.goTo(3); } }));
+    const clientesTemMais = clientesFiltrados.length > s.clientesVisiveis;
+    const clientesVazio = clientesFiltrados.length === 0;
+
+    const clienteDetalhe = clientesDefs[s.selectedCliente] || clientesDefs[0];
+
+    const clienteAbaOptions = ['Histórico', 'Serviços', 'Mensagens', 'Pagamentos', 'Arquivos', 'Observações'];
+    const clienteAbaChips = this.buildChips(clienteAbaOptions, l => s.clienteAba === l, l => this.setVal('clienteAba', l));
+    const clienteConteudoPorAba = {
+      'Histórico': [
+        { titulo: 'Consulta de rotina', data: '20 jun 2026', valor: 'R$ 280' },
+        { titulo: 'Vacinação', data: '02 mar 2026', valor: 'R$ 150' },
+        { titulo: 'Avaliação inicial', data: '14 nov 2025', valor: 'R$ 320' },
+      ],
+      'Serviços': [
+        { titulo: 'Consulta de rotina', data: 'contratado', valor: 'R$ 280' },
+        { titulo: 'Fisioterapia mensal', data: 'contratado', valor: 'R$ 190' },
+      ],
+      'Mensagens': [
+        { titulo: '"Obrigado pelo atendimento de hoje!"', data: 'há 2 dias', valor: '' },
+        { titulo: '"Podemos remarcar para sexta?"', data: 'há 1 semana', valor: '' },
+      ],
+      'Pagamentos': [
+        { titulo: 'Pagamento via PIX', data: '20 jun 2026', valor: 'R$ 280' },
+        { titulo: 'Pagamento via cartão', data: '02 mar 2026', valor: 'R$ 150' },
+      ],
+      'Arquivos': [
+        { titulo: 'Exame de sangue.pdf', data: '20 jun 2026', valor: '' },
+        { titulo: 'Raio-x casco.jpg', data: '14 nov 2025', valor: '' },
+      ],
+      'Observações': [
+        { titulo: 'Cliente sensível a horários matutinos', data: '', valor: '' },
+        { titulo: 'Prefere contato via WhatsApp', data: '', valor: '' },
+      ],
+    };
+    const clienteHistorico = clienteConteudoPorAba[s.clienteAba] || [];
+
+    const cavalosAtendidosDefs = [
+      { nome: 'Bela', raca: 'Mangalarga', idade: '8 anos', proprietario: 'Mauro Andrade', ultimo: 'jun/2026' },
+      { nome: 'Luna', raca: 'Lusitano', idade: '6 anos', proprietario: 'Helena Ribeiro', ultimo: 'jul/2026' },
+      { nome: 'Trovão', raca: 'Quarto de Milha', idade: '10 anos', proprietario: 'Carlos Melo', ultimo: 'mai/2026' },
+    ];
+    const cavalosAtendidosList = cavalosAtendidosDefs;
+
+    const servicosDefsBase = [
+      { nome: 'Consulta de rotina', categoria: 'Clínica geral', duracao: '45 min', preco: 'R$ 280' },
+      { nome: 'Ferrageamento completo', categoria: 'Casco', duracao: '1h', preco: 'R$ 220' },
+      { nome: 'Sessão de fisioterapia', categoria: 'Reabilitação', duracao: '1h', preco: 'R$ 190' },
+      { nome: 'Avaliação ortopédica', categoria: 'Clínica geral', duracao: '1h30', preco: 'R$ 450' },
+    ];
+    const servicosList = [...servicosDefsBase, ...s.servicosCriados];
+
+    const reservaFiltroOptions = ['Hoje', 'Semana', 'Pendentes', 'Confirmadas', 'Canceladas', 'Concluídas'];
+    const reservaFiltroChips = this.buildChips(reservaFiltroOptions, l => s.reservaFiltro === l, l => this.setVal('reservaFiltro', l));
+    const reservaEtapaIndex = { Pendente: 0, Confirmada: 2, Concluída: 4 };
+    const reservasDefsBase = [
+      { cliente: 'Ana Ferraz', servico: 'Consulta de rotina', data: '10 jul, 09:00', status: 'Pendente', bg: 'rgba(201,161,90,.16)', color: '#8A6E4B' },
+      { cliente: 'João Ferrador', servico: 'Avaliação de casco', data: '11 jul, 14:00', status: 'Confirmada', bg: 'rgba(107,115,83,.15)', color: '#4F5D45' },
+      { cliente: 'Helena Ribeiro', servico: 'Vacinação', data: '15 jul, 10:00', status: 'Concluída', bg: 'rgba(43,41,36,.06)', color: '#2B2924' },
+    ];
+    const reservasList = reservasDefsBase.map((r, i) => {
+      const override = s.reservasOverride['res' + i];
+      const status = override ? override.status : r.status;
+      const bg = override ? override.bg : r.bg;
+      const color = override ? override.color : r.color;
+      const isPendente = status === 'Pendente';
+      return {
+        ...r, status, bg, color, isPendente,
+        etapaAtual: reservaEtapaIndex[status] ?? 0,
+        onAceitar: this.askConfirm('Aceitar reserva?', `Aceitar a reserva de ${r.cliente} para ${r.data}?`, 'Aceitar', this.setReservaStatus('res' + i, 'Confirmada', 'rgba(107,115,83,.15)', '#4F5D45')),
+        onRecusar: this.askConfirm('Recusar reserva?', `Recusar a reserva de ${r.cliente}? O cliente será notificado.`, 'Recusar', this.setReservaStatus('res' + i, 'Cancelada', 'rgba(196,90,60,.14)', '#a1503a')),
+      };
+    });
+    const reservaFluxoDefs = ['Solicitação', 'Aceite', 'Pagamento', 'Atendimento', 'Avaliação'];
+    const reservasComFluxo = reservasList.map(r => ({
+      ...r,
+      fluxoChips: reservaFluxoDefs.map((label, i) => ({ label, color: i <= r.etapaAtual ? '#4F5D45' : '#a39c8a' })),
+    }));
+
+    const financeiroPeriodoOptions = ['Diário', 'Semanal', 'Mensal', 'Anual'];
+    const financeiroPeriodoChips = this.buildChips(financeiroPeriodoOptions, l => s.financeiroPeriodo === l, l => this.setVal('financeiroPeriodo', l));
+    const financeiroReceitaPorPeriodo = { Diário: 'R$ 420', Semanal: 'R$ 2.180', Mensal: 'R$ 8.420', Anual: 'R$ 96.400' };
+    const financeiroReceita = financeiroReceitaPorPeriodo[s.financeiroPeriodo];
+    const exportarCsv = this.askConfirm('Exportar CSV?', `Exportar o relatório financeiro (${s.financeiroPeriodo}) em CSV?`, 'Exportar', () => {});
+    const exportarPdf = this.askConfirm('Exportar PDF?', `Exportar o relatório financeiro (${s.financeiroPeriodo}) em PDF?`, 'Exportar', () => {});
+
+    const avaliacoesDefs = [
+      { nome: 'Mauro Andrade', nota: '5.0', comentario: 'Atendimento pontual e muito cuidadoso com a Bela.' },
+      { nome: 'Carlos Melo', nota: '4.8', comentario: 'Explicou tudo com clareza, recomendo.' },
+      { nome: 'Ana Ferraz', nota: '4.5', comentario: 'Ótimo profissional, só o horário atrasou um pouco.' },
+    ];
+    const avaliacoesList = avaliacoesDefs;
+
+    const profAnalyticsIndicadoresDefs = [
+      ['62', 'Clientes ativos'], ['128', 'Atendimentos'], ['4.9', 'Avaliação média'], ['18%', 'Taxa de retorno'], ['R$ 132', 'Ticket médio'], ['94%', 'Taxa de comparecimento'],
+    ];
+    const profAnalyticsIndicadores = profAnalyticsIndicadoresDefs.map(([valor, label]) => ({ valor, label }));
+
+    const perfilPublicoAbaOptions = ['Agenda', 'Avaliações', 'Certificados', 'Galeria', 'Contato'];
+    const perfilPublicoAbaChips = this.buildChips(perfilPublicoAbaOptions, l => s.perfilPublicoAba === l, l => this.setVal('perfilPublicoAba', l));
+
+    const portfolioItens = ['Antes e depois · casco', 'Sessão de fisioterapia', 'Atendimento de campo', 'Consulta em haras', 'Reabilitação', 'Vacinação em grupo', 'Avaliação postural', 'Acompanhamento de parto'];
+
+    const conteudoTipoOptions = ['Artigos', 'Vídeos', 'Dicas', 'Lives', 'Stories', 'Reels'];
+    const conteudoTipoChips = this.buildChips(conteudoTipoOptions, l => s.conteudoTipo === l, l => this.setVal('conteudoTipo', l));
+    const conteudoList = [
+      { titulo: 'Sinais de que seu cavalo precisa de atenção veterinária', tipo: 'Artigo' },
+      { titulo: 'Rotina de cuidados pós-treino', tipo: 'Dica' },
+      { titulo: 'Live: perguntas sobre alimentação equina', tipo: 'Live' },
+    ];
+
+    const organizadorCardsDefs = [
+      ['2', 'Eventos ativos', 14], ['184', 'Participantes', 15], ['210', 'Ingressos vendidos', null], ['R$ 38.900', 'Receita', null],
+      ['3', 'Patrocinadores', null], ['184', 'Check-ins', 16], ['4', 'Pendências', null],
+    ];
+    const organizadorCards = organizadorCardsDefs.map(([valor, label, target]) => ({ valor: label === 'Eventos ativos' ? String(Number(valor) + s.eventosCriados) : valor, label, onClick: target != null ? jump(target) : () => {} }));
+
+    const eventoCategoriaOptions = ['Salto', 'Adestramento', 'Enduro', 'Rédeas', 'Passeio', 'Exposição'];
+    const eventoCategoriaChips = this.buildChips(eventoCategoriaOptions, l => s.eventoCategoria === l, l => this.setVal('eventoCategoria', l));
+
+    const participanteFiltroOptions = ['Confirmados', 'Pendentes', 'Check-in', 'VIP', 'Profissionais', 'Imprensa'];
+    const participanteFiltroChips = this.buildChips(participanteFiltroOptions, l => s.participanteFiltro === l, l => this.setVal('participanteFiltro', l));
+    const participantesDefsBase = [
+      { nome: 'Mauro Andrade', categoria: 'Cavaleiro', status: 'Confirmado', bg: 'rgba(107,115,83,.15)', color: '#4F5D45' },
+      { nome: 'Carlos Melo', categoria: 'Cavaleiro', status: 'Check-in', bg: 'rgba(201,161,90,.16)', color: '#8A6E4B' },
+      { nome: 'Dra. Marina Kist', categoria: 'Profissional', status: 'VIP', bg: 'rgba(43,41,36,.06)', color: '#2B2924' },
+      { nome: 'Revista Equestre', categoria: 'Imprensa', status: 'Confirmado', bg: 'rgba(107,115,83,.15)', color: '#4F5D45' },
+    ];
+    const participantesList = participantesDefsBase.map((p, i) => {
+      const override = s.participantesOverride[i];
+      const status = override ? override.status : p.status;
+      const bg = override ? override.bg : p.bg;
+      const color = override ? override.color : p.color;
+      const jaCheckin = status === 'Check-in';
+      return {
+        ...p, status, bg, color, jaCheckin,
+        onCheckin: this.askConfirm('Confirmar check-in?', `Registrar check-in de ${p.nome}?`, 'Check-in', this.setParticipanteStatus(i, 'Check-in', 'rgba(201,161,90,.16)', '#8A6E4B')),
+      };
+    });
+
+    const certificadosOrganizadorList = [
+      { nome: 'Mauro Andrade — 3º lugar', data: '02 jul 2026' },
+      { nome: 'Carlos Melo — participação', data: '02 jul 2026' },
+      { nome: 'Helena Ribeiro — 1º lugar', data: '02 jul 2026' },
+    ];
+
+    const lojaCardsDefs = [
+      ['48', 'Produtos', 19], ['12', 'Pedidos abertos', 20], ['320', 'Clientes', null], ['R$ 96.400', 'Receita', 23],
+      ['3', 'Promoções ativas', 22], ['5', 'Baixo estoque', 21], ['4.7 ★', 'Avaliações', null],
+    ];
+    const lojaCards = lojaCardsDefs.map(([valor, label, target]) => ({ valor, label, onClick: target != null ? jump(target) : () => {} }));
+
+    const produtosDefsBase = [
+      { nome: 'Sela clássica em couro', categoria: 'Selaria', sku: 'SEL-001', preco: 'R$ 1.890' },
+      { nome: 'Manta térmica', categoria: 'Acessórios', sku: 'ACE-014', preco: 'R$ 210' },
+      { nome: 'Suplemento articular', categoria: 'Nutrição', sku: 'NUT-032', preco: 'R$ 165' },
+      { nome: 'Cabresto de couro', categoria: 'Selaria', sku: 'SEL-009', preco: 'R$ 145' },
+    ];
+    const produtosDefs = [...produtosDefsBase, ...s.produtosCriados];
+    const produtosList = produtosDefs.slice(0, s.produtosVisiveis);
+    const produtosTemMais = produtosDefs.length > s.produtosVisiveis;
+
+    const timelineStatuses = ['Novo', 'Pago', 'Separação', 'Enviado', 'Entregue'];
+    const pedidosDefsBase = [
+      { numero: '8821', cliente: 'Mauro Andrade', valor: 'R$ 340', atual: 3 },
+      { numero: '8822', cliente: 'Ana Ferraz', valor: 'R$ 210', atual: 1 },
+      { numero: '8823', cliente: 'Carlos Melo', valor: 'R$ 1.890', atual: 4 },
+    ];
+    const pedidosDefs = pedidosDefsBase.map((p, i) => ({ ...p, id: i, atual: s.pedidosOverride[i] ?? p.atual }));
+    const pedidosList = pedidosDefs.slice(0, s.pedidosVisiveis).map(p => ({
+      ...p,
+      timeline: timelineStatuses.map((label, i) => ({ label, bg: i <= p.atual ? 'rgba(107,115,83,.15)' : 'rgba(43,41,36,.06)', color: i <= p.atual ? '#4F5D45' : '#a39c8a' })),
+      onClick: () => { this.setState({ selectedPedido: p.id }); this.goTo(27); },
+    }));
+    const pedidosTemMais = pedidosDefs.length > s.pedidosVisiveis;
+
+    const pedidoDetalhe = pedidosDefs[s.selectedPedido] || pedidosDefs[0];
+    const pedidoEtapaFinal = pedidoDetalhe.atual >= timelineStatuses.length - 1;
+    const pedidoNaoFinal = !pedidoEtapaFinal;
+    const pedidoTimeline = timelineStatuses.map((label, i) => ({ label, bg: i <= pedidoDetalhe.atual ? 'rgba(107,115,83,.15)' : 'rgba(43,41,36,.06)', color: i <= pedidoDetalhe.atual ? '#4F5D45' : '#a39c8a' }));
+    const avancarEtapaPedido = this.askConfirm('Avançar etapa do pedido?', `Avançar pedido #${pedidoDetalhe.numero} para "${timelineStatuses[Math.min(pedidoDetalhe.atual + 1, timelineStatuses.length - 1)]}"?`, 'Avançar', this.setPedidoAtual(pedidoDetalhe.id, Math.min(pedidoDetalhe.atual + 1, timelineStatuses.length - 1)));
+
+    const estoqueDefsBase = [
+      { nome: 'Manta térmica', qtd: 42, percent: 80, color: '#6B7353', baixo: false },
+      { nome: 'Suplemento articular', qtd: 8, percent: 15, color: '#a1503a', baixo: true },
+      { nome: 'Cabresto de couro', qtd: 26, percent: 55, color: '#6B7353', baixo: false },
+      { nome: 'Sela clássica em couro', qtd: 3, percent: 10, color: '#a1503a', baixo: true },
+    ];
+    const estoqueList = estoqueDefsBase.map((e, i) => {
+      const reposto = !!s.estoqueOverride[i];
+      const baixo = e.baixo && !reposto;
+      return {
+        ...e,
+        qtd: reposto ? e.qtd + 40 : e.qtd,
+        percent: reposto ? 90 : e.percent,
+        color: reposto ? '#6B7353' : e.color,
+        baixo,
+        onRepor: this.askConfirm('Repor estoque?', `Registrar reposição de estoque para "${e.nome}"?`, 'Repor', this.reporEstoque(i)),
+      };
+    });
+
+    const promocoesDefsBase = [
+      { nome: 'Frete grátis acima de R$ 300', tipo: 'Frete', validade: '31 jul' },
+      { nome: 'Combo Casco Saudável', tipo: 'Combo', validade: '15 ago' },
+      { nome: 'Cupom BEMVINDO10', tipo: 'Cupom', validade: '31 dez' },
+    ];
+    const promocoesList = [...promocoesDefsBase, ...s.promocoesCriadas];
+
+    const relatoriosIndicadoresDefs = [
+      ['R$ 96.400', 'Receita'], ['320', 'Clientes'], ['3.2%', 'Conversão'], ['R$ 210', 'Ticket médio'], ['4', 'Cancelamentos'], ['4.7 ★', 'Avaliações'],
+    ];
+    const relatoriosIndicadores = relatoriosIndicadoresDefs.map(([valor, label]) => ({ valor, label }));
+    const relatoriosMaisVendidos = [{ nome: 'Manta térmica', qtd: 64 }, { nome: 'Suplemento articular', qtd: 51 }, { nome: 'Cabresto de couro', qtd: 38 }];
+
+    const checkinManualPendentes = participantesList.filter(p => !p.jaCheckin);
+
+    return {
+      ...screenIs,
+      screenDisplay: s.screen + 1,
+      totalScreens: 28,
+      screenLabel: screenNames[s.screen],
+      next: this.next,
+      goBack: this.goBack,
+      toDashboard: jump(0), toPortfolio: jump(11), toOrganizador: jump(13),
+      menuOpen: s.menuOpen, openMenu: this.setVal('menuOpen', true), closeMenu: this.setVal('menuOpen', false), modosList, modoAtivoLabel, stopClick,
+      confirm: s.confirm, closeConfirm: this.closeConfirm, runConfirm: this.runConfirm,
+      profDashboardCards, servicosMaisVendidos, profModuloAtalhos,
+      agendaVisChips, atendimentosList,
+      clienteQuery: s.clienteQuery, onClienteQuery: (e) => this.setState({ clienteQuery: e.target.value }),
+      clientesList, clientesTemMais, clientesVazio, carregarMaisClientes: () => this.setState(st => ({ clientesVisiveis: st.clientesVisiveis + 4 })),
+      clienteDetalhe,
+      clienteAbaChips, clienteHistorico,
+      cavalosAtendidosList,
+      servicosList, abrirNovoServico: jump(24),
+      reservaFiltroChips, reservasList: reservasComFluxo,
+      financeiroPeriodoChips, financeiroReceita, exportarCsv, exportarPdf,
+      avaliacoesList,
+      profAnalyticsIndicadores,
+      perfilPublicoAbaChips,
+      portfolioItens,
+      conteudoTipoChips, conteudoList,
+      organizadorCards,
+      novoEvento: s.novoEvento,
+      onEventoTitulo: (e) => this.setField('novoEvento', 'titulo', e.target.value),
+      onEventoDescricao: (e) => this.setField('novoEvento', 'descricao', e.target.value),
+      onEventoInicio: (e) => this.setField('novoEvento', 'inicio', e.target.value),
+      onEventoFim: (e) => this.setField('novoEvento', 'fim', e.target.value),
+      onEventoLocal: (e) => this.setField('novoEvento', 'local', e.target.value),
+      onEventoCapacidade: (e) => this.setField('novoEvento', 'capacidade', e.target.value),
+      eventoCategoriaChips,
+      publicarEvento: this.askConfirm('Publicar evento?', `Publicar "${s.novoEvento.titulo || 'evento sem título'}" no calendário de eventos?`, 'Publicar', this.publicarEvento),
+      participanteFiltroChips, participantesList,
+      checkinManualPendentes, abrirCheckinManual: this.setVal('checkinManualOpen', true), checkinManualOpen: s.checkinManualOpen, fecharCheckinManual: this.setVal('checkinManualOpen', false),
+      certificadosOrganizadorList,
+      lojaCards,
+      produtosList, produtosTemMais, carregarMaisProdutos: () => this.setState(st => ({ produtosVisiveis: st.produtosVisiveis + 4 })), abrirNovoProduto: jump(25),
+      pedidosList, pedidosTemMais, carregarMaisPedidos: () => this.setState(st => ({ pedidosVisiveis: st.pedidosVisiveis + 3 })),
+      pedidoDetalhe, pedidoTimeline, pedidoEtapaFinal, pedidoNaoFinal, avancarEtapaPedido,
+      estoqueList,
+      promocoesList, abrirNovaPromocao: jump(26),
+      relatoriosIndicadores, relatoriosMaisVendidos,
+      // formulários
+      novoServico: s.novoServico,
+      onServicoNome: (e) => this.setField('novoServico', 'nome', e.target.value),
+      onServicoCategoria: (e) => this.setField('novoServico', 'categoria', e.target.value),
+      onServicoDuracao: (e) => this.setField('novoServico', 'duracao', e.target.value),
+      onServicoPreco: (e) => this.setField('novoServico', 'preco', e.target.value),
+      salvarServico: this.publicarServico,
+      novoProduto: s.novoProduto,
+      onProdutoNome: (e) => this.setField('novoProduto', 'nome', e.target.value),
+      onProdutoCategoria: (e) => this.setField('novoProduto', 'categoria', e.target.value),
+      onProdutoSku: (e) => this.setField('novoProduto', 'sku', e.target.value),
+      onProdutoPreco: (e) => this.setField('novoProduto', 'preco', e.target.value),
+      salvarProduto: this.publicarProduto,
+      novaPromocao: s.novaPromocao,
+      onPromocaoNome: (e) => this.setField('novaPromocao', 'nome', e.target.value),
+      onPromocaoTipo: (e) => this.setField('novaPromocao', 'tipo', e.target.value),
+      onPromocaoValidade: (e) => this.setField('novaPromocao', 'validade', e.target.value),
+      salvarPromocao: this.publicarPromocao,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

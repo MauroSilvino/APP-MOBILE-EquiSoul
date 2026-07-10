@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#EDE8DE;font-family:'Nunito',sans-serif;-webkit-font-smoothing:antialiased}
+  .placeholder{background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.06) 0px,rgba(0,0,0,.06) 2px,transparent 2px,transparent 12px);background-color:#EAE4D6}
+  .ph-label{font:600 10px ui-monospace,Menlo,monospace;letter-spacing:.02em;text-transform:uppercase;text-align:center;padding:0 30px}
+  input::placeholder, textarea::placeholder{color:#a39c8a}
+  input, textarea{font-family:'Nunito',sans-serif;outline:none;box-sizing:border-box}
+  a{color:#6B7353}
+  a:hover{color:#4F5D45}
+  ::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:56px 20px;font-family:'Nunito',sans-serif">
+
+  <div style="display:flex;align-items:center;gap:22px">
+
+    <div onClick="{{ goBack }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+
+    <div style="width:390px;height:844px;background:#FBF9F4;position:relative;overflow:hidden;box-shadow:0 30px 70px rgba(43,41,36,.22);flex:none">
+
+      <!-- 0 CONFIGURACOES (hub) -->
+      <sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 112px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Configurações</div>
+          <div style="margin-top:16px;display:flex;align-items:center;gap:14px;border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px">
+            <div style="width:56px;height:56px;border-radius:50%;flex:none" class="placeholder"></div>
+            <div style="flex:1">
+              <div style="font:800 14px 'Nunito',sans-serif;color:#2B2924">{{ contaInfo.nome }}</div>
+              <div style="margin-top:2px;font:600 12px 'Nunito',sans-serif;color:#8A6E4B">Plano Premium</div>
+              <div style="margin-top:2px;font:500 11px 'Nunito',sans-serif;color:#6b6558">Último backup: hoje às 08:12</div>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ hubItens }}" as="i" hint-placeholder-count="13">
+              <div onClick="{{ i.onClick }}" style="display:flex;align-items:center;gap:14px;padding:13px 4px;cursor:pointer">
+                <div style="width:34px;height:34px;border-radius:10px;background:{{ i.iconBg }};display:flex;align-items:center;justify-content:center;flex:none" dangerouslySetInnerHTML="{{ i.iconHtml }}"></div>
+                <div style="flex:1;font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ i.label }}</div>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#a39c8a" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:18px;padding-top:14px;border-top:1px solid rgba(43,41,36,.08)">
+            <div onClick="{{ sairConta }}" style="display:flex;align-items:center;gap:14px;padding:13px 4px;cursor:pointer">
+              <div style="width:34px;height:34px;border-radius:10px;background:rgba(196,90,60,.12);display:flex;align-items:center;justify-content:center;flex:none">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#a1503a" stroke-width="1.8"><path d="M9 4H5v16h4M15 8l4 4-4 4M19 12H9"/></svg>
+              </div>
+              <div style="flex:1;font:700 13px 'Nunito',sans-serif;color:#a1503a">Sair da conta</div>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:5">
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <a href="./Criar%20Mem%C3%B3ria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 1 CONTA -->
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 112px">
+          <div onClick="{{ toHub }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="margin-left:52px;display:flex;align-items:center;gap:6px;font:700 11px 'Nunito',sans-serif;color:#a39c8a;text-transform:uppercase;letter-spacing:.03em"><span onClick="{{ toHub }}" style="cursor:pointer">Configurações</span><span>›</span><span style="color:#8A6E4B">Conta</span></div>
+          <div style="margin-top:6px;margin-left:52px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Conta</div>
+          <div style="margin-top:18px;display:flex;justify-content:center">
+            <div style="width:80px;height:80px;border-radius:50%" class="placeholder"></div>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ contaCampos }}" as="c" hint-placeholder-count="8">
+              <div style="border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.04);padding:12px 14px">
+                <div style="font:600 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">{{ c.label }}</div>
+                <div style="margin-top:4px;font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ c.valor }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:10px">
+            <div onClick="{{ abrirEdicao }}" style="height:48px;border-radius:24px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Editar informações</div>
+            <div onClick="{{ irTrocarSenha }}" style="height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Trocar senha</div>
+            <div onClick="{{ excluirConta }}" style="height:48px;border-radius:24px;border:1.5px solid rgba(196,90,60,.3);display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#a1503a;cursor:pointer">Excluir conta</div>
+          </div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:5">
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <a href="./Criar%20Mem%C3%B3ria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 2 PRIVACIDADE -->
+      <sc-if value="{{ s2 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 112px">
+          <div onClick="{{ toHub }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="margin-left:52px;display:flex;align-items:center;gap:6px;font:700 11px 'Nunito',sans-serif;color:#a39c8a;text-transform:uppercase;letter-spacing:.03em"><span onClick="{{ toHub }}" style="cursor:pointer">Configurações</span><span>›</span><span style="color:#8A6E4B">Privacidade</span></div>
+          <div style="margin-top:6px;margin-left:52px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Privacidade</div>
+          <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Suas memórias pertencem a você. Você decide o que é visível.</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:2px">
+            <sc-for list="{{ privacidadeOpcoes }}" as="p" hint-placeholder-count="8">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid rgba(43,41,36,.06)">
+                <div style="flex:1">
+                  <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ p.label }}</div>
+                  <div style="margin-top:2px;font:500 11px/1.4 'Nunito',sans-serif;color:#6b6558">{{ p.desc }}</div>
+                </div>
+                <div onClick="{{ p.toggle }}" style="flex:none;width:44px;height:26px;border-radius:13px;background:{{ p.trackBg }};position:relative;cursor:pointer">
+                  <div style="position:absolute;top:3px;left:{{ p.knobLeft }};width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s"></div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:5">
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <a href="./Criar%20Mem%C3%B3ria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 3 SEGURANCA -->
+      <sc-if value="{{ s3 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 112px">
+          <div onClick="{{ toHub }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="margin-left:52px;display:flex;align-items:center;gap:6px;font:700 11px 'Nunito',sans-serif;color:#a39c8a;text-transform:uppercase;letter-spacing:.03em"><span onClick="{{ toHub }}" style="cursor:pointer">Configurações</span><span>›</span><span style="color:#8A6E4B">Segurança</span></div>
+          <div style="margin-top:6px;margin-left:52px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Segurança</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:2px">
+            <sc-for list="{{ segurancaOpcoes }}" as="p" hint-placeholder-count="2">
+              <div style="display:flex;align-items:center;gap:12px;padding:13px 4px;border-bottom:1px solid rgba(43,41,36,.06)">
+                <div style="flex:1;font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ p.label }}</div>
+                <div onClick="{{ p.toggle }}" style="flex:none;width:44px;height:26px;border-radius:13px;background:{{ p.trackBg }};position:relative;cursor:pointer">
+                  <div style="position:absolute;top:3px;left:{{ p.knobLeft }};width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s"></div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Sessões ativas</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ sessoesList }}" as="s" hint-placeholder-count="2">
+              <div style="display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px">
+                <sc-if value="{{ s.laptop }}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A6E4B" stroke-width="1.8"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M2 20h20"/></svg></sc-if>
+                <sc-if value="{{ s.mobile }}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A6E4B" stroke-width="1.8"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></sc-if>
+                <div style="flex:1"><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ s.dispositivo }}</div><div style="margin-top:2px;font:500 11px 'Nunito',sans-serif;color:#6b6558">{{ s.local }} · {{ s.acesso }}</div></div>
+                <div onClick="{{ s.encerrar }}" style="font:700 11px 'Nunito',sans-serif;color:#a1503a;cursor:pointer">Encerrar</div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ sessoesVazio }}">
+              <div style="text-align:center;padding:26px 10px;border-radius:16px;background:rgba(43,41,36,.04)">
+                <div style="font:600 12px 'Nunito',sans-serif;color:#6b6558">Nenhuma sessão ativa além deste dispositivo.</div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:5">
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <a href="./Criar%20Mem%C3%B3ria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 4 CONFIGURACOES DA IA -->
+      <sc-if value="{{ s4 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 112px">
+          <div onClick="{{ toHub }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="margin-left:52px;display:flex;align-items:center;gap:6px;font:700 11px 'Nunito',sans-serif;color:#a39c8a;text-transform:uppercase;letter-spacing:.03em"><span onClick="{{ toHub }}" style="cursor:pointer">Configurações</span><span>›</span><span style="color:#8A6E4B">Configurações da IA</span></div>
+          <div style="margin-top:6px;margin-left:52px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Configurações da IA</div>
+          <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Você decide o que a IA pode fazer.</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:2px">
+            <sc-for list="{{ iaOpcoes }}" as="p" hint-placeholder-count="8">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid rgba(43,41,36,.06)">
+                <div style="flex:1;font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ p.label }}</div>
+                <div onClick="{{ p.toggle }}" style="flex:none;width:44px;height:26px;border-radius:13px;background:{{ p.trackBg }};position:relative;cursor:pointer">
+                  <div style="position:absolute;top:3px;left:{{ p.knobLeft }};width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s"></div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;display:flex;align-items:center;gap:10px;border-radius:16px;background:rgba(201,161,90,.12);padding:14px">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A6E4B" stroke-width="1.8"><path d="M12 3a9 9 0 100 18 9 9 0 000-18z"/><path d="M12 8v4l2.5 2.5"/></svg>
+            <div style="font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">Veja quais dados alimentam a IA e exclua o histórico quando quiser.</div>
+          </div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:5">
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <a href="./Criar%20Mem%C3%B3ria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 5 NOTIFICACOES -->
+      <sc-if value="{{ s5 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 112px">
+          <div onClick="{{ toHub }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="margin-left:52px;display:flex;align-items:center;gap:6px;font:700 11px 'Nunito',sans-serif;color:#a39c8a;text-transform:uppercase;letter-spacing:.03em"><span onClick="{{ toHub }}" style="cursor:pointer">Configurações</span><span>›</span><span style="color:#8A6E4B">Notificações</span></div>
+          <div style="margin-top:6px;margin-left:52px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Notificações</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ notificacoesList }}" as="n" hint-placeholder-count="10">
+              <div style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px">
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ n.categoria }}</div>
+                <div style="margin-top:8px;font:600 11px 'Nunito',sans-serif;color:#8A6E4B">{{ n.modo }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;display:flex;align-items:center;justify-content:space-between;border-radius:16px;background:rgba(43,41,36,.05);padding:14px">
+            <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">Horário de silêncio · 22h–07h</div>
+            <div style="width:44px;height:26px;border-radius:13px;background:#6B7353;position:relative"><div style="position:absolute;top:3px;left:21px;width:20px;height:20px;border-radius:50%;background:#fff"></div></div>
+          </div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:5">
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <a href="./Criar%20Mem%C3%B3ria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 6 APARENCIA -->
+      <sc-if value="{{ s6 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 112px">
+          <div onClick="{{ toHub }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="margin-left:52px;display:flex;align-items:center;gap:6px;font:700 11px 'Nunito',sans-serif;color:#a39c8a;text-transform:uppercase;letter-spacing:.03em"><span onClick="{{ toHub }}" style="cursor:pointer">Configurações</span><span>›</span><span style="color:#8A6E4B">Aparência</span></div>
+          <div style="margin-top:6px;margin-left:52px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Aparência</div>
+          <div style="margin-top:14px;display:flex;gap:8px">
+            <sc-for list="{{ temaChips }}" as="c" hint-placeholder-count="3">
+              <div onClick="{{ c.onClick }}" style="padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Temas premium</div>
+          <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <sc-for list="{{ temasPremium }}" as="t" hint-placeholder-count="7">
+              <div onClick="{{ t.onClick }}" style="position:relative;border-radius:14px;overflow:hidden;border:2px solid {{ t.border }};cursor:pointer">
+                <div style="height:50px;background:{{ t.bg }}"></div>
+                <div style="padding:6px;text-align:center;font:700 10px 'Nunito',sans-serif;color:#2B2924;background:#fff">{{ t.nome }}</div>
+                <div style="position:absolute;top:5px;right:5px;background:#2B2924;color:#C9A15A;font:800 8px 'Nunito',sans-serif;padding:2px 6px;border-radius:8px;letter-spacing:.03em">PRO</div>
+                <sc-if value="{{ t.selected }}"><div style="position:absolute;top:5px;left:5px;width:16px;height:16px;border-radius:50%;background:#4F5D45;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="#fff" stroke-width="3"><path d="M4 12l6 6L20 6"/></svg></div></sc-if>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Ajustes</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:16px">
+            <div>
+              <div style="font:600 12px 'Nunito',sans-serif;color:#2B2924">Tamanho da fonte</div>
+              <div onClick="{{ onFontTrackClick }}" style="margin-top:10px;height:5px;border-radius:3px;background:rgba(43,41,36,.1);cursor:pointer;position:relative">
+                <div style="height:100%;width:{{ fontSizePct }}%;border-radius:3px;background:#C9A15A"></div>
+                <div style="position:absolute;top:50%;left:{{ fontSizePct }}%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:#fff;border:2px solid #C9A15A"></div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font:600 12px 'Nunito',sans-serif;color:#2B2924">Reduzir movimento</div>
+              <div onClick="{{ toggleReduzirMovimento }}" style="width:44px;height:26px;border-radius:13px;background:{{ reduzirMovimentoBg }};position:relative;cursor:pointer"><div style="position:absolute;top:3px;left:{{ reduzirMovimentoKnob }};width:20px;height:20px;border-radius:50%;background:#fff;transition:left .15s"></div></div>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:5">
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <a href="./Criar%20Mem%C3%B3ria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 7 IDIOMA -->
+      <sc-if value="{{ s7 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 112px">
+          <div onClick="{{ toHub }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="margin-left:52px;display:flex;align-items:center;gap:6px;font:700 11px 'Nunito',sans-serif;color:#a39c8a;text-transform:uppercase;letter-spacing:.03em"><span onClick="{{ toHub }}" style="cursor:pointer">Configurações</span><span>›</span><span style="color:#8A6E4B">Idioma e região</span></div>
+          <div style="margin-top:6px;margin-left:52px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Idioma e região</div>
+          <div style="margin-top:14px;display:flex;align-items:center;gap:10px;border-radius:16px;background:rgba(43,41,36,.05);padding:10px 14px">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6b6558" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <div style="font:500 13px 'Nunito',sans-serif;color:#a39c8a">Buscar idioma</div>
+          </div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:2px">
+            <sc-for list="{{ idiomasList }}" as="l" hint-placeholder-count="4">
+              <div onClick="{{ l.onClick }}" style="display:flex;align-items:center;justify-content:space-between;padding:13px 4px;border-bottom:1px solid rgba(43,41,36,.06);cursor:pointer">
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ l.nome }}</div>
+                <sc-if value="{{ l.selected }}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#4F5D45" stroke-width="2.4"><path d="M4 12l6 6L20 6"/></svg></sc-if>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Formatos</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;justify-content:space-between;font:600 12px 'Nunito',sans-serif"><span style="color:#2B2924">Data</span><span style="color:#6b6558">DD/MM/AAAA</span></div>
+            <div style="display:flex;justify-content:space-between;font:600 12px 'Nunito',sans-serif"><span style="color:#2B2924">Sistema de medidas</span><span style="color:#6b6558">Métrico</span></div>
+            <div style="display:flex;justify-content:space-between;font:600 12px 'Nunito',sans-serif"><span style="color:#2B2924">Moeda</span><span style="color:#6b6558">R$ (BRL)</span></div>
+          </div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:5">
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <a href="./Criar%20Mem%C3%B3ria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 8 BACKUP -->
+      <sc-if value="{{ s8 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 112px">
+          <div onClick="{{ toHub }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="margin-left:52px;display:flex;align-items:center;gap:6px;font:700 11px 'Nunito',sans-serif;color:#a39c8a;text-transform:uppercase;letter-spacing:.03em"><span onClick="{{ toHub }}" style="cursor:pointer">Configurações</span><span>›</span><span style="color:#8A6E4B">Backup e exportação</span></div>
+          <div style="margin-top:6px;margin-left:52px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Backup e exportação</div>
+          <div style="margin-top:16px;border-radius:20px;background:#fff;box-shadow:0 4px 16px rgba(43,41,36,.06);padding:18px">
+            <div style="font:600 11px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">Última sincronização</div>
+            <div style="margin-top:4px;font:700 14px 'Nunito',sans-serif;color:#2B2924">Hoje às 08:12</div>
+            <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ backupItens }}" as="b" hint-placeholder-count="3">
+                <div style="display:flex;justify-content:space-between;font:600 12px 'Nunito',sans-serif"><span style="color:#2B2924">{{ b.label }}</span><span style="color:#6b6558">{{ b.valor }}</span></div>
+              </sc-for>
+            </div>
+          </div>
+          <div onClick="{{ fazerBackup }}" style="margin-top:14px;height:52px;border-radius:26px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">{{ backupLabel }}</div>
+          <div onClick="{{ restaurarBackup }}" style="margin-top:10px;height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Restaurar backup</div>
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Exportar como</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ exportOptions }}" as="e" hint-placeholder-count="6">
+              <div onClick="{{ e.onClick }}" style="padding:9px 14px;border-radius:16px;background:rgba(43,41,36,.06);color:#2B2924;font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ e.label }}</div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:5">
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <a href="./Criar%20Mem%C3%B3ria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 9 COMPARTILHAMENTO -->
+      <sc-if value="{{ s9 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 112px">
+          <div onClick="{{ toHub }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="margin-left:52px;display:flex;align-items:center;gap:6px;font:700 11px 'Nunito',sans-serif;color:#a39c8a;text-transform:uppercase;letter-spacing:.03em"><span onClick="{{ toHub }}" style="cursor:pointer">Configurações</span><span>›</span><span style="color:#8A6E4B">Compartilhamento</span></div>
+          <div style="margin-top:6px;margin-left:52px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Compartilhamento</div>
+          <div style="margin-top:16px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Compartilhar</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ compartilharOptions }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="padding:9px 14px;border-radius:16px;background:rgba(201,161,90,.16);color:#8A6E4B;font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Links e permissões ativas</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ linksAtivosList }}" as="l" hint-placeholder-count="2">
+              <div style="display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A6E4B" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3"/></svg>
+                <div style="flex:1"><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ l.nome }}</div><div style="margin-top:2px;font:500 11px 'Nunito',sans-serif;color:#6b6558">{{ l.permissao }}</div></div>
+                <div onClick="{{ l.revogar }}" style="font:700 11px 'Nunito',sans-serif;color:#a1503a;cursor:pointer">Revogar</div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ linksVazio }}">
+              <div style="text-align:center;padding:26px 10px;border-radius:16px;background:rgba(43,41,36,.04)">
+                <div style="font:600 12px 'Nunito',sans-serif;color:#6b6558">Nenhum link compartilhado no momento.</div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:5">
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <a href="./Criar%20Mem%C3%B3ria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 10 PREMIUM -->
+      <sc-if value="{{ s10 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 112px">
+          <div onClick="{{ toHub }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="margin-left:52px;display:flex;align-items:center;gap:6px;font:700 11px 'Nunito',sans-serif;color:#a39c8a;text-transform:uppercase;letter-spacing:.03em"><span onClick="{{ toHub }}" style="cursor:pointer">Configurações</span><span>›</span><span style="color:#8A6E4B">Premium</span></div>
+          <div style="margin-top:14px;border-radius:22px;background:linear-gradient(160deg,#2B2924,#3a372f);padding:22px;text-align:center">
+            <div style="font:700 11px 'Nunito',sans-serif;color:#C9A15A;text-transform:uppercase;letter-spacing:.05em">Plano atual</div>
+            <div style="margin-top:6px;font:800 22px 'Nunito',sans-serif;color:#FBF9F4">EquiSoul Premium</div>
+            <div style="margin-top:4px;font:500 12px 'Nunito',sans-serif;color:rgba(251,249,244,.65)">Renova em 14 de agosto de 2026</div>
+          </div>
+          <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Benefícios inclusos</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ premiumBeneficios }}" as="b" hint-placeholder-count="6">
+              <div style="display:flex;align-items:center;gap:10px">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#4F5D45" stroke-width="2.4"><path d="M4 12l6 6L20 6"/></svg>
+                <div style="font:600 13px 'Nunito',sans-serif;color:#2B2924">{{ b }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:18px;height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Gerenciar assinatura</div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:5">
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <a href="./Criar%20Mem%C3%B3ria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 11 AJUDA -->
+      <sc-if value="{{ s11 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 112px">
+          <div onClick="{{ toHub }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="margin-left:52px;display:flex;align-items:center;gap:6px;font:700 11px 'Nunito',sans-serif;color:#a39c8a;text-transform:uppercase;letter-spacing:.03em"><span onClick="{{ toHub }}" style="cursor:pointer">Configurações</span><span>›</span><span style="color:#8A6E4B">Ajuda</span></div>
+          <div style="margin-top:6px;margin-left:52px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Ajuda</div>
+          <div style="margin-top:14px;display:flex;align-items:center;gap:10px;border-radius:16px;background:rgba(43,41,36,.05);padding:10px 14px">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6b6558" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <div style="font:500 13px 'Nunito',sans-serif;color:#a39c8a">Como podemos ajudar?</div>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:2px">
+            <sc-for list="{{ ajudaItens }}" as="a" hint-placeholder-count="6">
+              <div onClick="{{ a.onClick }}" style="display:flex;align-items:center;justify-content:space-between;padding:13px 4px;border-bottom:1px solid rgba(43,41,36,.06);cursor:pointer">
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ a.label }}</div>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#a39c8a" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:5">
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <a href="./Criar%20Mem%C3%B3ria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 12 SOBRE -->
+      <sc-if value="{{ s12 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 112px;text-align:center">
+          <div onClick="{{ toHub }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="width:64px;height:64px;border-radius:20px;margin:0 auto;background:#2B2924;display:flex;align-items:center;justify-content:center">
+            <span style="font:800 22px 'Nunito',sans-serif;color:#C9A15A">Eq</span>
+          </div>
+          <div style="margin-top:14px;font:800 18px 'Nunito',sans-serif;color:#2B2924">EquiSoul</div>
+          <div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">Versão 3.4.1</div>
+          <div style="margin-top:20px;display:flex;flex-direction:column;gap:2px;text-align:left">
+            <sc-for list="{{ sobreItens }}" as="s" hint-placeholder-count="6">
+              <div onClick="{{ s.onClick }}" style="display:flex;align-items:center;justify-content:space-between;padding:13px 4px;border-bottom:1px solid rgba(43,41,36,.06);cursor:pointer">
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ s.label }}</div>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#a39c8a" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:5">
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <a href="./Criar%20Mem%C3%B3ria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 13 DESENVOLVEDOR -->
+      <sc-if value="{{ s13 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 112px">
+          <div onClick="{{ toHub }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="margin-left:52px;display:flex;align-items:center;gap:6px;font:700 11px 'Nunito',sans-serif;color:#a39c8a;text-transform:uppercase;letter-spacing:.03em"><span onClick="{{ toHub }}" style="cursor:pointer">Configurações</span><span>›</span><span style="color:#8A6E4B">Modo desenvolvedor</span></div>
+          <div style="margin-top:6px;margin-left:52px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Modo desenvolvedor</div>
+          <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Disponível apenas quando habilitado manualmente.</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:2px">
+            <sc-for list="{{ devItens }}" as="d" hint-placeholder-count="4">
+              <div onClick="{{ d.onClick }}" style="display:flex;align-items:center;justify-content:space-between;padding:13px 4px;border-bottom:1px solid rgba(43,41,36,.06);cursor:pointer">
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ d.label }}</div>
+                <div style="font:700 12px 'Nunito',sans-serif;color:{{ d.color }}">{{ d.status }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:5">
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Di%C3%A1rio%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <a href="./Criar%20Mem%C3%B3ria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 14 EDITAR INFORMACOES -->
+      <sc-if value="{{ s14 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div onClick="{{ cancelarEdicao }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="margin-left:52px;display:flex;align-items:center;gap:6px;font:700 11px 'Nunito',sans-serif;color:#a39c8a;text-transform:uppercase;letter-spacing:.03em"><span onClick="{{ jumpConta }}" style="cursor:pointer">Conta</span><span>›</span><span style="color:#8A6E4B">Editar</span></div>
+          <div style="margin-top:6px;margin-left:52px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Editar informações</div>
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ editFields }}" as="f" hint-placeholder-count="5">
+              <div>
+                <div style="font:600 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">{{ f.label }}</div>
+                <input value="{{ f.value }}" onChange="{{ f.onChange }}" style="width:100%;height:46px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);background:#fff;padding:0 14px;font:700 13px 'Nunito',sans-serif;color:#2B2924"/>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:22px;display:flex;flex-direction:column;gap:10px">
+            <div onClick="{{ salvarEdicao }}" style="height:50px;border-radius:25px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Salvar alterações</div>
+            <div onClick="{{ cancelarEdicao }}" style="height:46px;border-radius:23px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Cancelar</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 15 TROCAR SENHA -->
+      <sc-if value="{{ s15 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div onClick="{{ cancelarSenha }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="margin-left:52px;display:flex;align-items:center;gap:6px;font:700 11px 'Nunito',sans-serif;color:#a39c8a;text-transform:uppercase;letter-spacing:.03em"><span onClick="{{ jumpConta }}" style="cursor:pointer">Conta</span><span>›</span><span style="color:#8A6E4B">Trocar senha</span></div>
+          <div style="margin-top:6px;margin-left:52px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Trocar senha</div>
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:12px">
+            <div>
+              <div style="font:600 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">Senha atual</div>
+              <input type="password" value="{{ senhaForm.atual }}" onChange="{{ onSenhaAtualChange }}" style="width:100%;height:46px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);background:#fff;padding:0 14px;font:700 13px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+            <div>
+              <div style="font:600 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">Nova senha</div>
+              <input type="password" value="{{ senhaForm.nova }}" onChange="{{ onSenhaNovaChange }}" style="width:100%;height:46px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);background:#fff;padding:0 14px;font:700 13px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+            <div>
+              <div style="font:600 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">Confirmar nova senha</div>
+              <input type="password" value="{{ senhaForm.confirmar }}" onChange="{{ onSenhaConfirmarChange }}" style="width:100%;height:46px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);background:#fff;padding:0 14px;font:700 13px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+            <sc-if value="{{ senhaErro }}"><div style="font:600 12px 'Nunito',sans-serif;color:#a1503a">{{ senhaErro }}</div></sc-if>
+          </div>
+          <div style="margin-top:22px;display:flex;flex-direction:column;gap:10px">
+            <div onClick="{{ salvarSenha }}" style="height:50px;border-radius:25px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Salvar nova senha</div>
+            <div onClick="{{ cancelarSenha }}" style="height:46px;border-radius:23px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Cancelar</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 16 CONFIGURAR 2FA -->
+      <sc-if value="{{ s16 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div onClick="{{ cancelar2fa }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="margin-left:52px;display:flex;align-items:center;gap:6px;font:700 11px 'Nunito',sans-serif;color:#a39c8a;text-transform:uppercase;letter-spacing:.03em"><span onClick="{{ jumpSeguranca }}" style="cursor:pointer">Segurança</span><span>›</span><span style="color:#8A6E4B">Dois fatores</span></div>
+          <div style="margin-top:6px;margin-left:52px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Autenticação em dois fatores</div>
+
+          <sc-if value="{{ etapaTelefone }}">
+            <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Informe seu número para receber um código de verificação por SMS.</div>
+            <div style="margin-top:18px">
+              <div style="font:600 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">Telefone</div>
+              <input value="{{ duasEtapasForm.telefone }}" onChange="{{ onTelefone2faChange }}" placeholder="+55 11 90000-0000" style="width:100%;height:46px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);background:#fff;padding:0 14px;font:700 13px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+            <div onClick="{{ enviarCodigo2fa }}" style="margin-top:22px;height:50px;border-radius:25px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Enviar código</div>
+          </sc-if>
+
+          <sc-if value="{{ etapaCodigo }}">
+            <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Enviamos um código de 4 dígitos para {{ duasEtapasForm.telefone }}.</div>
+            <div style="margin-top:18px">
+              <div style="font:600 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px">Código de verificação</div>
+              <input value="{{ duasEtapasForm.codigo }}" onChange="{{ onCodigo2faChange }}" placeholder="0000" style="width:100%;height:46px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);background:#fff;padding:0 14px;font:700 18px 'Nunito',sans-serif;color:#2B2924;letter-spacing:.1em"/>
+            </div>
+            <div onClick="{{ confirmar2fa }}" style="margin-top:22px;height:50px;border-radius:25px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Confirmar e ativar</div>
+          </sc-if>
+
+          <div onClick="{{ cancelar2fa }}" style="margin-top:10px;height:46px;border-radius:23px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Cancelar</div>
+        </div>
+      </sc-if>
+
+      <!-- MODAL CONFIRMACAO -->
+      <sc-if value="{{ confirm }}">
+        <div onClick="{{ closeConfirm }}" style="position:absolute;inset:0;background:rgba(43,41,36,.55);z-index:50;display:flex;align-items:center;justify-content:center;padding:24px">
+          <div onClick="{{ stop }}" style="width:100%;max-width:300px;border-radius:22px;background:#fff;padding:22px;box-shadow:0 20px 50px rgba(43,41,36,.3)">
+            <div style="font:800 16px 'Nunito',sans-serif;color:#2B2924">{{ confirm.title }}</div>
+            <div style="margin-top:8px;font:500 13px/1.5 'Nunito',sans-serif;color:#6b6558">{{ confirm.desc }}</div>
+            <div style="margin-top:20px;display:flex;flex-direction:column;gap:8px">
+              <div onClick="{{ confirm.onConfirm }}" style="height:46px;border-radius:23px;background:{{ confirm.confirmBg }};display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:{{ confirm.confirmColor }};cursor:pointer">{{ confirm.confirmLabel }}</div>
+              <div onClick="{{ closeConfirm }}" style="height:44px;border-radius:22px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Cancelar</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- MODAL INFO -->
+      <sc-if value="{{ info }}">
+        <div onClick="{{ closeInfo }}" style="position:absolute;inset:0;background:rgba(43,41,36,.55);z-index:50;display:flex;align-items:center;justify-content:center;padding:24px">
+          <div onClick="{{ stop }}" style="width:100%;max-width:300px;max-height:70%;overflow-y:auto;border-radius:22px;background:#fff;padding:22px;box-shadow:0 20px 50px rgba(43,41,36,.3)">
+            <div style="font:800 16px 'Nunito',sans-serif;color:#2B2924">{{ info.title }}</div>
+            <div style="margin-top:10px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">{{ info.body }}</div>
+            <div onClick="{{ closeInfo }}" style="margin-top:18px;height:44px;border-radius:22px;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Fechar</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- MODAL FORMULARIO -->
+      <sc-if value="{{ form }}">
+        <div onClick="{{ closeForm }}" style="position:absolute;inset:0;background:rgba(43,41,36,.55);z-index:50;display:flex;align-items:center;justify-content:center;padding:24px">
+          <div onClick="{{ stop }}" style="width:100%;max-width:300px;border-radius:22px;background:#fff;padding:22px;box-shadow:0 20px 50px rgba(43,41,36,.3)">
+            <div style="font:800 16px 'Nunito',sans-serif;color:#2B2924">{{ form.title }}</div>
+            <textarea value="{{ formValue }}" onChange="{{ onFormValueChange }}" placeholder="{{ form.placeholder }}" style="margin-top:12px;width:100%;height:90px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:12px;font:500 13px 'Nunito',sans-serif;color:#2B2924;resize:none"></textarea>
+            <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+              <div onClick="{{ submitForm }}" style="height:46px;border-radius:23px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">{{ form.submitLabel }}</div>
+              <div onClick="{{ closeForm }}" style="height:44px;border-radius:22px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Cancelar</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- TOAST -->
+      <sc-if value="{{ toast }}">
+        <div style="position:absolute;left:20px;right:20px;bottom:96px;display:flex;justify-content:center;z-index:60;pointer-events:none">
+          <div style="max-width:90%;background:#2B2924;color:#FBF9F4;font:700 12px 'Nunito',sans-serif;padding:12px 18px;border-radius:18px;box-shadow:0 10px 24px rgba(43,41,36,.3);text-align:center">{{ toast }}</div>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <div onClick="{{ next }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+
+  </div>
+
+  <div style="display:flex;align-items:center;gap:16px;font:600 12px ui-monospace,Menlo,monospace;color:#6b6558">
+    <span>{{ screenLabel }} · tela {{ screenDisplay }} / {{ totalScreens }}</span>
+    <span onClick="{{ toHub }}" style="cursor:pointer;text-decoration:underline">início</span>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    screen: 0,
+    privacidade: { perfilPublico: true, mostrarCidade: true, mostrarEstatisticas: true, mostrarTimeline: false, permitirSeguidores: true, permitirMensagens: true, permitirDownload: false, iaConteudoPrivado: false },
+    seguranca: { biometria: true, doisFatores: false },
+    ia: { cartas: true, retrospectivas: true, insights: true, sugestoes: true, reconhecimentoImagens: true, reconhecimentoVideos: false, reconhecimentoVoz: true, ocr: false },
+    tema: 'Automático',
+    temaPremiumSel: null,
+    idiomaSelecionado: 'Português (Brasil)',
+    backupFeito: false,
+    reduzirMovimento: false,
+    fontSizePct: 55,
+    sessoes: [
+      { id: 1, dispositivo: 'iPhone 15 Pro', local: 'São Paulo, SP', acesso: 'agora', tipo: 'mobile' },
+      { id: 2, dispositivo: 'MacBook Air', local: 'São Paulo, SP', acesso: 'há 2 dias', tipo: 'laptop' },
+    ],
+    linksAtivos: [
+      { id: 1, nome: 'Álbum · Copa Nacional de Salto', permissao: 'Qualquer pessoa com o link' },
+      { id: 2, nome: 'Perfil de Bela', permissao: 'Apenas seguidores' },
+    ],
+    contaInfo: { nome: 'Mauro Andrade', email: 'mauro.andrade@email.com', telefone: '+55 11 98888-2231', cidade: 'São Paulo, SP', pais: 'Brasil' },
+    editForm: null,
+    senhaForm: { atual: '', nova: '', confirmar: '' },
+    senhaErro: '',
+    duasEtapasForm: { telefone: '', codigo: '', etapa: 1 },
+    confirm: null,
+    info: null,
+    form: null,
+    formValue: '',
+    toast: '',
+  };
+
+  goTo(n) { this.setState({ screen: Math.max(0, Math.min(16, n)) }); }
+  next = () => this.goTo(this.state.screen + 1);
+  setVal(key, value) { return () => this.setState({ [key]: value }); }
+  toggleNested(group, key) { return () => this.setState(s => ({ [group]: { ...s[group], [key]: !s[group][key] } })); }
+  buildChips(options, isSelected, onToggle) {
+    return options.map(label => ({
+      label,
+      bg: isSelected(label) ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: isSelected(label) ? '#C9A15A' : '#2B2924',
+      onClick: onToggle(label),
+    }));
+  }
+
+  stop = (e) => e.stopPropagation();
+
+  openConfirm(cfg) { this.setState({ confirm: { confirmBg: cfg.danger ? 'rgba(196,90,60,.12)' : '#C9A15A', confirmColor: cfg.danger ? '#a1503a' : '#2B2924', ...cfg } }); }
+  closeConfirm = () => this.setState({ confirm: null });
+  openInfo(cfg) { this.setState({ info: cfg }); }
+  closeInfo = () => this.setState({ info: null });
+  openForm(cfg) { this.setState({ form: cfg, formValue: '' }); }
+  closeForm = () => this.setState({ form: null, formValue: '' });
+  onFormValueChange = (e) => this.setState({ formValue: e.target.value });
+  submitForm = () => {
+    const f = this.state.form;
+    this.setState({ form: null, formValue: '' });
+    if (f) this.showToast(f.success);
+  };
+
+  showToast(text) {
+    this.setState({ toast: text });
+    clearTimeout(this._toastTimer);
+    this._toastTimer = setTimeout(() => this.setState({ toast: '' }), 2400);
+  }
+
+  toHub = () => this.goTo(0);
+  jumpConta = () => this.goTo(1);
+  jumpSeguranca = () => this.goTo(3);
+
+  abrirEdicao = () => this.setState(s => ({ editForm: { ...s.contaInfo }, screen: 14 }));
+  cancelarEdicao = () => this.setState({ editForm: null, screen: 1 });
+  salvarEdicao = () => {
+    this.setState(s => ({ contaInfo: { ...s.editForm }, editForm: null, screen: 1 }));
+    this.showToast('Informações atualizadas');
+  };
+  editField(key) { return (e) => this.setState(s => ({ editForm: { ...s.editForm, [key]: e.target.value } })); }
+
+  irTrocarSenha = () => this.setState({ senhaForm: { atual: '', nova: '', confirmar: '' }, senhaErro: '', screen: 15 });
+  cancelarSenha = () => this.setState({ screen: 1 });
+  onSenhaAtualChange = (e) => this.setState(s => ({ senhaForm: { ...s.senhaForm, atual: e.target.value } }));
+  onSenhaNovaChange = (e) => this.setState(s => ({ senhaForm: { ...s.senhaForm, nova: e.target.value } }));
+  onSenhaConfirmarChange = (e) => this.setState(s => ({ senhaForm: { ...s.senhaForm, confirmar: e.target.value } }));
+  salvarSenha = () => {
+    const { nova, confirmar } = this.state.senhaForm;
+    if (!nova || nova.length < 6) { this.setState({ senhaErro: 'A nova senha deve ter ao menos 6 caracteres.' }); return; }
+    if (nova !== confirmar) { this.setState({ senhaErro: 'As senhas não coincidem.' }); return; }
+    this.setState({ senhaErro: '', screen: 1 });
+    this.showToast('Senha alterada com sucesso');
+  };
+
+  excluirConta = () => this.openConfirm({
+    title: 'Excluir sua conta?',
+    desc: 'Essa ação é permanente. Memórias, fotos e dados do seu cavalo serão apagados e não podem ser recuperados.',
+    confirmLabel: 'Excluir definitivamente', danger: true,
+    onConfirm: () => { this.setState({ confirm: null }); this.showToast('Conta marcada para exclusão'); },
+  });
+
+  sairConta = () => this.openConfirm({
+    title: 'Sair da conta?',
+    desc: 'Você precisará entrar novamente para acessar o EquiSoul.',
+    confirmLabel: 'Sair', danger: false,
+    onConfirm: () => { this.setState({ confirm: null }); this.showToast('Você saiu da conta'); },
+  });
+
+  toggleBiometria = () => this.toggleNested('seguranca', 'biometria')();
+  toggleDoisFatores = () => {
+    if (this.state.seguranca.doisFatores) {
+      this.openConfirm({
+        title: 'Desativar dois fatores?',
+        desc: 'Sua conta ficará protegida apenas por senha.',
+        confirmLabel: 'Desativar', danger: true,
+        onConfirm: () => this.setState(s => ({ seguranca: { ...s.seguranca, doisFatores: false }, confirm: null })),
+      });
+    } else {
+      this.setState({ duasEtapasForm: { telefone: '', codigo: '', etapa: 1 }, screen: 16 });
+    }
+  };
+  onTelefone2faChange = (e) => this.setState(s => ({ duasEtapasForm: { ...s.duasEtapasForm, telefone: e.target.value } }));
+  onCodigo2faChange = (e) => this.setState(s => ({ duasEtapasForm: { ...s.duasEtapasForm, codigo: e.target.value } }));
+  enviarCodigo2fa = () => this.setState(s => ({ duasEtapasForm: { ...s.duasEtapasForm, etapa: 2 } }));
+  confirmar2fa = () => {
+    this.setState(s => ({ seguranca: { ...s.seguranca, doisFatores: true }, screen: 3 }));
+    this.showToast('Autenticação em dois fatores ativada');
+  };
+  cancelar2fa = () => this.setState({ screen: 3 });
+
+  encerrarSessao(sessao) {
+    return () => this.openConfirm({
+      title: 'Encerrar sessão?',
+      desc: `Isso desconectará ${sessao.dispositivo} imediatamente.`,
+      confirmLabel: 'Encerrar', danger: true,
+      onConfirm: () => { this.setState(s => ({ sessoes: s.sessoes.filter(x => x.id !== sessao.id), confirm: null })); this.showToast('Sessão encerrada'); },
+    });
+  }
+
+  revogarLink(link) {
+    return () => this.openConfirm({
+      title: 'Revogar acesso?',
+      desc: `Quem tiver o link de "${link.nome}" perderá o acesso imediatamente.`,
+      confirmLabel: 'Revogar', danger: true,
+      onConfirm: () => { this.setState(s => ({ linksAtivos: s.linksAtivos.filter(x => x.id !== link.id), confirm: null })); this.showToast('Link revogado'); },
+    });
+  }
+
+  restaurarBackup = () => this.openConfirm({
+    title: 'Restaurar backup?',
+    desc: 'Isso substituirá os dados atuais pelo backup de hoje às 08:12. Alterações recentes não salvas serão perdidas.',
+    confirmLabel: 'Restaurar', danger: true,
+    onConfirm: () => { this.setState({ confirm: null }); this.showToast('Backup restaurado com sucesso'); },
+  });
+
+  exportarComo(label) {
+    return () => {
+      this.showToast(`Preparando exportação em ${label}…`);
+      clearTimeout(this._exportTimer);
+      this._exportTimer = setTimeout(() => this.showToast(`Exportação em ${label} concluída`), 1100);
+    };
+  }
+  compartilhar(tipo) { return () => this.showToast(`Compartilhando ${tipo}…`); }
+
+  onFontTrackClick = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const pct = Math.round(Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)) * 100);
+    this.setState({ fontSizePct: pct });
+  };
+  toggleReduzirMovimento = () => this.setState(s => ({ reduzirMovimento: !s.reduzirMovimento }));
+
+  renderVals() {
+    const s = this.state;
+    const screenIs = {};
+    for (let i = 0; i <= 16; i++) screenIs['s' + i] = s.screen === i;
+    const jump = (n) => () => this.goTo(n);
+
+    const screenNames = ['Configurações', 'Conta', 'Privacidade', 'Segurança', 'Configurações da IA', 'Notificações', 'Aparência', 'Idioma e região', 'Backup e exportação', 'Compartilhamento', 'Premium', 'Ajuda', 'Sobre', 'Modo desenvolvedor', 'Editar informações', 'Trocar senha', 'Configurar dois fatores'];
+
+    const iconPaths = {
+      conta: '<circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/>',
+      privacidade: '<path d="M12 3l7 3v6c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V6z"/>',
+      seguranca: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>',
+      ia: '<circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/>',
+      notificacoes: '<path d="M6 9a6 6 0 0112 0c0 4 1.5 5.5 1.5 5.5h-15S6 13 6 9z"/><path d="M10 18a2 2 0 004 0"/>',
+      aparencia: '<circle cx="12" cy="12" r="8"/><path d="M12 4v16"/>',
+      idioma: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9c-2.5-2.5-4-6-4-9s1.5-6.5 4-9z"/>',
+      backup: '<path d="M6 16a4 4 0 010-8 5 5 0 019.6-1.5A4.5 4.5 0 0118 16H6z"/><path d="M12 11v6M9.5 14.5L12 17l2.5-2.5"/>',
+      compartilhamento: '<circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="M8.1 10.8L15.9 7M8.1 13.2L15.9 17"/>',
+      premium: '<path d="M12 3l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 15.6 6.6 18.2l1.2-5.6L3.6 8.8l5.6-.6z"/>',
+      ajuda: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.5 2.5 0 015 .5c0 1.5-2.5 1.8-2.5 3.5"/><circle cx="12" cy="17" r=".6"/>',
+      sobre: '<circle cx="12" cy="12" r="9"/><path d="M12 8v.5M12 11v5"/>',
+      dev: '<path d="M8 9l-4 3 4 3M16 9l4 3-4 3M14 6l-4 12"/>',
+    };
+    const svg = (path) => `<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#8A6E4B" stroke-width="1.8">${path}</svg>`;
+
+    const hubDefs = [
+      ['Conta', iconPaths.conta, 1], ['Privacidade', iconPaths.privacidade, 2], ['Segurança', iconPaths.seguranca, 3],
+      ['Configurações da IA', iconPaths.ia, 4], ['Notificações', iconPaths.notificacoes, 5], ['Aparência', iconPaths.aparencia, 6],
+      ['Idioma', iconPaths.idioma, 7], ['Backup', iconPaths.backup, 8], ['Compartilhamento', iconPaths.compartilhamento, 9],
+      ['Premium', iconPaths.premium, 10], ['Ajuda', iconPaths.ajuda, 11], ['Sobre', iconPaths.sobre, 12], ['Desenvolvedor', iconPaths.dev, 13],
+    ];
+    const hubItens = hubDefs.map(([label, path, target]) => ({ label, iconBg: 'rgba(201,161,90,.14)', iconHtml: { __html: svg(path) }, onClick: jump(target) }));
+
+    const contaCampos = [
+      { label: 'Nome', valor: s.contaInfo.nome },
+      { label: 'Email', valor: s.contaInfo.email },
+      { label: 'Telefone', valor: s.contaInfo.telefone },
+      { label: 'Cidade', valor: s.contaInfo.cidade },
+      { label: 'País', valor: s.contaInfo.pais },
+      { label: 'Data de nascimento', valor: '14 de março de 1991' },
+      { label: 'Idioma', valor: s.idiomaSelecionado },
+      { label: 'Fuso horário', valor: 'GMT-3 · Brasília' },
+    ];
+
+    const editFieldDefs = [
+      { key: 'nome', label: 'Nome' }, { key: 'email', label: 'Email' }, { key: 'telefone', label: 'Telefone' },
+      { key: 'cidade', label: 'Cidade' }, { key: 'pais', label: 'País' },
+    ];
+    const editFields = s.editForm ? editFieldDefs.map(f => ({ label: f.label, value: s.editForm[f.key] || '', onChange: this.editField(f.key) })) : [];
+
+    const privacidadeDefs = [
+      { key: 'perfilPublico', label: 'Perfil público', desc: 'Outros cavaleiros podem encontrar seu perfil.' },
+      { key: 'mostrarCidade', label: 'Mostrar cidade', desc: 'Exibe sua cidade no perfil público.' },
+      { key: 'mostrarEstatisticas', label: 'Mostrar estatísticas', desc: 'Conquistas e níveis visíveis para outros.' },
+      { key: 'mostrarTimeline', label: 'Mostrar timeline', desc: 'Sua linha do tempo fica visível publicamente.' },
+      { key: 'permitirSeguidores', label: 'Permitir seguidores', desc: 'Outras pessoas podem seguir seu perfil.' },
+      { key: 'permitirMensagens', label: 'Permitir mensagens', desc: 'Receber mensagens diretas de outros usuários.' },
+      { key: 'permitirDownload', label: 'Permitir download das minhas fotos', desc: 'Outros podem salvar fotos que você publica.' },
+      { key: 'iaConteudoPrivado', label: 'IA usar conteúdo privado', desc: 'Permite que a IA personalize sugestões com conteúdo privado.' },
+    ];
+    const privacidadeOpcoes = privacidadeDefs.map(p => {
+      const on = s.privacidade[p.key];
+      return { ...p, trackBg: on ? '#6B7353' : 'rgba(43,41,36,.12)', knobLeft: on ? '21px' : '3px', toggle: this.toggleNested('privacidade', p.key) };
+    });
+
+    const segurancaOpcoes = [
+      { label: 'Face ID / Biometria', trackBg: s.seguranca.biometria ? '#6B7353' : 'rgba(43,41,36,.12)', knobLeft: s.seguranca.biometria ? '21px' : '3px', toggle: this.toggleBiometria },
+      { label: 'Autenticação em dois fatores', trackBg: s.seguranca.doisFatores ? '#6B7353' : 'rgba(43,41,36,.12)', knobLeft: s.seguranca.doisFatores ? '21px' : '3px', toggle: this.toggleDoisFatores },
+    ];
+    const sessoesList = s.sessoes.map(sess => ({ dispositivo: sess.dispositivo, local: sess.local, acesso: sess.acesso, laptop: sess.tipo === 'laptop', mobile: sess.tipo === 'mobile', encerrar: this.encerrarSessao(sess) }));
+    const sessoesVazio = s.sessoes.length === 0;
+
+    const iaDefs = [
+      { key: 'cartas', label: 'Cartas automáticas' },
+      { key: 'retrospectivas', label: 'Retrospectivas' },
+      { key: 'insights', label: 'Insights' },
+      { key: 'sugestoes', label: 'Sugestões' },
+      { key: 'reconhecimentoImagens', label: 'Reconhecimento de imagens' },
+      { key: 'reconhecimentoVideos', label: 'Reconhecimento de vídeos' },
+      { key: 'reconhecimentoVoz', label: 'Reconhecimento de voz' },
+      { key: 'ocr', label: 'OCR de documentos' },
+    ];
+    const iaOpcoes = iaDefs.map(p => {
+      const on = s.ia[p.key];
+      return { ...p, trackBg: on ? '#6B7353' : 'rgba(43,41,36,.12)', knobLeft: on ? '21px' : '3px', toggle: this.toggleNested('ia', p.key) };
+    });
+
+    const notificacoesList = ['Memórias', 'Eventos', 'Comunidade', 'Marketplace', 'Mensagens', 'Conquistas', 'Lembretes', 'IA', 'Premium', 'Atualizações'].map(categoria => ({ categoria, modo: 'Push · Email' }));
+
+    const temaOptions = ['Claro', 'Escuro', 'Automático'];
+    const temaChips = this.buildChips(temaOptions, l => s.tema === l, l => this.setVal('tema', l));
+    const temasPremiumDefs = [
+      { nome: 'Outono', bg: 'linear-gradient(135deg,#C9A15A,#8A6E4B)' },
+      { nome: 'Campo', bg: 'linear-gradient(135deg,#8FA06B,#4F5D45)' },
+      { nome: 'Madeira', bg: 'linear-gradient(135deg,#8A6E4B,#5c4a34)' },
+      { nome: 'Couro', bg: 'linear-gradient(135deg,#6b4f36,#3d2f21)' },
+      { nome: 'Minimal', bg: 'linear-gradient(135deg,#FBF9F4,#EDE8DE)' },
+      { nome: 'Natureza', bg: 'linear-gradient(135deg,#6B7353,#4F5D45)' },
+      { nome: 'Noite', bg: 'linear-gradient(135deg,#2B2924,#14130f)' },
+    ];
+    const temasPremium = temasPremiumDefs.map(t => ({ ...t, selected: s.temaPremiumSel === t.nome, border: s.temaPremiumSel === t.nome ? '#4F5D45' : 'rgba(43,41,36,.1)', onClick: this.setVal('temaPremiumSel', t.nome) }));
+
+    const idiomasDefs = ['Português (Brasil)', 'English (US)', 'Español', 'Français'];
+    const idiomasList = idiomasDefs.map(nome => ({ nome, selected: s.idiomaSelecionado === nome, onClick: this.setVal('idiomaSelecionado', nome) }));
+
+    const backupItens = [
+      { label: 'Espaço utilizado', valor: '2.4 GB de 15 GB' },
+      { label: 'Fotos', valor: '1.860' },
+      { label: 'Vídeos', valor: '42' },
+    ];
+    const exportOptions = ['PDF', 'CSV', 'ZIP', 'Livro Digital', 'Álbum', 'Timeline'].map(label => ({ label, onClick: this.exportarComo(label) }));
+
+    const compartilharOptions = ['Perfil', 'Cavalo', 'Evento', 'Álbum', 'Carta', 'Timeline'].map(label => ({ label, onClick: this.compartilhar(label) }));
+    const linksAtivosList = s.linksAtivos.map(l => ({ ...l, revogar: this.revogarLink(l) }));
+    const linksVazio = s.linksAtivos.length === 0;
+
+    const premiumBeneficios = ['IA ilimitada', 'Armazenamento estendido', 'Temas exclusivos', 'Vídeos automáticos', 'Retrospectivas avançadas', 'Personalização completa'];
+
+    const ajudaDefs = [
+      { label: 'Perguntas frequentes', kind: 'info', body: 'Encontre respostas para as dúvidas mais comuns sobre diário, IA e privacidade.' },
+      { label: 'Tutoriais', kind: 'info', body: 'Vídeos curtos mostrando como registrar memórias, criar cartas automáticas e usar retrospectivas.' },
+      { label: 'Falar com suporte', kind: 'form', placeholder: 'Descreva o que você precisa...', submitLabel: 'Enviar mensagem', success: 'Mensagem enviada! Respondemos em até 24h.' },
+      { label: 'Chat com a IA', kind: 'form', placeholder: 'Pergunte algo à IA do EquiSoul...', submitLabel: 'Enviar', success: 'A IA já está preparando sua resposta.' },
+      { label: 'Enviar feedback', kind: 'form', placeholder: 'O que podemos melhorar?', submitLabel: 'Enviar feedback', success: 'Feedback enviado, obrigado!' },
+      { label: 'Reportar um problema', kind: 'form', placeholder: 'Descreva o problema encontrado...', submitLabel: 'Reportar', success: 'Problema reportado à equipe técnica.' },
+    ];
+    const ajudaItens = ajudaDefs.map(a => ({ label: a.label, onClick: () => a.kind === 'info' ? this.openInfo({ title: a.label, body: a.body }) : this.openForm(a) }));
+
+    const sobreDefs = [
+      { label: 'Equipe', body: 'EquiSoul é feito por uma equipe pequena e apaixonada por cavalos e bem-estar animal.' },
+      { label: 'Licenças', body: 'Bibliotecas de código aberto usadas no EquiSoul e seus respectivos termos de licença.' },
+      { label: 'Termos de uso', body: 'Termos que regem o uso do aplicativo EquiSoul.' },
+      { label: 'Política de privacidade', body: 'Como coletamos, usamos e protegemos seus dados.' },
+      { label: 'Roadmap', body: 'Próximas novidades: comunidade de treinadores, integração com sensores e mais idiomas.' },
+      { label: 'Atualizações', body: 'Histórico de versões e novidades de cada atualização do app.' },
+    ];
+    const sobreItens = sobreDefs.map(a => ({ label: a.label, onClick: () => this.openInfo({ title: a.label, body: a.body }) }));
+
+    const devItens = [
+      { label: 'Logs de sincronização', status: 'Ativado', color: '#4F5D45', onClick: () => {} },
+      { label: 'Modo debug', status: 'Desativado', color: '#a39c8a', onClick: () => {} },
+      { label: 'Status da API', status: 'Operacional', color: '#4F5D45', onClick: () => {} },
+      { label: 'Diagnóstico do app', status: 'Ver relatório', color: '#8A6E4B', onClick: () => this.openInfo({ title: 'Diagnóstico do app', body: 'Tudo operacional. Última sincronização há 3 minutos. Cache: 42MB. Nenhum erro reportado nas últimas 24h.' }) },
+    ];
+
+    return {
+      ...screenIs,
+      screenDisplay: s.screen + 1,
+      totalScreens: 17,
+      screenLabel: screenNames[s.screen],
+      next: this.next,
+      goBack: () => this.goTo(0),
+      toHub: this.toHub,
+      jumpConta: this.jumpConta,
+      jumpSeguranca: this.jumpSeguranca,
+      hubItens,
+      contaInfo: s.contaInfo,
+      contaCampos,
+      abrirEdicao: this.abrirEdicao,
+      irTrocarSenha: this.irTrocarSenha,
+      excluirConta: this.excluirConta,
+      sairConta: this.sairConta,
+      editFields, cancelarEdicao: this.cancelarEdicao, salvarEdicao: this.salvarEdicao,
+      senhaForm: s.senhaForm, senhaErro: s.senhaErro,
+      onSenhaAtualChange: this.onSenhaAtualChange, onSenhaNovaChange: this.onSenhaNovaChange, onSenhaConfirmarChange: this.onSenhaConfirmarChange,
+      salvarSenha: this.salvarSenha, cancelarSenha: this.cancelarSenha,
+      duasEtapasForm: s.duasEtapasForm, etapaTelefone: s.duasEtapasForm.etapa === 1, etapaCodigo: s.duasEtapasForm.etapa === 2,
+      onTelefone2faChange: this.onTelefone2faChange, onCodigo2faChange: this.onCodigo2faChange,
+      enviarCodigo2fa: this.enviarCodigo2fa, confirmar2fa: this.confirmar2fa, cancelar2fa: this.cancelar2fa,
+      privacidadeOpcoes,
+      segurancaOpcoes, sessoesList, sessoesVazio,
+      iaOpcoes,
+      notificacoesList,
+      temaChips, temasPremium,
+      idiomasList,
+      backupItens, exportOptions,
+      backupLabel: s.backupFeito ? 'Backup concluído ✓' : 'Fazer backup agora',
+      fazerBackup: () => this.setState({ backupFeito: true }),
+      restaurarBackup: this.restaurarBackup,
+      compartilharOptions, linksAtivosList, linksVazio,
+      premiumBeneficios,
+      ajudaItens, sobreItens,
+      devItens,
+      fontSizePct: s.fontSizePct, onFontTrackClick: this.onFontTrackClick,
+      reduzirMovimentoBg: s.reduzirMovimento ? '#6B7353' : 'rgba(43,41,36,.12)',
+      reduzirMovimentoKnob: s.reduzirMovimento ? '21px' : '3px',
+      toggleReduzirMovimento: this.toggleReduzirMovimento,
+      confirm: s.confirm, closeConfirm: this.closeConfirm,
+      info: s.info, closeInfo: this.closeInfo,
+      form: s.form, formValue: s.formValue, onFormValueChange: this.onFormValueChange, submitForm: this.submitForm, closeForm: this.closeForm,
+      toast: s.toast,
+      stop: this.stop,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -6,7 +6,7 @@ type Variant = keyof typeof theme.typography.sizes;
 interface TextProps extends RNTextProps {
   variant?: Variant;
   color?: keyof typeof theme.colors.text | string;
-  weight?: 'regular' | 'medium' | 'bold';
+  weight?: keyof typeof theme.typography.fontFamily;
 }
 
 export function Text({ variant = 'md', color = 'primary', weight = 'regular', style, ...props }: TextProps) {

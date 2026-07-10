@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#FBF9F4;font-family:'Nunito',sans-serif;-webkit-font-smoothing:antialiased}
+  .placeholder{background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.06) 0px,rgba(0,0,0,.06) 2px,transparent 2px,transparent 12px);background-color:#EAE4D6}
+  .ph-label{font:600 9px ui-monospace,Menlo,monospace;letter-spacing:.02em;text-transform:uppercase;text-align:center;padding:0 10px;color:#8A6E4B}
+  input::placeholder, textarea::placeholder{color:#a39c8a}
+  input, textarea{font-family:'Nunito',sans-serif;outline:none;box-sizing:border-box}
+  a{color:#6B7353;text-decoration:none}
+  a:hover{color:#4F5D45}
+  ::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:56px 20px;font-family:'Nunito',sans-serif">
+
+  <div style="display:flex;align-items:center;gap:22px">
+
+    <div onClick="{{ goBack }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+
+    <div style="width:390px;height:844px;background:#FBF9F4;position:relative;overflow:hidden;box-shadow:0 30px 70px rgba(43,41,36,.22);flex:none">
+
+      <!-- 0 CENTRO DE EVOLUCAO -->
+      <sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 104px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Centro de evolução</div>
+            <div onClick="{{ toggleDemoNovo }}" style="font:700 10px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer;text-decoration:underline;flex:none">{{ demoNovoLabel }}</div>
+          </div>
+
+          <div style="margin-top:18px;border-radius:24px;background:linear-gradient(160deg,#2B2924,#3a372f);padding:24px 20px;text-align:center;position:relative;overflow:hidden">
+            <div style="position:absolute;top:-40px;right:-30px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(201,161,90,.18),transparent 70%)"></div>
+            <div style="width:82px;height:82px;border-radius:50%;margin:0 auto;background:conic-gradient(from 180deg,#C9A15A,#8A6E4B,#6B7353,#C9A15A);padding:3px;position:relative">
+              <div style="width:100%;height:100%;border-radius:50%;background:#2B2924;padding:3px">
+                <div style="width:100%;height:100%;border-radius:50%;overflow:hidden" class="placeholder">
+                  <div style="height:100%;display:flex;align-items:center;justify-content:center"><span class="ph-label">foto de perfil</span></div>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:14px;font:800 18px 'Nunito',sans-serif;color:#FBF9F4">Mauro Andrade</div>
+            <div style="margin-top:2px;font:700 12px 'Nunito',sans-serif;color:#C9A15A;letter-spacing:.03em">Nível {{ nivelAtual }} · {{ nivelNome }}</div>
+            <div style="margin-top:16px;height:8px;border-radius:4px;background:rgba(251,249,244,.14);overflow:hidden">
+              <div style="height:100%;width:{{ xpPercent }}%;border-radius:4px;background:linear-gradient(90deg,#8A6E4B,#C9A15A)"></div>
+            </div>
+            <div style="margin-top:8px;font:600 11px 'Nunito',sans-serif;color:rgba(251,249,244,.65)">{{ xpAtual }} / {{ xpProximo }} XP para {{ proximoNivelNome }}</div>
+          </div>
+
+          <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div onClick="{{ toDesafios }}" style="border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:16px;cursor:pointer">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#8A6E4B" stroke-width="1.8"><path d="M12 3l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 15.6 6.6 18.2l1.2-5.6L3.6 8.8l5.6-.6z"/></svg>
+              <div style="margin-top:10px;font:800 22px 'Nunito',sans-serif;color:#2B2924">{{ desafiosAtivosCount }}</div>
+              <div style="margin-top:2px;font:600 12px 'Nunito',sans-serif;color:#6b6558">Desafios ativos</div>
+            </div>
+            <div onClick="{{ toSequencia }}" style="border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:16px;cursor:pointer">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#8A6E4B" stroke-width="1.8"><path d="M12 3c2 3-1 4-1 7a4 4 0 108 0c0-1-.3-2-1-3 1 4-1 6-3 6a4 4 0 01-4-4c0-3 1-4 1-6z"/></svg>
+              <div style="margin-top:10px;font:800 22px 'Nunito',sans-serif;color:#2B2924">{{ sequenciaDias }} dias</div>
+              <div style="margin-top:2px;font:600 12px 'Nunito',sans-serif;color:#6b6558">Sequência atual</div>
+            </div>
+          </div>
+
+          <div style="margin-top:20px;display:flex;align-items:center;justify-content:space-between">
+            <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Conquistas recentes</div>
+            <div onClick="{{ toConquistas }}" style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">ver todas</div>
+          </div>
+
+          <sc-if value="{{ demoNovo }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:10px;border-radius:16px;background:rgba(43,41,36,.03);padding:22px 16px;text-align:center">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#a39c8a" stroke-width="1.6" style="margin:0 auto;display:block"><path d="M12 15a6 6 0 100-12 6 6 0 000 12z"/><path d="M8.2 14l-1.6 6L12 18l5.4 2-1.6-6"/></svg>
+              <div style="margin-top:8px;font:600 12px 'Nunito',sans-serif;color:#6b6558">Suas primeiras conquistas com {{ nomeCavalo }} vão aparecer aqui.</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ demoNovoInv }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:10px;display:flex;gap:10px;overflow-x:auto">
+              <sc-for list="{{ conquistasRecentes }}" as="c" hint-placeholder-count="4">
+                <div onClick="{{ toConquistas }}" style="flex:none;width:84px;text-align:center;cursor:pointer">
+                  <div style="width:64px;height:64px;border-radius:50%;margin:0 auto;background:{{ c.bg }};display:flex;align-items:center;justify-content:center">
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="{{ c.color }}" stroke-width="1.8" dangerouslySetInnerHTML="{{ c.icon }}"></svg>
+                  </div>
+                  <div style="margin-top:6px;font:700 10px 'Nunito',sans-serif;color:#2B2924">{{ c.nome }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Missões de hoje</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ missoesPreview }}" as="m" hint-placeholder-count="2">
+              <div onClick="{{ toMissoes }}" style="display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px;cursor:pointer">
+                <div style="width:34px;height:34px;border-radius:50%;background:rgba(107,115,83,.12);display:flex;align-items:center;justify-content:center;flex:none">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#4F5D45" stroke-width="2"><path d="M4 12l6 6L20 6"/></svg>
+                </div>
+                <div style="font:600 13px 'Nunito',sans-serif;color:#2B2924">{{ m }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Explorar</div>
+          <div style="margin-top:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+            <sc-for list="{{ menuItens }}" as="it" hint-placeholder-count="6">
+              <div onClick="{{ it.onClick }}" style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px 8px;text-align:center;cursor:pointer">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A6E4B" stroke-width="1.7" style="margin:0 auto;display:block" dangerouslySetInnerHTML="{{ it.icon }}"></svg>
+                <div style="margin-top:8px;font:700 11px 'Nunito',sans-serif;color:#2B2924">{{ it.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 1 CONQUISTAS -->
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 104px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ toEvolucao }}" style="width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(43,41,36,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M13 17l-5-5 5-5"/></svg>
+            </div>
+            <div>
+              <div style="font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.05em">Gamificação</div>
+              <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924;margin-top:1px">Conquistas</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Cada conquista conta uma história vivida com {{ nomeCavalo }}.</div>
+          <div style="margin-top:14px;display:flex;gap:8px;overflow-x:auto">
+            <sc-for list="{{ conquistaCategoriaChips }}" as="c" hint-placeholder-count="9">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ demoNovo }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:24px;border-radius:16px;background:rgba(43,41,36,.03);padding:30px 20px;text-align:center">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#a39c8a" stroke-width="1.6" style="margin:0 auto;display:block"><path d="M12 15a6 6 0 100-12 6 6 0 000 12z"/><path d="M8.2 14l-1.6 6L12 18l5.4 2-1.6-6"/></svg>
+              <div style="margin-top:10px;font:700 13px 'Nunito',sans-serif;color:#2B2924">Nenhuma conquista ainda</div>
+              <div style="margin-top:4px;font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">Registre memórias e participe da comunidade para desbloquear as primeiras.</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ demoNovoInv }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <sc-for list="{{ conquistasList }}" as="c" hint-placeholder-count="8">
+                <div onClick="{{ c.onClick }}" style="border-radius:18px;background:{{ c.locked }};box-shadow:0 4px 14px rgba(43,41,36,.05);padding:16px;text-align:center;cursor:pointer">
+                  <div style="width:56px;height:56px;border-radius:50%;margin:0 auto;background:{{ c.iconBg }};display:flex;align-items:center;justify-content:center">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="{{ c.iconColor }}" stroke-width="1.8" dangerouslySetInnerHTML="{{ c.icon }}"></svg>
+                  </div>
+                  <div style="margin-top:10px;font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ c.nome }}</div>
+                  <div style="margin-top:4px;font:700 9px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">{{ c.tipo }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{ conquistaDetalhe }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:rgba(43,41,36,.4);display:flex;align-items:flex-end;z-index:30">
+            <div style="width:100%;background:#FBF9F4;border-radius:24px 24px 0 0;padding:26px 22px 30px">
+              <div style="width:36px;height:4px;background:rgba(43,41,36,.15);border-radius:2px;margin:0 auto 18px"></div>
+              <div style="width:64px;height:64px;border-radius:50%;margin:0 auto;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#a39c8a" stroke-width="1.8"><path d="M12 15a6 6 0 100-12 6 6 0 000 12z"/><path d="M8.2 14l-1.6 6L12 18l5.4 2-1.6-6"/></svg>
+              </div>
+              <div style="margin-top:14px;font:800 16px 'Nunito',sans-serif;color:#2B2924;text-align:center">{{ conquistaDetalhe.nome }}</div>
+              <div style="margin-top:2px;font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em;text-align:center">{{ conquistaDetalhe.tipo }} · bloqueada</div>
+              <div style="margin-top:12px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558;text-align:center">{{ conquistaDetalhe.requisito }}</div>
+              <div onClick="{{ fecharConquistaDetalhe }}" style="margin-top:20px;height:48px;border-radius:24px;background:#2B2924;color:#FBF9F4;display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;cursor:pointer">Entendi</div>
+            </div>
+          </div>
+        </sc-if>
+      </sc-if>
+
+      <!-- 2 SELOS -->
+      <sc-if value="{{ s2 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 104px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ toEvolucao }}" style="width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(43,41,36,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M13 17l-5-5 5-5"/></svg>
+            </div>
+            <div>
+              <div style="font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.05em">Gamificação</div>
+              <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924;margin-top:1px">Selos</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Pequenos reconhecimentos que marcam sua jornada.</div>
+          <div style="margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+            <sc-for list="{{ selosList }}" as="s" hint-placeholder-count="10">
+              <div style="text-align:center">
+                <div style="width:58px;height:58px;border-radius:50%;margin:0 auto;background:{{ s.bg }};display:flex;align-items:center;justify-content:center;border:1.5px solid {{ s.border }}">
+                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="{{ s.color }}" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M9 12l2 2 4-4"/></svg>
+                </div>
+                <div style="margin-top:6px;font:700 10px 'Nunito',sans-serif;color:#2B2924;line-height:1.3">{{ s.nome }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 3 DESAFIOS -->
+      <sc-if value="{{ s3 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 104px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ toEvolucao }}" style="width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(43,41,36,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M13 17l-5-5 5-5"/></svg>
+            </div>
+            <div>
+              <div style="font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.05em">Gamificação</div>
+              <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924;margin-top:1px">Desafios</div>
+            </div>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:8px">
+            <sc-for list="{{ desafioTipoChips }}" as="c" hint-placeholder-count="3">
+              <div onClick="{{ c.onClick }}" style="padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ demoNovo }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:24px;border-radius:16px;background:rgba(43,41,36,.03);padding:30px 20px;text-align:center">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#a39c8a" stroke-width="1.6" style="margin:0 auto;display:block"><path d="M12 3a9 9 0 100 18 9 9 0 000-18z"/><path d="M12 8v4l2.5 2.5"/></svg>
+              <div style="margin-top:10px;font:700 13px 'Nunito',sans-serif;color:#2B2924">Nenhum desafio ativo ainda</div>
+              <div style="margin-top:4px;font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">A IA vai sugerir seu primeiro desafio em breve.</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ demoNovoInv }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ desafiosList }}" as="d" hint-placeholder-count="5">
+                <div style="border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:16px">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">{{ d.titulo }}</div>
+                    <div onClick="{{ d.toggle }}" style="padding:7px 13px;border-radius:14px;background:{{ d.bg }};color:{{ d.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer;flex:none">{{ d.label }}</div>
+                  </div>
+                  <div style="margin-top:10px;height:6px;border-radius:3px;background:rgba(43,41,36,.06);overflow:hidden">
+                    <div style="height:100%;width:{{ d.progresso }}%;border-radius:3px;background:#C9A15A"></div>
+                  </div>
+                  <div style="margin-top:6px;font:600 11px 'Nunito',sans-serif;color:#6b6558">{{ d.progressoLabel }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <div style="margin-top:16px;display:flex;align-items:center;gap:10px;border-radius:16px;background:rgba(201,161,90,.12);padding:14px">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A6E4B" stroke-width="1.8"><path d="M12 3a9 9 0 100 18 9 9 0 000-18z"/><path d="M12 8v4l2.5 2.5"/></svg>
+            <div style="font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">A IA cria desafios personalizados para você e {{ nomeCavalo }}.</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 4 SEQUENCIA -->
+      <sc-if value="{{ s4 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 104px;display:flex;flex-direction:column;align-items:center;text-align:center">
+          <div style="align-self:flex-start;display:flex;align-items:center;gap:12px">
+            <div onClick="{{ toEvolucao }}" style="width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(43,41,36,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M13 17l-5-5 5-5"/></svg>
+            </div>
+            <div style="text-align:left">
+              <div style="font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.05em">Gamificação</div>
+              <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924;margin-top:1px">Sequência</div>
+            </div>
+          </div>
+          <div style="margin-top:26px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(201,161,90,.16),transparent 72%);display:flex;align-items:center;justify-content:center;position:relative">
+            <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C9A15A" stroke-width="1.6"><path d="M12 3c2 3-1 4-1 7a4 4 0 108 0c0-1-.3-2-1-3 1 4-1 6-3 6a4 4 0 01-4-4c0-3 1-4 1-6z"/></svg>
+          </div>
+          <div style="margin-top:14px;font:800 30px 'Nunito',sans-serif;color:#2B2924">{{ sequenciaDias }} dias</div>
+          <div style="margin-top:4px;font:600 13px 'Nunito',sans-serif;color:#6b6558">consecutivos registrando momentos</div>
+          <div style="margin-top:22px;display:flex;gap:8px">
+            <sc-for list="{{ sequenciaSemana }}" as="d" hint-placeholder-count="7">
+              <div style="width:34px;height:34px;border-radius:10px;background:{{ d.bg }};display:flex;align-items:center;justify-content:center">
+                <sc-if value="{{ d.done }}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#FBF9F4" stroke-width="2.6"><path d="M4 12l6 6L20 6"/></svg></sc-if>
+              </div>
+            </sc-for>
+          </div>
+          <div onClick="{{ registrarHoje }}" style="margin-top:20px;width:100%;height:50px;border-radius:25px;background:{{ registrarHojeBg }};color:{{ registrarHojeColor }};display:flex;align-items:center;justify-content:center;gap:8px;font:800 13px 'Nunito',sans-serif;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="{{ registrarHojeColor }}" stroke-width="2.2"><path d="M4 12l6 6L20 6"/></svg>
+            {{ registrarHojeLabel }}
+          </div>
+          <div style="margin-top:16px;width:100%;border-radius:18px;background:rgba(107,115,83,.1);padding:16px;text-align:left">
+            <div style="font:700 12px 'Nunito',sans-serif;color:#4F5D45">Perdeu um dia? Sem problema.</div>
+            <div style="margin-top:6px;font:500 12px/1.6 'Nunito',sans-serif;color:#6b6558">Sua sequência tem um dia de recuperação — o importante é continuar a jornada, não a perfeição.</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 5 JORNADAS -->
+      <sc-if value="{{ s5 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 104px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ toEvolucao }}" style="width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(43,41,36,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M13 17l-5-5 5-5"/></svg>
+            </div>
+            <div>
+              <div style="font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.05em">Gamificação</div>
+              <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924;margin-top:1px">Jornadas</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Histórias longas, construídas com o tempo.</div>
+          <div style="margin-top:20px;font:700 13px 'Nunito',sans-serif;color:#2B2924">Primeiro Ano Juntos — você e {{ nomeCavalo }}</div>
+          <div style="margin-top:14px;display:flex;flex-direction:column">
+            <sc-for list="{{ jornadaEtapas }}" as="e" as-index="$index" hint-placeholder-count="5">
+              <div style="display:flex;gap:14px">
+                <div style="display:flex;flex-direction:column;align-items:center;flex:none">
+                  <div style="width:14px;height:14px;border-radius:50%;background:{{ e.bg }};border:2px solid {{ e.border }}"></div>
+                  <sc-if value="{{ e.hasLine }}"><div style="width:2px;flex:1;background:rgba(43,41,36,.12);margin:2px 0"></div></sc-if>
+                </div>
+                <div onClick="{{ e.toggle }}" style="padding-bottom:22px;flex:1;cursor:pointer">
+                  <div style="font:700 13px 'Nunito',sans-serif;color:{{ e.textColor }}">{{ e.titulo }}</div>
+                  <div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ e.status }}</div>
+                  <sc-if value="{{ e.expanded }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:8px;padding:10px 12px;border-radius:12px;background:rgba(43,41,36,.04);font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">{{ e.detalhe }}</div>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 6 MISSOES -->
+      <sc-if value="{{ s6 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 104px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ toEvolucao }}" style="width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(43,41,36,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M13 17l-5-5 5-5"/></svg>
+            </div>
+            <div>
+              <div style="font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.05em">Gamificação</div>
+              <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924;margin-top:1px">Missões</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Sugestões adaptadas ao seu ritmo.</div>
+          <div style="margin-top:20px;display:flex;flex-direction:column;gap:18px">
+            <sc-for list="{{ missoesGrupos }}" as="g" hint-placeholder-count="3">
+              <div>
+                <div style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">{{ g.periodo }}</div>
+                <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ g.itens }}" as="m" hint-placeholder-count="1">
+                    <div onClick="{{ m.toggle }}" style="display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px;cursor:pointer">
+                      <div style="width:26px;height:26px;border-radius:8px;background:{{ m.bg }};display:flex;align-items:center;justify-content:center;flex:none">
+                        <sc-if value="{{ m.done }}"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#FBF9F4" stroke-width="2.8"><path d="M4 12l6 6L20 6"/></svg></sc-if>
+                      </div>
+                      <div style="font:600 13px 'Nunito',sans-serif;color:#2B2924">{{ m.texto }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 7 LOJA DE RECOMPENSAS -->
+      <sc-if value="{{ s7 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 104px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ toEvolucao }}" style="width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(43,41,36,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M13 17l-5-5 5-5"/></svg>
+            </div>
+            <div>
+              <div style="font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.05em">Gamificação</div>
+              <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924;margin-top:1px">Loja de recompensas</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Puramente cosmético — nunca vantagem competitiva.</div>
+          <div style="margin-top:14px;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:16px;background:rgba(43,41,36,.05);width:fit-content">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A6E4B" stroke-width="1.8"><path d="M12 3l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 15.6 6.6 18.2l1.2-5.6L3.6 8.8l5.6-.6z"/></svg>
+            <div style="font:800 13px 'Nunito',sans-serif;color:#2B2924">{{ pontosLoja }} pontos</div>
+          </div>
+          <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <sc-for list="{{ lojaItens }}" as="i" hint-placeholder-count="6">
+              <div style="border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05)">
+                <div style="height:80px" class="placeholder">
+                  <div style="height:100%;display:flex;align-items:center;justify-content:center"><span class="ph-label">{{ i.categoria }}</span></div>
+                </div>
+                <div style="padding:12px">
+                  <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ i.nome }}</div>
+                  <div style="margin-top:2px;font:600 11px 'Nunito',sans-serif;color:#8A6E4B">{{ i.custoLabel }}</div>
+                  <div onClick="{{ i.toggle }}" style="margin-top:8px;height:34px;border-radius:14px;background:{{ i.bg }};color:{{ i.color }};display:flex;align-items:center;justify-content:center;font:700 11px 'Nunito',sans-serif;cursor:{{ i.cursor }}">{{ i.label }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 8 RANKING -->
+      <sc-if value="{{ s8 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 104px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ toEvolucao }}" style="width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(43,41,36,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M13 17l-5-5 5-5"/></svg>
+            </div>
+            <div>
+              <div style="font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.05em">Gamificação</div>
+              <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924;margin-top:1px">Ranking</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Reconhece contribuições — nunca apenas curtidas.</div>
+          <div style="margin-top:14px;display:flex;gap:8px;overflow-x:auto">
+            <sc-for list="{{ rankingCategoriaChips }}" as="c" hint-placeholder-count="7">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:8px;overflow-x:auto">
+            <sc-for list="{{ rankingEscopoChips }}" as="c" hint-placeholder-count="7">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:7px 13px;border-radius:14px;background:{{ c.bg }};color:{{ c.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ rankingList }}" as="r" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;gap:12px;border-radius:16px;background:{{ r.rowBg }};box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px">
+                <div style="font:800 14px 'Nunito',sans-serif;color:#8A6E4B;width:20px">{{ r.pos }}</div>
+                <div style="width:38px;height:38px;border-radius:50%;flex:none" class="placeholder"></div>
+                <div style="flex:1;font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ r.nome }}</div>
+                <div style="font:700 12px 'Nunito',sans-serif;color:#6b6558">{{ r.pontos }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 9 TEMPORADAS -->
+      <sc-if value="{{ s9 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 104px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ toEvolucao }}" style="width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(43,41,36,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M13 17l-5-5 5-5"/></svg>
+            </div>
+            <div>
+              <div style="font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.05em">Gamificação</div>
+              <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924;margin-top:1px">Temporadas</div>
+            </div>
+          </div>
+          <div style="margin-top:16px;border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 4px 16px rgba(43,41,36,.06)">
+            <div style="height:120px;position:relative" class="placeholder">
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">ilustração · Temporada Primavera</div>
+            </div>
+            <div style="padding:16px">
+              <div style="font:800 15px 'Nunito',sans-serif;color:#2B2924">Temporada Primavera</div>
+              <div style="margin-top:4px;font:600 12px 'Nunito',sans-serif;color:#6b6558">Termina em {{ temporadaDiasRestantes }} dias</div>
+              <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ temporadaItens }}" as="t" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#8A6E4B" stroke-width="1.8"><path d="M4 12l6 6L20 6"/></svg>
+                    <div style="font:600 12px 'Nunito',sans-serif;color:#2B2924">{{ t }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <div onClick="{{ toRetrospectivaTemporada }}" style="margin-top:14px;height:52px;border-radius:26px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Ver retrospectiva da temporada</div>
+        </div>
+      </sc-if>
+
+      <!-- 10 OBJETIVOS -->
+      <sc-if value="{{ s10 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 104px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ toEvolucao }}" style="width:36px;height:36px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(43,41,36,.08);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M13 17l-5-5 5-5"/></svg>
+            </div>
+            <div>
+              <div style="font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.05em">Gamificação</div>
+              <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924;margin-top:1px">Objetivos</div>
+            </div>
+          </div>
+          <div style="margin-top:10px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Metas pessoais que a IA acompanha com você.</div>
+
+          <sc-if value="{{ demoNovo }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:24px;border-radius:16px;background:rgba(43,41,36,.03);padding:30px 20px;text-align:center">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#a39c8a" stroke-width="1.6" style="margin:0 auto;display:block"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".6" fill="#a39c8a"/></svg>
+              <div style="margin-top:10px;font:700 13px 'Nunito',sans-serif;color:#2B2924">Nenhum objetivo definido</div>
+              <div style="margin-top:4px;font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">Conte à IA uma meta sua e ela vai acompanhar o progresso aqui.</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ demoNovoInv }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ objetivosList }}" as="o" hint-placeholder-count="5">
+                <div style="border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:16px">
+                  <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ o.titulo }}</div>
+                  <div style="margin-top:10px;height:6px;border-radius:3px;background:rgba(43,41,36,.06);overflow:hidden">
+                    <div style="height:100%;width:{{ o.progresso }}%;border-radius:3px;background:#6B7353"></div>
+                  </div>
+                  <div style="margin-top:6px;font:600 11px 'Nunito',sans-serif;color:#6b6558">{{ o.progressoLabel }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <div style="margin-top:16px;display:flex;align-items:center;gap:10px;border-radius:16px;background:rgba(201,161,90,.12);padding:14px">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A6E4B" stroke-width="1.8"><path d="M12 3a9 9 0 100 18 9 9 0 000-18z"/><path d="M12 8v4l2.5 2.5"/></svg>
+            <div style="font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">"{{ iaMensagem }}"</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- TAB BAR FLUTUANTE -->
+      <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:20">
+        <a href="./Home e Diario - EquiSoul.dc.html" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg>
+        </a>
+        <a href="./Home e Diario - EquiSoul.dc.html" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg>
+        </a>
+        <a href="./Criar Memoria - EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;margin-top:-18px">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+        </a>
+        <a href="./Comunidade - EquiSoul.dc.html" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg>
+        </a>
+        <a href="./Perfis - EquiSoul.dc.html" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg>
+        </a>
+      </div>
+
+    </div>
+
+    <div onClick="{{ next }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+
+  </div>
+
+  <div style="display:flex;align-items:center;gap:16px;font:600 12px ui-monospace,Menlo,monospace;color:#6b6558">
+    <span>{{ screenLabel }} · tela {{ screenDisplay }} / {{ totalScreens }}</span>
+    <span onClick="{{ toEvolucao }}" style="cursor:pointer;text-decoration:underline">início</span>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+
+class Component extends DCLogic {
+  state = {
+    screen: 0,
+    conquistaCategoria: 'Todas',
+    desafiosParticipando: [],
+    desafioTipo: 'Individuais',
+    missoesFeitas: [],
+    lojaAdquiridos: [],
+    pontos: 1240,
+    rankingCategoria: 'Colaboração',
+    rankingEscopo: 'Amigos',
+    demoNovo: false,
+    conquistaDetalheIdx: null,
+    registradoHoje: false,
+    jornadaExpandIdx: null,
+  };
+
+  goTo(n) { this.setState({ screen: Math.max(0, Math.min(10, n)) }); }
+  next = () => this.goTo(this.state.screen + 1);
+  setVal(key, value) { return () => this.setState({ [key]: value }); }
+  toggleArr(key, value) {
+    return () => this.setState(s => {
+      const arr = s[key];
+      return { [key]: arr.includes(value) ? arr.filter(v => v !== value) : [...arr, value] };
+    });
+  }
+  buildChips(options, isSelected, onToggle) {
+    return options.map(label => ({
+      label,
+      bg: isSelected(label) ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: isSelected(label) ? '#C9A15A' : '#2B2924',
+      onClick: onToggle(label),
+    }));
+  }
+
+  renderVals() {
+    const s = this.state;
+    const screenIs = {};
+    for (let i = 0; i <= 10; i++) screenIs['s' + i] = s.screen === i;
+    const jump = (n) => () => this.goTo(n);
+
+    const screenNames = ['Centro de evolução','Conquistas','Selos','Desafios','Sequência','Jornadas','Missões','Loja de recompensas','Ranking','Temporadas','Objetivos'];
+
+    const nomeCavalo = 'Bela';
+
+    const ICONS = {
+      medalha: '<path d="M12 15a6 6 0 100-12 6 6 0 000 12z"/><path d="M8.2 14l-1.6 6L12 18l5.4 2-1.6-6"/>',
+      livro: '<path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/>',
+      coracao: '<path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/>',
+      calendario: '<path d="M4 6h16v14H4z"/><path d="M4 10h16"/><path d="M8 3v4"/><path d="M16 3v4"/>',
+      camera: '<path d="M4 8h4l2-3h4l2 3h4v11H4z"/><circle cx="12" cy="12.5" r="3"/>',
+      montanha: '<path d="M3 18l6-9 4 5 3-4 5 8z"/>',
+      taca: '<path d="M6 4h12v3a6 6 0 01-12 0V4z"/><path d="M9 15h6v3H9z"/><path d="M8 18h8"/>',
+      formatura: '<path d="M12 3l10 5-10 5L2 8z"/><path d="M6 11v4c0 1.5 3 3 6 3s6-1.5 6-3v-4"/>',
+      sparkle: '<path d="M12 3l1.5 4.5L18 9l-4.5 1.5L12 15l-1.5-4.5L6 9l4.5-1.5z"/>',
+      rota: '<circle cx="5" cy="19" r="2.4"/><circle cx="19" cy="9" r="2.4"/><path d="M7 16.5l9-6"/>',
+      escudo: '<path d="M12 3l7 3v6c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V6l7-3z"/>',
+      grafico: '<path d="M6 20v-6"/><path d="M12 20V9"/><path d="M18 20v-10"/>',
+      alvo: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1"/>',
+      bolsa: '<path d="M6 8h12l-1 12H7z"/><path d="M9 8V6a3 3 0 016 0v2"/>',
+    };
+
+    // Centro de Evolução
+    const nivelAtual = 3;
+    const nivelNome = 'Cavaleiro';
+    const proximoNivelNome = 'Guardião';
+    const xpAtual = 640;
+    const xpProximo = 900;
+    const xpPercent = Math.round((xpAtual / xpProximo) * 100);
+    const desafiosAtivosCount = 3;
+    const sequenciaDias = 12 + (s.registradoHoje ? 1 : 0);
+    const conquistasRecentes = [
+      { nome: 'Primeira Trilha', bg: 'rgba(201,161,90,.16)', color: '#8A6E4B', icon: { __html: ICONS.montanha } },
+      { nome: '100 Memórias', bg: 'rgba(107,115,83,.14)', color: '#4F5D45', icon: { __html: ICONS.livro } },
+      { nome: 'Primeiro Evento', bg: 'rgba(201,161,90,.16)', color: '#8A6E4B', icon: { __html: ICONS.calendario } },
+      { nome: 'Mentor', bg: 'rgba(43,41,36,.08)', color: '#2B2924', icon: { __html: ICONS.coracao } },
+    ];
+    const missoesPreview = ['Registrar um momento especial com ' + nomeCavalo, 'Responder uma pergunta na comunidade'];
+
+    const menuItens = [
+      { label: 'Jornadas', icon: { __html: ICONS.rota }, onClick: jump(5) },
+      { label: 'Selos', icon: { __html: ICONS.escudo }, onClick: jump(2) },
+      { label: 'Loja', icon: { __html: ICONS.bolsa }, onClick: jump(7) },
+      { label: 'Ranking', icon: { __html: ICONS.grafico }, onClick: jump(8) },
+      { label: 'Temporadas', icon: { __html: ICONS.calendario }, onClick: jump(9) },
+      { label: 'Objetivos', icon: { __html: ICONS.alvo }, onClick: jump(10) },
+    ];
+
+    // Conquistas
+    const conquistaCategoriaOptions = ['Todas', 'Memórias', 'Comunidade', 'Eventos', 'Fotografia', 'Trilhas', 'Competições', 'Aprendizado', 'IA'];
+    const conquistaCategoriaChips = this.buildChips(conquistaCategoriaOptions, l => s.conquistaCategoria === l, l => this.setVal('conquistaCategoria', l));
+    const conquistasDefs = [
+      { nome: 'Primeira Memória', tipo: 'Bronze', unlocked: true, icon: ICONS.livro },
+      { nome: '100 Memórias', tipo: 'Prata', unlocked: true, icon: ICONS.livro },
+      { nome: 'Primeira Trilha', tipo: 'Bronze', unlocked: true, icon: ICONS.montanha },
+      { nome: 'Primeira Competição', tipo: 'Ouro', unlocked: true, icon: ICONS.taca },
+      { nome: 'Um Ano de Jornada', tipo: 'Diamante', unlocked: false, icon: ICONS.montanha, requisito: 'Continue registrando memórias por 365 dias com ' + nomeCavalo + ' para desbloquear.' },
+      { nome: 'Mentor da Comunidade', tipo: 'Especial', unlocked: false, icon: ICONS.coracao, requisito: 'Ajude 20 pessoas na comunidade respondendo perguntas.' },
+      { nome: 'Retrospectiva Completa', tipo: 'Limitada', unlocked: false, icon: ICONS.camera, requisito: 'Complete sua retrospectiva anual para desbloquear este selo limitado.' },
+      { nome: 'Cinco Anos Juntos', tipo: 'Histórica', unlocked: false, icon: ICONS.calendario, requisito: 'Comemore 5 anos de parceria com ' + nomeCavalo + '.' },
+    ];
+    const conquistasList = conquistasDefs.map((c, i) => ({
+      ...c,
+      icon: { __html: c.icon },
+      locked: c.unlocked ? '#fff' : 'rgba(43,41,36,.03)',
+      iconBg: c.unlocked ? 'rgba(201,161,90,.16)' : 'rgba(43,41,36,.06)',
+      iconColor: c.unlocked ? '#8A6E4B' : '#a39c8a',
+      onClick: c.unlocked ? () => {} : () => this.setState({ conquistaDetalheIdx: i }),
+    }));
+    const conquistaDetalhe = s.conquistaDetalheIdx != null ? conquistasList[s.conquistaDetalheIdx] : false;
+    const fecharConquistaDetalhe = () => this.setState({ conquistaDetalheIdx: null });
+
+    // Selos
+    const selosDefs = ['Primeira Memória', '100 Memórias', 'Primeira Competição', 'Primeira Trilha', 'Primeiro Evento', 'Primeira Carta', 'Um Ano de Jornada', 'Cinco Anos', 'Aniversário do Cavalo', 'Mentor da Comunidade'];
+    const selosList = selosDefs.map((nome, i) => ({
+      nome,
+      bg: i < 6 ? 'rgba(201,161,90,.14)' : 'rgba(43,41,36,.05)',
+      border: i < 6 ? 'rgba(201,161,90,.4)' : 'rgba(43,41,36,.1)',
+      color: i < 6 ? '#8A6E4B' : '#a39c8a',
+    }));
+
+    // Desafios
+    const desafioTipoOptions = ['Individuais', 'Coletivos', 'Sazonais'];
+    const desafioTipoChips = this.buildChips(desafioTipoOptions, l => s.desafioTipo === l, l => this.setVal('desafioTipo', l));
+    const desafiosDefs = [
+      { titulo: 'Registrar memórias por 7 dias', progresso: 70 },
+      { titulo: 'Participar de 3 eventos', progresso: 33 },
+      { titulo: 'Criar 5 cartas', progresso: 40 },
+      { titulo: 'Completar álbum', progresso: 85 },
+      { titulo: 'Fotografar o pôr do sol', progresso: 0 },
+    ];
+    const desafiosList = desafiosDefs.map(d => {
+      const concluido = d.progresso >= 100;
+      const participando = s.desafiosParticipando.includes(d.titulo);
+      let label, bg, color;
+      if (concluido) { label = 'Concluído ✓'; bg = 'rgba(107,115,83,.15)'; color = '#4F5D45'; }
+      else if (participando) { label = 'Em andamento'; bg = 'rgba(138,110,75,.14)'; color = '#8A6E4B'; }
+      else { label = 'Participar'; bg = '#C9A15A'; color = '#2B2924'; }
+      return {
+        ...d,
+        progressoLabel: d.progresso + '% concluído',
+        label, bg, color,
+        toggle: concluido ? () => {} : this.toggleArr('desafiosParticipando', d.titulo),
+      };
+    });
+
+    // Sequência
+    const sequenciaSemana = [true, true, true, true, true, true, s.registradoHoje].map(done => ({ done, bg: done ? '#6B7353' : 'rgba(43,41,36,.06)' }));
+    const registrarHoje = () => { if (!s.registradoHoje) this.setState({ registradoHoje: true }); };
+    const registrarHojeBg = s.registradoHoje ? 'rgba(107,115,83,.15)' : '#2B2924';
+    const registrarHojeColor = s.registradoHoje ? '#4F5D45' : '#FBF9F4';
+    const registrarHojeLabel = s.registradoHoje ? 'Registrado hoje ✓' : 'Registrar hoje';
+
+    // Jornadas
+    const jornadaEtapasDefs = [
+      { titulo: 'Primeiro Ano Juntos', status: 'Concluída', done: true, detalhe: 'Concluída em 12 de março de 2026.' },
+      { titulo: 'Primeira Competição', status: 'Concluída', done: true, detalhe: 'Concluída em 28 de abril de 2026.' },
+      { titulo: 'Primeiro Campeonato', status: 'Em andamento', done: false, detalhe: 'Falta participar de mais 2 competições este ano.' },
+      { titulo: 'Primeira Viagem', status: 'Bloqueada', done: false, detalhe: 'Desbloqueia após concluir o Primeiro Campeonato.' },
+      { titulo: 'Primeira Retrospectiva', status: 'Bloqueada', done: false, detalhe: 'Disponível ao final da temporada atual.' },
+    ];
+    const jornadaEtapas = jornadaEtapasDefs.map((e, i) => ({
+      ...e,
+      hasLine: i < jornadaEtapasDefs.length - 1,
+      bg: e.done ? '#6B7353' : '#fff',
+      border: e.done ? '#6B7353' : 'rgba(43,41,36,.2)',
+      textColor: e.done ? '#2B2924' : '#a39c8a',
+      expanded: s.jornadaExpandIdx === i,
+      toggle: () => this.setState({ jornadaExpandIdx: s.jornadaExpandIdx === i ? null : i }),
+    }));
+
+    // Missões
+    const missoesDefs = [
+      { periodo: 'Hoje', itens: ['Registrar um momento especial'] },
+      { periodo: 'Esta semana', itens: ['Participar da comunidade'] },
+      { periodo: 'Este mês', itens: ['Criar um álbum'] },
+    ];
+    const missoesGrupos = missoesDefs.map(g => ({
+      periodo: g.periodo,
+      itens: g.itens.map(texto => ({
+        texto,
+        done: s.missoesFeitas.includes(texto),
+        bg: s.missoesFeitas.includes(texto) ? '#6B7353' : 'rgba(43,41,36,.08)',
+        toggle: this.toggleArr('missoesFeitas', texto),
+      })),
+    }));
+
+    // Loja
+    const lojaDefs = [
+      { nome: 'Tema Campo Dourado', categoria: 'Tema', custo: 300 },
+      { nome: 'Moldura Clássica', categoria: 'Moldura', custo: 150 },
+      { nome: 'Capa Outono', categoria: 'Capa', custo: 200 },
+      { nome: 'Animação Brilho Suave', categoria: 'Animação', custo: 350 },
+      { nome: 'Stickers Equestres', categoria: 'Sticker', custo: 120 },
+      { nome: 'Modelo Retrospectiva Premium', categoria: 'Modelo', custo: 500 },
+    ];
+    const lojaItens = lojaDefs.map(i => {
+      const adquirido = s.lojaAdquiridos.includes(i.nome);
+      const podeResgatar = s.pontos >= i.custo;
+      let label, bg, color, cursor;
+      if (adquirido) { label = 'Adquirido ✓'; bg = 'rgba(107,115,83,.15)'; color = '#4F5D45'; cursor = 'default'; }
+      else if (!podeResgatar) { label = 'Pontos insuficientes'; bg = 'rgba(43,41,36,.06)'; color = '#a39c8a'; cursor = 'not-allowed'; }
+      else { label = 'Resgatar'; bg = '#C9A15A'; color = '#2B2924'; cursor = 'pointer'; }
+      return {
+        ...i,
+        custoLabel: i.custo + ' pontos',
+        label, bg, color, cursor,
+        toggle: (adquirido || !podeResgatar) ? () => {} : () => this.setState(st => ({
+          lojaAdquiridos: [...st.lojaAdquiridos, i.nome],
+          pontos: st.pontos - i.custo,
+        })),
+      };
+    });
+    const pontosLoja = s.pontos;
+
+    // Ranking
+    const rankingCategoriaOptions = ['Colaboração', 'Ajuda', 'Participação', 'Eventos', 'Fotografia', 'Histórias', 'Aprendizado'];
+    const rankingCategoriaChips = this.buildChips(rankingCategoriaOptions, l => s.rankingCategoria === l, l => this.setVal('rankingCategoria', l));
+    const rankingEscopoOptions = ['Global', 'País', 'Estado', 'Cidade', 'Clube', 'Grupo', 'Amigos'];
+    const rankingEscopoChips = this.buildChips(rankingEscopoOptions, l => s.rankingEscopo === l, l => this.setVal('rankingEscopo', l));
+    const rankingDefs = [
+      { pos: '1º', nome: 'Helena Ribeiro', pontos: '860 pts' },
+      { pos: '2º', nome: 'Carlos Melo', pontos: '790 pts' },
+      { pos: '3º', nome: 'Você', pontos: '640 pts' },
+      { pos: '4º', nome: 'Ana Ferraz', pontos: '590 pts' },
+    ];
+    const rankingList = rankingDefs.map(r => ({ ...r, rowBg: r.nome === 'Você' ? 'rgba(201,161,90,.14)' : '#fff' }));
+
+    // Temporadas
+    const temporadaDiasRestantes = 18;
+    const temporadaItens = ['Novos desafios', 'Novas medalhas', 'Novos eventos', 'Novas recompensas'];
+
+    // Objetivos
+    const objetivosDefs = [
+      { titulo: 'Participar da primeira competição', progresso: 100 },
+      { titulo: 'Registrar 100 memórias', progresso: 78 },
+      { titulo: 'Visitar cinco haras', progresso: 40 },
+      { titulo: 'Criar retrospectiva anual', progresso: 20 },
+      { titulo: 'Completar álbum', progresso: 60 },
+    ];
+    const objetivosList = objetivosDefs.map(o => ({ ...o, progressoLabel: o.progresso + '% concluído' }));
+    const objetivoMenorProgresso = objetivosDefs.reduce((min, o) => o.progresso < min.progresso ? o : min, objetivosDefs[0]);
+    const iaMensagem = 'Vocês construíram uma linda sequência este mês. Que tal avançar em "' + objetivoMenorProgresso.titulo.toLowerCase() + '"?';
+
+    return {
+      ...screenIs,
+      screenDisplay: s.screen + 1,
+      totalScreens: 11,
+      screenLabel: screenNames[s.screen],
+      next: this.next,
+      goBack: () => this.goTo(0),
+      toEvolucao: jump(0), toConquistas: jump(1), toSelos: jump(2), toDesafios: jump(3), toSequencia: jump(4),
+      toJornadas: jump(5), toMissoes: jump(6), toLoja: jump(7), toRanking: jump(8), toTemporadas: jump(9), toObjetivos: jump(10),
+      toRetrospectivaTemporada: () => {},
+      nomeCavalo,
+      demoNovo: s.demoNovo, demoNovoInv: !s.demoNovo,
+      demoNovoLabel: s.demoNovo ? 'ver com progresso' : 'ver estado vazio',
+      toggleDemoNovo: () => this.setState({ demoNovo: !s.demoNovo }),
+      nivelAtual, nivelNome, proximoNivelNome, xpAtual, xpProximo, xpPercent,
+      desafiosAtivosCount, sequenciaDias, conquistasRecentes, missoesPreview, menuItens,
+      conquistaCategoriaChips, conquistasList, conquistaDetalhe, fecharConquistaDetalhe,
+      selosList,
+      desafioTipoChips, desafiosList,
+      sequenciaSemana, registrarHoje, registrarHojeBg, registrarHojeColor, registrarHojeLabel,
+      jornadaEtapas,
+      missoesGrupos,
+      pontosLoja, lojaItens,
+      rankingCategoriaChips, rankingEscopoChips, rankingList,
+      temporadaDiasRestantes, temporadaItens,
+      objetivosList, iaMensagem,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

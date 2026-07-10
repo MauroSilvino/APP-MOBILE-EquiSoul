@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#EDE8DE;font-family:'Nunito',sans-serif;-webkit-font-smoothing:antialiased}
+  .placeholder{background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.06) 0px,rgba(0,0,0,.06) 2px,transparent 2px,transparent 12px);background-color:#EAE4D6}
+  input::placeholder, textarea::placeholder{color:#a39c8a}
+  input, textarea{font-family:'Nunito',sans-serif;outline:none;box-sizing:border-box}
+  a{color:#6B7353}
+  a:hover{color:#4F5D45}
+  ::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:56px 20px;font-family:'Nunito',sans-serif">
+
+  <div style="display:flex;align-items:center;gap:22px">
+
+    <div onClick="{{ goBack }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+
+    <div style="width:390px;height:844px;background:#FBF9F4;position:relative;overflow:hidden;box-shadow:0 30px 70px rgba(43,41,36,.22);flex:none">
+
+      <!-- BARRA SUPERIOR PERSISTENTE -->
+      <div style="position:absolute;top:0;left:0;right:0;height:54px;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:0 16px;background:rgba(251,249,244,.94);backdrop-filter:blur(4px)">
+        <div onClick="{{ openMenu }}" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+          <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="#2B2924" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </div>
+        <div style="font:700 10px ui-monospace,Menlo,monospace;color:#6b6558">Admin: Renata Souza · Super Admin</div>
+        <div onClick="{{ openSearch }}" style="width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#2B2924" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        </div>
+      </div>
+
+      <!-- MENU LATERAL -->
+      <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ closeMenu }}" style="position:absolute;inset:0;z-index:30;background:rgba(43,41,36,.35)">
+          <div onClick="{{ stopClick }}" style="position:absolute;top:0;left:0;bottom:0;width:250px;background:#FBF9F4;box-shadow:4px 0 24px rgba(43,41,36,.2);overflow-y:auto;padding:20px 14px">
+            <div style="font:800 15px 'Nunito',sans-serif;color:#2B2924;padding:0 8px 12px;border-bottom:1px solid rgba(43,41,36,.08)">Módulos</div>
+            <div style="display:flex;flex-direction:column;gap:2px;margin-top:8px">
+              <sc-for list="{{ menuModulos }}" as="m" hint-placeholder-count="19">
+                <div onClick="{{ m.onClick }}" style="padding:10px 8px;border-radius:10px;background:{{ m.activeBg }};font:700 12px 'Nunito',sans-serif;color:{{ m.activeColor }};cursor:pointer">{{ m.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- BUSCA GLOBAL -->
+      <sc-if value="{{ searchOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:30;background:#FBF9F4;padding:16px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="flex:1;display:flex;align-items:center;gap:8px;border-radius:14px;background:rgba(43,41,36,.06);padding:10px 12px">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#6b6558" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input autoFocus="{{ true }}" value="{{ globalQuery }}" onChange="{{ onGlobalQuery }}" placeholder="Buscar usuários, cavalos, chamados, módulos…" style="flex:1;border:none;background:transparent;font:600 12px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+            <div onClick="{{ closeSearch }}" style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Fechar</div>
+          </div>
+          <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ searchResults }}" as="r" hint-placeholder-count="3">
+              <div onClick="{{ r.onClick }}" style="display:flex;align-items:center;justify-content:space-between;border-radius:12px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:10px 12px;cursor:pointer">
+                <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ r.label }}</div>
+                <div style="font:700 9px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase">{{ r.tipo }}</div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ searchNoResults }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:20px;text-align:center;font:600 12px 'Nunito',sans-serif;color:#a39c8a">Nenhum resultado para "{{ globalQuery }}"</div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- MODAL DE CONFIRMAÇÃO -->
+      <sc-if value="{{ confirm }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;z-index:40;background:rgba(43,41,36,.4);display:flex;align-items:center;justify-content:center;padding:24px">
+          <div style="width:100%;border-radius:20px;background:#FBF9F4;padding:20px;box-shadow:0 20px 50px rgba(43,41,36,.3)">
+            <div style="font:800 15px 'Nunito',sans-serif;color:#2B2924">{{ confirm.title }}</div>
+            <div style="margin-top:8px;font:500 12.5px/1.5 'Nunito',sans-serif;color:#6b6558">{{ confirm.message }}</div>
+            <div style="margin-top:18px;display:flex;gap:10px">
+              <div onClick="{{ closeConfirm }}" style="flex:1;height:44px;border-radius:22px;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;font:800 12px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Cancelar</div>
+              <div onClick="{{ runConfirm }}" style="flex:1;height:44px;border-radius:22px;background:#2B2924;display:flex;align-items:center;justify-content:center;font:800 12px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">{{ confirm.confirmLabel }}</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 0 DASHBOARD -->
+      <sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Dashboard</div>
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <sc-for list="{{ periodoChips }}" as="c" hint-placeholder-count="4">
+              <div onClick="{{ c.onClick }}" style="padding:7px 12px;border-radius:14px;background:{{ c.bg }};color:{{ c.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+            <sc-for list="{{ dashboardKpis }}" as="k" hint-placeholder-count="13">
+              <div style="border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:10px">
+                <div style="font:800 15px 'Nunito',sans-serif;color:#2B2924">{{ k.valor }}</div>
+                <div style="margin-top:2px;font:600 9px 'Nunito',sans-serif;color:#6b6558;line-height:1.3">{{ k.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Alertas</div>
+          <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ alertasList }}" as="a" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:10px;border-radius:14px;background:{{ a.bg }};padding:11px 13px">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="{{ a.color }}" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9L2.5 18a1.5 1.5 0 001.3 2.3h16.4a1.5 1.5 0 001.3-2.3L13.7 3.9a1.5 1.5 0 00-2.6 0z"/></svg>
+                <div style="font:600 11px 'Nunito',sans-serif;color:#2B2924">{{ a.texto }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <sc-for list="{{ moduloAtalhos }}" as="m" hint-placeholder-count="18">
+              <div onClick="{{ m.onClick }}" style="border-radius:12px;background:rgba(43,41,36,.05);padding:10px 12px;font:700 11px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">{{ m.label }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 1 USUARIOS -->
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Usuários</div>
+          <div style="margin-top:10px;display:flex;align-items:center;gap:8px;border-radius:14px;background:rgba(43,41,36,.05);padding:9px 12px">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#6b6558" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input value="{{ usuarioQuery }}" onChange="{{ onUsuarioQuery }}" placeholder="Nome, email, ID ou cidade" style="flex:1;border:none;background:transparent;font:500 12px 'Nunito',sans-serif;color:#2B2924"/>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:7px;overflow-x:auto">
+            <sc-for list="{{ usuarioFiltroChips }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:7px 12px;border-radius:14px;background:{{ c.bg }};color:{{ c.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ usuariosList }}" as="u" hint-placeholder-count="6">
+              <div onClick="{{ u.onClick }}" style="display:flex;align-items:center;gap:10px;border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:10px 12px;cursor:pointer">
+                <div style="width:36px;height:36px;border-radius:50%;flex:none" class="placeholder"></div>
+                <div style="flex:1;min-width:0"><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ u.nome }}</div><div style="margin-top:1px;font:500 10px 'Nunito',sans-serif;color:#6b6558">{{ u.cidade }} · {{ u.plano }}</div></div>
+                <div style="padding:4px 9px;border-radius:9px;background:{{ u.bg }};color:{{ u.color }};font:700 9px 'Nunito',sans-serif;flex:none">{{ u.status }}</div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ usuariosVazio }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align:center;padding:24px 0;font:600 12px 'Nunito',sans-serif;color:#a39c8a">Nenhum usuário encontrado.</div>
+            </sc-if>
+            <sc-if value="{{ usuariosTemMais }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ carregarMaisUsuarios }}" style="margin-top:4px;text-align:center;padding:12px;border-radius:14px;background:rgba(43,41,36,.05);font:700 12px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Carregar mais</div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 2 CAVALOS -->
+      <sc-if value="{{ s2 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Cavalos</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ cavalosList }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="display:flex;align-items:center;gap:10px;border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:10px 12px;cursor:pointer">
+                <div style="width:36px;height:36px;border-radius:10px;flex:none" class="placeholder"></div>
+                <div style="flex:1;min-width:0"><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ c.nome }} · {{ c.raca }}</div><div style="margin-top:1px;font:500 10px 'Nunito',sans-serif;color:#6b6558">Tutor: {{ c.usuario }} · {{ c.pais }}</div></div>
+                <div style="font:700 10px 'Nunito',sans-serif;color:#8A6E4B;flex:none">{{ c.eventos }} ev.</div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ cavalosTemMais }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ carregarMaisCavalos }}" style="margin-top:4px;text-align:center;padding:12px;border-radius:14px;background:rgba(43,41,36,.05);font:700 12px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Carregar mais</div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 3 COMUNIDADE -->
+      <sc-if value="{{ s3 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Comunidade</div>
+          <div style="margin-top:10px;display:flex;gap:7px">
+            <sc-for list="{{ comunidadeTipoChips }}" as="c" hint-placeholder-count="4">
+              <div onClick="{{ c.onClick }}" style="padding:7px 12px;border-radius:14px;background:{{ c.bg }};color:{{ c.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ comunidadeItens }}" as="c" hint-placeholder-count="4">
+              <div style="border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:12px;opacity:{{ c.opacidade }}">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ c.autor }}</div>
+                  <div style="font:700 10px 'Nunito',sans-serif;color:#a1503a">{{ c.denuncias }} denúncias</div>
+                </div>
+                <div style="margin-top:4px;font:500 11px/1.5 'Nunito',sans-serif;color:#6b6558">{{ c.resumo }}</div>
+                <sc-if value="{{ c.resolvido }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:8px;font:700 10px 'Nunito',sans-serif;color:#4F5D45">Ação aplicada ✓</div>
+                </sc-if>
+                <sc-if value="{{ c.mostrarAcoes }}" hint-placeholder-val="{{ true }}">
+                  <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+                    <sc-for list="{{ c.acoesChips }}" as="ac" hint-placeholder-count="3">
+                      <div onClick="{{ ac.onClick }}" style="padding:5px 10px;border-radius:10px;background:rgba(43,41,36,.06);color:#2B2924;font:700 10px 'Nunito',sans-serif;cursor:pointer">{{ ac.label }}</div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 4 MODERACAO -->
+      <sc-if value="{{ s4 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Moderação</div>
+          <div style="margin-top:6px;font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">A IA prioriza e agrupa — nunca decide sozinha.</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ denunciasList }}" as="d" hint-placeholder-count="5">
+              <div style="border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:12px;opacity:{{ d.opacidade }}">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div style="padding:4px 9px;border-radius:9px;background:{{ d.bg }};color:{{ d.color }};font:700 9px 'Nunito',sans-serif;text-transform:uppercase">{{ d.categoria }}</div>
+                  <div style="font:600 10px 'Nunito',sans-serif;color:#a39c8a">{{ d.tempo }}</div>
+                </div>
+                <div style="margin-top:6px;font:600 12px 'Nunito',sans-serif;color:#2B2924">{{ d.descricao }}</div>
+                <sc-if value="{{ d.resolvida }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:8px;font:700 10px 'Nunito',sans-serif;color:#4F5D45">Resolvida ✓</div>
+                </sc-if>
+                <sc-if value="{{ d.mostrarBotao }}" hint-placeholder-val="{{ true }}">
+                  <div onClick="{{ d.onResolver }}" style="margin-top:8px;display:inline-block;padding:6px 12px;border-radius:10px;background:#2B2924;color:#C9A15A;font:700 10px 'Nunito',sans-serif;cursor:pointer">Resolver</div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 5 MARKETPLACE -->
+      <sc-if value="{{ s5 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Marketplace</div>
+          <div style="margin-top:10px;display:flex;gap:7px;overflow-x:auto">
+            <sc-for list="{{ marketplaceTipoChips }}" as="c" hint-placeholder-count="5">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:7px 12px;border-radius:14px;background:{{ c.bg }};color:{{ c.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ marketplaceItens }}" as="m" hint-placeholder-count="5">
+              <div style="border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:10px 12px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="flex:1;min-width:0"><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ m.nome }}</div><div style="margin-top:1px;font:500 10px 'Nunito',sans-serif;color:#6b6558">{{ m.tipo }} · {{ m.valor }}</div></div>
+                  <div style="padding:4px 9px;border-radius:9px;background:{{ m.bg }};color:{{ m.color }};font:700 9px 'Nunito',sans-serif;flex:none">{{ m.status }}</div>
+                </div>
+                <sc-if value="{{ m.isPendente }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:8px;display:flex;gap:6px">
+                    <div onClick="{{ m.onAprovar }}" style="flex:1;text-align:center;padding:7px 0;border-radius:10px;background:#2B2924;color:#C9A15A;font:700 10px 'Nunito',sans-serif;cursor:pointer">Aprovar</div>
+                    <div onClick="{{ m.onRejeitar }}" style="flex:1;text-align:center;padding:7px 0;border-radius:10px;background:rgba(196,90,60,.12);color:#a1503a;font:700 10px 'Nunito',sans-serif;cursor:pointer">Rejeitar</div>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ m.isReembolso }}" hint-placeholder-val="{{ false }}">
+                  <div onClick="{{ m.onProcessarReembolso }}" style="margin-top:8px;text-align:center;padding:7px 0;border-radius:10px;background:#2B2924;color:#C9A15A;font:700 10px 'Nunito',sans-serif;cursor:pointer">Processar reembolso</div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 6 EVENTOS -->
+      <sc-if value="{{ s6 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Eventos</div>
+            <div onClick="{{ abrirCriarEvento }}" style="width:32px;height:32px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#2B2924" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg></div>
+          </div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ eventosAdminList }}" as="e" hint-placeholder-count="5">
+              <div style="border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:12px">
+                <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ e.titulo }}</div>
+                <div style="margin-top:3px;font:500 10px 'Nunito',sans-serif;color:#6b6558">{{ e.organizador }} · {{ e.participantes }} participantes · {{ e.ingressos }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 7 CLUBE PREMIUM (admin) -->
+      <sc-if value="{{ s7 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Clube Premium</div>
+          <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <sc-for list="{{ premiumMetricas }}" as="m" hint-placeholder-count="5">
+              <div style="border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:12px">
+                <div style="font:800 16px 'Nunito',sans-serif;color:#2B2924">{{ m.valor }}</div>
+                <div style="margin-top:2px;font:600 10px 'Nunito',sans-serif;color:#6b6558">{{ m.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Planos ativos</div>
+          <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ premiumPlanosList }}" as="p" hint-placeholder-count="3">
+              <div style="display:flex;justify-content:space-between;font:600 12px 'Nunito',sans-serif;border-radius:12px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:10px 12px"><span style="color:#2B2924">{{ p.nome }}</span><span style="color:#8A6E4B">{{ p.assinantes }} assinantes</span></div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 8 IA (admin) -->
+      <sc-if value="{{ s8 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">IA</div>
+          <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+            <sc-for list="{{ iaIndicadores }}" as="i" hint-placeholder-count="9">
+              <div style="border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:10px">
+                <div style="font:800 14px 'Nunito',sans-serif;color:#2B2924">{{ i.valor }}</div>
+                <div style="margin-top:2px;font:600 9px 'Nunito',sans-serif;color:#6b6558;line-height:1.3">{{ i.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Ferramentas</div>
+          <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:7px">
+            <sc-for list="{{ iaFerramentas }}" as="f" hint-placeholder-count="5">
+              <div style="padding:7px 12px;border-radius:14px;background:rgba(43,41,36,.06);color:#2B2924;font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ f }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 9 ANALYTICS (admin) -->
+      <sc-if value="{{ s9 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Analytics</div>
+          <div style="margin-top:10px;display:flex;gap:7px;overflow-x:auto">
+            <sc-for list="{{ analyticsPaineisChips }}" as="c" hint-placeholder-count="8">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:7px 12px;border-radius:14px;background:{{ c.bg }};color:{{ c.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:14px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:16px">
+            <svg viewBox="0 0 200 70" width="100%" height="70" preserveAspectRatio="none"><polyline points="0,55 30,50 60,40 90,44 120,28 150,32 180,15 200,20" fill="none" stroke="#C9A15A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <div style="margin-top:8px;font:600 11px 'Nunito',sans-serif;color:#6b6558">Tendência de {{ analyticsPainelAtivo }} nos últimos 30 dias</div>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:8px">
+            <div style="flex:1;height:44px;border-radius:22px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 11px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Exportar CSV</div>
+            <div style="flex:1;height:44px;border-radius:22px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 11px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Exportar PDF</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 10 FINANCEIRO -->
+      <sc-if value="{{ s10 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Financeiro</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ receitasList }}" as="r" hint-placeholder-count="5">
+              <div style="display:flex;justify-content:space-between;border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:11px 13px">
+                <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ r.label }}</div>
+                <div style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B">{{ r.valor }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Integrações</div>
+          <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ integracoesList }}" as="i" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;justify-content:space-between;border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:10px 13px">
+                <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ i.nome }}</div>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="display:flex;align-items:center;gap:6px"><div style="width:7px;height:7px;border-radius:50%;background:{{ i.dotColor }}"></div><div style="font:700 10px 'Nunito',sans-serif;color:{{ i.statusColor }}">{{ i.statusLabel }}</div></div>
+                  <div onClick="{{ i.onAction }}" style="font:700 10px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer;text-decoration:underline">{{ i.actionLabel }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 11 CMS -->
+      <sc-if value="{{ s11 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">CMS</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ cmsList }}" as="c" hint-placeholder-count="8">
+              <div onClick="{{ c.onClick }}" style="display:flex;align-items:center;justify-content:space-between;border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:11px 13px;cursor:pointer">
+                <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ c.label }}</div>
+                <div style="font:700 11px 'Nunito',sans-serif;color:#8A6E4B">{{ c.count }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 12 NOTIFICACOES (admin) -->
+      <sc-if value="{{ s12 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Campanhas</div>
+          <div style="margin-top:12px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Segmentar por</div>
+          <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:7px">
+            <sc-for list="{{ segmentacaoOptions }}" as="s" hint-placeholder-count="6">
+              <div style="padding:7px 12px;border-radius:14px;background:rgba(43,41,36,.06);color:#2B2924;font:700 11px 'Nunito',sans-serif">{{ s }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:14px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Campanhas agendadas</div>
+          <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ campanhasList }}" as="c" hint-placeholder-count="3">
+              <div style="border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:11px 13px">
+                <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ c.titulo }}</div>
+                <div style="margin-top:2px;font:500 10px 'Nunito',sans-serif;color:#6b6558">{{ c.tipo }} · {{ c.data }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 13 SUPORTE -->
+      <sc-if value="{{ s13 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Suporte</div>
+          <div style="margin-top:10px;display:flex;gap:7px;overflow-x:auto">
+            <sc-for list="{{ suporteCategoriaChips }}" as="c" hint-placeholder-count="7">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:7px 12px;border-radius:14px;background:{{ c.bg }};color:{{ c.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ chamadosList }}" as="c" hint-placeholder-count="5">
+              <div onClick="{{ c.onClick }}" style="border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:11px 13px;cursor:pointer">
+                <div style="display:flex;justify-content:space-between">
+                  <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ c.assunto }}</div>
+                  <div style="padding:3px 8px;border-radius:8px;background:{{ c.bg }};color:{{ c.color }};font:700 9px 'Nunito',sans-serif">{{ c.prioridade }}</div>
+                </div>
+                <div style="margin-top:3px;font:500 10px 'Nunito',sans-serif;color:#6b6558">{{ c.categoria }} · SLA {{ c.sla }} · {{ c.status }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 14 AUDITORIA -->
+      <sc-if value="{{ s14 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Auditoria</div>
+          <div style="margin-top:6px;font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">Nenhum registro pode ser apagado.</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column">
+            <sc-for list="{{ auditoriaList }}" as="a" as-index="$index" hint-placeholder-count="8">
+              <div style="display:flex;gap:12px">
+                <div style="display:flex;flex-direction:column;align-items:center;flex:none">
+                  <div style="width:9px;height:9px;border-radius:50%;background:#8A6E4B"></div>
+                  <sc-if value="{{ a.hasLine }}"><div style="width:2px;flex:1;background:rgba(43,41,36,.1);margin:2px 0"></div></sc-if>
+                </div>
+                <div style="padding-bottom:14px;flex:1">
+                  <div style="font:700 11px 'Nunito',sans-serif;color:#2B2924">{{ a.acao }}</div>
+                  <div style="margin-top:1px;font:500 10px 'Nunito',sans-serif;color:#6b6558">{{ a.ator }} · {{ a.tempo }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 15 CONFIGURACOES GLOBAIS -->
+      <sc-if value="{{ s15 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Configurações globais</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:2px">
+            <sc-for list="{{ configGlobaisList }}" as="c" hint-placeholder-count="8">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 4px;border-bottom:1px solid rgba(43,41,36,.06)">
+                <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ c.label }}</div>
+                <div style="font:600 11px 'Nunito',sans-serif;color:#6b6558">{{ c.valor }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 16 LOGS -->
+      <sc-if value="{{ s16 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Logs</div>
+          <div style="margin-top:10px;display:flex;align-items:center;gap:8px;border-radius:14px;background:rgba(43,41,36,.05);padding:9px 12px">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#6b6558" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input value="{{ logsQuery }}" onChange="{{ onLogsQuery }}" placeholder="Pesquisa avançada" style="flex:1;border:none;background:transparent;font:500 12px 'Nunito',sans-serif;color:#2B2924"/>
+          </div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:6px">
+            <sc-for list="{{ logsList }}" as="l" hint-placeholder-count="10">
+              <div style="display:flex;align-items:center;gap:10px;font:600 11px ui-monospace,Menlo,monospace;padding:8px 10px;border-radius:10px;background:#fff;box-shadow:0 2px 8px rgba(43,41,36,.04)">
+                <div style="padding:2px 7px;border-radius:6px;background:rgba(43,41,36,.08);color:#8A6E4B;font:700 9px ui-monospace,monospace">{{ l.fonte }}</div>
+                <div style="flex:1;color:#2B2924;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ l.mensagem }}</div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ logsVazio }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align:center;padding:24px 0;font:600 12px 'Nunito',sans-serif;color:#a39c8a">Nenhum log encontrado.</div>
+            </sc-if>
+            <sc-if value="{{ logsTemMais }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ carregarMaisLogs }}" style="margin-top:4px;text-align:center;padding:10px;border-radius:12px;background:rgba(43,41,36,.05);font:700 11px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Carregar mais</div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 17 APIS -->
+      <sc-if value="{{ s17 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">APIs</div>
+          <div style="margin-top:12px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Chaves e clientes</div>
+          <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ apisList }}" as="a" hint-placeholder-count="4">
+              <div style="border-radius:14px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:11px 13px">
+                <div style="display:flex;justify-content:space-between"><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ a.nome }}</div><div style="font:600 10px 'Nunito',sans-serif;color:#6b6558">{{ a.rateLimit }}</div></div>
+                <div style="margin-top:3px;font:600 10px ui-monospace,monospace;color:#8A6E4B">{{ a.chaveExibida }}</div>
+                <sc-if value="{{ a.revogada }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:8px;font:700 10px 'Nunito',sans-serif;color:#a1503a">Revogada</div>
+                </sc-if>
+                <sc-if value="{{ a.ativa }}" hint-placeholder-val="{{ true }}">
+                  <div style="margin-top:8px;display:flex;gap:6px">
+                    <div onClick="{{ a.onCopiar }}" style="flex:1;text-align:center;padding:6px 0;border-radius:9px;background:rgba(43,41,36,.06);color:#2B2924;font:700 10px 'Nunito',sans-serif;cursor:pointer">{{ a.copiarLabel }}</div>
+                    <div onClick="{{ a.onRotacionar }}" style="flex:1;text-align:center;padding:6px 0;border-radius:9px;background:rgba(43,41,36,.06);color:#2B2924;font:700 10px 'Nunito',sans-serif;cursor:pointer">Rotacionar</div>
+                    <div onClick="{{ a.onRevogar }}" style="flex:1;text-align:center;padding:6px 0;border-radius:9px;background:rgba(196,90,60,.12);color:#a1503a;font:700 10px 'Nunito',sans-serif;cursor:pointer">Revogar</div>
+                  </div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 18 FEATURE FLAGS -->
+      <sc-if value="{{ s18 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Feature flags</div>
+          <div style="margin-top:6px;font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">Ideal para testes por país, versão, usuário ou plano.</div>
+          <div style="margin-top:12px;display:flex;flex-direction:column;gap:2px">
+            <sc-for list="{{ flagsList }}" as="f" hint-placeholder-count="7">
+              <div style="padding:12px 4px;border-bottom:1px solid rgba(43,41,36,.06)">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="flex:1"><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ f.nome }}</div><div style="margin-top:1px;font:500 10px 'Nunito',sans-serif;color:#6b6558">{{ f.escopo }}</div></div>
+                  <div onClick="{{ f.toggle }}" style="flex:none;width:40px;height:24px;border-radius:12px;background:{{ f.trackBg }};position:relative;cursor:pointer">
+                    <div style="position:absolute;top:3px;left:{{ f.knobLeft }};width:18px;height:18px;border-radius:50%;background:#fff"></div>
+                  </div>
+                </div>
+                <sc-if value="{{ f.hasRollout }}" hint-placeholder-val="{{ false }}">
+                  <input type="range" min="0" max="100" step="5" value="{{ f.percent }}" onChange="{{ f.onPercent }}" style="width:100%;margin-top:8px;accent-color:#C9A15A"/>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 19 USUARIO DETALHE -->
+      <sc-if value="{{ s19 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:52px;height:52px;border-radius:50%;flex:none" class="placeholder"></div>
+            <div><div style="font:800 17px 'Nunito',sans-serif;color:#2B2924">{{ usuarioDetalhe.nome }}</div><div style="margin-top:2px;font:600 11px 'Nunito',sans-serif;color:#6b6558">{{ usuarioDetalhe.cidade }}</div></div>
+          </div>
+          <div style="margin-top:16px;border-radius:16px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:14px;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between"><div style="font:600 11px 'Nunito',sans-serif;color:#6b6558">Email</div><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ usuarioDetalhe.email }}</div></div>
+            <div style="display:flex;justify-content:space-between"><div style="font:600 11px 'Nunito',sans-serif;color:#6b6558">Plano</div><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ usuarioDetalhe.plano }}</div></div>
+            <div style="display:flex;justify-content:space-between"><div style="font:600 11px 'Nunito',sans-serif;color:#6b6558">Cliente desde</div><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ usuarioDetalhe.desde }}</div></div>
+            <div style="display:flex;justify-content:space-between"><div style="font:600 11px 'Nunito',sans-serif;color:#6b6558">Status</div><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ usuarioDetalhe.status }}</div></div>
+          </div>
+          <div style="margin-top:16px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Ações</div>
+          <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+            <sc-if value="{{ banido }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ reativarUsuario }}" style="padding:12px;border-radius:14px;background:#2B2924;color:#C9A15A;font:800 12px 'Nunito',sans-serif;text-align:center;cursor:pointer">Reativar usuário</div>
+            </sc-if>
+            <sc-if value="{{ naoBanido }}" hint-placeholder-val="{{ true }}">
+              <div onClick="{{ banirUsuario }}" style="padding:12px;border-radius:14px;background:rgba(196,90,60,.12);color:#a1503a;font:800 12px 'Nunito',sans-serif;text-align:center;cursor:pointer">Banir usuário</div>
+            </sc-if>
+            <sc-if value="{{ naoVerificado }}" hint-placeholder-val="{{ true }}">
+              <div onClick="{{ verificarUsuario }}" style="padding:12px;border-radius:14px;background:rgba(43,41,36,.06);color:#2B2924;font:800 12px 'Nunito',sans-serif;text-align:center;cursor:pointer">Verificar usuário</div>
+            </sc-if>
+            <div onClick="{{ reembolsarUsuario }}" style="padding:12px;border-radius:14px;background:rgba(43,41,36,.06);color:#2B2924;font:800 12px 'Nunito',sans-serif;text-align:center;cursor:pointer">Reembolsar última cobrança</div>
+            <div style="padding:12px;border-radius:14px;background:rgba(43,41,36,.06);color:#2B2924;font:800 12px 'Nunito',sans-serif;text-align:center;cursor:pointer">Enviar mensagem</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 20 CAVALO DETALHE -->
+      <sc-if value="{{ s20 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:52px;height:52px;border-radius:14px;flex:none" class="placeholder"></div>
+            <div><div style="font:800 17px 'Nunito',sans-serif;color:#2B2924">{{ cavaloDetalhe.nome }}</div><div style="margin-top:2px;font:600 11px 'Nunito',sans-serif;color:#6b6558">{{ cavaloDetalhe.raca }} · {{ cavaloDetalhe.idade }}</div></div>
+          </div>
+          <div style="margin-top:16px;border-radius:16px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:14px;display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between"><div style="font:600 11px 'Nunito',sans-serif;color:#6b6558">Tutor</div><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ cavaloDetalhe.usuario }}</div></div>
+            <div style="display:flex;justify-content:space-between"><div style="font:600 11px 'Nunito',sans-serif;color:#6b6558">País</div><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ cavaloDetalhe.pais }}</div></div>
+            <div style="display:flex;justify-content:space-between"><div style="font:600 11px 'Nunito',sans-serif;color:#6b6558">Eventos</div><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ cavaloDetalhe.eventos }}</div></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 21 CHAMADO DETALHE -->
+      <sc-if value="{{ s21 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 17px 'Nunito',sans-serif;color:#2B2924">{{ chamadoDetalhe.assunto }}</div>
+          <div style="margin-top:4px;font:600 11px 'Nunito',sans-serif;color:#6b6558">{{ chamadoDetalhe.cliente }} · {{ chamadoDetalhe.categoria }} · SLA {{ chamadoDetalhe.sla }} · {{ chamadoStatus }}</div>
+          <div style="margin-top:14px;border-radius:16px;background:#fff;box-shadow:0 3px 10px rgba(43,41,36,.05);padding:14px;font:500 12.5px/1.6 'Nunito',sans-serif;color:#2B2924">{{ chamadoDetalhe.mensagem }}</div>
+          <div style="margin-top:16px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Responder</div>
+          <textarea value="{{ chamadoResposta }}" onChange="{{ onChamadoResposta }}" placeholder="Escreva uma resposta para o usuário…" style="margin-top:8px;width:100%;height:100px;border-radius:14px;border:1px solid rgba(43,41,36,.14);padding:12px;font:500 12px/1.5 'Nunito',sans-serif;color:#2B2924;resize:none"></textarea>
+          <sc-if value="{{ chamadoResolvido }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ reabrirChamado }}" style="margin-top:14px;height:48px;border-radius:24px;border:2px solid #2B2924;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Reabrir chamado</div>
+          </sc-if>
+          <sc-if value="{{ chamadoNaoResolvido }}" hint-placeholder-val="{{ true }}">
+            <div onClick="{{ marcarChamadoResolvido }}" style="margin-top:14px;height:48px;border-radius:24px;background:#2B2924;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">Enviar e marcar como resolvido</div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- 22 CMS EDITOR -->
+      <sc-if value="{{ s22 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Editar {{ cmsLabel }}</div>
+          <div style="margin-top:16px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Título</div>
+          <input value="{{ cmsTitulo }}" onChange="{{ onCmsTitulo }}" style="margin-top:8px;width:100%;height:46px;border-radius:14px;border:1px solid rgba(43,41,36,.14);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+          <div style="margin-top:16px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Conteúdo</div>
+          <textarea value="{{ cmsConteudo }}" onChange="{{ onCmsConteudo }}" placeholder="Escreva o conteúdo aqui…" style="margin-top:8px;width:100%;height:180px;border-radius:14px;border:1px solid rgba(43,41,36,.14);padding:12px;font:500 12px/1.5 'Nunito',sans-serif;color:#2B2924;resize:none"></textarea>
+          <div onClick="{{ salvarCms }}" style="margin-top:16px;height:50px;border-radius:25px;background:#2B2924;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">Salvar alterações</div>
+        </div>
+      </sc-if>
+
+      <!-- 23 CRIAR EVENTO -->
+      <sc-if value="{{ s23 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Criar evento</div>
+          <div style="margin-top:16px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Título</div>
+          <input value="{{ novoEvento.titulo }}" onChange="{{ onNovoEventoTitulo }}" placeholder="Nome do evento" style="margin-top:8px;width:100%;height:46px;border-radius:14px;border:1px solid rgba(43,41,36,.14);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+          <div style="margin-top:14px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Data</div>
+          <input value="{{ novoEvento.data }}" onChange="{{ onNovoEventoData }}" placeholder="ex: 20 ago 2026" style="margin-top:8px;width:100%;height:46px;border-radius:14px;border:1px solid rgba(43,41,36,.14);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+          <div style="margin-top:14px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Organizador</div>
+          <input value="{{ novoEvento.organizador }}" onChange="{{ onNovoEventoOrganizador }}" placeholder="Nome do organizador" style="margin-top:8px;width:100%;height:46px;border-radius:14px;border:1px solid rgba(43,41,36,.14);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+          <div onClick="{{ salvarEvento }}" style="margin-top:20px;height:50px;border-radius:25px;background:#2B2924;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">Criar evento</div>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <div onClick="{{ next }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+
+  </div>
+
+  <div style="display:flex;align-items:center;gap:16px;font:600 12px ui-monospace,Menlo,monospace;color:#6b6558">
+    <span>{{ screenLabel }} · tela {{ screenDisplay }} / {{ totalScreens }}</span>
+    <span onClick="{{ toDashboard }}" style="cursor:pointer;text-decoration:underline">início</span>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    screen: 0,
+    historyStack: [],
+    menuOpen: false,
+    searchOpen: false,
+    globalQuery: '',
+    confirm: null,
+    periodo: '7 dias',
+    usuarioFiltro: 'Todos',
+    usuarioQuery: '',
+    usuariosVisiveis: 6,
+    cavalosVisiveis: 4,
+    logsQuery: '',
+    logsVisiveis: 10,
+    comunidadeTipo: 'Posts',
+    comunidadeResolvidos: {},
+    denunciasResolvidas: {},
+    marketplaceTipo: 'Produtos',
+    marketplaceStatus: {},
+    marketplaceActionSheet: null,
+    integracoesDesconectadas: {},
+    apisState: {},
+    analyticsPainel: 'Aquisição',
+    suporteCategoria: 'Todos',
+    selectedUsuario: null,
+    selectedCavalo: null,
+    selectedChamado: null,
+    chamadosState: {},
+    selectedCms: null,
+    cmsState: {},
+    novoEvento: { titulo: '', data: '', organizador: '' },
+    eventosExtras: [],
+    usuariosOverride: {},
+    marketplaceOverride: {},
+    apisState: {},
+    flags: { novoOnboarding: true, ranking2: false, videosIa: true, marketplacePro: false, checkinQr: true, temaHaras: false, buscaSemantica: false },
+    rolloutPercent: { buscaSemantica: 10 },
+  };
+
+  goTo = (n, push = true) => {
+    const cur = this.state.screen;
+    const target = Math.max(0, Math.min(23, n));
+    if (push && cur !== target) {
+      this.setState(s => ({ screen: target, historyStack: [...s.historyStack, cur], menuOpen: false }));
+    } else {
+      this.setState({ screen: target, menuOpen: false });
+    }
+  };
+  next = () => this.goTo(this.state.screen + 1);
+  goBack = () => {
+    const stack = [...this.state.historyStack];
+    const prev = stack.pop();
+    if (prev != null) this.setState({ screen: prev, historyStack: stack });
+    else this.goTo(0, false);
+  };
+  setVal(key, value) { return () => this.setState({ [key]: value }); }
+  toggleFlag(key) { return () => this.setState(s => ({ flags: { ...s.flags, [key]: !s.flags[key] } })); }
+  buildChips(options, isSelected, onToggle) {
+    return options.map(label => ({
+      label,
+      bg: isSelected(label) ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: isSelected(label) ? '#C9A15A' : '#2B2924',
+      onClick: onToggle(label),
+    }));
+  }
+  askConfirm(title, message, confirmLabel, onConfirm) {
+    return () => this.setState({ confirm: { title, message, confirmLabel, onConfirm } });
+  }
+  closeConfirm = () => this.setState({ confirm: null });
+  runConfirm = () => {
+    const fn = this.state.confirm && this.state.confirm.onConfirm;
+    this.setState({ confirm: null });
+    if (fn) fn();
+  };
+  setUsuarioStatus(id, status) { return () => this.setState(s => ({ usuariosOverride: { ...s.usuariosOverride, [id]: status } })); }
+  setMarketplaceStatus(id, status) { return () => this.setState(s => ({ marketplaceOverride: { ...s.marketplaceOverride, [id]: status } })); }
+  resolveComunidade(idx) { return () => this.setState(s => ({ comunidadeResolvidos: { ...s.comunidadeResolvidos, [idx]: true } })); }
+  resolveDenuncia(idx) { return () => this.setState(s => ({ denunciasResolvidas: { ...s.denunciasResolvidas, [idx]: true } })); }
+  toggleIntegracao(nome) { return () => this.setState(s => ({ integracoesDesconectadas: { ...s.integracoesDesconectadas, [nome]: !s.integracoesDesconectadas[nome] } })); }
+  setApiAction(key, patch) { return () => this.setState(s => ({ apisState: { ...s.apisState, [key]: { ...(s.apisState[key] || {}), ...patch } } })); }
+  setChamadoStatus(id, status) { return () => this.setState(s => ({ chamadosState: { ...s.chamadosState, [id]: { ...(s.chamadosState[id] || {}), status } } })); }
+  setChamadoResposta(id, resposta) { this.setState(s => ({ chamadosState: { ...s.chamadosState, [id]: { ...(s.chamadosState[id] || {}), resposta } } })); }
+  setCmsField(id, field, value) { this.setState(s => ({ cmsState: { ...s.cmsState, [id]: { ...(s.cmsState[id] || {}), [field]: value } } })); }
+  setNovoEventoField(field, value) { this.setState(s => ({ novoEvento: { ...s.novoEvento, [field]: value } })); }
+  salvarEvento = () => {
+    const ev = this.state.novoEvento;
+    if (!ev.titulo.trim()) return;
+    this.setState(s => ({
+      eventosExtras: [...s.eventosExtras, { titulo: ev.titulo, organizador: ev.organizador || 'Você', participantes: 0, ingressos: ev.data ? `agendado · ${ev.data}` : 'agendado' }],
+      novoEvento: { titulo: '', data: '', organizador: '' },
+    }));
+    this.goTo(6, false);
+  };
+
+  renderVals() {
+    const s = this.state;
+    const screenIs = {};
+    for (let i = 0; i <= 23; i++) screenIs['s' + i] = s.screen === i;
+    const jump = (n) => () => this.goTo(n);
+
+    const screenNames = ['Dashboard','Usuários','Cavalos','Comunidade','Moderação','Marketplace','Eventos','Clube Premium','IA','Analytics','Financeiro','CMS','Notificações','Suporte','Auditoria','Configurações globais','Logs','APIs','Feature flags','Usuário','Cavalo','Chamado','Editor CMS','Criar evento'];
+
+    const menuModulos = ['Dashboard','Usuários','Cavalos','Comunidade','Moderação','Marketplace','Eventos','Clube Premium','IA','Analytics','Financeiro','CMS','Notificações','Suporte','Auditoria','Configurações globais','Logs','APIs','Feature flags'].map((label, i) => {
+      const active = s.screen === i;
+      return { label, active, activeBg: active ? 'rgba(201,161,90,.16)' : 'transparent', activeColor: active ? '#8A6E4B' : '#2B2924', onClick: jump(i) };
+    });
+    const stopClick = (e) => e.stopPropagation();
+
+    const periodoOptions = ['Tempo real', '7 dias', '30 dias', '12 meses'];
+    const periodoChips = this.buildChips(periodoOptions, l => s.periodo === l, l => this.setVal('periodo', l));
+    const dashboardKpisPorPeriodo = {
+      'Tempo real': [
+        ['Usuários online', '3.402'], ['Novos cadastros', '14'], ['DAU', '3.4k'], ['MAU', '96.2k'], ['Retenção', '64%'],
+        ['Premium', '12.900'], ['Receita', 'R$ 1.1k'], ['Eventos', '3'], ['Marketplace', 'R$ 820'], ['Uso da IA', '640'],
+        ['Uploads', '210'], ['Notificações', '4.1k'], ['Chamados', '4'],
+      ],
+      '7 dias': [
+        ['Usuários online', '3.402'], ['Novos cadastros', '812'], ['DAU', '18.4k'], ['MAU', '96.2k'], ['Retenção', '64%'],
+        ['Premium', '12.900'], ['Receita', 'R$ 482k'], ['Eventos', '128'], ['Marketplace', 'R$ 96k'], ['Uso da IA', '221k'],
+        ['Uploads', '54.1k'], ['Notificações', '1.2M'], ['Chamados', '86'],
+      ],
+      '30 dias': [
+        ['Usuários online', '3.402'], ['Novos cadastros', '3.140'], ['DAU', '19.1k'], ['MAU', '98.6k'], ['Retenção', '61%'],
+        ['Premium', '13.450'], ['Receita', 'R$ 1.9M'], ['Eventos', '512'], ['Marketplace', 'R$ 384k'], ['Uso da IA', '890k'],
+        ['Uploads', '212k'], ['Notificações', '4.8M'], ['Chamados', '340'],
+      ],
+      '12 meses': [
+        ['Usuários online', '3.402'], ['Novos cadastros', '38.2k'], ['DAU', '21.6k'], ['MAU', '104k'], ['Retenção', '58%'],
+        ['Premium', '15.800'], ['Receita', 'R$ 22.4M'], ['Eventos', '6.140'], ['Marketplace', 'R$ 4.6M'], ['Uso da IA', '10.2M'],
+        ['Uploads', '2.5M'], ['Notificações', '58M'], ['Chamados', '4.1k'],
+      ],
+    };
+    const dashboardKpis = (dashboardKpisPorPeriodo[s.periodo] || dashboardKpisPorPeriodo['7 dias']).map(([label, valor]) => ({ label, valor }));
+    const alertasList = [
+      { texto: 'Latência elevada no serviço de vídeos IA', bg: 'rgba(196,90,60,.12)', color: '#a1503a' },
+      { texto: 'Custo de IA 18% acima da média mensal', bg: 'rgba(201,161,90,.16)', color: '#8A6E4B' },
+      { texto: 'Uso de storage em 82% da capacidade', bg: 'rgba(201,161,90,.16)', color: '#8A6E4B' },
+    ];
+    const moduloAtalhosDefs = ['Usuários', 'Cavalos', 'Comunidade', 'Moderação', 'Marketplace', 'Eventos', 'Clube Premium', 'IA', 'Analytics', 'Financeiro', 'CMS', 'Notificações', 'Suporte', 'Auditoria', 'Configurações', 'Logs', 'APIs', 'Feature Flags'];
+    const moduloAtalhos = moduloAtalhosDefs.map((label, i) => ({ label, onClick: jump(i + 1) }));
+
+    const usuarioFiltroOptions = ['Todos', 'Premium', 'Banido', 'Verificado', 'Novo', 'Inativo'];
+    const usuarioFiltroChips = this.buildChips(usuarioFiltroOptions, l => s.usuarioFiltro === l, l => this.setVal('usuarioFiltro', l));
+    const usuariosDefsBase = [
+      { nome: 'Mauro Andrade', cidade: 'São Paulo, SP', plano: 'Premium', status: 'Verificado', email: 'mauro.andrade@email.com', desde: 'mar 2023' },
+      { nome: 'Helena Ribeiro', cidade: 'Curitiba, PR', plano: 'Gratuito', status: 'Novo', email: 'helena.ribeiro@email.com', desde: 'jun 2026' },
+      { nome: 'Carlos Melo', cidade: 'Belo Horizonte, MG', plano: 'Premium', status: 'Ativo', email: 'carlos.melo@email.com', desde: 'set 2022' },
+      { nome: 'Ana Ferraz', cidade: 'Porto Alegre, RS', plano: 'Gratuito', status: 'Inativo', email: 'ana.ferraz@email.com', desde: 'jan 2024' },
+      { nome: 'João Ferrador', cidade: 'Ribeirão Preto, SP', plano: 'Gratuito', status: 'Ativo', email: 'joao.ferrador@email.com', desde: 'fev 2025' },
+      { nome: 'Usuário reportado #4471', cidade: 'Recife, PE', plano: 'Gratuito', status: 'Banido', email: 'user4471@email.com', desde: 'nov 2024' },
+      { nome: 'Renata Souza', cidade: 'Florianópolis, SC', plano: 'Premium', status: 'Verificado', email: 'renata.souza@email.com', desde: 'ago 2021' },
+      { nome: 'Diego Alves', cidade: 'Fortaleza, CE', plano: 'Gratuito', status: 'Ativo', email: 'diego.alves@email.com', desde: 'mai 2025' },
+    ];
+    const statusColors = { Verificado: ['rgba(107,115,83,.15)', '#4F5D45'], Novo: ['rgba(201,161,90,.16)', '#8A6E4B'], Ativo: ['rgba(43,41,36,.06)', '#2B2924'], Inativo: ['rgba(43,41,36,.06)', '#a39c8a'], Banido: ['rgba(196,90,60,.14)', '#a1503a'] };
+    const usuariosDefs = usuariosDefsBase.map((u, i) => ({ ...u, id: i, status: s.usuariosOverride && s.usuariosOverride[i] ? s.usuariosOverride[i] : u.status }));
+    const usuarioMatches = (u) => {
+      const q = s.usuarioQuery.trim().toLowerCase();
+      const matchQuery = !q || u.nome.toLowerCase().includes(q) || u.email.toLowerCase().includes(q) || u.cidade.toLowerCase().includes(q);
+      const matchFiltro = s.usuarioFiltro === 'Todos' || u.status === s.usuarioFiltro || (s.usuarioFiltro === 'Premium' && u.plano === 'Premium');
+      return matchQuery && matchFiltro;
+    };
+    const usuariosFiltrados = usuariosDefs.filter(usuarioMatches);
+    const usuariosList = usuariosFiltrados.slice(0, s.usuariosVisiveis).map(u => {
+      const [bg, color] = statusColors[u.status];
+      return { ...u, bg, color, onClick: () => { this.setState({ selectedUsuario: u.id }); this.goTo(19); } };
+    });
+    const usuariosTemMais = usuariosFiltrados.length > s.usuariosVisiveis;
+    const usuariosVazio = usuariosFiltrados.length === 0;
+
+    const cavalosDefsBase = [
+      { nome: 'Bela', raca: 'Mangalarga', usuario: 'Mauro Andrade', pais: 'Brasil', eventos: 6, idade: '8 anos' },
+      { nome: 'Trovão', raca: 'Quarto de Milha', usuario: 'Carlos Melo', pais: 'Brasil', eventos: 3, idade: '5 anos' },
+      { nome: 'Luna', raca: 'Lusitano', usuario: 'Helena Ribeiro', pais: 'Portugal', eventos: 9, idade: '11 anos' },
+      { nome: 'Fogo', raca: 'Crioulo', usuario: 'Ana Ferraz', pais: 'Brasil', eventos: 1, idade: '3 anos' },
+      { nome: 'Estrela', raca: 'Andaluz', usuario: 'Renata Souza', pais: 'Brasil', eventos: 14, idade: '9 anos' },
+      { nome: 'Vento', raca: 'Puro Sangue Inglês', usuario: 'Diego Alves', pais: 'Brasil', eventos: 2, idade: '4 anos' },
+    ];
+    const cavalosDefs = cavalosDefsBase.map((c, i) => ({ ...c, id: i }));
+    const cavalosList = cavalosDefs.slice(0, s.cavalosVisiveis).map(c => ({ ...c, onClick: () => { this.setState({ selectedCavalo: c.id }); this.goTo(20); } }));
+    const cavalosTemMais = cavalosDefs.length > s.cavalosVisiveis;
+
+    const comunidadeTipoOptions = ['Posts', 'Stories', 'Reels', 'Comentários'];
+    const comunidadeTipoChips = this.buildChips(comunidadeTipoOptions, l => s.comunidadeTipo === l, l => this.setVal('comunidadeTipo', l));
+    const comunidadeItensDefs = [
+      { autor: 'Post de Carlos Melo', denuncias: 2, resumo: '"Dica de treino" — denunciado por conteúdo enganoso.', acoes: ['Ocultar', 'Remover', 'Ignorar'] },
+      { autor: 'Comentário em evento', denuncias: 1, resumo: 'Comentário sinalizado como possível assédio.', acoes: ['Remover', 'Avisar autor'] },
+    ];
+    const comunidadeItens = comunidadeItensDefs.map((c, i) => {
+      const resolvido = !!s.comunidadeResolvidos[i];
+      return {
+        ...c,
+        resolvido,
+        opacidade: resolvido ? '0.55' : '1',
+        mostrarAcoes: !resolvido,
+        acoesChips: c.acoes.map(ac => ({
+          label: ac,
+          onClick: this.askConfirm(`${ac} conteúdo?`, `Confirma "${ac}" para: ${c.resumo}`, ac, this.resolveComunidade(i)),
+        })),
+      };
+    });
+
+    const denunciasDefsBase = [
+      { categoria: 'Maus-tratos', descricao: 'Vídeo denunciado por possível maus-tratos ao animal', tempo: 'há 12 min' },
+      { categoria: 'Spam', descricao: 'Conta publicando links repetidos no feed', tempo: 'há 40 min' },
+      { categoria: 'Fake', descricao: 'Perfil suspeito de se passar por profissional verificado', tempo: 'há 2h' },
+      { categoria: 'Fraude', descricao: 'Anúncio de marketplace com preço suspeito', tempo: 'há 5h' },
+      { categoria: 'Direitos autorais', descricao: 'Foto reportada como uso não autorizado', tempo: 'há 1 dia' },
+    ];
+    const catColors = { 'Maus-tratos': ['rgba(196,90,60,.14)', '#a1503a'], 'Spam': ['rgba(43,41,36,.06)', '#2B2924'], 'Fake': ['rgba(201,161,90,.16)', '#8A6E4B'], 'Fraude': ['rgba(196,90,60,.14)', '#a1503a'], 'Direitos autorais': ['rgba(43,41,36,.06)', '#2B2924'] };
+    const denunciasList = denunciasDefsBase.map((d, i) => {
+      const [bg, color] = catColors[d.categoria];
+      const resolvida = !!s.denunciasResolvidas[i];
+      return {
+        ...d, bg, color, resolvida,
+        opacidade: resolvida ? '0.55' : '1',
+        mostrarBotao: !resolvida,
+        onResolver: this.askConfirm('Resolver denúncia?', `Marcar "${d.descricao}" como resolvida.`, 'Resolver', this.resolveDenuncia(i)),
+      };
+    });
+
+    const marketplaceTipoOptions = ['Produtos', 'Serviços', 'Profissionais', 'Reservas', 'Pedidos'];
+    const marketplaceTipoChips = this.buildChips(marketplaceTipoOptions, l => s.marketplaceTipo === l, l => this.setVal('marketplaceTipo', l));
+    const marketplaceItensDefsBase = [
+      { nome: 'Sela clássica em couro', tipo: 'Produto', valor: 'R$ 1.890', status: 'Aprovado' },
+      { nome: 'Aula de adestramento', tipo: 'Serviço', valor: 'R$ 220', status: 'Pendente' },
+      { nome: 'Marina Kist — Veterinária', tipo: 'Profissional', valor: '4.9 ★', status: 'Verificado' },
+      { nome: 'Reserva de box · Haras Boa Vista', tipo: 'Reserva', valor: 'R$ 450/mês', status: 'Aprovado' },
+      { nome: 'Pedido #8821', tipo: 'Pedido', valor: 'R$ 340', status: 'Reembolso' },
+    ];
+    const mktColors = { Aprovado: ['rgba(107,115,83,.15)', '#4F5D45'], Pendente: ['rgba(201,161,90,.16)', '#8A6E4B'], Verificado: ['rgba(107,115,83,.15)', '#4F5D45'], Reembolso: ['rgba(196,90,60,.14)', '#a1503a'], Rejeitado: ['rgba(196,90,60,.14)', '#a1503a'], Reembolsado: ['rgba(43,41,36,.06)', '#6b6558'] };
+    const marketplaceItens = marketplaceItensDefsBase.map((m, i) => {
+      const status = s.marketplaceOverride[i] || m.status;
+      const [bg, color] = mktColors[status];
+      return {
+        ...m, id: i, status, bg, color,
+        isPendente: status === 'Pendente',
+        isReembolso: status === 'Reembolso',
+        onAprovar: this.askConfirm('Aprovar item?', `Aprovar "${m.nome}" para publicação.`, 'Aprovar', this.setMarketplaceStatus(i, 'Aprovado')),
+        onRejeitar: this.askConfirm('Rejeitar item?', `Rejeitar "${m.nome}"? O anunciante será notificado.`, 'Rejeitar', this.setMarketplaceStatus(i, 'Rejeitado')),
+        onProcessarReembolso: this.askConfirm('Processar reembolso?', `Confirmar reembolso de ${m.valor} para "${m.nome}".`, 'Processar', this.setMarketplaceStatus(i, 'Reembolsado')),
+      };
+    });
+
+    const eventosAdminList = [
+      { titulo: 'Copa Nacional de Salto', organizador: 'Federação Paulista', participantes: 240, ingressos: '210 vendidos' },
+      { titulo: 'Clínica de Adestramento', organizador: 'Marina Kist', participantes: 32, ingressos: '32 vendidos' },
+      { titulo: 'Encontro de Trilhas · Serra Verde', organizador: 'Clube de Trilhas', participantes: 58, ingressos: 'gratuito' },
+      ...s.eventosExtras,
+    ];
+
+    const premiumMetricasDefs = [
+      ['R$ 214k', 'MRR'], ['R$ 2.6M', 'ARR'], ['R$ 890', 'LTV'], ['R$ 62', 'CAC'], ['3.1%', 'Churn'],
+    ];
+    const premiumMetricas = premiumMetricasDefs.map(([valor, label]) => ({ valor, label }));
+    const premiumPlanosList = [
+      { nome: 'Mensal', assinantes: '4.120' },
+      { nome: 'Anual', assinantes: '8.340' },
+      { nome: 'Trial ativo', assinantes: '640' },
+    ];
+
+    const iaIndicadoresDefs = [
+      ['48.2k', 'Cartas geradas'], ['6.900', 'Vídeos'], ['3.100', 'Álbuns'], ['91.4k', 'Insights'], ['R$ 38k', 'Custos/mês'],
+      ['1.8s', 'Tempo médio'], ['0.4%', 'Erros'], ['87%', 'Cache hit'], ['12.6M', 'Tokens/dia'],
+    ];
+    const iaIndicadores = iaIndicadoresDefs.map(([valor, label]) => ({ valor, label }));
+    const iaFerramentas = ['Modelos', 'Prompts', 'Fallbacks', 'Limites', 'A/B Tests'];
+
+    const analyticsPaineisOptions = ['Aquisição', 'Retenção', 'Engajamento', 'Marketplace', 'Comunidade', 'Premium', 'Eventos', 'IA'];
+    const analyticsPaineisChips = this.buildChips(analyticsPaineisOptions, l => s.analyticsPainel === l, l => this.setVal('analyticsPainel', l));
+
+    const receitasList = [
+      { label: 'Marketplace', valor: 'R$ 96.400' },
+      { label: 'Premium', valor: 'R$ 214.200' },
+      { label: 'Eventos', valor: 'R$ 38.900' },
+      { label: 'Comissões', valor: 'R$ 12.100' },
+      { label: 'Reembolsos', valor: '-R$ 4.300' },
+    ];
+    const integracoesListDefs = [{ nome: 'Stripe' }, { nome: 'Apple Pay' }, { nome: 'Google Pay' }, { nome: 'PIX' }];
+    const integracoesList = integracoesListDefs.map(i => {
+      const desconectado = !!s.integracoesDesconectadas[i.nome];
+      return {
+        ...i,
+        desconectado,
+        statusLabel: desconectado ? 'Desconectado' : 'Ativo',
+        dotColor: desconectado ? '#a39c8a' : '#6B7353',
+        statusColor: desconectado ? '#a39c8a' : '#4F5D45',
+        actionLabel: desconectado ? 'Conectar' : 'Desconectar',
+        onAction: desconectado
+          ? this.toggleIntegracao(i.nome)
+          : this.askConfirm('Desconectar integração?', `Desconectar "${i.nome}" interrompe pagamentos por esse meio.`, 'Desconectar', this.toggleIntegracao(i.nome)),
+      };
+    });
+
+    const cmsListDefsBase = [
+      ['Artigos', 84], ['Tutoriais', 22], ['Banners', 6], ['Categorias', 18], ['FAQ', 41], ['Emails', 12], ['Push', 9], ['Landing pages', 5],
+    ];
+    const cmsList = cmsListDefsBase.map(([label, count], i) => ({ label, count, id: i, onClick: () => { this.setState({ selectedCms: i }); this.goTo(22); } }));
+
+    const segmentacaoOptions = ['País', 'Cidade', 'Plano', 'Idioma', 'Interesses', 'Atividade'];
+    const campanhasList = [
+      { titulo: 'Lembrete: Copa Nacional de Salto', tipo: 'Push', data: '18 jul, 09:00' },
+      { titulo: 'Novidades do Clube Premium', tipo: 'Email', data: '22 jul, 14:00' },
+      { titulo: 'Convite: Masterclass de Fotografia', tipo: 'In-app', data: '25 jul, 10:00' },
+    ];
+
+    const suporteCategoriaOptions = ['Todos', 'Pagamento', 'Bug', 'Marketplace', 'Eventos', 'Premium', 'IA', 'Conta'];
+    const suporteCategoriaChips = this.buildChips(suporteCategoriaOptions, l => s.suporteCategoria === l, l => this.setVal('suporteCategoria', l));
+    const chamadosDefsBase = [
+      { assunto: 'Cobrança duplicada no plano anual', categoria: 'Pagamento', prioridade: 'Alta', sla: '2h', cliente: 'Mauro Andrade', mensagem: 'Fui cobrado duas vezes pelo plano anual neste mês. Podem verificar e reembolsar a duplicidade?' },
+      { assunto: 'Erro ao gerar retrospectiva em vídeo', categoria: 'Bug', prioridade: 'Média', sla: '8h', cliente: 'Carlos Melo', mensagem: 'A retrospectiva em vídeo trava em 80% e não conclui, testei em duas redes diferentes.' },
+      { assunto: 'Dúvida sobre reembolso de produto', categoria: 'Marketplace', prioridade: 'Baixa', sla: '24h', cliente: 'Ana Ferraz', mensagem: 'Comprei uma sela e preciso trocar o tamanho, como funciona o reembolso?' },
+      { assunto: 'Não recebeu certificado do evento', categoria: 'Eventos', prioridade: 'Média', sla: '12h', cliente: 'Helena Ribeiro', mensagem: 'Participei da Clínica de Adestramento mas o certificado não chegou por email.' },
+      { assunto: 'Cancelamento de assinatura Premium', categoria: 'Premium', prioridade: 'Alta', sla: '2h', cliente: 'Renata Souza', mensagem: 'Quero cancelar o Premium mas o botão de cancelar não aparece para mim.' },
+    ];
+    const chamadosDefs = chamadosDefsBase.map((c, i) => ({ ...c, id: i }));
+    const prioColors = { Alta: ['rgba(196,90,60,.14)', '#a1503a'], Média: ['rgba(201,161,90,.16)', '#8A6E4B'], Baixa: ['rgba(107,115,83,.15)', '#4F5D45'] };
+    const chamadosList = chamadosDefs.map(c => {
+      const [bg, color] = prioColors[c.prioridade];
+      const status = (s.chamadosState[c.id] && s.chamadosState[c.id].status) || 'Aberto';
+      return { ...c, bg, color, status, onClick: () => { this.setState({ selectedChamado: c.id }); this.goTo(21); } };
+    });
+
+    const auditoriaDefs = [
+      { acao: 'Usuário #4471 banido', ator: 'Admin: Renata Souza', tempo: 'há 8 min' },
+      { acao: 'Permissão de moderador concedida', ator: 'Admin: Paulo Lima', tempo: 'há 40 min' },
+      { acao: 'Reembolso aprovado — Pedido #8821', ator: 'Financeiro: Júlia Prado', tempo: 'há 1h' },
+      { acao: 'Feature flag "videosIa" ativada', ator: 'Produto: Diego Alves', tempo: 'há 3h' },
+      { acao: 'Login administrativo', ator: 'Admin: Renata Souza', tempo: 'há 5h' },
+      { acao: 'Conteúdo removido — denúncia #221', ator: 'Moderação: Bianca Reis', tempo: 'há 6h' },
+    ];
+    const auditoriaList = auditoriaDefs.map((a, i) => ({ ...a, hasLine: i < auditoriaDefs.length - 1 }));
+
+    const configGlobaisListDefs = [
+      ['Idioma padrão', 'Português (Brasil)'], ['Países ativos', '14'], ['Planos', '3'], ['Categorias', '22'],
+      ['Modelo de IA padrão', 'EquiSoul-Vision-2'], ['Comissão marketplace', '8%'], ['Prazo de cancelamento de eventos', '48h'], ['Feature flags ativas', '5 de 7'],
+    ];
+    const configGlobaisList = configGlobaisListDefs.map(([label, valor]) => ({ label, valor }));
+
+    const logsListDefs = [
+      ['API', 'GET /v2/memories 200 · 82ms'], ['IA', 'gen_letter completed · 1.4s'], ['Uploads', 'photo_8891.jpg stored'],
+      ['Marketplace', 'order_2213 payment confirmed'], ['Eventos', 'checkin event_44 · user_921'], ['Push', 'campaign_12 sent to 8.4k'],
+      ['Banco', 'replica lag 0.3s'], ['Emails', 'digest_weekly delivered'], ['API', 'POST /v2/albums 201 · 140ms'], ['IA', 'insight_engine batch #88'],
+    ];
+    const logsList = logsListDefs.map(([fonte, mensagem]) => ({ fonte, mensagem }));
+
+    const apisListDefs = [
+      { key: 'ios', nome: 'App iOS', chave: 'sk_live_••••4f2a', rateLimit: '5k req/min' },
+      { key: 'android', nome: 'App Android', chave: 'sk_live_••••9b31', rateLimit: '5k req/min' },
+      { key: 'marketplace', nome: 'Parceiro Marketplace', chave: 'sk_live_••••1c08', rateLimit: '600 req/min' },
+      { key: 'financeiro', nome: 'Webhook Financeiro', chave: 'whsec_••••77ae', rateLimit: '—' },
+    ];
+    const apisList = apisListDefs.map(a => {
+      const st = s.apisState[a.key] || {};
+      const revogada = !!st.revoked;
+      const chaveExibida = revogada ? 'revogada' : (st.rotated ? a.chave.slice(0, 8) + '••••' + Math.random().toString(16).slice(2, 6) : a.chave);
+      return {
+        ...a,
+        revogada,
+        ativa: !revogada,
+        chaveExibida: revogada ? '••• revogada •••' : (st.rotated ? a.chave.slice(0, -4) + 'a2f9' : a.chave),
+        copiado: !!st.copied,
+        copiarLabel: st.copied ? 'Copiado ✓' : 'Copiar',
+        onCopiar: this.setApiAction(a.key, { copied: true }),
+        onRotacionar: this.askConfirm('Rotacionar chave?', `Gerar uma nova chave para "${a.nome}"? A chave atual deixará de funcionar.`, 'Rotacionar', this.setApiAction(a.key, { rotated: true, copied: false })),
+        onRevogar: this.askConfirm('Revogar chave?', `Revogar acesso de "${a.nome}" imediatamente?`, 'Revogar', this.setApiAction(a.key, { revoked: true })),
+      };
+    });
+
+    const flagsDefs = [
+      { key: 'novoOnboarding', nome: 'Novo onboarding', escopo: 'Todos os países · v3.4+' },
+      { key: 'ranking2', nome: 'Ranking 2.0', escopo: 'Brasil · beta' },
+      { key: 'videosIa', nome: 'Vídeos automáticos por IA', escopo: 'Usuários Premium' },
+      { key: 'marketplacePro', nome: 'Marketplace Pro', escopo: 'Profissionais verificados' },
+      { key: 'checkinQr', nome: 'Check-in por QR', escopo: 'Todos os eventos' },
+      { key: 'temaHaras', nome: 'Tema Haras Clássico', escopo: 'Premium · fidelidade 12m+' },
+      { key: 'buscaSemantica', nome: 'Busca semântica na timeline', escopo: 'Rollout gradual · 10%' },
+    ];
+    const flagsList = flagsDefs.map(f => {
+      const on = s.flags[f.key];
+      const hasRollout = f.key === 'buscaSemantica';
+      const percent = s.rolloutPercent[f.key] ?? 10;
+      return {
+        ...f,
+        trackBg: on ? '#6B7353' : 'rgba(43,41,36,.12)',
+        knobLeft: on ? '19px' : '3px',
+        toggle: this.toggleFlag(f.key),
+        escopo: hasRollout ? `Rollout gradual · ${percent}%` : f.escopo,
+        hasRollout: hasRollout && on,
+        percent,
+        onPercent: (e) => this.setState(st => ({ rolloutPercent: { ...st.rolloutPercent, [f.key]: Number(e.target.value) } })),
+      };
+    });
+
+    // ---- Usuário detalhe (19) ----
+    const usuarioDetalhe = usuariosDefs[s.selectedUsuario] || usuariosDefs[0];
+    const banido = usuarioDetalhe.status === 'Banido';
+    const naoBanido = !banido;
+    const verificado = usuarioDetalhe.status === 'Verificado';
+    const naoVerificado = !verificado;
+
+    // ---- Cavalo detalhe (20) ----
+    const cavaloDetalhe = cavalosDefs[s.selectedCavalo] || cavalosDefs[0];
+
+    // ---- Chamado detalhe (21) ----
+    const chamadoDetalhe = chamadosDefs[s.selectedChamado] || chamadosDefs[0];
+    const chamadoState = s.chamadosState[chamadoDetalhe.id] || {};
+    const chamadoStatus = chamadoState.status || 'Aberto';
+    const chamadoResolvido = chamadoStatus === 'Resolvido';
+    const chamadoNaoResolvido = !chamadoResolvido;
+
+    // ---- CMS editor (22) ----
+    const cmsItemBase = cmsList[s.selectedCms] || cmsList[0];
+    const cmsEdit = s.cmsState[cmsItemBase.id] || {};
+    const cmsTitulo = cmsEdit.titulo ?? cmsItemBase.label;
+    const cmsConteudo = cmsEdit.conteudo ?? '';
+
+    // ---- Global search (mock cross-module) ----
+    const searchIndex = [
+      ...usuariosDefs.map(u => ({ tipo: 'Usuário', label: u.nome, onClick: () => { this.setState({ selectedUsuario: u.id, searchOpen: false }); this.goTo(19); } })),
+      ...cavalosDefs.map(c => ({ tipo: 'Cavalo', label: c.nome, onClick: () => { this.setState({ selectedCavalo: c.id, searchOpen: false }); this.goTo(20); } })),
+      ...chamadosDefs.map(c => ({ tipo: 'Chamado', label: c.assunto, onClick: () => { this.setState({ selectedChamado: c.id, searchOpen: false }); this.goTo(21); } })),
+      ...menuModulos.map(m => ({ tipo: 'Módulo', label: m.label, onClick: () => { this.setState({ searchOpen: false }); m.onClick(); } })),
+    ];
+    const gq = s.globalQuery.trim().toLowerCase();
+    const searchResults = gq ? searchIndex.filter(r => r.label.toLowerCase().includes(gq)).slice(0, 8) : [];
+    const searchNoResults = !!gq && searchResults.length === 0;
+
+    // ---- Logs search + pagination ----
+    const lq = s.logsQuery.trim().toLowerCase();
+    const logsFiltrados = logsList.filter(l => !lq || l.fonte.toLowerCase().includes(lq) || l.mensagem.toLowerCase().includes(lq));
+    const logsListVisivel = logsFiltrados.slice(0, s.logsVisiveis);
+    const logsTemMais = logsFiltrados.length > s.logsVisiveis;
+    const logsVazio = logsFiltrados.length === 0;
+
+    return {
+      ...screenIs,
+      screenDisplay: s.screen + 1,
+      totalScreens: 24,
+      screenLabel: screenNames[s.screen],
+      next: this.next,
+      goBack: this.goBack,
+      toDashboard: jump(0),
+      menuModulos, menuOpen: s.menuOpen, openMenu: this.setVal('menuOpen', true), closeMenu: this.setVal('menuOpen', false),
+      searchOpen: s.searchOpen, openSearch: this.setVal('searchOpen', true), closeSearch: () => this.setState({ searchOpen: false, globalQuery: '' }),
+      globalQuery: s.globalQuery, onGlobalQuery: (e) => this.setState({ globalQuery: e.target.value }), searchResults, searchHasResults: searchResults.length > 0, searchHasQuery: !!gq, searchNoResults, stopClick,
+      confirm: s.confirm, closeConfirm: this.closeConfirm, runConfirm: this.runConfirm,
+      periodoChips, dashboardKpis, alertasList, moduloAtalhos,
+      usuarioFiltroChips, usuariosList, usuarioQuery: s.usuarioQuery, onUsuarioQuery: (e) => this.setState({ usuarioQuery: e.target.value }),
+      usuariosTemMais, usuariosVazio, carregarMaisUsuarios: () => this.setState(st => ({ usuariosVisiveis: st.usuariosVisiveis + 6 })),
+      cavalosList, cavalosTemMais, carregarMaisCavalos: () => this.setState(st => ({ cavalosVisiveis: st.cavalosVisiveis + 4 })),
+      comunidadeTipoChips, comunidadeItens,
+      denunciasList,
+      marketplaceTipoChips, marketplaceItens,
+      eventosAdminList, abrirCriarEvento: jump(23),
+      premiumMetricas, premiumPlanosList,
+      iaIndicadores, iaFerramentas,
+      analyticsPaineisChips, analyticsPainelAtivo: s.analyticsPainel,
+      receitasList, integracoesList,
+      cmsList,
+      segmentacaoOptions, campanhasList,
+      suporteCategoriaChips, chamadosList,
+      auditoriaList,
+      configGlobaisList,
+      logsQuery: s.logsQuery, onLogsQuery: (e) => this.setState({ logsQuery: e.target.value }),
+      logsList: logsListVisivel, logsTemMais, logsVazio, carregarMaisLogs: () => this.setState(st => ({ logsVisiveis: st.logsVisiveis + 10 })),
+      apisList,
+      flagsList,
+      // detail screens
+      usuarioDetalhe, banido, naoBanido, verificado, naoVerificado,
+      banirUsuario: this.askConfirm('Banir usuário?', `Banir "${usuarioDetalhe.nome}"? Ele perderá acesso à plataforma.`, 'Banir', this.setUsuarioStatus(usuarioDetalhe.id, 'Banido')),
+      reativarUsuario: this.setUsuarioStatus(usuarioDetalhe.id, 'Ativo'),
+      verificarUsuario: this.askConfirm('Verificar usuário?', `Marcar "${usuarioDetalhe.nome}" como verificado?`, 'Verificar', this.setUsuarioStatus(usuarioDetalhe.id, 'Verificado')),
+      reembolsarUsuario: this.askConfirm('Processar reembolso?', `Reembolsar a última cobrança de "${usuarioDetalhe.nome}"?`, 'Reembolsar', () => {}),
+      cavaloDetalhe,
+      chamadoDetalhe, chamadoStatus, chamadoResolvido, chamadoNaoResolvido, chamadoResposta: chamadoState.resposta || '',
+      onChamadoResposta: (e) => this.setChamadoResposta(chamadoDetalhe.id, e.target.value),
+      marcarChamadoResolvido: this.setChamadoStatus(chamadoDetalhe.id, 'Resolvido'),
+      reabrirChamado: this.setChamadoStatus(chamadoDetalhe.id, 'Aberto'),
+      cmsTitulo, cmsConteudo, cmsLabel: cmsItemBase.label,
+      onCmsTitulo: (e) => this.setCmsField(cmsItemBase.id, 'titulo', e.target.value),
+      onCmsConteudo: (e) => this.setCmsField(cmsItemBase.id, 'conteudo', e.target.value),
+      salvarCms: jump(11),
+      novoEvento: s.novoEvento,
+      onNovoEventoTitulo: (e) => this.setNovoEventoField('titulo', e.target.value),
+      onNovoEventoData: (e) => this.setNovoEventoField('data', e.target.value),
+      onNovoEventoOrganizador: (e) => this.setNovoEventoField('organizador', e.target.value),
+      salvarEvento: this.salvarEvento,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#EDE8DE;font-family:'Nunito',sans-serif;-webkit-font-smoothing:antialiased}
+  .placeholder{background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.06) 0px,rgba(0,0,0,.06) 2px,transparent 2px,transparent 12px);background-color:#EAE4D6}
+  .ph-label{font:600 10px ui-monospace,Menlo,monospace;letter-spacing:.02em;text-transform:uppercase;text-align:center;padding:0 30px}
+  input::placeholder, textarea::placeholder{color:#a39c8a}
+  input, textarea{font-family:'Nunito',sans-serif;outline:none;box-sizing:border-box}
+  a{color:#6B7353}
+  a:hover{color:#4F5D45}
+  ::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:56px 20px;font-family:'Nunito',sans-serif">
+
+  <div style="display:flex;align-items:center;gap:22px">
+
+    <div onClick="{{ goBackMeta }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+
+    <div style="width:390px;height:844px;background:#FBF9F4;position:relative;overflow:hidden;box-shadow:0 30px 70px rgba(43,41,36,.22);flex:none" data-screen-label="Agenda e Analytics">
+
+      <!-- 0 DASHBOARD DA AGENDA -->
+      <sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 110px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Agenda</div>
+          <div style="margin-top:14px;border-radius:20px;background:rgba(201,161,90,.12);padding:16px">
+            <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#2B2924">Esta semana vocês possuem dois treinos, um evento e um lembrete de ferrageamento.</div>
+          </div>
+
+          <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <sc-for list="{{ dashboardCards }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px;cursor:pointer">
+                <div style="font:700 11px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.03em">{{ c.label }}</div>
+                <div style="margin-top:8px;font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ c.valor }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Ações rápidas</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ acoesRapidas }}" as="a" hint-placeholder-count="5">
+              <div onClick="{{ a.onClick }}" style="padding:9px 14px;border-radius:16px;background:rgba(43,41,36,.06);color:#2B2924;font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ a.label }}</div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ agendaLinkCopiado }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:8px;font:700 11px 'Nunito',sans-serif;color:#4F5D45">Link da agenda copiado ✓</div>
+          </sc-if>
+
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Explorar</div>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <div onClick="{{ toCalendario }}" style="flex:1;height:44px;border-radius:22px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#2B2924" stroke-width="1.8"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>
+              <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">Calendário</div>
+            </div>
+            <div onClick="{{ toAnalytics }}" style="flex:1;height:44px;border-radius:22px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;gap:6px;cursor:pointer">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#2B2924" stroke-width="1.8"><path d="M4 19V9M12 19V4M20 19v-7"/></svg>
+              <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">Analytics</div>
+            </div>
+          </div>
+
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Insights</div>
+          <div onClick="{{ toInsights }}" style="margin-top:10px;display:flex;align-items:center;gap:10px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A6E4B" stroke-width="1.8"><path d="M12 3a9 9 0 100 18 9 9 0 000-18z"/><path d="M12 8v4l2.5 2.5"/></svg>
+            <div style="font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">Vocês participaram de mais eventos este semestre do que no anterior.</div>
+          </div>
+        </div>
+
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:20">
+          <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg>
+          </a>
+          <a href="./Criar%20Memoria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;margin-top:-18px;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <div onClick="{{ toDashboardAgenda }}" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>
+          </div>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg>
+          </a>
+        </div>
+      </sc-if>
+
+      <!-- 1 CALENDARIO -->
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 110px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </div>
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Calendário</div>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:8px;overflow-x:auto;mask-image:linear-gradient(90deg,transparent,#000 20px,#000 calc(100% - 20px),transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 20px,#000 calc(100% - 20px),transparent)">
+            <sc-for list="{{ visualizacaoChips }}" as="c" hint-placeholder-count="5">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:18px;font:700 15px 'Nunito',sans-serif;color:#2B2924">Julho 2026</div>
+          <div style="margin-top:12px;display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center">
+            <sc-for list="{{ weekdayLabels }}" as="w" hint-placeholder-count="7">
+              <div style="font:700 10px 'Nunito',sans-serif;color:#a39c8a">{{ w }}</div>
+            </sc-for>
+            <sc-for list="{{ calendarDays }}" as="d" hint-placeholder-count="35">
+              <div onClick="{{ d.onClick }}" style="position:relative;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font:600 12px 'Nunito',sans-serif;color:{{ d.color }};cursor:{{ d.cursor }}">
+                {{ d.num }}
+                <sc-if value="{{ d.eventColor }}"><div style="position:absolute;bottom:4px;width:4px;height:4px;border-radius:50%;background:{{ d.eventColor }}"></div></sc-if>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Legenda</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:10px">
+            <sc-for list="{{ calendarioLegenda }}" as="l" hint-placeholder-count="9">
+              <div style="display:flex;align-items:center;gap:6px"><div style="width:8px;height:8px;border-radius:50%;background:{{ l.cor }}"></div><div style="font:600 11px 'Nunito',sans-serif;color:#2B2924">{{ l.label }}</div></div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 2 AGENDA DO DIA -->
+      <sc-if value="{{ s2 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </div>
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Sáb, 20 de julho</div>
+          </div>
+
+          <sc-if value="{{ temEventosNoDia }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:16px;display:flex;flex-direction:column">
+              <sc-for list="{{ agendaDiaList }}" as="a" as-index="$index" hint-placeholder-count="4">
+                <div style="display:flex;gap:14px">
+                  <div style="width:48px;flex:none;font:700 12px 'Nunito',sans-serif;color:#8A6E4B;padding-top:2px">{{ a.hora }}</div>
+                  <div style="display:flex;flex-direction:column;align-items:center;flex:none">
+                    <div style="width:11px;height:11px;border-radius:50%;background:{{ a.cor }}"></div>
+                    <sc-if value="{{ a.hasLine }}"><div style="width:2px;flex:1;background:rgba(43,41,36,.12);margin:2px 0"></div></sc-if>
+                  </div>
+                  <div style="padding-bottom:20px;flex:1;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px;margin-bottom:6px;opacity:{{ a.opacity }}">
+                    <div style="display:flex;align-items:center;gap:6px">
+                      <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924;text-decoration:{{ a.titleDecoration }}">{{ a.titulo }}</div>
+                      <sc-if value="{{ a.showCheck }}"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#6B7353" stroke-width="2.4"><path d="M5 13l4 4L19 7"/></svg></sc-if>
+                    </div>
+                    <div style="margin-top:4px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ a.local }} · {{ a.cavalo }}</div>
+                    <sc-if value="{{ a.statusLabel }}"><div style="margin-top:6px;display:inline-block;padding:3px 8px;border-radius:8px;background:{{ a.statusBg }};font:700 10px 'Nunito',sans-serif;color:{{ a.statusColor }}">{{ a.statusLabel }}</div></sc-if>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div onClick="{{ toRegistrarMemoria }}" style="margin-top:8px;height:52px;border-radius:26px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Registrar memória do dia</div>
+          </sc-if>
+
+          <sc-if value="{{ semEventosNoDia }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:40px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px">
+              <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#a39c8a" stroke-width="1.6"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>
+              <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Nenhum compromisso neste dia</div>
+              <div style="font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558;max-width:220px">Aproveite para descansar ou adicione algo novo à agenda.</div>
+              <div onClick="{{ toCriarCompromisso }}" style="margin-top:8px;height:48px;padding:0 22px;border-radius:24px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Adicionar compromisso</div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- 3 CRIAR COMPROMISSO -->
+      <sc-if value="{{ s3 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </div>
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Novo compromisso</div>
+          </div>
+          <div style="margin-top:16px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Tipo</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;mask-image:linear-gradient(90deg,#000 calc(100% - 12px),transparent);-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 12px),transparent)">
+            <sc-for list="{{ tipoCompromissoChips }}" as="c" hint-placeholder-count="7">
+              <div onClick="{{ c.onClick }}" style="padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:10px">
+            <input placeholder="Título" style="height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            <div style="display:flex;gap:10px">
+              <input placeholder="Data" style="flex:1;min-width:0;width:100%;height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+              <input placeholder="Hora" style="flex:1;min-width:0;width:100%;height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+            <input placeholder="Local" style="height:48px;border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+
+            <div onClick="{{ toggleCavaloPicker }}" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:16px;background:rgba(43,41,36,.05);cursor:pointer">
+              <div style="width:32px;height:32px;border-radius:50%;flex:none;padding:2px;background:linear-gradient(135deg,#C9A15A,#8A6E4B,#6B7353)">
+                <div style="width:100%;height:100%;border-radius:50%;background:#FBF9F4;padding:2px">
+                  <div style="width:100%;height:100%;border-radius:50%" class="placeholder"></div>
+                </div>
+              </div>
+              <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924;flex:1">{{ cavaloSelecionado }}</div>
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#6b6558" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+            <sc-if value="{{ showCavaloPicker }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;gap:8px;flex-wrap:wrap;padding-left:4px">
+                <sc-for list="{{ cavaloOptions }}" as="h" hint-placeholder-count="2">
+                  <div onClick="{{ h.onClick }}" style="padding:8px 14px;border-radius:14px;background:{{ h.bg }};color:{{ h.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ h.nome }}</div>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <textarea placeholder="Observações" rows="3" style="border-radius:14px;border:1.5px solid rgba(43,41,36,.12);padding:12px 14px;font:500 13px 'Nunito',sans-serif;color:#2B2924;resize:none"></textarea>
+          </div>
+          <div style="margin-top:18px;display:flex;gap:10px">
+            <div onClick="{{ back }}" style="flex:1;height:52px;border-radius:26px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Cancelar</div>
+            <div onClick="{{ toDashboardAgenda }}" style="flex:1.4;height:52px;border-radius:26px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Salvar compromisso</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 4 PLANEJAMENTO SEMANAL -->
+      <sc-if value="{{ s4 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </div>
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Planejamento semanal</div>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ planejamentoSemana }}" as="d" hint-placeholder-count="7">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="width:36px;flex:none;font:700 11px 'Nunito',sans-serif;color:#8A6E4B">{{ d.dia }}</div>
+                <div style="flex:1;height:34px;border-radius:10px;background:{{ d.bg }};display:flex;align-items:center;padding:0 12px">
+                  <div style="font:700 11px 'Nunito',sans-serif;color:{{ d.color }}">{{ d.label }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:18px;display:flex;align-items:center;gap:10px;border-radius:16px;background:rgba(201,161,90,.12);padding:14px">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A6E4B" stroke-width="1.8"><path d="M12 3a9 9 0 100 18 9 9 0 000-18z"/><path d="M12 8v4l2.5 2.5"/></svg>
+            <div style="font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">Você programou quatro atividades intensas consecutivas. Talvez seja interessante avaliar a distribuição da rotina.</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 5 METAS -->
+      <sc-if value="{{ s5 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </div>
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Metas</div>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ metasList }}" as="m" hint-placeholder-count="5">
+              <div style="border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:16px">
+                <div style="display:flex;justify-content:space-between"><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ m.titulo }}</div><div style="font:600 11px 'Nunito',sans-serif;color:#8A6E4B">{{ m.prazo }}</div></div>
+                <div style="margin-top:10px;height:6px;border-radius:3px;background:rgba(43,41,36,.06);overflow:hidden">
+                  <div style="height:100%;width:{{ m.progresso }}%;border-radius:3px;background:#6B7353"></div>
+                </div>
+                <div style="margin-top:6px;font:600 11px 'Nunito',sans-serif;color:#6b6558">{{ m.progressoLabel }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 6 CLIMA -->
+      <sc-if value="{{ s6 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px;text-align:center">
+          <div style="display:flex;align-items:center;gap:12px;text-align:left">
+            <div onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </div>
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Clima</div>
+          </div>
+          <div style="margin-top:6px;display:flex;align-items:center;justify-content:space-between">
+            <div onClick="{{ atualizarClima }}" style="display:flex;align-items:center;gap:5px;cursor:pointer">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#8A6E4B" stroke-width="2"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M5.6 9A7.5 7.5 0 0119 8.5M18.4 15A7.5 7.5 0 015 15.5"/></svg>
+              <div style="font:600 11px 'Nunito',sans-serif;color:#8A6E4B">Atualizado há {{ climaAtualizadoHaMinLabel }}</div>
+            </div>
+          </div>
+          <div style="margin-top:12px;border-radius:24px;background:linear-gradient(160deg,#C9A15A,#8A6E4B);padding:26px">
+            <div style="font:800 42px 'Nunito',sans-serif;color:#FBF9F4">26°C</div>
+            <div style="margin-top:2px;font:600 13px 'Nunito',sans-serif;color:rgba(251,249,244,.85)">Ensolarado · Ribeirão Preto, SP</div>
+            <div style="margin-top:16px;display:flex;justify-content:space-around">
+              <div><div style="font:700 13px 'Nunito',sans-serif;color:#FBF9F4">14%</div><div style="font:600 10px 'Nunito',sans-serif;color:rgba(251,249,244,.7)">chuva</div></div>
+              <div><div style="font:700 13px 'Nunito',sans-serif;color:#FBF9F4">12 km/h</div><div style="font:600 10px 'Nunito',sans-serif;color:rgba(251,249,244,.7)">vento</div></div>
+              <div><div style="font:700 13px 'Nunito',sans-serif;color:#FBF9F4">06:12</div><div style="font:600 10px 'Nunito',sans-serif;color:rgba(251,249,244,.7)">nascer do sol</div></div>
+            </div>
+          </div>
+          <div style="margin-top:16px;display:flex;gap:8px;overflow-x:auto">
+            <sc-for list="{{ climaProximosDias }}" as="c" hint-placeholder-count="5">
+              <div style="flex:none;width:64px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 0">
+                <div style="font:700 11px 'Nunito',sans-serif;color:#2B2924">{{ c.dia }}</div>
+                <div style="margin-top:6px;font:700 13px 'Nunito',sans-serif;color:#8A6E4B">{{ c.temp }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;text-align:left;display:flex;align-items:center;gap:10px;border-radius:16px;background:rgba(201,161,90,.12);padding:14px">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A6E4B" stroke-width="1.8"><path d="M12 3a9 9 0 100 18 9 9 0 000-18z"/><path d="M12 8v4l2.5 2.5"/></svg>
+            <div style="font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">Há previsão de chuva para amanhã. Caso seus planos dependam de pista externa, vale considerar uma alternativa.</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 7 ANALYTICS -->
+      <sc-if value="{{ s7 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 110px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Analytics</div>
+          <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Sua evolução, em poucos números e muita história.</div>
+          <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <sc-for list="{{ analyticsCategorias }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:16px;cursor:pointer">
+                <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">{{ c.valor }}</div>
+                <div style="margin-top:2px;font:600 12px 'Nunito',sans-serif;color:#6b6558">{{ c.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Atividade — últimos 7 dias</div>
+          <div style="margin-top:12px;border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:16px 16px 12px">
+            <div style="display:flex;align-items:flex-end;gap:8px;height:90px">
+              <sc-for list="{{ atividadeSemana }}" as="b" hint-placeholder-count="7">
+                <div style="flex:1;height:{{ b.pct }}%;border-radius:6px 6px 0 0;background:#6B7353"></div>
+              </sc-for>
+            </div>
+            <div style="margin-top:6px;display:flex;gap:8px">
+              <sc-for list="{{ atividadeSemana }}" as="b" hint-placeholder-count="7">
+                <div style="flex:1;text-align:center;font:600 10px 'Nunito',sans-serif;color:#a39c8a">{{ b.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="margin-top:18px;display:flex;gap:10px">
+            <div onClick="{{ toEvolucao }}" style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 12px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Evolução</div>
+            <div onClick="{{ toLinhaAnalitica }}" style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 12px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Linha do tempo</div>
+          </div>
+          <div onClick="{{ toRelatorios }}" style="margin-top:10px;height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 12px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Relatórios</div>
+        </div>
+
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:20">
+          <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg>
+          </a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg>
+          </a>
+          <a href="./Criar%20Memoria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;margin-top:-18px;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </a>
+          <div onClick="{{ toDashboardAgenda }}" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>
+          </div>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg>
+          </a>
+        </div>
+      </sc-if>
+
+      <!-- 8 EVOLUCAO -->
+      <sc-if value="{{ s8 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </div>
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Evolução</div>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:8px">
+            <sc-for list="{{ periodoChips }}" as="c" hint-placeholder-count="4">
+              <div onClick="{{ c.onClick }}" style="padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <sc-for list="{{ evolucaoIndicadores }}" as="i" hint-placeholder-count="6">
+              <div style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px;text-align:center">
+                <div style="font:800 18px 'Nunito',sans-serif;color:#2B2924">{{ i.valor }}</div>
+                <div style="margin-top:2px;font:600 11px 'Nunito',sans-serif;color:#6b6558">{{ i.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:16px 16px 12px">
+            <div style="font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.03em;margin-bottom:8px">Dias ativos por semana</div>
+            <div style="display:flex;align-items:flex-end;gap:8px;height:80px">
+              <sc-for list="{{ evolucaoTendencia }}" as="b" hint-placeholder-count="6">
+                <div style="flex:1;height:{{ b.pct }}%;border-radius:6px 6px 0 0;background:#8A6E4B"></div>
+              </sc-for>
+            </div>
+            <div style="margin-top:6px;display:flex;gap:8px">
+              <sc-for list="{{ evolucaoTendencia }}" as="b" hint-placeholder-count="6">
+                <div style="flex:1;text-align:center;font:600 10px 'Nunito',sans-serif;color:#a39c8a">{{ b.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="margin-top:16px;font:500 13px/1.7 'Nunito',sans-serif;color:#6b6558">Você e Bela mantiveram uma rotina consistente neste período, com destaque para o aumento de passeios registrados.</div>
+        </div>
+      </sc-if>
+
+      <!-- 9 LINHA DO TEMPO ANALITICA -->
+      <sc-if value="{{ s9 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </div>
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Linha do tempo</div>
+          </div>
+          <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Cada mês é um capítulo da sua jornada.</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column">
+            <sc-for list="{{ linhaTempoMeses }}" as="m" as-index="$index" hint-placeholder-count="4">
+              <div style="display:flex;gap:14px">
+                <div style="display:flex;flex-direction:column;align-items:center;flex:none">
+                  <div style="width:12px;height:12px;border-radius:50%;background:#C9A15A"></div>
+                  <sc-if value="{{ m.hasLine }}"><div style="width:2px;flex:1;background:rgba(43,41,36,.12);margin:2px 0"></div></sc-if>
+                </div>
+                <div style="padding-bottom:22px;flex:1">
+                  <div style="font:800 13px 'Nunito',sans-serif;color:#2B2924">{{ m.mes }}</div>
+                  <div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ m.destaque }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 10 INSIGHTS INTELIGENTES -->
+      <sc-if value="{{ s10 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </div>
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Insights</div>
+          </div>
+          <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Observações baseadas nos seus registros.</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ insightsList }}" as="i" hint-placeholder-count="5">
+              <div style="border-radius:18px;background:rgba(201,161,90,.12);padding:16px;display:flex;gap:12px">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A6E4B" stroke-width="1.8" style="flex:none;margin-top:2px"><path d="M12 3a9 9 0 100 18 9 9 0 000-18z"/><path d="M12 8v4l2.5 2.5"/></svg>
+                <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#2B2924">{{ i }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 11 RELATORIOS -->
+      <sc-if value="{{ s11 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </div>
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Relatórios</div>
+          </div>
+          <div style="margin-top:16px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">A IA pode gerar</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ iaResumosOptions }}" as="r" hint-placeholder-count="7">
+              <div onClick="{{ r.onClick }}" style="display:flex;align-items:center;gap:12px;border-radius:16px;background:{{ r.bg }};border:1.5px solid {{ r.border }};box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px;cursor:pointer">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#8A6E4B" stroke-width="1.8"><path d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"/></svg>
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ r.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Exportar como</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ exportOptions }}" as="e" hint-placeholder-count="6">
+              <div onClick="{{ e.onClick }}" style="padding:9px 14px;border-radius:16px;background:{{ e.bg }};color:{{ e.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ e.label }}</div>
+            </sc-for>
+          </div>
+          <div onClick="{{ gerarRelatorio }}" style="margin-top:20px;height:52px;border-radius:26px;background:{{ gerarBg }};display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Gerar relatório</div>
+          <sc-if value="{{ relatorioStatus }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:12px;font:600 12px/1.6 'Nunito',sans-serif;color:#4F5D45">{{ relatorioStatus }}</div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <div onClick="{{ next }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+
+  </div>
+
+  <div style="display:flex;align-items:center;gap:16px;font:600 12px ui-monospace,Menlo,monospace;color:#6b6558">
+    <span>{{ screenLabel }} · tela {{ screenDisplay }} / {{ totalScreens }}</span>
+    <span onClick="{{ gotoInicioMeta }}" style="cursor:pointer;text-decoration:underline">início</span>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    screen: 0,
+    history: [],
+    visualizacaoCal: 'Mês',
+    tipoCompromisso: 'Treino',
+    periodo: '30 dias',
+    cavaloSelecionado: 'Bela',
+    showCavaloPicker: false,
+    diaVazio: false,
+    agendaLinkCopiado: false,
+    climaAtualizadoHaMin: 12,
+    resumoSelecionado: null,
+    exportSelecionado: null,
+    relatorioStatus: '',
+  };
+
+  goTo(n) { this.setState({ screen: Math.max(0, Math.min(11, n)) }); }
+  next = () => this.goTo(this.state.screen + 1);
+  goBackMeta = () => this.goTo(0);
+  gotoInicioMeta = () => this.goTo(0);
+
+  jump(n) {
+    return () => this.setState(s => ({ history: [...s.history, s.screen], screen: n }));
+  }
+  back = () => {
+    this.setState(s => {
+      const h = [...s.history];
+      const prev = h.pop();
+      return { history: h, screen: prev === undefined ? 0 : prev };
+    });
+  };
+
+  setVal(key, value) { return () => this.setState({ [key]: value }); }
+  buildChips(options, isSelected, onToggle) {
+    return options.map(label => ({
+      label,
+      bg: isSelected(label) ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: isSelected(label) ? '#C9A15A' : '#2B2924',
+      onClick: onToggle(label),
+    }));
+  }
+
+  toggleCavaloPicker = () => this.setState(s => ({ showCavaloPicker: !s.showCavaloPicker }));
+  escolherCavalo = (nome) => () => this.setState({ cavaloSelecionado: nome, showCavaloPicker: false });
+
+  toAgendaDiaFor = (temEvento) => () => this.setState(s => ({ history: [...s.history, s.screen], screen: 2, diaVazio: !temEvento }));
+
+  compartilharAgenda = () => {
+    this.setState({ agendaLinkCopiado: true });
+    setTimeout(() => this.setState({ agendaLinkCopiado: false }), 2200);
+  };
+
+  atualizarClima = () => this.setState({ climaAtualizadoHaMin: 0 });
+
+  selecionarResumo = (label) => () => this.setState({ resumoSelecionado: label, relatorioStatus: '' });
+  selecionarExport = (label) => () => this.setState({ exportSelecionado: label, relatorioStatus: '' });
+  gerarRelatorio = () => {
+    const s = this.state;
+    if (!s.resumoSelecionado || !s.exportSelecionado) {
+      this.setState({ relatorioStatus: 'Escolha um tipo de resumo e um formato de exportação primeiro.' });
+      return;
+    }
+    this.setState({ relatorioStatus: `Gerando "${s.resumoSelecionado}" em ${s.exportSelecionado}...` });
+  };
+
+  renderVals() {
+    const s = this.state;
+    const screenIs = {};
+    for (let i = 0; i <= 11; i++) screenIs['s' + i] = s.screen === i;
+
+    const screenNames = ['Dashboard da agenda','Calendário','Agenda do dia','Criar compromisso','Planejamento semanal','Metas','Clima','Analytics','Evolução','Linha do tempo analítica','Insights inteligentes','Relatórios'];
+
+    const toCalendario = this.jump(1);
+    const toAgendaDia = this.jump(2);
+    const toCriarCompromisso = this.jump(3);
+    const toPlanejamento = this.jump(4);
+    const toMetas = this.jump(5);
+    const toClima = this.jump(6);
+    const toAnalytics = this.jump(7);
+    const toEvolucao = this.jump(8);
+    const toLinhaAnalitica = this.jump(9);
+    const toInsights = this.jump(10);
+    const toRelatorios = this.jump(11);
+    const toDashboardAgenda = this.jump(0);
+
+    const dashboardCardsDefs = [
+      ['Agenda de hoje', '2 compromissos', toAgendaDia], ['Próximo evento', 'Copa Nacional · 20 jul', toAgendaDia],
+      ['Treino planejado', 'Hoje às 16h', toAgendaDia], ['Cuidados', 'Ferrageamento em 10 dias', toPlanejamento],
+      ['Metas', '3 em andamento', toMetas], ['Clima', '26°C · ensolarado', toClima],
+    ];
+    const dashboardCards = dashboardCardsDefs.map(([label, valor, onClick]) => ({ label, valor, onClick }));
+
+    const acoesRapidasDefs = [
+      ['Adicionar compromisso', toCriarCompromisso],
+      ['Registrar treino', () => { this.setState({ tipoCompromisso: 'Treino' }); toCriarCompromisso(); }],
+      ['Novo evento', () => { this.setState({ tipoCompromisso: 'Evento' }); toCriarCompromisso(); }],
+      ['Nova memória', () => { window.location.href = './Criar Memoria - EquiSoul.dc.html'; }],
+      ['Compartilhar agenda', this.compartilharAgenda],
+    ];
+    const acoesRapidas = acoesRapidasDefs.map(([label, onClick]) => ({ label, onClick }));
+
+    const visualizacaoOptions = ['Dia', 'Semana', 'Mês', 'Agenda', 'Linha do tempo'];
+    const visualizacaoChips = this.buildChips(visualizacaoOptions, l => s.visualizacaoCal === l, l => this.setVal('visualizacaoCal', l));
+    const weekdayLabels = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+    const eventColors = { 12: '#6B7353', 16: '#8A6E4B', 20: '#C9A15A', 28: '#4F5D45' };
+    const calendarDays = Array.from({ length: 35 }, (_, i) => {
+      const num = i - 2;
+      const valid = num >= 1 && num <= 31;
+      const hasEvento = valid && !!eventColors[num];
+      return {
+        num: valid ? num : '',
+        eventColor: valid ? eventColors[num] : null,
+        color: !valid ? 'transparent' : '#2B2924',
+        cursor: valid ? 'pointer' : 'default',
+        onClick: valid ? this.toAgendaDiaFor(hasEvento) : () => {},
+      };
+    });
+    const calendarioLegenda = [
+      { label: 'Treino', cor: '#a39c8a' }, { label: 'Competição', cor: '#4F5D45' }, { label: 'Consulta', cor: '#8A6E4B' },
+      { label: 'Vacina', cor: '#C9A15A' }, { label: 'Ferrageamento', cor: '#6B7353' }, { label: 'Evento', cor: '#8A6E4B' },
+      { label: 'Passeio', cor: '#6B7353' }, { label: 'Aniversário', cor: '#C9A15A' }, { label: 'Lembrete', cor: '#a39c8a' },
+    ];
+
+    const agendaDiaDefs = [
+      { hora: '08:00', titulo: 'Treino de adestramento', local: 'Haras Boa Vista', cavalo: 'Bela', cor: '#a39c8a', status: 'concluido' },
+      { hora: '13:00', titulo: 'Consulta de rotina', local: 'Clínica Hípica SP', cavalo: 'Bela', cor: '#8A6E4B', status: 'concluido' },
+      { hora: '16:00', titulo: 'Passeio na trilha', local: 'Serra Verde', cavalo: 'Bela', cor: '#6B7353', status: 'proximo' },
+      { hora: '19:00', titulo: 'Aula de longe', local: 'Haras Boa Vista', cavalo: 'Bela', cor: '#a39c8a', status: 'cancelado' },
+    ];
+    const statusMeta = {
+      concluido: { opacity: 0.55, showCheck: true, titleDecoration: 'none', statusLabel: '', statusBg: '', statusColor: '' },
+      proximo: { opacity: 1, showCheck: false, titleDecoration: 'none', statusLabel: '', statusBg: '', statusColor: '' },
+      cancelado: { opacity: 0.6, showCheck: false, titleDecoration: 'line-through', statusLabel: 'Cancelado', statusBg: 'rgba(184,92,76,.12)', statusColor: '#B85C4C' },
+    };
+    const agendaDiaListFull = agendaDiaDefs.map((a, i) => ({ ...a, ...statusMeta[a.status], hasLine: i < agendaDiaDefs.length - 1 }));
+    const temEventosNoDia = !s.diaVazio;
+    const agendaDiaList = temEventosNoDia ? agendaDiaListFull : [];
+
+    const tipoCompromissoOptions = ['Treino', 'Passeio', 'Consulta', 'Evento', 'Ferrageamento', 'Competição', 'Outro'];
+    const tipoCompromissoChips = this.buildChips(tipoCompromissoOptions, l => s.tipoCompromisso === l, l => this.setVal('tipoCompromisso', l));
+
+    const cavaloOptionsDefs = ['Bela', 'Thor'];
+    const cavaloOptions = cavaloOptionsDefs.map(nome => ({
+      nome,
+      bg: s.cavaloSelecionado === nome ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: s.cavaloSelecionado === nome ? '#C9A15A' : '#2B2924',
+      onClick: this.escolherCavalo(nome),
+    }));
+
+    const planejamentoDefs = [
+      { dia: 'Seg', label: 'Treino de solta', bg: 'rgba(43,41,36,.06)', color: '#2B2924' },
+      { dia: 'Ter', label: 'Descanso', bg: 'rgba(43,41,36,.03)', color: '#a39c8a' },
+      { dia: 'Qua', label: 'Treino de adestramento', bg: 'rgba(43,41,36,.06)', color: '#2B2924' },
+      { dia: 'Qui', label: 'Fisioterapia', bg: 'rgba(107,115,83,.14)', color: '#4F5D45' },
+      { dia: 'Sex', label: 'Treino de salto', bg: 'rgba(43,41,36,.06)', color: '#2B2924' },
+      { dia: 'Sáb', label: 'Copa Nacional de Salto', bg: 'rgba(201,161,90,.18)', color: '#8A6E4B' },
+      { dia: 'Dom', label: 'Passeio tranquilo', bg: 'rgba(43,41,36,.06)', color: '#2B2924' },
+    ];
+
+    const metasDefs = [
+      { titulo: 'Participar de duas trilhas', prazo: 'até 30 jul', progresso: 50 },
+      { titulo: 'Registrar quatro memórias', prazo: 'esta semana', progresso: 75 },
+      { titulo: 'Concluir um álbum', prazo: 'este mês', progresso: 30 },
+      { titulo: 'Participar de um evento', prazo: 'este mês', progresso: 100 },
+      { titulo: 'Treinar três vezes', prazo: 'esta semana', progresso: 66 },
+    ];
+    const metasList = metasDefs.map(m => ({ ...m, progressoLabel: m.progresso + '% concluído' }));
+
+    const climaProximosDias = [
+      { dia: 'Hoje', temp: '26°C' }, { dia: 'Amanhã', temp: '21°C' }, { dia: 'Qua', temp: '23°C' }, { dia: 'Qui', temp: '24°C' }, { dia: 'Sex', temp: '25°C' },
+    ];
+    const climaAtualizadoHaMinLabel = s.climaAtualizadoHaMin === 0 ? 'poucos segundos' : s.climaAtualizadoHaMin + ' min';
+
+    const analyticsCategoriasDefs = [
+      ['128', 'Treinos', toEvolucao], ['34', 'Passeios', toEvolucao], ['9', 'Eventos', toEvolucao],
+      ['5', 'Competições', toEvolucao], ['312', 'Memórias', () => { window.location.href = './Home e Diario - EquiSoul.dc.html'; }], ['48h', 'Tempo junto', toLinhaAnalitica],
+    ];
+    const analyticsCategorias = analyticsCategoriasDefs.map(([valor, label, onClick]) => ({ valor, label, onClick }));
+
+    const atividadeSemana = [
+      { label: 'Seg', pct: 55 }, { label: 'Ter', pct: 20 }, { label: 'Qua', pct: 75 }, { label: 'Qui', pct: 40 },
+      { label: 'Sex', pct: 90 }, { label: 'Sáb', pct: 100 }, { label: 'Dom', pct: 35 },
+    ];
+
+    const periodoOptions = ['7 dias', '30 dias', '90 dias', '1 ano'];
+    const periodoChips = this.buildChips(periodoOptions, l => s.periodo === l, l => this.setVal('periodo', l));
+    const evolucaoIndicadoresDefs = [
+      ['22', 'Dias ativos'], ['14', 'Treinos'], ['6', 'Passeios'], ['2', 'Eventos'], ['48', 'Memórias'], ['5', 'Conquistas'],
+    ];
+    const evolucaoIndicadores = evolucaoIndicadoresDefs.map(([valor, label]) => ({ valor, label }));
+    const evolucaoTendencia = [
+      { label: 'S1', pct: 45 }, { label: 'S2', pct: 60 }, { label: 'S3', pct: 50 }, { label: 'S4', pct: 80 }, { label: 'S5', pct: 70 }, { label: 'S6', pct: 95 },
+    ];
+
+    const linhaTempoDefs = [
+      { mes: 'Janeiro', destaque: 'Primeira competição' },
+      { mes: 'Março', destaque: 'Maior sequência de registros' },
+      { mes: 'Junho', destaque: 'Primeira trilha' },
+      { mes: 'Outubro', destaque: 'Melhor mês' },
+    ];
+    const linhaTempoMeses = linhaTempoDefs.map((m, i) => ({ ...m, hasLine: i < linhaTempoDefs.length - 1 }));
+
+    const insightsList = [
+      'Os treinos registrados aos sábados costumam gerar mais fotos e avaliações positivas.',
+      'Vocês participaram de mais eventos este semestre do que no anterior.',
+      'Nos últimos meses, os passeios têm sido registrados com maior frequência do que os treinos.',
+    ];
+
+    const iaResumosOptionsDefs = ['Resumo semanal', 'Resumo mensal', 'Resumo anual', 'Maiores conquistas', 'Evolução', 'Momentos marcantes', 'Padrões e sugestões'];
+    const iaResumosOptions = iaResumosOptionsDefs.map(label => ({
+      label,
+      onClick: this.selecionarResumo(label),
+      bg: s.resumoSelecionado === label ? 'rgba(201,161,90,.14)' : '#fff',
+      border: s.resumoSelecionado === label ? '#C9A15A' : 'rgba(43,41,36,0)',
+    }));
+    const exportOptionsDefs = ['PDF', 'CSV', 'Livro Digital', 'Retrospectiva', 'Timeline', 'Estatísticas'];
+    const exportOptions = exportOptionsDefs.map(label => ({
+      label,
+      onClick: this.selecionarExport(label),
+      bg: s.exportSelecionado === label ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: s.exportSelecionado === label ? '#C9A15A' : '#2B2924',
+    }));
+    const gerarBg = (s.resumoSelecionado && s.exportSelecionado) ? '#C9A15A' : 'rgba(43,41,36,.12)';
+
+    return {
+      ...screenIs,
+      screenDisplay: s.screen + 1,
+      totalScreens: 12,
+      screenLabel: screenNames[s.screen],
+      next: this.next,
+      goBackMeta: this.goBackMeta,
+      gotoInicioMeta: this.gotoInicioMeta,
+      back: this.back,
+      toDashboardAgenda, toCalendario, toAgendaDia, toCriarCompromisso,
+      toRegistrarMemoria: () => { window.location.href = './Criar Memoria - EquiSoul.dc.html'; },
+      toInsights, toEvolucao, toLinhaAnalitica, toAnalytics, toRelatorios,
+      dashboardCards, acoesRapidas, agendaLinkCopiado: s.agendaLinkCopiado,
+      visualizacaoChips, weekdayLabels, calendarDays, calendarioLegenda,
+      agendaDiaList, temEventosNoDia, semEventosNoDia: !temEventosNoDia,
+      tipoCompromissoChips,
+      cavaloSelecionado: s.cavaloSelecionado, showCavaloPicker: s.showCavaloPicker, toggleCavaloPicker: this.toggleCavaloPicker, cavaloOptions,
+      planejamentoSemana: planejamentoDefs,
+      metasList,
+      climaProximosDias, climaAtualizadoHaMinLabel, atualizarClima: this.atualizarClima,
+      analyticsCategorias, atividadeSemana,
+      periodoChips, evolucaoIndicadores, evolucaoTendencia,
+      linhaTempoMeses,
+      insightsList,
+      iaResumosOptions, exportOptions, gerarBg, gerarRelatorio: this.gerarRelatorio, relatorioStatus: s.relatorioStatus,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

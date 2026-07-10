@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#EDE8DE;font-family:'Nunito',sans-serif;-webkit-font-smoothing:antialiased}
+  .placeholder{background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.06) 0px,rgba(0,0,0,.06) 2px,transparent 2px,transparent 12px);background-color:#EAE4D6}
+  a{color:#6B7353}
+  a:hover{color:#4F5D45}
+  ::-webkit-scrollbar{display:none}
+  @keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:56px 20px;font-family:'Nunito',sans-serif">
+
+  <div style="display:flex;align-items:center;gap:22px">
+
+    <div style="width:390px;height:844px;background:#FBF9F4;position:relative;overflow:hidden;box-shadow:0 30px 70px rgba(43,41,36,.22);flex:none">
+
+      <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 130px">
+
+        <div style="display:flex;align-items:center;gap:12px">
+          <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="width:36px;height:36px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;flex:none;text-decoration:none">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+          </a>
+          <div style="flex:1;min-width:0">
+            <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924">Notificações</div>
+            <sc-if value="{{ hasUnread }}" hint-placeholder-val="{{ true }}">
+              <div style="margin-top:1px;font:600 11px 'Nunito',sans-serif;color:#8A6E4B">{{ unreadCount }} não lidas</div>
+            </sc-if>
+            <sc-if value="{{ !hasUnread }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:1px;font:600 11px 'Nunito',sans-serif;color:#a39c8a">Tudo em dia</div>
+            </sc-if>
+          </div>
+          <div onClick="{{ refresh }}" style="width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#6b6558" stroke-width="1.8" style="{{ refreshSpin }}"><path d="M20 11A8 8 0 105.5 6.5M20 11V5M20 11h-6"/></svg>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;display:flex;align-items:center;justify-content:space-between">
+          <div onClick="{{ marcarTodasLidas }}" style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Marcar tudo como lido</div>
+          <div onClick="{{ toggleDigest }}" style="display:flex;align-items:center;gap:8px;cursor:pointer">
+            <div style="font:600 11px 'Nunito',sans-serif;color:#6b6558">Resumo diário</div>
+            <div style="width:38px;height:22px;border-radius:11px;background:{{ digestBg }};position:relative">
+              <div style="position:absolute;top:2px;left:{{ digestKnob }};width:18px;height:18px;border-radius:50%;background:#fff;transition:left .15s"></div>
+            </div>
+          </div>
+        </div>
+
+        <sc-if value="{{ digestOn }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:14px;border-radius:18px;background:rgba(201,161,90,.12);padding:14px 16px">
+            <div style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.03em">Resumo de hoje</div>
+            <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#2B2924">Bela recebeu 3 curtidas, você tem um lembrete de ferrageamento em 10 dias e uma nova carta da IA está pronta.</div>
+            <a href="./Inteligencia%20Artificial%20-%20EquiSoul.dc.html" style="margin-top:8px;display:inline-block;font:700 11px 'Nunito',sans-serif;color:#8A6E4B;text-decoration:none">Ver resumo completo →</a>
+          </div>
+        </sc-if>
+
+        <div style="margin-top:8px">
+          <a href="./Configuracoes%20-%20EquiSoul.dc.html" style="font:600 10px 'Nunito',sans-serif;color:#a39c8a;text-decoration:underline">Gerenciar preferências de notificação</a>
+        </div>
+
+        <div style="margin-top:16px;position:relative">
+          <div style="display:flex;gap:8px;overflow-x:auto">
+            <sc-for list="{{ filtroChips }}" as="c" hint-placeholder-count="7">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="position:absolute;top:0;right:0;bottom:0;width:28px;background:linear-gradient(90deg,rgba(251,249,244,0),#FBF9F4);pointer-events:none"></div>
+        </div>
+
+        <sc-if value="{{ hasGrupos }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top:20px;display:flex;flex-direction:column;gap:18px">
+            <sc-for list="{{ grupos }}" as="g" hint-placeholder-count="4">
+              <div>
+                <div style="font:700 11px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.05em">{{ g.periodo }}</div>
+                <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ g.itens }}" as="n" hint-placeholder-count="3">
+                    <div style="position:relative;display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px">
+                      <div onClick="{{ n.dismiss }}" style="position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;background:rgba(43,41,36,.05);flex:none">
+                        <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="#a39c8a" stroke-width="2.4"><path d="M5 5l14 14M19 5L5 19"/></svg>
+                      </div>
+                      <div style="width:38px;height:38px;border-radius:50%;background:{{ n.iconBg }};display:flex;align-items:center;justify-content:center;flex:none" dangerouslySetInnerHTML="{{ n.iconHtml }}"></div>
+                      <div style="flex:1;min-width:0;padding-right:18px">
+                        <div style="display:flex;align-items:center;gap:6px">
+                          <sc-if value="{{ n.unread }}"><div style="width:6px;height:6px;border-radius:50%;background:#C9A15A;flex:none"></div></sc-if>
+                          <div style="font:{{ n.tituloWeight }} 12px 'Nunito',sans-serif;color:{{ n.tituloColor }}">{{ n.titulo }}</div>
+                        </div>
+                        <div style="margin-top:2px;font:500 11px/1.4 'Nunito',sans-serif;color:#6b6558">{{ n.descricao }}</div>
+                        <div style="margin-top:6px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                          <div onClick="{{ n.toggleData }}" style="font:600 10px 'Nunito',sans-serif;color:#a39c8a;cursor:pointer">{{ n.tempoLabel }}</div>
+                          <sc-if value="{{ n.cta }}"><a href="{{ n.ctaHref }}" style="font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-decoration:none">{{ n.cta }}</a></sc-if>
+                          <div onClick="{{ n.toggleSnooze }}" style="font:600 10px 'Nunito',sans-serif;color:#a39c8a;cursor:pointer;margin-left:auto">Silenciar…</div>
+                        </div>
+                        <sc-if value="{{ n.snoozeOpen }}" hint-placeholder-val="{{ false }}">
+                          <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">
+                            <sc-for list="{{ n.snoozeOptions }}" as="op" hint-placeholder-count="4">
+                              <div onClick="{{ op.onClick }}" style="padding:6px 10px;border-radius:10px;background:rgba(43,41,36,.06);font:700 10px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">{{ op.label }}</div>
+                            </sc-for>
+                          </div>
+                        </sc-if>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ showCarregarMais }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ carregarMaisAntigas }}" style="text-align:center;font:700 12px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer;padding:6px">Carregar mais antigas</div>
+            </sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ !hasGrupos }}" hint-placeholder-val="{{ false }}">
+          <div style="margin-top:32px;display:flex;flex-direction:column;align-items:center;gap:10px;padding:30px 20px;text-align:center">
+            <div style="width:52px;height:52px;border-radius:50%;background:rgba(107,115,83,.12);display:flex;align-items:center;justify-content:center">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#4F5D45" stroke-width="1.8"><path d="M18 8a6 6 0 00-12 0c0 5-2 6-2 6h16s-2-1-2-6"/><path d="M10 20a2 2 0 004 0"/></svg>
+            </div>
+            <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">{{ emptyTitle }}</div>
+            <div style="font:500 12px/1.6 'Nunito',sans-serif;color:#6b6558">{{ emptySubtitle }}</div>
+          </div>
+        </sc-if>
+
+        <div style="margin-top:20px;display:flex;align-items:center;gap:10px;border-radius:16px;background:rgba(107,115,83,.1);padding:14px">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#4F5D45" stroke-width="1.8"><path d="M12 3a9 9 0 100 18 9 9 0 000-18z"/><path d="M12 8v4l2.5 2.5"/></svg>
+          <div style="flex:1;font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">Silêncio automático ativo durante treinos e competições registradas na sua agenda.</div>
+          <div onClick="{{ toggleSilencioAuto }}" style="width:34px;height:20px;border-radius:10px;background:{{ silencioAutoBg }};position:relative;cursor:pointer;flex:none">
+            <div style="position:absolute;top:2px;left:{{ silencioAutoKnob }};width:16px;height:16px;border-radius:50%;background:#fff;transition:left .15s"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:20">
+        <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;text-decoration:none">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg>
+        </a>
+        <a href="./Comunidade%20-%20EquiSoul.dc.html" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;text-decoration:none">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg>
+        </a>
+        <a href="./Criar%20Memoria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;margin-top:-8px;text-decoration:none">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+        </a>
+        <a href="./Agenda%20e%20Analytics%20-%20EquiSoul.dc.html" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;text-decoration:none">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M8 3v4M16 3v4"/></svg>
+        </a>
+        <a href="./Perfis%20-%20EquiSoul.dc.html" style="width:36px;height:36px;display:flex;align-items:center;justify-content:center;text-decoration:none">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg>
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    filtro: 'Todas',
+    digestOn: true,
+    silencioAuto: true,
+    allRead: false,
+    deletedIds: [],
+    snoozeOpenId: null,
+    dateExpandedId: null,
+    moreAntigas: false,
+    refreshing: false,
+  };
+
+  setVal(key, value) { return () => this.setState({ [key]: value }); }
+  buildChips(options, isSelected, onToggle) {
+    return options.map(label => ({
+      label,
+      bg: isSelected(label) ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: isSelected(label) ? '#C9A15A' : '#2B2924',
+      onClick: onToggle(label),
+    }));
+  }
+
+  toggleSnooze(id) { return () => this.setState(s => ({ snoozeOpenId: s.snoozeOpenId === id ? null : id })); }
+  toggleData(id) { return () => this.setState(s => ({ dateExpandedId: s.dateExpandedId === id ? null : id })); }
+  dismiss(id) { return () => this.setState(s => ({ deletedIds: [...s.deletedIds, id], snoozeOpenId: null })); }
+
+  refresh = () => {
+    if (this.state.refreshing) return;
+    this.setState({ refreshing: true });
+    setTimeout(() => this.setState({ refreshing: false }), 900);
+  };
+
+  renderVals() {
+    const s = this.state;
+    const filtroOptions = ['Todas', 'IA', 'Comunidade', 'Marketplace', 'Eventos', 'Saúde', 'Premium', 'Sistema'];
+    const filtroChips = this.buildChips(filtroOptions, l => s.filtro === l, l => this.setVal('filtro', l));
+
+    const icon = (path, color) => ({ __html: `<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="${color}" stroke-width="1.8">${path}</svg>` });
+    const paths = {
+      ia: '<path d="M12 3a9 9 0 100 18 9 9 0 000-18z"/><path d="M12 8v4l2.5 2.5"/>',
+      saude: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16"/>',
+      comunidade: '<circle cx="9" cy="9" r="3.2"/><circle cx="17" cy="9" r="2.4"/><path d="M4 20c.5-3.5 2.5-5.5 5-5.5s4.5 2 5 5.5"/>',
+      evento: '<rect x="4" y="6" width="16" height="14" rx="2"/><path d="M4 11h16M8 3v5M16 3v5"/>',
+      marketplace: '<path d="M4 8l1.5-4h13L20 8"/><path d="M4 8h16v11a1 1 0 01-1 1H5a1 1 0 01-1-1z"/><path d="M9 12a3 3 0 006 0"/>',
+      premium: '<path d="M12 3l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 15.6 6.6 18.2l1.2-5.6L3.6 8.8l5.6-.6z"/>',
+      sistema: '<circle cx="12" cy="12" r="3"/><path d="M4 12h2M18 12h2M12 4v2M12 18v2M6.3 6.3l1.4 1.4M16.3 16.3l1.4 1.4M6.3 17.7l1.4-1.4M16.3 7.7l1.4-1.4"/>',
+    };
+
+    const gruposDefsBase = [
+      { periodo: 'Hoje', itens: [
+        { id: 'ia-carta', titulo: 'Nova carta da IA chegou', descricao: 'Uma reflexão sobre os últimos treinos com Bela.', tempo: 'há 20 min', fullTime: '9 de julho de 2026, 14:40', cta: 'Ler carta', ctaHref: './Inteligencia%20Artificial%20-%20EquiSoul.dc.html', unread: true, cat: 'IA', iconBg: 'rgba(201,161,90,.16)', iconHtml: icon(paths.ia, '#8A6E4B') },
+        { id: 'com-coment', titulo: 'Helena Ribeiro comentou na sua memória', descricao: '"Que momento lindo com a Bela!"', tempo: 'há 1h', fullTime: '9 de julho de 2026, 14:00', cta: 'Ver comentário', ctaHref: './Comunidade%20-%20EquiSoul.dc.html', unread: true, cat: 'Comunidade', iconBg: 'rgba(107,115,83,.14)', iconHtml: icon(paths.comunidade, '#4F5D45') },
+        { id: 'saude-ferrageamento', titulo: 'Lembrete de ferrageamento', descricao: 'Historicamente vocês fazem a cada 6 semanas — já se passaram 5.', tempo: 'há 3h', fullTime: '9 de julho de 2026, 11:10', cta: null, ctaHref: null, unread: false, cat: 'Saúde', iconBg: 'rgba(201,161,90,.16)', iconHtml: icon(paths.saude, '#8A6E4B') },
+      ]},
+      { periodo: 'Ontem', itens: [
+        { id: 'evt-inscricao', titulo: 'Inscrição confirmada', descricao: 'Copa Nacional de Salto · 20 de julho.', tempo: 'ontem', fullTime: '8 de julho de 2026, 09:22', cta: 'Ver evento', ctaHref: './Eventos%20-%20EquiSoul.dc.html', unread: false, cat: 'Eventos', iconBg: 'rgba(107,115,83,.14)', iconHtml: icon(paths.evento, '#4F5D45') },
+        { id: 'mkt-pedido', titulo: 'Pedido enviado', descricao: 'Sela clássica em couro está a caminho.', tempo: 'ontem', fullTime: '8 de julho de 2026, 08:05', cta: 'Rastrear', ctaHref: './Marketplace%20-%20EquiSoul.dc.html', unread: false, cat: 'Marketplace', iconBg: 'rgba(138,110,75,.16)', iconHtml: icon(paths.marketplace, '#8A6E4B') },
+      ]},
+      { periodo: 'Esta semana', itens: [
+        { id: 'ia-retro', titulo: 'Retrospectiva semanal pronta', descricao: 'Sua semana com Bela, resumida pela IA.', tempo: '3 dias', fullTime: '6 de julho de 2026, 18:00', cta: 'Ver retrospectiva', ctaHref: './Inteligencia%20Artificial%20-%20EquiSoul.dc.html', unread: false, cat: 'IA', iconBg: 'rgba(201,161,90,.16)', iconHtml: icon(paths.ia, '#8A6E4B') },
+        { id: 'prem-tema', titulo: 'Novo benefício Premium disponível', descricao: 'Tema "Haras Clássico" foi desbloqueado.', tempo: '4 dias', fullTime: '5 de julho de 2026, 10:30', cta: 'Ver tema', ctaHref: './Premium%20-%20EquiSoul.dc.html', unread: false, cat: 'Premium', iconBg: 'rgba(201,161,90,.16)', iconHtml: icon(paths.premium, '#8A6E4B') },
+      ]},
+      { periodo: 'Mais antigas', itens: [
+        { id: 'sys-backup', titulo: 'Backup concluído com sucesso', descricao: 'Suas memórias estão seguras.', tempo: '2 semanas', fullTime: '25 de junho de 2026, 03:00', cta: null, ctaHref: null, unread: false, cat: 'Sistema', iconBg: 'rgba(43,41,36,.06)', iconHtml: icon(paths.sistema, '#2B2924') },
+      ]},
+    ];
+
+    if (s.moreAntigas) {
+      gruposDefsBase[3].itens.push(
+        { id: 'old-1', titulo: 'Marina Alves seguiu você', descricao: 'Agora vocês podem trocar mensagens.', tempo: '3 semanas', fullTime: '18 de junho de 2026, 16:45', cta: 'Ver perfil', ctaHref: './Perfis%20-%20EquiSoul.dc.html', unread: false, cat: 'Comunidade', iconBg: 'rgba(107,115,83,.14)', iconHtml: icon(paths.comunidade, '#4F5D45') },
+        { id: 'old-2', titulo: 'Avaliação de fornecedor pendente', descricao: 'Avalie sua compra na Loja Equus.', tempo: '1 mês', fullTime: '9 de junho de 2026, 12:00', cta: 'Avaliar', ctaHref: './Marketplace%20-%20EquiSoul.dc.html', unread: false, cat: 'Marketplace', iconBg: 'rgba(138,110,75,.16)', iconHtml: icon(paths.marketplace, '#8A6E4B') },
+      );
+    }
+
+    const allItens = gruposDefsBase.flatMap(g => g.itens);
+    const remainingItens = allItens.filter(n => !s.deletedIds.includes(n.id));
+    const unreadCount = remainingItens.filter(n => n.unread && !s.allRead).length;
+
+    const decorate = (n) => {
+      const unread = n.unread && !s.allRead;
+      const dateExpanded = s.dateExpandedId === n.id;
+      return {
+        ...n,
+        unread,
+        tituloWeight: unread ? '800' : '700',
+        tituloColor: unread ? '#2B2924' : '#4b473e',
+        tempoLabel: dateExpanded ? n.fullTime : n.tempo,
+        toggleData: this.toggleData(n.id),
+        dismiss: this.dismiss(n.id),
+        toggleSnooze: this.toggleSnooze(n.id),
+        snoozeOpen: s.snoozeOpenId === n.id,
+        snoozeOptions: ['1 hora', 'Hoje', 'Este tipo', 'Sempre'].map(label => ({ label, onClick: this.dismiss(n.id) })),
+      };
+    };
+
+    const filtered = gruposDefsBase
+      .map(g => ({ ...g, itens: g.itens.filter(n => !s.deletedIds.includes(n.id) && (s.filtro === 'Todas' || n.cat === s.filtro)) }))
+      .filter(g => g.itens.length > 0);
+    const grupos = filtered.map(g => ({ ...g, itens: g.itens.map(decorate) }));
+
+    const hasGrupos = grupos.length > 0;
+    const emptyTitle = remainingItens.length === 0 ? 'Tudo limpo por aqui' : `Nenhuma notificação em ${s.filtro}`;
+    const emptySubtitle = remainingItens.length === 0 ? 'Você não tem notificações pendentes.' : 'Notificações desta categoria vão aparecer aqui.';
+
+    const lastGroupItens = gruposDefsBase[3].itens.filter(n => !s.deletedIds.includes(n.id));
+    const showCarregarMais = !s.moreAntigas && lastGroupItens.length > 0 && (s.filtro === 'Todas' || lastGroupItens.some(n => n.cat === s.filtro));
+
+    return {
+      filtroChips,
+      grupos,
+      hasGrupos,
+      emptyTitle, emptySubtitle,
+      hasUnread: unreadCount > 0,
+      unreadCount,
+      marcarTodasLidas: () => this.setState({ allRead: true }),
+      digestOn: s.digestOn,
+      digestBg: s.digestOn ? '#6B7353' : 'rgba(43,41,36,.12)',
+      digestKnob: s.digestOn ? '18px' : '2px',
+      toggleDigest: () => this.setState(st => ({ digestOn: !st.digestOn })),
+      silencioAutoBg: s.silencioAuto ? '#6B7353' : 'rgba(43,41,36,.12)',
+      silencioAutoKnob: s.silencioAuto ? '16px' : '2px',
+      toggleSilencioAuto: () => this.setState(st => ({ silencioAuto: !st.silencioAuto })),
+      showCarregarMais,
+      carregarMaisAntigas: () => this.setState({ moreAntigas: true }),
+      refresh: this.refresh,
+      refreshSpin: s.refreshing ? 'animation:spin .8s linear infinite' : '',
+    };
+  }
+}
+
+</script>
+</body>
+</html>

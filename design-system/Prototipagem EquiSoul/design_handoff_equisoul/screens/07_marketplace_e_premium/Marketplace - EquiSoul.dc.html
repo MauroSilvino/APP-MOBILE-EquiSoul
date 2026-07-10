@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#EDE8DE;font-family:'Nunito',sans-serif;-webkit-font-smoothing:antialiased}
+  .placeholder{background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.06) 0px,rgba(0,0,0,.06) 2px,transparent 2px,transparent 12px);background-color:#EAE4D6}
+  .ph-label{font:600 10px ui-monospace,Menlo,monospace;letter-spacing:.02em;text-transform:uppercase;text-align:center;padding:0 30px}
+  input::placeholder, textarea::placeholder{color:#a39c8a}
+  input, textarea{font-family:'Nunito',sans-serif;outline:none;box-sizing:border-box}
+  a{color:#6B7353}
+  a:hover{color:#4F5D45}
+  ::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:56px 20px;font-family:'Nunito',sans-serif">
+
+  <div style="display:flex;align-items:center;gap:22px">
+
+    <div onClick="{{ goBack }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+
+    <div style="width:390px;height:844px;background:#FBF9F4;position:relative;overflow:hidden;box-shadow:0 30px 70px rgba(43,41,36,.22);flex:none">
+
+      <!-- 0 HOME MARKETPLACE -->
+      <sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 104px">
+          <div style="display:flex;align-items:center;justify-content:space-between">
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Marketplace</div>
+            <div style="display:flex;gap:14px">
+              <div onClick="{{ toExplorar }}" style="cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></div>
+              <div onClick="{{ toFavoritos }}" style="cursor:pointer;position:relative">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg>
+                <sc-if value="{{ favoritosCount }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute;top:-6px;right:-8px;min-width:15px;height:15px;padding:0 3px;border-radius:8px;background:#C9A15A;color:#2B2924;font:800 9px 'Nunito',sans-serif;display:flex;align-items:center;justify-content:center">{{ favoritosCount }}</div>
+                </sc-if>
+              </div>
+              <div onClick="{{ toCarteira }}" style="cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 14h2"/></svg></div>
+            </div>
+          </div>
+
+          <div style="margin-top:16px;height:150px;border-radius:22px;position:relative;overflow:hidden" class="placeholder">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">banner · clínica de adestramento com 20% off</div>
+          </div>
+
+          <div style="margin-top:16px;display:flex;gap:8px;overflow-x:auto">
+            <sc-for list="{{ homeCategoriaChips }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:20px;display:flex;align-items:baseline;justify-content:space-between">
+            <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Próximos serviços</div>
+            <div onClick="{{ toHistorico }}" style="font:700 11px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">ver todos</div>
+          </div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:8px">
+            <sc-for list="{{ proximosServicos }}" as="p" hint-placeholder-count="2">
+              <div style="display:flex;gap:12px;border-radius:18px;background:#fff;padding:12px;box-shadow:0 4px 14px rgba(43,41,36,.05);align-items:center">
+                <div onClick="{{ toServico }}" style="width:52px;height:52px;border-radius:14px;flex:none;cursor:pointer" class="placeholder"></div>
+                <div onClick="{{ toServico }}" style="min-width:0;flex:1;cursor:pointer"><div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">{{ p.nome }}</div><div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ p.quando }}</div></div>
+                <div onClick="{{ p.onRemove }}" style="width:26px;height:26px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#a39c8a">
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ proximosServicosVazio }}" hint-placeholder-val="{{ false }}">
+              <div style="border-radius:18px;background:rgba(43,41,36,.04);padding:20px;text-align:center">
+                <div style="font:600 12px 'Nunito',sans-serif;color:#6b6558">Nenhum serviço agendado no momento.</div>
+                <div onClick="{{ toExplorar }}" style="margin-top:6px;font:700 12px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer;display:inline-block">Explorar serviços →</div>
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="margin-top:20px;display:flex;align-items:baseline;justify-content:space-between">
+            <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Produtos recomendados</div>
+          </div>
+          <div style="margin-top:10px;display:flex;gap:12px;overflow-x:auto">
+            <sc-for list="{{ produtosRecomendados }}" as="p" hint-placeholder-count="3">
+              <div onClick="{{ toProduto }}" style="flex:none;width:130px;cursor:pointer">
+                <div style="height:110px;border-radius:16px" class="placeholder"></div>
+                <div style="margin-top:6px;font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ p.nome }}</div>
+                <div style="margin-top:2px;font:700 12px 'Nunito',sans-serif;color:#8A6E4B">{{ p.preco }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Profissionais próximos</div>
+          <div style="margin-top:10px;display:flex;gap:14px;overflow-x:auto">
+            <sc-for list="{{ profissionaisProximos }}" as="p" hint-placeholder-count="3">
+              <div onClick="{{ toProfissional }}" style="flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;width:76px;cursor:pointer">
+                <div style="width:56px;height:56px;border-radius:50%" class="placeholder"></div>
+                <div style="font:600 11px 'Nunito',sans-serif;color:#6b6558;text-align:center">{{ p }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div onClick="{{ toHaras }}" style="margin-top:20px;border-radius:20px;overflow:hidden;background:#2B2924;color:#FBF9F4;cursor:pointer;display:flex;gap:12px;padding:14px">
+            <div style="width:70px;height:70px;border-radius:14px;flex:none" class="placeholder"></div>
+            <div style="min-width:0">
+              <div style="font:600 10px 'Nunito',sans-serif;color:#C9A15A;text-transform:uppercase;letter-spacing:.05em">Haras em destaque</div>
+              <div style="margin-top:4px;font:700 14px 'Nunito',sans-serif">Haras Vale Verde</div>
+              <div style="margin-top:2px;font:500 11px 'Nunito',sans-serif;color:rgba(251,249,244,.7)">Hospedagem, aulas e eventos</div>
+            </div>
+          </div>
+        </div>
+        {{ tabBar }}
+      </sc-if>
+
+      <!-- 1 EXPLORAR -->
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 20px 104px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Explorar</div>
+          <div style="margin-top:14px;display:flex;align-items:center;gap:10px;height:50px;border-radius:16px;background:#fff;border:1px solid rgba(43,41,36,.12);padding:0 14px">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6b6558" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input value="{{ buscaQuery }}" onChange="{{ buscaQueryChange }}" placeholder="Ex: ferrador especializado em salto" style="flex:1;border:none;background:transparent;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:8px;overflow-x:auto">
+            <sc-for list="{{ explorarCategoriaChips }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:12px;display:flex;gap:8px">
+            <sc-for list="{{ filtroChips }}" as="c" hint-placeholder-count="3">
+              <div onClick="{{ c.onClick }}" style="padding:8px 14px;border-radius:14px;background:{{ c.bg }};color:{{ c.color }};font:600 11px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ explorarLoading }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <sc-for list="{{ skeletonSlots }}" as="k" hint-placeholder-count="4">
+                <div><div style="height:110px;border-radius:16px" class="placeholder"></div><div style="margin-top:6px;height:10px;width:70%;border-radius:5px;background:rgba(43,41,36,.08)"></div></div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ !explorarLoading }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <sc-for list="{{ explorarResultados }}" as="r" hint-placeholder-count="4">
+                <div onClick="{{ r.onClick }}" style="cursor:pointer">
+                  <div style="height:110px;border-radius:16px" class="placeholder"></div>
+                  <div style="margin-top:6px;font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ r.nome }}</div>
+                  <div style="margin-top:2px;font:600 11px 'Nunito',sans-serif;color:#8A6E4B">{{ r.sub }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ explorarVazio }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:24px;text-align:center;padding:20px;color:#6b6558;font:600 12px 'Nunito',sans-serif">Nenhum resultado para essa busca.</div>
+            </sc-if>
+          </sc-if>
+        </div>
+
+        <sc-if value="{{ filtroAberto }}" hint-placeholder-val="{{ false }}">
+          <div onClick="{{ fecharFiltro }}" style="position:absolute;inset:0;background:rgba(43,41,36,.4);z-index:30"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;background:#FBF9F4;border-radius:24px 24px 0 0;padding:20px 22px 28px;z-index:31;box-shadow:0 -10px 30px rgba(43,41,36,.15)">
+            <div style="width:36px;height:4px;border-radius:2px;background:rgba(43,41,36,.15);margin:0 auto 16px"></div>
+            <div style="font:800 15px 'Nunito',sans-serif;color:#2B2924">{{ filtroAberto }}</div>
+            <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+              <sc-for list="{{ filtroOpcoes }}" as="o" hint-placeholder-count="4">
+                <div onClick="{{ o.onClick }}" style="padding:12px 14px;border-radius:14px;background:{{ o.bg }};color:{{ o.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ o.label }}</div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+      </sc-if>
+
+      <!-- 2 PAGINA DE PRODUTO -->
+      <sc-if value="{{ s2 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto">
+          <div style="height:260px;position:relative" class="placeholder">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · protetor de canela</div>
+            {{ backFloating }}
+          </div>
+          <div style="padding:20px 24px 40px">
+            <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924">Protetor de canela premium</div>
+            <div style="margin-top:6px;font:700 18px 'Nunito',sans-serif;color:#8A6E4B">R$ 189,00</div>
+            <div style="margin-top:6px;font:600 12px 'Nunito',sans-serif;color:#6b6558">★ 4.8 · 214 avaliações</div>
+            <div style="margin-top:14px;font:500 13px/1.7 'Nunito',sans-serif;color:#6b6558">Proteção resistente para treinos de salto e trilha, com fechamento em velcro reforçado e forro respirável.</div>
+            <div style="margin-top:16px;border-radius:16px;padding:14px 16px;background:rgba(107,115,83,.1)">
+              <div style="font:600 10px 'Nunito',sans-serif;color:#4F5D45;text-transform:uppercase;letter-spacing:.05em">A IA resume as avaliações</div>
+              <div style="margin-top:6px;font:600 12px/1.6 'Nunito',sans-serif;color:#2B2924">Pontos fortes: durabilidade e ajuste. Ponto de atenção: numeração costuma vir um tamanho menor.</div>
+              <div onClick="{{ toAvaliacoesProduto }}" style="margin-top:8px;font:700 11px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Ver todas as avaliações →</div>
+            </div>
+            <div style="margin-top:20px;display:flex;gap:10px">
+              <div onClick="{{ toCheckout }}" style="flex:1;height:52px;border-radius:26px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Comprar</div>
+              <div onClick="{{ toggleFavProduto }}" style="width:52px;height:52px;border-radius:26px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="{{ favProdutoFill }}" stroke="#2B2924" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg>
+              </div>
+            </div>
+            <div onClick="{{ toChatVendedor }}" style="margin-top:10px;height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Chat com vendedor</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 3 PAGINA DE SERVICO -->
+      <sc-if value="{{ s3 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          {{ backHeader }}
+          <div style="display:flex;align-items:center;gap:14px">
+            <div style="width:64px;height:64px;border-radius:50%;flex:none" class="placeholder"></div>
+            <div>
+              <div style="font:800 18px 'Nunito',sans-serif;color:#2B2924">Dra. Marina Kist</div>
+              <div style="margin-top:2px;font:600 12px 'Nunito',sans-serif;color:#6b6558">Veterinária equina · ★ 4.9 (86)</div>
+              <div onClick="{{ toAvaliacoesMarina }}" style="margin-top:3px;font:700 11px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Ver avaliações →</div>
+            </div>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:8px">
+            <div style="padding:7px 13px;border-radius:14px;background:rgba(43,41,36,.06);font:600 11px 'Nunito',sans-serif;color:#2B2924">Ortopedia equina</div>
+            <div style="padding:7px 13px;border-radius:14px;background:rgba(43,41,36,.06);font:600 11px 'Nunito',sans-serif;color:#2B2924">Nutrição</div>
+            <div style="padding:7px 13px;border-radius:14px;background:rgba(43,41,36,.06);font:600 11px 'Nunito',sans-serif;color:#2B2924">Emergências</div>
+          </div>
+          <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Horários disponíveis</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ horarioChips }}" as="h" hint-placeholder-count="6">
+              <div onClick="{{ h.onClick }}" style="padding:9px 14px;border-radius:16px;background:{{ h.bg }};color:{{ h.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ h.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;font:700 15px 'Nunito',sans-serif;color:#8A6E4B">R$ 220 a consulta</div>
+          <div style="margin-top:18px;display:flex;gap:10px">
+            <div onClick="{{ toReservaMarina }}" style="flex:1;height:52px;border-radius:26px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Agendar</div>
+            <div onClick="{{ toChatMarina }}" style="flex:1;height:52px;border-radius:26px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Mensagem</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 4 PERFIL PROFISSIONAL -->
+      <sc-if value="{{ s4 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          {{ backHeader }}
+          <div style="display:flex;align-items:center;gap:14px">
+            <div style="width:70px;height:70px;border-radius:50%;flex:none" class="placeholder"></div>
+            <div>
+              <div style="font:800 18px 'Nunito',sans-serif;color:#2B2924">João Ferrador</div>
+              <div style="margin-top:2px;font:600 12px 'Nunito',sans-serif;color:#6b6558">Ferrador · 12 anos de experiência</div>
+              <div style="margin-top:6px;padding:4px 10px;border-radius:10px;background:rgba(201,161,90,.18);color:#8A6E4B;font:700 10px 'Nunito',sans-serif;display:inline-block">Perfil verificado</div>
+            </div>
+          </div>
+          <div style="margin-top:16px;font:500 13px/1.7 'Nunito',sans-serif;color:#6b6558">Especialista em ferrageamento corretivo para cavalos de salto e adestramento. Atendimento em domicílio na região de Campinas.</div>
+          <div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center">
+            <div onClick="{{ toAvaliacoesJoao }}" style="cursor:pointer"><div style="font:800 16px 'Nunito',sans-serif;color:#2B2924">4.8</div><div style="font:600 10px 'Nunito',sans-serif;color:#6b6558;text-transform:uppercase">Avaliação</div></div>
+            <div><div style="font:800 16px 'Nunito',sans-serif;color:#2B2924">340</div><div style="font:600 10px 'Nunito',sans-serif;color:#6b6558;text-transform:uppercase">Atendimentos</div></div>
+            <div><div style="font:800 16px 'Nunito',sans-serif;color:#2B2924">12</div><div style="font:600 10px 'Nunito',sans-serif;color:#6b6558;text-transform:uppercase">Anos</div></div>
+          </div>
+          <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Galeria</div>
+          <div style="margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+            <sc-for list="{{ galeriaProfissional }}" as="g" hint-placeholder-count="3">
+              <div style="height:80px;border-radius:12px" class="placeholder"></div>
+            </sc-for>
+          </div>
+          <div style="margin-top:20px;display:flex;gap:10px">
+            <div onClick="{{ toReservaJoao }}" style="flex:1;height:52px;border-radius:26px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Agendar</div>
+            <div onClick="{{ toChatJoao }}" style="flex:1;height:52px;border-radius:26px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Conversar</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 5 HARAS -->
+      <sc-if value="{{ s5 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto">
+          <div style="height:220px;position:relative" class="placeholder">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto grande · Haras Vale Verde</div>
+            {{ backFloating }}
+          </div>
+          <div style="padding:20px 24px 40px">
+            <div style="font:800 21px 'Nunito',sans-serif;color:#2B2924">Haras Vale Verde</div>
+            <div style="margin-top:6px;font:600 12px 'Nunito',sans-serif;color:#6b6558">Campinas, SP · hospedagem, aulas e eventos · ★ 4.7</div>
+            <div onClick="{{ toAvaliacoesHaras }}" style="margin-top:3px;font:700 11px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Ver avaliações →</div>
+            <div style="margin-top:14px;height:110px;border-radius:16px" class="placeholder"><div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">mapa</div></div>
+            <div style="margin-top:14px;font:500 13px/1.7 'Nunito',sans-serif;color:#6b6558">Fundado em 1998, o Haras Vale Verde reúne 40 hectares de pastagens, pista coberta e uma equipe dedicada ao bem-estar equino.</div>
+            <div style="margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
+              <sc-for list="{{ harasFotos }}" as="f" hint-placeholder-count="3">
+                <div style="height:80px;border-radius:12px" class="placeholder"></div>
+              </sc-for>
+            </div>
+            <div onClick="{{ toReservaHaras }}" style="margin-top:18px;height:52px;border-radius:26px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Reservar visita</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 6 RESERVA -->
+      <sc-if value="{{ s6 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          {{ backHeader }}
+          <sc-if value="{{ !reservaConfirmada }}" hint-placeholder-val="{{ true }}">
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Reservar</div>
+            <div style="margin-top:4px;font:600 12px 'Nunito',sans-serif;color:#6b6558">{{ reservaContext.origem }} · {{ reservaContext.nome }}</div>
+            <div style="margin-top:16px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Data</div>
+            <div style="margin-top:10px;display:flex;gap:8px;overflow-x:auto">
+              <sc-for list="{{ dataChips }}" as="d" hint-placeholder-count="5">
+                <div onClick="{{ d.onClick }}" style="flex:none;padding:10px 14px;border-radius:16px;background:{{ d.bg }};color:{{ d.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer;text-align:center">{{ d.label }}</div>
+              </sc-for>
+            </div>
+            <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Horário</div>
+            <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ horarioReservaChips }}" as="h" hint-placeholder-count="4">
+                <div onClick="{{ h.onClick }}" style="padding:9px 14px;border-radius:16px;background:{{ h.bg }};color:{{ h.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ h.label }}</div>
+              </sc-for>
+            </div>
+            <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Pagamento</div>
+            <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ pagamentoChips }}" as="p" hint-placeholder-count="4">
+                <div onClick="{{ p.onClick }}" style="padding:9px 14px;border-radius:16px;background:{{ p.bg }};color:{{ p.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ p.label }}</div>
+              </sc-for>
+            </div>
+            <div style="margin-top:20px;border-radius:16px;padding:14px 16px;background:rgba(43,41,36,.05);display:flex;justify-content:space-between;font:700 14px 'Nunito',sans-serif;color:#2B2924"><span>Total</span><span>{{ reservaContext.preco }}</span></div>
+            <div onClick="{{ confirmarReserva }}" style="margin-top:20px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Confirmar reserva</div>
+          </sc-if>
+          <sc-if value="{{ reservaConfirmada }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:18px;text-align:center">
+              <div style="width:64px;height:64px;border-radius:50%;background:rgba(107,115,83,.15);display:flex;align-items:center;justify-content:center">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#4F5D45" stroke-width="2.4"><path d="M4 12l6 6L20 6"/></svg>
+              </div>
+              <div style="font:800 19px 'Nunito',sans-serif;color:#2B2924">Reserva confirmada</div>
+              <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558;max-width:280px">{{ reservaContext.origem }} com {{ reservaContext.nome }} · {{ dataSelecionada }} às {{ horarioReservaLabel }}. Você vai receber um lembrete próximo à data.</div>
+              <div onClick="{{ toggleIcs }}" style="height:52px;padding:0 24px;border-radius:26px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">{{ icsLabel }}</div>
+              <div onClick="{{ toHome }}" style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Voltar ao início</div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- 7 CARTEIRA -->
+      <sc-if value="{{ s7 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 104px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Carteira</div>
+          <div style="margin-top:16px;border-radius:22px;padding:20px;background:#2B2924;color:#FBF9F4">
+            <div style="font:600 11px 'Nunito',sans-serif;color:#C9A15A;text-transform:uppercase;letter-spacing:.05em">Saldo em cashback</div>
+            <div style="margin-top:6px;font:800 26px 'Nunito',sans-serif">R$ 34,50</div>
+          </div>
+          <div style="margin-top:20px;display:flex;align-items:baseline;justify-content:space-between">
+            <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Métodos de pagamento</div>
+          </div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px 16px">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6B7353" stroke-width="1.8"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>
+              <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">Cartão •••• 4021</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px 16px">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6B7353" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg>
+              <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">PIX</div>
+            </div>
+          </div>
+          <div style="margin-top:20px;display:flex;align-items:baseline;justify-content:space-between">
+            <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Cupons</div>
+            <div onClick="{{ toCupons }}" style="font:700 11px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">ver todos</div>
+          </div>
+          <div onClick="{{ toCupons }}" style="margin-top:10px;border-radius:16px;padding:14px 16px;background:rgba(201,161,90,.1);font:700 13px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">10% OFF em produtos de bem-estar · válido até 20/07</div>
+          <div onClick="{{ toHistorico }}" style="margin-top:20px;display:flex;align-items:center;justify-content:space-between;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px 16px;cursor:pointer">
+            <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">Ver histórico completo</div>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+          </div>
+        </div>
+        {{ tabBar }}
+      </sc-if>
+
+      <!-- 8 HISTORICO -->
+      <sc-if value="{{ s8 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          {{ backHeader }}
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Histórico</div>
+          <sc-if value="{{ historicoTemItens }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ historicoList }}" as="h" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px">
+                  <div style="width:44px;height:44px;border-radius:12px;flex:none" class="placeholder"></div>
+                  <div style="flex:1;min-width:0"><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ h.titulo }}</div><div style="margin-top:2px;font:500 11px 'Nunito',sans-serif;color:#6b6558">{{ h.data }}</div></div>
+                  <div style="padding:5px 10px;border-radius:10px;background:rgba(107,115,83,.15);color:#4F5D45;font:700 10px 'Nunito',sans-serif">{{ h.status }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ !historicoTemItens }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:40px;text-align:center;color:#6b6558;font:600 12px 'Nunito',sans-serif">Nenhum pedido ou reserva ainda.</div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- 9 FAVORITOS -->
+      <sc-if value="{{ s9 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 104px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Favoritos</div>
+          <div style="margin-top:14px;display:flex;gap:8px;overflow-x:auto">
+            <sc-for list="{{ favTabChips }}" as="c" hint-placeholder-count="5">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ favoritosList }}" as="f" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px">
+                <div style="width:52px;height:52px;border-radius:12px;flex:none" class="placeholder"></div>
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924;flex:1">{{ f.nome }}</div>
+                <div onClick="{{ f.onRemove }}" style="width:26px;height:26px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;cursor:pointer">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="#C9A15A" stroke="#C9A15A" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ favoritosVazio }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:40px;text-align:center">
+              <div style="font:600 12px 'Nunito',sans-serif;color:#6b6558">Nenhum favorito em {{ favTabAtual }} ainda.</div>
+              <div onClick="{{ toExplorar }}" style="margin-top:6px;font:700 12px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer;display:inline-block">Explorar →</div>
+            </div>
+          </sc-if>
+        </div>
+        {{ tabBar }}
+      </sc-if>
+
+      <!-- 10 CHAT -->
+      <sc-if value="{{ s10 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column">
+          <div style="padding:56px 20px 14px;display:flex;align-items:center;gap:12px;box-shadow:0 1px 0 rgba(43,41,36,.08)">
+            <div onClick="{{ back }}" style="width:36px;height:36px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </div>
+            <div style="width:36px;height:36px;border-radius:50%;flex:none" class="placeholder"></div>
+            <div style="font:800 14px 'Nunito',sans-serif;color:#2B2924">{{ chatNome }}</div>
+          </div>
+          <div style="flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ chatMensagens }}" as="m" hint-placeholder-count="3">
+              <div style="max-width:75%;padding:10px 14px;border-radius:16px;font:600 13px/1.5 'Nunito',sans-serif;{{ m.style }}">{{ m.texto }}</div>
+            </sc-for>
+          </div>
+          <div style="padding:12px 16px 20px;display:flex;gap:8px;align-items:center;box-shadow:0 -1px 0 rgba(43,41,36,.08)">
+            <input value="{{ chatInput }}" onChange="{{ chatInputChange }}" placeholder="Escreva uma mensagem…" style="flex:1;height:44px;border-radius:22px;background:rgba(43,41,36,.05);border:none;padding:0 16px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            <div onClick="{{ sendChat }}" style="width:44px;height:44px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 11 CHECKOUT -->
+      <sc-if value="{{ s11 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          {{ backHeader }}
+          <sc-if value="{{ checkoutStep0 }}" hint-placeholder-val="{{ true }}">
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Carrinho</div>
+            <div style="margin-top:18px;display:flex;gap:12px;align-items:center;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px">
+              <div style="width:56px;height:56px;border-radius:14px;flex:none" class="placeholder"></div>
+              <div style="flex:1"><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">Protetor de canela premium</div><div style="margin-top:2px;font:700 12px 'Nunito',sans-serif;color:#8A6E4B">R$ 189,00</div></div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <div onClick="{{ decQtd }}" style="width:26px;height:26px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;font:800 14px 'Nunito',sans-serif;color:#2B2924">–</div>
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924;width:14px;text-align:center">{{ quantidade }}</div>
+                <div onClick="{{ incQtd }}" style="width:26px;height:26px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;font:800 14px 'Nunito',sans-serif;color:#2B2924">+</div>
+              </div>
+            </div>
+            <div style="margin-top:20px;border-radius:16px;padding:14px 16px;background:rgba(43,41,36,.05);display:flex;justify-content:space-between;font:700 14px 'Nunito',sans-serif;color:#2B2924"><span>Subtotal</span><span>{{ subtotal }}</span></div>
+            <div onClick="{{ checkoutNext }}" style="margin-top:20px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Continuar</div>
+          </sc-if>
+          <sc-if value="{{ checkoutStep1 }}" hint-placeholder-val="{{ false }}">
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Endereço de entrega</div>
+            <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ enderecoOpcoes }}" as="e" hint-placeholder-count="2">
+                <div onClick="{{ e.onClick }}" style="border-radius:16px;padding:14px 16px;background:{{ e.bg }};border:1.5px solid {{ e.border }};cursor:pointer">
+                  <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ e.titulo }}</div>
+                  <div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ e.endereco }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div onClick="{{ checkoutNext }}" style="margin-top:20px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Continuar</div>
+          </sc-if>
+          <sc-if value="{{ checkoutStep2 }}" hint-placeholder-val="{{ false }}">
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Pagamento</div>
+            <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ pagamentoChips }}" as="p" hint-placeholder-count="4">
+                <div onClick="{{ p.onClick }}" style="padding:9px 14px;border-radius:16px;background:{{ p.bg }};color:{{ p.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ p.label }}</div>
+              </sc-for>
+            </div>
+            <div style="margin-top:20px;border-radius:16px;padding:14px 16px;background:rgba(43,41,36,.05);display:flex;justify-content:space-between;font:700 14px 'Nunito',sans-serif;color:#2B2924"><span>Total</span><span>{{ subtotal }}</span></div>
+            <div onClick="{{ checkoutNext }}" style="margin-top:20px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Finalizar compra</div>
+          </sc-if>
+          <sc-if value="{{ checkoutStep3 }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:18px;text-align:center">
+              <div style="width:64px;height:64px;border-radius:50%;background:rgba(107,115,83,.15);display:flex;align-items:center;justify-content:center">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#4F5D45" stroke-width="2.4"><path d="M4 12l6 6L20 6"/></svg>
+              </div>
+              <div style="font:800 19px 'Nunito',sans-serif;color:#2B2924">Compra confirmada</div>
+              <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558;max-width:260px">{{ quantidade }}x Protetor de canela premium · {{ subtotal }}</div>
+              <div onClick="{{ toHistorico }}" style="height:52px;padding:0 24px;border-radius:26px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Ver no histórico</div>
+              <div onClick="{{ toHome }}" style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Voltar à loja</div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- 12 AVALIACOES -->
+      <sc-if value="{{ s12 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          {{ backHeader }}
+          <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924">Avaliações</div>
+          <div style="margin-top:4px;font:600 12px 'Nunito',sans-serif;color:#6b6558">{{ avalNome }} · ★ {{ avalNota }}</div>
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ avaliacoesList }}" as="a" hint-placeholder-count="4">
+              <div style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px 16px">
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                  <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ a.autor }}</div>
+                  <div style="font:700 12px 'Nunito',sans-serif;color:#C9A15A">★ {{ a.nota }}</div>
+                </div>
+                <div style="margin-top:6px;font:500 12px/1.6 'Nunito',sans-serif;color:#6b6558">{{ a.texto }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 13 CUPONS -->
+      <sc-if value="{{ s13 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          {{ backHeader }}
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Cupons</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ cuponsList }}" as="c" hint-placeholder-count="3">
+              <div onClick="{{ c.onClick }}" style="border-radius:16px;padding:14px 16px;background:{{ c.bg }};border:1.5px dashed {{ c.border }};cursor:pointer">
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ c.titulo }}</div>
+                <div style="margin-top:4px;font:500 11px 'Nunito',sans-serif;color:#6b6558">Válido até {{ c.validade }}</div>
+                <div style="margin-top:6px;font:700 11px 'Nunito',sans-serif;color:#8A6E4B">{{ c.status }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 14 EVENTOS -->
+      <sc-if value="{{ s14 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          {{ backHeader }}
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Eventos</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ eventosList }}" as="e" hint-placeholder-count="3">
+              <div style="display:flex;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px">
+                <div style="width:60px;height:60px;border-radius:14px;flex:none" class="placeholder"></div>
+                <div><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ e.titulo }}</div><div style="margin-top:2px;font:500 11px 'Nunito',sans-serif;color:#6b6558">{{ e.quando }}</div><div style="margin-top:2px;font:700 11px 'Nunito',sans-serif;color:#8A6E4B">{{ e.preco }}</div></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 15 CURSOS -->
+      <sc-if value="{{ s15 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          {{ backHeader }}
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Cursos</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ cursosList }}" as="c" hint-placeholder-count="3">
+              <div style="display:flex;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px">
+                <div style="width:60px;height:60px;border-radius:14px;flex:none" class="placeholder"></div>
+                <div><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ c.titulo }}</div><div style="margin-top:2px;font:500 11px 'Nunito',sans-serif;color:#6b6558">{{ c.instrutor }}</div><div style="margin-top:2px;font:700 11px 'Nunito',sans-serif;color:#8A6E4B">{{ c.preco }}</div></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <div onClick="{{ next }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+
+  </div>
+
+  <div style="display:flex;align-items:center;gap:16px;font:600 12px ui-monospace,Menlo,monospace;color:#6b6558">
+    <span>{{ screenLabel }} · tela {{ screenDisplay }} / {{ totalScreens }}</span>
+    <span onClick="{{ toHome }}" style="cursor:pointer;text-decoration:underline">início</span>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+
+class Component extends DCLogic {
+  state = {
+    screen: 0,
+    history: [],
+    categoria: 'Produtos',
+    buscaQuery: '',
+    explorarLoading: false,
+    favProduto: false,
+    horarioSelecionado: null,
+    dataSelecionada: 'Sáb 12',
+    horarioReserva: null,
+    pagamentoSelecionado: 'PIX',
+    reservaConfirmada: false,
+    reservaContext: { origem: 'Consulta', nome: 'Dra. Marina Kist', preco: 'R$ 220,00' },
+    icsAdicionado: false,
+    favTab: 'Produtos',
+    filtroAberto: null,
+    filtroValores: { Cidade: 'Todas', 'Preço': 'Qualquer', 'Avaliação': 'Qualquer' },
+    checkoutStep: 0,
+    quantidade: 1,
+    enderecoSelecionado: 'Casa',
+    chatNome: 'Vendedor · Equistore',
+    chatMensagens: [
+      { from: 'them', texto: 'Olá! Como posso ajudar com o pedido?' },
+      { from: 'me', texto: 'Oi, o protetor serve para casco 26?' },
+    ],
+    chatInput: '',
+    avalNome: 'Dra. Marina Kist', avalNota: '4.9',
+    cupons: [
+      { id: 1, titulo: '10% OFF em produtos de bem-estar', validade: '20/07', aplicado: false },
+      { id: 2, titulo: 'Frete grátis na primeira compra', validade: '31/07', aplicado: false },
+      { id: 3, titulo: 'R$ 30 OFF em serviços veterinários', validade: '15/08', aplicado: false },
+    ],
+    proximosServicos: [
+      { id: 1, nome: 'Dra. Marina Kist · Veterinária', quando: 'Consulta agendada · sáb, 10h' },
+      { id: 2, nome: 'João Ferrador', quando: 'Ferrageamento agendado · seg, 15h' },
+    ],
+    favoritosData: {
+      'Produtos': [{ id: 1, nome: 'Protetor de canela premium' }, { id: 2, nome: 'Manta térmica' }, { id: 3, nome: 'Escova premium' }],
+      'Serviços': [{ id: 1, nome: 'Consulta · Dra. Marina Kist' }, { id: 2, nome: 'Fisioterapia · Ana' }],
+      'Profissionais': [{ id: 1, nome: 'João Ferrador' }],
+      'Haras': [{ id: 1, nome: 'Haras Vale Verde' }],
+      'Eventos': [],
+    },
+  };
+
+  navigate(n) {
+    this.setState(s => ({ history: [...s.history, s.screen], screen: n }));
+  }
+  back = () => {
+    this.setState(s => {
+      const h = [...s.history];
+      const prev = h.length ? h.pop() : 0;
+      return { history: h, screen: prev };
+    });
+  };
+  goTo(n) { this.setState({ screen: Math.max(0, Math.min(15, n)) }); }
+  next = () => this.goTo(this.state.screen + 1);
+
+  bind(key) { return (e) => this.setState({ [key]: e.target.value }); }
+  setVal(key, value) { return () => this.setState({ [key]: value }); }
+  toggleBool(key) { return () => this.setState(s => ({ [key]: !s[key] })); }
+  buildChips(options, isSelected, onToggle) {
+    return options.map(label => ({
+      label,
+      bg: isSelected(label) ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: isSelected(label) ? '#C9A15A' : '#2B2924',
+      onClick: onToggle(label),
+    }));
+  }
+
+  setCategoriaExplorar(label) {
+    return () => {
+      this.setState({ categoria: label, explorarLoading: true });
+      setTimeout(() => this.setState({ explorarLoading: false }), 450);
+    };
+  }
+
+  removeProximo(id) {
+    return () => this.setState(s => ({ proximosServicos: s.proximosServicos.filter(p => p.id !== id) }));
+  }
+  removeFavorito(tab, id) {
+    return () => this.setState(s => ({
+      favoritosData: { ...s.favoritosData, [tab]: s.favoritosData[tab].filter(f => f.id !== id) },
+    }));
+  }
+  toggleCupom(id) {
+    return () => this.setState(s => ({
+      cupons: s.cupons.map(c => c.id === id ? { ...c, aplicado: !c.aplicado } : c),
+    }));
+  }
+
+  toReservaCtx(origem, nome, preco) {
+    return () => {
+      this.setState({ reservaContext: { origem, nome, preco }, reservaConfirmada: false, dataSelecionada: 'Sáb 12', horarioReserva: null });
+      this.navigate(6);
+    };
+  }
+  toChatCtx(nome) {
+    return () => {
+      this.setState({ chatNome: nome, chatMensagens: [{ from: 'them', texto: 'Olá! Em que posso ajudar?' }], chatInput: '' });
+      this.navigate(10);
+    };
+  }
+  toAvalCtx(nome, nota) {
+    return () => { this.setState({ avalNome: nome, avalNota: nota }); this.navigate(12); };
+  }
+
+  sendChat = () => {
+    const texto = this.state.chatInput.trim();
+    if (!texto) return;
+    this.setState(s => ({ chatMensagens: [...s.chatMensagens, { from: 'me', texto }], chatInput: '' }));
+  };
+
+  renderVals() {
+    const s = this.state;
+    const screenIs = {};
+    for (let i = 0; i <= 15; i++) screenIs['s' + i] = s.screen === i;
+    const jump = (n) => () => this.navigate(n);
+
+    const screenNames = ['Home marketplace','Explorar','Página de produto','Página de serviço','Perfil profissional','Haras','Reserva','Carteira','Histórico','Favoritos','Chat','Checkout','Avaliações','Cupons','Eventos','Cursos'];
+
+    const toHome = () => this.goTo(0);
+    const toExplorar = jump(1);
+    const toProduto = jump(2);
+    const toServico = jump(3);
+    const toProfissional = jump(4);
+    const toHaras = jump(5);
+    const toCarteira = jump(7);
+    const toHistorico = jump(8);
+    const toFavoritos = jump(9);
+    const toCheckout = () => { this.setState({ checkoutStep: 0, quantidade: 1 }); this.navigate(11); };
+
+    const categoriaOptions = ['Produtos', 'Serviços', 'Profissionais', 'Haras', 'Eventos', 'Cursos'];
+    const homeCategoriaChips = categoriaOptions.map(label => ({
+      label, bg: 'rgba(43,41,36,.06)', color: '#2B2924',
+      onClick: label === 'Eventos' ? jump(14) : label === 'Cursos' ? jump(15) : () => { this.setState({ categoria: label }); this.navigate(1); },
+    }));
+    const explorarCategoriaChips = categoriaOptions.map(label => ({
+      label,
+      bg: s.categoria === label ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: s.categoria === label ? '#C9A15A' : '#2B2924',
+      onClick: label === 'Eventos' ? jump(14) : label === 'Cursos' ? jump(15) : this.setCategoriaExplorar(label),
+    }));
+
+    const filtroTipos = ['Cidade', 'Preço', 'Avaliação'];
+    const filtroChips = filtroTipos.map(t => ({
+      label: s.filtroValores[t] === (t === 'Cidade' ? 'Todas' : 'Qualquer') ? t : t + ': ' + s.filtroValores[t],
+      bg: s.filtroValores[t] !== (t === 'Cidade' ? 'Todas' : 'Qualquer') ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: s.filtroValores[t] !== (t === 'Cidade' ? 'Todas' : 'Qualquer') ? '#C9A15A' : '#2B2924',
+      onClick: () => this.setState({ filtroAberto: t }),
+    }));
+    const filtroOptionsMap = {
+      'Cidade': ['Todas', 'Campinas, SP', 'São Paulo, SP', 'Valinhos, SP'],
+      'Preço': ['Qualquer', 'Até R$ 100', 'R$ 100–300', 'R$ 300+'],
+      'Avaliação': ['Qualquer', '4.5+', '4.8+'],
+    };
+    const filtroOpcoes = s.filtroAberto ? filtroOptionsMap[s.filtroAberto].map(v => ({
+      label: v,
+      bg: s.filtroValores[s.filtroAberto] === v ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: s.filtroValores[s.filtroAberto] === v ? '#C9A15A' : '#2B2924',
+      onClick: () => this.setState(st => ({ filtroValores: { ...st.filtroValores, [s.filtroAberto]: v }, filtroAberto: null })),
+    })) : [];
+
+    const produtosRecomendados = [
+      { nome: 'Protetor de canela', preco: 'R$ 189' },
+      { nome: 'Manta térmica', preco: 'R$ 249' },
+      { nome: 'Escova premium', preco: 'R$ 65' },
+    ];
+    const profissionaisProximos = ['Dra. Marina', 'João Ferrador', 'Ana Fisio'];
+
+    const itemsAll = [
+      { nome: 'Protetor de canela premium', sub: 'R$ 189', categoria: 'Produtos', cidade: null, onClick: toProduto },
+      { nome: 'Manta térmica', sub: 'R$ 249', categoria: 'Produtos', cidade: null, onClick: toProduto },
+      { nome: 'Dra. Marina Kist', sub: 'Veterinária · ★ 4.9', categoria: 'Serviços', cidade: null, onClick: toServico },
+      { nome: 'Ana Fisioterapeuta', sub: 'Fisioterapia equina · ★ 4.7', categoria: 'Serviços', cidade: null, onClick: toServico },
+      { nome: 'João Ferrador', sub: 'Ferrador · ★ 4.8', categoria: 'Profissionais', cidade: null, onClick: toProfissional },
+      { nome: 'Haras Vale Verde', sub: 'Hospedagem · Campinas, SP', categoria: 'Haras', cidade: 'Campinas, SP', onClick: toHaras },
+    ];
+    const cidadeFiltro = s.filtroValores['Cidade'];
+    let explorarResultados = itemsAll.filter(it => it.categoria === s.categoria);
+    if (s.buscaQuery.trim()) {
+      const q = s.buscaQuery.trim().toLowerCase();
+      explorarResultados = explorarResultados.filter(it => it.nome.toLowerCase().includes(q) || it.sub.toLowerCase().includes(q));
+    }
+    if (cidadeFiltro !== 'Todas') {
+      explorarResultados = explorarResultados.filter(it => !it.cidade || it.cidade === cidadeFiltro);
+    }
+
+    const horarioOptions = ['09:00', '10:30', '14:00', '16:00', '17:30', '18:30'];
+    const horarioChips = this.buildChips(horarioOptions, l => s.horarioSelecionado === l, l => this.setVal('horarioSelecionado', l));
+
+    const galeriaProfissional = [0, 1, 2];
+    const harasFotos = [0, 1, 2];
+
+    const dataOptions = ['Sáb 12', 'Dom 13', 'Seg 14', 'Ter 15', 'Qua 16'];
+    const dataChips = this.buildChips(dataOptions, l => s.dataSelecionada === l, l => this.setVal('dataSelecionada', l));
+    const horarioReservaOptions = ['09:00', '11:00', '14:00', '16:00'];
+    const horarioReservaChips = this.buildChips(horarioReservaOptions, l => s.horarioReserva === l, l => this.setVal('horarioReserva', l));
+    const pagamentoOptions = ['Apple Pay', 'Google Pay', 'PIX', 'Cartão'];
+    const pagamentoChips = this.buildChips(pagamentoOptions, l => s.pagamentoSelecionado === l, l => this.setVal('pagamentoSelecionado', l));
+
+    const historicoList = [
+      { titulo: 'Consulta · Dra. Marina Kist', data: '28 de junho', status: 'Concluído' },
+      { titulo: 'Protetor de canela premium', data: '20 de junho', status: 'Entregue' },
+      { titulo: 'Clínica de adestramento', data: '15 de junho', status: 'Concluído' },
+      { titulo: 'Ferrageamento · João Ferrador', data: '2 de junho', status: 'Concluído' },
+    ];
+
+    const favTabOptions = ['Produtos', 'Serviços', 'Profissionais', 'Haras', 'Eventos'];
+    const favTabChips = this.buildChips(favTabOptions, l => s.favTab === l, l => this.setVal('favTab', l));
+    const favoritosList = (s.favoritosData[s.favTab] || []).map(f => ({ ...f, onRemove: this.removeFavorito(s.favTab, f.id) }));
+    const favoritosCount = Object.values(s.favoritosData).reduce((sum, arr) => sum + arr.length, 0);
+
+    const proximosServicos = s.proximosServicos.map(p => ({ ...p, onRemove: this.removeProximo(p.id) }));
+
+    // tab bar (shared across root screens)
+    const tabBar = React.createElement('div', {
+      style: { position: 'absolute', left: 20, right: 20, bottom: 20, height: 64, borderRadius: 32, background: '#2B2924', display: 'flex', alignItems: 'center', justifyContent: 'space-around', padding: '0 10px', boxShadow: '0 10px 30px rgba(43,41,36,.25)', zIndex: 20 },
+    },
+      React.createElement('a', { href: 'Home e Diario - EquiSoul.dc.html', style: { display: 'flex', flexDirection: 'column', alignItems: 'center', textDecoration: 'none', color: 'rgba(251,249,244,.55)' } },
+        React.createElement('svg', { viewBox: '0 0 24 24', width: 20, height: 20, fill: 'none', stroke: 'currentColor', strokeWidth: 1.8 },
+          React.createElement('path', { d: 'M4 11.5L12 4l8 7.5' }), React.createElement('path', { d: 'M6 10v9h12v-9' }))),
+      React.createElement('a', { href: 'Comunidade - EquiSoul.dc.html', style: { display: 'flex', flexDirection: 'column', alignItems: 'center', textDecoration: 'none', color: 'rgba(251,249,244,.55)' } },
+        React.createElement('svg', { viewBox: '0 0 24 24', width: 20, height: 20, fill: 'none', stroke: 'currentColor', strokeWidth: 1.8 },
+          React.createElement('circle', { cx: 8, cy: 9, r: 3 }), React.createElement('circle', { cx: 16, cy: 9, r: 3 }),
+          React.createElement('path', { d: 'M2 20c0-3 2.5-5 6-5s6 2 6 5M10 20c0-3 2.5-5 6-5s6 2 6 5' }))),
+      React.createElement('a', { href: 'Criar Memoria - EquiSoul.dc.html', style: { width: 46, height: 46, borderRadius: '50%', background: '#C9A15A', display: 'flex', alignItems: 'center', justifyContent: 'center', textDecoration: 'none', marginTop: -14, boxShadow: '0 6px 16px rgba(201,161,90,.4)' } },
+        React.createElement('svg', { viewBox: '0 0 24 24', width: 20, height: 20, fill: 'none', stroke: '#2B2924', strokeWidth: 2.4 },
+          React.createElement('path', { d: 'M12 5v14M5 12h14' }))),
+      React.createElement('div', { onClick: toHome, style: { display: 'flex', flexDirection: 'column', alignItems: 'center', cursor: 'pointer', color: '#C9A15A' } },
+        React.createElement('svg', { viewBox: '0 0 24 24', width: 20, height: 20, fill: 'none', stroke: 'currentColor', strokeWidth: 1.8 },
+          React.createElement('path', { d: 'M6 8h12l-1 12H7z' }), React.createElement('path', { d: 'M9 8V6a3 3 0 016 0v2' }))),
+      React.createElement('a', { href: 'Perfis - EquiSoul.dc.html', style: { display: 'flex', flexDirection: 'column', alignItems: 'center', textDecoration: 'none', color: 'rgba(251,249,244,.55)' } },
+        React.createElement('svg', { viewBox: '0 0 24 24', width: 20, height: 20, fill: 'none', stroke: 'currentColor', strokeWidth: 1.8 },
+          React.createElement('circle', { cx: 12, cy: 8, r: 4 }), React.createElement('path', { d: 'M4 20c0-4 3.5-6 8-6s8 2 8 6' })))
+    );
+
+    const backHeader = React.createElement('div', { style: { display: 'flex', alignItems: 'center', marginBottom: 6, marginTop: -16 } },
+      React.createElement('div', { onClick: this.back, style: { width: 36, height: 36, borderRadius: '50%', background: 'rgba(43,41,36,.06)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' } },
+        React.createElement('svg', { viewBox: '0 0 24 24', width: 16, height: 16, fill: 'none', stroke: '#2B2924', strokeWidth: 2 },
+          React.createElement('path', { d: 'M15 18l-6-6 6-6' }))));
+
+    const backFloating = React.createElement('div', { style: { position: 'absolute', top: 16, left: 16 } },
+      React.createElement('div', { onClick: this.back, style: { width: 36, height: 36, borderRadius: '50%', background: 'rgba(255,255,255,.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 8px rgba(43,41,36,.15)' } },
+        React.createElement('svg', { viewBox: '0 0 24 24', width: 16, height: 16, fill: 'none', stroke: '#2B2924', strokeWidth: 2 },
+          React.createElement('path', { d: 'M15 18l-6-6 6-6' }))));
+
+    // checkout
+    const precoUnit = 189;
+    const subtotal = 'R$ ' + (precoUnit * s.quantidade).toFixed(2).replace('.', ',');
+    const enderecoOpcoes = [
+      { titulo: 'Casa', endereco: 'Rua das Palmeiras, 120 · Campinas, SP' },
+      { titulo: 'Haras', endereco: 'Estrada Vale Verde, km 4 · Campinas, SP' },
+    ].map(e => ({
+      ...e,
+      bg: s.enderecoSelecionado === e.titulo ? 'rgba(201,161,90,.12)' : '#fff',
+      border: s.enderecoSelecionado === e.titulo ? '#C9A15A' : 'rgba(43,41,36,.1)',
+      onClick: this.setVal('enderecoSelecionado', e.titulo),
+    }));
+
+    const avaliacoesList = [
+      { autor: 'Camila R.', nota: '5.0', texto: 'Atendimento impecável, super recomendo!' },
+      { autor: 'Rodrigo S.', nota: '4.8', texto: 'Muito atencioso e pontual.' },
+      { autor: 'Beatriz A.', nota: '4.9', texto: 'Excelente profissional, resolveu rápido.' },
+      { autor: 'Felipe M.', nota: '4.7', texto: 'Recomendo, mas a agenda costuma lotar.' },
+    ];
+
+    const cuponsList = s.cupons.map(c => ({
+      ...c,
+      status: c.aplicado ? 'Aplicado ✓' : 'Toque para aplicar',
+      bg: c.aplicado ? 'rgba(107,115,83,.1)' : 'rgba(201,161,90,.08)',
+      border: c.aplicado ? '#6B7353' : '#C9A15A',
+      onClick: this.toggleCupom(c.id),
+    }));
+
+    const eventosList = [
+      { titulo: 'Clínica de adestramento', quando: 'Sáb, 12 jul · 9h', preco: 'R$ 120' },
+      { titulo: 'Encontro de hipismo', quando: 'Dom, 20 jul · 8h', preco: 'Gratuito' },
+      { titulo: 'Feira de produtos equinos', quando: 'Sáb, 26 jul · 10h', preco: 'Gratuito' },
+    ];
+    const cursosList = [
+      { titulo: 'Fundamentos de adestramento', instrutor: 'Ana Fisio', preco: 'R$ 249' },
+      { titulo: 'Primeiros socorros equinos', instrutor: 'Dra. Marina Kist', preco: 'R$ 189' },
+      { titulo: 'Ferrageamento na prática', instrutor: 'João Ferrador', preco: 'R$ 299' },
+    ];
+
+    return {
+      ...screenIs,
+      screenDisplay: s.screen + 1,
+      totalScreens: 16,
+      screenLabel: screenNames[s.screen],
+      next: this.next,
+      goBack: () => this.goTo(0),
+      back: this.back,
+      tabBar, backHeader, backFloating,
+      toHome, toExplorar, toProduto, toServico, toProfissional, toHaras, toCarteira, toHistorico, toFavoritos,
+      toReservaMarina: this.toReservaCtx('Consulta', 'Dra. Marina Kist', 'R$ 220,00'),
+      toReservaJoao: this.toReservaCtx('Ferrageamento', 'João Ferrador', 'R$ 180,00'),
+      toReservaHaras: this.toReservaCtx('Visita', 'Haras Vale Verde', 'R$ 50,00'),
+      toChatMarina: this.toChatCtx('Dra. Marina Kist'),
+      toChatJoao: this.toChatCtx('João Ferrador'),
+      toChatVendedor: this.toChatCtx('Vendedor · Equistore'),
+      toAvaliacoesMarina: this.toAvalCtx('Dra. Marina Kist', '4.9'),
+      toAvaliacoesJoao: this.toAvalCtx('João Ferrador', '4.8'),
+      toAvaliacoesHaras: this.toAvalCtx('Haras Vale Verde', '4.7'),
+      toAvaliacoesProduto: this.toAvalCtx('Protetor de canela premium', '4.8'),
+      toCheckout,
+      toCupons: jump(13),
+      homeCategoriaChips, explorarCategoriaChips,
+      buscaQuery: s.buscaQuery, buscaQueryChange: this.bind('buscaQuery'),
+      filtroChips, filtroAberto: s.filtroAberto, filtroOpcoes,
+      fecharFiltro: () => this.setState({ filtroAberto: null }),
+      explorarLoading: s.explorarLoading, skeletonSlots: [0, 1, 2, 3],
+      explorarResultados, explorarVazio: explorarResultados.length === 0,
+      produtosRecomendados, profissionaisProximos,
+      favProduto: s.favProduto, toggleFavProduto: this.toggleBool('favProduto'),
+      favProdutoFill: s.favProduto ? '#C9A15A' : 'none',
+      horarioChips,
+      galeriaProfissional, harasFotos,
+      dataChips, horarioReservaChips, pagamentoChips,
+      dataSelecionada: s.dataSelecionada,
+      horarioReservaLabel: s.horarioReserva || '—',
+      reservaContext: s.reservaContext,
+      reservaConfirmada: s.reservaConfirmada,
+      confirmarReserva: () => this.setState({ reservaConfirmada: true }),
+      icsAdicionado: s.icsAdicionado, toggleIcs: this.toggleBool('icsAdicionado'),
+      icsLabel: s.icsAdicionado ? 'Adicionado ✓' : 'Adicionar ao calendário',
+      historicoList, historicoTemItens: historicoList.length > 0,
+      favTabChips, favoritosList, favTabAtual: s.favTab, favoritosVazio: favoritosList.length === 0, favoritosCount,
+      proximosServicos, proximosServicosVazio: proximosServicos.length === 0,
+      chatNome: s.chatNome,
+      chatMensagens: s.chatMensagens.map(m => ({
+        texto: m.texto,
+        style: m.from === 'me'
+          ? 'background:#C9A15A;color:#2B2924;align-self:flex-end;margin-left:auto'
+          : 'background:rgba(43,41,36,.06);color:#2B2924;align-self:flex-start;margin-right:auto',
+      })),
+      chatInput: s.chatInput, chatInputChange: this.bind('chatInput'), sendChat: this.sendChat,
+      checkoutStep0: s.checkoutStep === 0, checkoutStep1: s.checkoutStep === 1, checkoutStep2: s.checkoutStep === 2, checkoutStep3: s.checkoutStep === 3,
+      checkoutNext: () => this.setState(st => ({ checkoutStep: st.checkoutStep + 1 })),
+      quantidade: s.quantidade,
+      incQtd: () => this.setState(st => ({ quantidade: Math.min(9, st.quantidade + 1) })),
+      decQtd: () => this.setState(st => ({ quantidade: Math.max(1, st.quantidade - 1) })),
+      subtotal, enderecoOpcoes,
+      avalNome: s.avalNome, avalNota: s.avalNota, avaliacoesList,
+      cuponsList,
+      eventosList, cursosList,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#EDE8DE;font-family:'Nunito',sans-serif;-webkit-font-smoothing:antialiased}
+  .placeholder{background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.06) 0px,rgba(0,0,0,.06) 2px,transparent 2px,transparent 12px);background-color:#EAE4D6}
+  .ph-label{font:600 10px ui-monospace,Menlo,monospace;letter-spacing:.02em;text-transform:uppercase;text-align:center;padding:0 30px}
+  input::placeholder, textarea::placeholder{color:#a39c8a}
+  input, textarea{font-family:'Nunito',sans-serif;outline:none;box-sizing:border-box}
+  a{color:#6B7353}
+  a:hover{color:#4F5D45}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:56px 20px;font-family:'Nunito',sans-serif">
+
+  <div style="display:flex;align-items:center;gap:22px">
+
+    <div onClick="{{ goBack }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+
+    <div style="width:390px;height:844px;background:#FBF9F4;position:relative;overflow:hidden;box-shadow:0 30px 70px rgba(43,41,36,.22);flex:none">
+
+      <!-- 0 SPLASH -->
+      <sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+        <div onClick="{{ next }}" style="position:absolute;inset:0;cursor:pointer" class="placeholder">
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(43,41,36,.1),rgba(43,41,36,.6))"></div>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px">
+            <div style="width:60px;height:60px;border-radius:50%;border:1.6px solid #FBF9F4;display:flex;align-items:center;justify-content:center">
+              <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#FBF9F4" stroke-width="1.6"><circle cx="12" cy="12" r="6"/><path d="M2 12h4M18 12h4"/></svg>
+            </div>
+            <div style="font:800 27px 'Nunito',sans-serif;color:#FBF9F4;letter-spacing:.01em">EquiSoul</div>
+          </div>
+          <div class="ph-label" style="position:absolute;bottom:56px;left:0;right:0;color:rgba(251,249,244,.7)">foto · campo ao amanhecer, cavalo e cavaleiro em silhueta</div>
+        </div>
+      </sc-if>
+
+      <!-- 1 WELCOME -->
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column">
+          <div style="height:500px;position:relative" class="placeholder">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · cavalo e cavaleira ao pôr do sol</div>
+          </div>
+          <div style="flex:1;background:#FBF9F4;border-radius:28px 28px 0 0;margin-top:-28px;position:relative;padding:36px 28px 40px;display:flex;flex-direction:column;box-shadow:0 -14px 30px rgba(43,41,36,.06)">
+            <div style="width:36px;height:3px;background:rgba(43,41,36,.15);border-radius:2px;margin:0 auto 24px"></div>
+            <div style="font:800 28px/1.3 'Nunito',sans-serif;color:#2B2924">Cada cavalo tem uma história.</div>
+            <div style="margin-top:10px;font:600 15px/1.6 'Nunito',sans-serif;color:#6b6558">E toda parceria merece ser lembrada.</div>
+            <div style="flex:1"></div>
+            <div onClick="{{ toStorytelling1 }}" style="height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Começar</div>
+            <div onClick="{{ toLogin }}" style="margin-top:14px;height:56px;border-radius:28px;border:1.5px solid rgba(43,41,36,.15);color:#2B2924;display:flex;align-items:center;justify-content:center;font:700 15px 'Nunito',sans-serif;cursor:pointer">Já tenho conta</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 2 STORYTELLING 1 -->
+      <sc-if value="{{ s2 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:54px 28px 40px">
+          <div onClick="{{ toLogin }}" style="align-self:flex-end;font:700 13px 'Nunito',sans-serif;color:#6b6558;cursor:pointer">Pular</div>
+          <div style="flex:1;border-radius:24px;margin-top:20px" class="placeholder">
+            <div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · cavalo e cavaleiro em treino</div>
+          </div>
+          <div style="margin-top:28px;font:800 24px/1.35 'Nunito',sans-serif;color:#2B2924">Seu cavalo nunca esquecerá os momentos que viveram juntos.</div>
+          <div style="margin-top:12px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Transforme cada passeio, treino e conquista em uma memória eterna.</div>
+          <div style="margin-top:20px;display:flex;justify-content:center;gap:6px">
+            <div style="width:22px;height:6px;border-radius:3px;background:#C9A15A"></div>
+            <div style="width:6px;height:6px;border-radius:3px;background:rgba(43,41,36,.15)"></div>
+            <div style="width:6px;height:6px;border-radius:3px;background:rgba(43,41,36,.15)"></div>
+          </div>
+          <div onClick="{{ next }}" style="margin-top:20px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Próximo</div>
+        </div>
+      </sc-if>
+
+      <!-- 3 STORYTELLING 2 -->
+      <sc-if value="{{ s3 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:54px 28px 40px">
+          <div onClick="{{ toLogin }}" style="align-self:flex-end;font:700 13px 'Nunito',sans-serif;color:#6b6558;cursor:pointer">Pular</div>
+          <div style="flex:1;border-radius:24px;margin-top:20px" class="placeholder">
+            <div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · menina abraçando o cavalo</div>
+          </div>
+          <div style="margin-top:28px;font:800 24px/1.35 'Nunito',sans-serif;color:#2B2924">A IA transforma registros em histórias.</div>
+          <div style="margin-top:12px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Cada treino pode se tornar uma carta emocionante escrita pelo seu companheiro.</div>
+          <div style="margin-top:20px;display:flex;justify-content:center;gap:6px">
+            <div style="width:6px;height:6px;border-radius:3px;background:rgba(43,41,36,.15)"></div>
+            <div style="width:22px;height:6px;border-radius:3px;background:#C9A15A"></div>
+            <div style="width:6px;height:6px;border-radius:3px;background:rgba(43,41,36,.15)"></div>
+          </div>
+          <div onClick="{{ next }}" style="margin-top:20px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Próximo</div>
+        </div>
+      </sc-if>
+
+      <!-- 4 STORYTELLING 3 -->
+      <sc-if value="{{ s4 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:54px 28px 40px">
+          <div onClick="{{ toLogin }}" style="align-self:flex-end;font:700 13px 'Nunito',sans-serif;color:#6b6558;cursor:pointer">Pular</div>
+          <div style="flex:1;border-radius:24px;margin-top:20px" class="placeholder">
+            <div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · grupo de cavaleiros na comunidade</div>
+          </div>
+          <div style="margin-top:28px;font:800 24px/1.35 'Nunito',sans-serif;color:#2B2924">Compartilhe sua jornada.</div>
+          <div style="margin-top:12px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Conecte-se com milhares de apaixonados por cavalos.</div>
+          <div style="margin-top:20px;display:flex;justify-content:center;gap:6px">
+            <div style="width:6px;height:6px;border-radius:3px;background:rgba(43,41,36,.15)"></div>
+            <div style="width:6px;height:6px;border-radius:3px;background:rgba(43,41,36,.15)"></div>
+            <div style="width:22px;height:6px;border-radius:3px;background:#C9A15A"></div>
+          </div>
+          <div onClick="{{ toLogin }}" style="margin-top:20px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Começar agora</div>
+        </div>
+      </sc-if>
+
+      <!-- 5 LOGIN -->
+      <sc-if value="{{ s5 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:70px 28px 40px">
+          <div style="font:800 26px 'Nunito',sans-serif;color:#2B2924">Bem-vindo(a) de volta</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Entre para continuar sua história com seu cavalo.</div>
+          <div style="margin-top:36px;display:flex;flex-direction:column;gap:12px">
+            <div onClick="{{ toDashboard }}" style="height:56px;border-radius:28px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;gap:10px;font:700 14px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a13 13 0 010 18 13 13 0 010-18z"/></svg>
+              Continuar com Google
+            </div>
+            <div onClick="{{ toDashboard }}" style="height:56px;border-radius:28px;background:#2B2924;color:#FBF9F4;display:flex;align-items:center;justify-content:center;gap:10px;font:700 14px 'Nunito',sans-serif;cursor:pointer">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#FBF9F4" stroke-width="1.8"><path d="M12 4a4 4 0 014 4c0 3-2 4-2 4"/><path d="M6 12c0 5 3 8 6 8s6-3 6-8"/></svg>
+              Continuar com Apple
+            </div>
+            <div onClick="{{ toCadastro }}" style="height:56px;border-radius:28px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;gap:10px;font:700 14px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="1.8"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>
+              Continuar com Email
+            </div>
+          </div>
+          <div style="margin-top:8px;font:500 11px/1.5 'Nunito',sans-serif;color:#a39c8a;text-align:center">Google e Apple reconhecem sua conta e vão direto ao seu diário. Email é para quem está criando uma conta nova.</div>
+          <div onClick="{{ toRecSenha }}" style="margin-top:16px;text-align:center;font:700 13px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Esqueceu a senha?</div>
+          <div style="flex:1"></div>
+          <div onClick="{{ toDashboard }}" style="text-align:center;font:700 13px 'Nunito',sans-serif;color:#6b6558;text-decoration:underline;cursor:pointer">Entrar como visitante</div>
+        </div>
+      </sc-if>
+
+      <!-- 6 CADASTRO -->
+      <sc-if value="{{ s6 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:70px 28px 40px;display:flex;flex-direction:column">
+          <div style="font:800 26px 'Nunito',sans-serif;color:#2B2924">Criar conta</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Leva menos de um minuto.</div>
+          <div style="margin-top:28px;display:flex;flex-direction:column;gap:14px">
+            <div>
+              <input value="{{ cadastroNome }}" onChange="{{ cadastroNomeChange }}" placeholder="Nome completo" style="width:100%;height:52px;border-radius:16px;border:1px solid {{ nomeBorder }};background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+              <sc-if value="{{ nomeErro }}"><div style="margin-top:6px;font:600 11px 'Nunito',sans-serif;color:#B85C4C">Conte pra gente seu nome completo</div></sc-if>
+            </div>
+            <div>
+              <input value="{{ cadastroEmail }}" onChange="{{ cadastroEmailChange }}" type="email" placeholder="Email" style="width:100%;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+              <sc-if value="{{ emailTouched }}"><sc-if value="{{ !emailValid }}"><div style="margin-top:6px;font:600 11px 'Nunito',sans-serif;color:#B85C4C">Verifique o formato do email</div></sc-if></sc-if>
+            </div>
+            <div>
+              <input value="{{ cadastroSenha }}" onChange="{{ cadastroSenhaChange }}" type="password" placeholder="Senha" style="width:100%;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924;box-sizing:border-box"/>
+              <div style="margin-top:8px;height:4px;border-radius:2px;background:rgba(43,41,36,.08)">
+                <div style="height:100%;border-radius:2px;width:{{ strengthWidth }}%;background:{{ strengthColor }}"></div>
+              </div>
+              <div style="margin-top:4px;font:600 11px 'Nunito',sans-serif;color:#6b6558">{{ strengthLabel }}</div>
+            </div>
+            <div>
+              <input value="{{ cadastroConfirmar }}" onChange="{{ cadastroConfirmarChange }}" type="password" placeholder="Confirmar senha" style="width:100%;height:52px;border-radius:16px;border:1px solid {{ confirmarBorder }};background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+              <sc-if value="{{ confirmarErro }}"><div style="margin-top:6px;font:600 11px 'Nunito',sans-serif;color:#B85C4C">As senhas não coincidem</div></sc-if>
+            </div>
+          </div>
+          <div onClick="{{ toggleTermos }}" style="margin-top:20px;display:flex;align-items:center;gap:10px;cursor:pointer">
+            <div style="width:20px;height:20px;border-radius:6px;background:{{ termosBg }};display:flex;align-items:center;justify-content:center;flex:none">
+              <sc-if value="{{ aceiteTermos }}"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#FBF9F4" stroke-width="3"><path d="M4 12l6 6L20 6"/></svg></sc-if>
+            </div>
+            <div style="font:500 13px/1.4 'Nunito',sans-serif;color:#6b6558">Aceito os <span onClick="{{ abrirTermos }}" style="color:#8A6E4B;font-weight:700;text-decoration:underline">Termos de Uso</span></div>
+          </div>
+          <div onClick="{{ togglePrivacidade }}" style="margin-top:12px;display:flex;align-items:center;gap:10px;cursor:pointer">
+            <div style="width:20px;height:20px;border-radius:6px;background:{{ privacidadeBg }};display:flex;align-items:center;justify-content:center;flex:none">
+              <sc-if value="{{ aceitePrivacidade }}"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#FBF9F4" stroke-width="3"><path d="M4 12l6 6L20 6"/></svg></sc-if>
+            </div>
+            <div style="font:500 13px/1.4 'Nunito',sans-serif;color:#6b6558">Aceito a <span onClick="{{ abrirPrivacidade }}" style="color:#8A6E4B;font-weight:700;text-decoration:underline">Política de Privacidade</span></div>
+          </div>
+          <sc-if value="{{ submitAttemptedCadastro }}"><sc-if value="{{ !cadastroValido }}">
+            <div style="margin-top:14px;padding:12px 14px;border-radius:14px;background:rgba(184,92,76,.1);font:600 12px/1.5 'Nunito',sans-serif;color:#B85C4C">Revise os campos destacados e aceite os termos para continuar.</div>
+          </sc-if></sc-if>
+          <div style="flex:1;min-height:20px"></div>
+          <div onClick="{{ tentarCriarConta }}" style="height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Criar conta</div>
+        </div>
+
+        <sc-if value="{{ showTermosModal }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:rgba(43,41,36,.55);display:flex;align-items:flex-end;z-index:20">
+            <div style="width:100%;max-height:70%;background:#FBF9F4;border-radius:24px 24px 0 0;padding:24px 24px 28px;overflow-y:auto">
+              <div style="width:36px;height:3px;background:rgba(43,41,36,.15);border-radius:2px;margin:0 auto 18px"></div>
+              <div style="font:800 18px 'Nunito',sans-serif;color:#2B2924">Termos de Uso</div>
+              <div style="margin-top:12px;font:500 13px/1.7 'Nunito',sans-serif;color:#6b6558">Ao usar o EquiSoul, você concorda em manter registros verdadeiros sobre você e seu cavalo, respeitar outros membros da comunidade e utilizar a IA apenas como apoio — nunca como substituta de cuidado veterinário profissional. O conteúdo que você publica permanece seu; compartilhamos apenas o que você autorizar.</div>
+              <div onClick="{{ fecharTermos }}" style="margin-top:20px;height:48px;border-radius:24px;background:#2B2924;color:#FBF9F4;display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;cursor:pointer">Fechar</div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ showPrivacidadeModal }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:rgba(43,41,36,.55);display:flex;align-items:flex-end;z-index:20">
+            <div style="width:100%;max-height:70%;background:#FBF9F4;border-radius:24px 24px 0 0;padding:24px 24px 28px;overflow-y:auto">
+              <div style="width:36px;height:3px;background:rgba(43,41,36,.15);border-radius:2px;margin:0 auto 18px"></div>
+              <div style="font:800 18px 'Nunito',sans-serif;color:#2B2924">Política de Privacidade</div>
+              <div style="margin-top:12px;font:500 13px/1.7 'Nunito',sans-serif;color:#6b6558">Suas memórias pertencem a você. Você escolhe o que é público, privado ou visível só para seguidores. Dados de saúde do seu cavalo nunca são compartilhados sem sua autorização explícita, mesmo com profissionais conectados na plataforma.</div>
+              <div onClick="{{ fecharPrivacidade }}" style="margin-top:20px;height:48px;border-radius:24px;background:#2B2924;color:#FBF9F4;display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;cursor:pointer">Fechar</div>
+            </div>
+          </div>
+        </sc-if>
+      </sc-if>
+
+      <!-- 7 RECUPERAR SENHA -->
+      <sc-if value="{{ s7 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:70px 28px 40px">
+          <div style="font:800 25px 'Nunito',sans-serif;color:#2B2924">Recuperar senha</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Enviaremos um link de redefinição para o seu email.</div>
+          <div style="margin-top:28px">
+            <input value="{{ recEmail }}" onChange="{{ recEmailChange }}" type="email" placeholder="Email" style="width:100%;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+          </div>
+          <div onClick="{{ enviarRecuperacao }}" style="margin-top:20px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Enviar link</div>
+          <sc-if value="{{ recEnviado }}">
+            <div style="margin-top:18px;padding:16px;border-radius:16px;background:rgba(107,115,83,.12);color:#4F5D45;font:600 13px/1.5 'Nunito',sans-serif">Enviamos um link de recuperação. Verifique sua caixa de entrada.</div>
+            <div onClick="{{ toNovaSenha }}" style="margin-top:12px;text-align:center;font:700 13px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Já abri o link, definir nova senha</div>
+          </sc-if>
+          <div style="flex:1"></div>
+          <div onClick="{{ toLogin }}" style="text-align:center;font:700 13px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Voltar para login</div>
+        </div>
+      </sc-if>
+
+      <!-- 8 NOVA SENHA -->
+      <sc-if value="{{ s8 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:70px 28px 40px">
+          <div style="font:800 25px 'Nunito',sans-serif;color:#2B2924">Nova senha</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Crie uma senha nova para sua conta.</div>
+          <div style="margin-top:28px;display:flex;flex-direction:column;gap:14px">
+            <div>
+              <input value="{{ novaSenha }}" onChange="{{ novaSenhaChange }}" type="password" placeholder="Nova senha" style="width:100%;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+            <div>
+              <input value="{{ novaSenhaConfirmar }}" onChange="{{ novaSenhaConfirmarChange }}" type="password" placeholder="Confirmar nova senha" style="width:100%;height:52px;border-radius:16px;border:1px solid {{ novaSenhaBorder }};background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+              <sc-if value="{{ novaSenhaErro }}"><div style="margin-top:6px;font:600 11px 'Nunito',sans-serif;color:#B85C4C">As senhas precisam ter 6+ caracteres e coincidir</div></sc-if>
+            </div>
+          </div>
+          <div style="flex:1;min-height:20px"></div>
+          <div onClick="{{ tentarNovaSenha }}" style="height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Redefinir senha</div>
+        </div>
+      </sc-if>
+
+      <!-- 9 CRIAR PERFIL -->
+      <sc-if value="{{ s9 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:70px 28px 40px;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+            <div style="flex:1;height:4px;border-radius:2px;background:rgba(43,41,36,.08)"><div style="height:100%;border-radius:2px;width:{{ setupStepPercent }}%;background:#C9A15A"></div></div>
+            <div style="font:700 11px 'Nunito',sans-serif;color:#8A6E4B;flex:none;white-space:nowrap">{{ setupStepLabel }}</div>
+          </div>
+          <div style="font:800 25px 'Nunito',sans-serif;color:#2B2924">Criar perfil</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Como podemos te chamar por aqui?</div>
+          <div style="margin-top:24px;display:flex;align-items:center;gap:16px">
+            <div style="width:76px;height:76px;border-radius:50%;flex:none" class="placeholder">
+              <div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B;font:600 8px ui-monospace,monospace">foto</div>
+            </div>
+            <div style="font:600 13px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Adicionar foto de perfil</div>
+          </div>
+          <div style="margin-top:22px;display:flex;flex-direction:column;gap:14px">
+            <input value="{{ perfilNome }}" onChange="{{ perfilNomeChange }}" placeholder="Nome de exibição" style="height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+            <div style="display:flex;gap:10px">
+              <input value="{{ perfilCidade }}" onChange="{{ perfilCidadeChange }}" placeholder="Cidade" style="flex:1;min-width:0;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+              <input value="{{ perfilEstado }}" onChange="{{ perfilEstadoChange }}" placeholder="Estado" style="width:88px;flex:none;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+            <input value="{{ perfilPais }}" onChange="{{ perfilPaisChange }}" placeholder="País" style="height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+          </div>
+          <div style="margin-top:22px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Modalidade principal</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ modalidadePerfilChips }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="padding:10px 16px;border-radius:20px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Nível de experiência</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ nivelChips }}" as="c" hint-placeholder-count="3">
+              <div onClick="{{ c.onClick }}" style="padding:10px 16px;border-radius:20px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:20px">
+            <textarea value="{{ perfilBio }}" onChange="{{ perfilBioChange }}" placeholder="Biografia curta (opcional)" rows="3" style="width:100%;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:12px 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924;resize:none"></textarea>
+          </div>
+          <div style="flex:1;min-height:20px"></div>
+          <div onClick="{{ toCavalo }}" style="height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Continuar</div>
+        </div>
+      </sc-if>
+
+      <!-- 10 ADICIONAR CAVALO -->
+      <sc-if value="{{ s10 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;display:flex;flex-direction:column">
+          <div style="height:220px;position:relative" class="placeholder">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto grande · seu cavalo</div>
+            <div onClick="{{ toRelacionamento }}" style="position:absolute;top:16px;right:16px;padding:8px 14px;border-radius:16px;background:rgba(43,41,36,.35);font:700 12px 'Nunito',sans-serif;color:#FBF9F4;cursor:pointer">Pular por enquanto</div>
+          </div>
+          <div style="padding:24px 28px 40px;display:flex;flex-direction:column">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+              <div style="flex:1;height:4px;border-radius:2px;background:rgba(43,41,36,.08)"><div style="height:100%;border-radius:2px;width:{{ setupStepPercent }}%;background:#C9A15A"></div></div>
+              <div style="font:700 11px 'Nunito',sans-serif;color:#8A6E4B;flex:none;white-space:nowrap">{{ setupStepLabel }}</div>
+            </div>
+            <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Adicione seu primeiro cavalo</div>
+            <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Este é o começo da história de vocês dois.</div>
+            <div style="margin-top:20px;display:flex;flex-direction:column;gap:14px">
+              <input value="{{ cavaloNome }}" onChange="{{ cavaloNomeChange }}" placeholder="Nome do cavalo" style="height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+              <input value="{{ cavaloRaca }}" onChange="{{ cavaloRacaChange }}" placeholder="Raça" style="height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+              <input value="{{ cavaloPelagem }}" onChange="{{ cavaloPelagemChange }}" placeholder="Pelagem" style="height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+              <div>
+                <div style="font:700 11px 'Nunito',sans-serif;color:#6b6558;margin-bottom:6px">Data de nascimento (aproximada)</div>
+                <input value="{{ cavaloNascimento }}" onChange="{{ cavaloNascimentoChange }}" type="date" style="width:100%;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+              </div>
+            </div>
+            <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Sexo</div>
+            <div style="margin-top:10px;display:flex;gap:8px">
+              <sc-for list="{{ sexoChips }}" as="c" hint-placeholder-count="2">
+                <div onClick="{{ c.onClick }}" style="padding:10px 16px;border-radius:20px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+              </sc-for>
+            </div>
+            <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Personalidade</div>
+            <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ personalidadeChips }}" as="c" hint-placeholder-count="7">
+                <div onClick="{{ c.onClick }}" style="padding:10px 16px;border-radius:20px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+              </sc-for>
+            </div>
+            <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Modalidade praticada</div>
+            <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ modalidadeCavaloChips }}" as="c" hint-placeholder-count="6">
+                <div onClick="{{ c.onClick }}" style="padding:10px 16px;border-radius:20px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+              </sc-for>
+            </div>
+            <div style="margin-top:20px">
+              <textarea value="{{ cavaloCuriosidade }}" onChange="{{ cavaloCuriosidadeChange }}" placeholder="Uma curiosidade ou história sobre o cavalo (opcional)" rows="3" style="width:100%;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:12px 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924;resize:none"></textarea>
+            </div>
+            <div onClick="{{ toRelacionamento }}" style="margin-top:24px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Continuar</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 11 RELACIONAMENTO -->
+      <sc-if value="{{ s11 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:70px 28px 40px;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div style="display:flex;align-items:center;gap:8px;flex:1">
+              <div style="flex:1;height:4px;border-radius:2px;background:rgba(43,41,36,.08)"><div style="height:100%;border-radius:2px;width:{{ setupStepPercent }}%;background:#C9A15A"></div></div>
+              <div style="font:700 11px 'Nunito',sans-serif;color:#8A6E4B;flex:none;white-space:nowrap">{{ setupStepLabel }}</div>
+            </div>
+          </div>
+          <div onClick="{{ toPreferencias }}" style="align-self:flex-end;font:700 13px 'Nunito',sans-serif;color:#6b6558;cursor:pointer;margin-bottom:8px">Pular por enquanto</div>
+          <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Sua parceria</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Essas respostas ajudam a IA a entender vocês dois.</div>
+          <div style="margin-top:24px;display:flex;flex-direction:column;gap:16px">
+            <div>
+              <div style="font:700 12px 'Nunito',sans-serif;color:#6b6558;margin-bottom:8px">Há quanto tempo vocês estão juntos?</div>
+              <input value="{{ relTempoJuntos }}" onChange="{{ relTempoJuntosChange }}" placeholder="Ex: 2 anos" style="width:100%;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+            <div>
+              <div style="font:700 12px 'Nunito',sans-serif;color:#6b6558;margin-bottom:8px">Quem monta normalmente?</div>
+              <input value="{{ relQuemMonta }}" onChange="{{ relQuemMontaChange }}" placeholder="Ex: eu e minha filha" style="width:100%;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+            <div>
+              <div style="font:700 12px 'Nunito',sans-serif;color:#6b6558;margin-bottom:8px">Vocês competem?</div>
+              <div style="display:flex;gap:8px">
+                <sc-for list="{{ competemChips }}" as="c" hint-placeholder-count="2">
+                  <div onClick="{{ c.onClick }}" style="padding:10px 16px;border-radius:20px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+                </sc-for>
+              </div>
+            </div>
+            <div>
+              <div style="font:700 12px 'Nunito',sans-serif;color:#6b6558;margin-bottom:8px">Qual é o maior sonho com esse cavalo?</div>
+              <input value="{{ relSonho }}" onChange="{{ relSonhoChange }}" placeholder="Ex: competir juntos um dia" style="width:100%;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+            <div>
+              <div style="font:700 12px 'Nunito',sans-serif;color:#6b6558;margin-bottom:8px">Quanto tempo passam juntos por semana?</div>
+              <input value="{{ relTempoSemana }}" onChange="{{ relTempoSemanaChange }}" placeholder="Ex: 5 horas" style="width:100%;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+            <div>
+              <div style="font:700 12px 'Nunito',sans-serif;color:#6b6558;margin-bottom:8px">Descreva essa parceria em uma palavra</div>
+              <input value="{{ relPalavra }}" onChange="{{ relPalavraChange }}" placeholder="Ex: confiança" style="width:100%;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+          </div>
+          <div onClick="{{ toPreferencias }}" style="margin-top:24px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Continuar</div>
+        </div>
+      </sc-if>
+
+      <!-- 12 PREFERENCIAS -->
+      <sc-if value="{{ s12 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:70px 28px 40px;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+            <div style="flex:1;height:4px;border-radius:2px;background:rgba(43,41,36,.08)"><div style="height:100%;border-radius:2px;width:{{ setupStepPercent }}%;background:#C9A15A"></div></div>
+            <div style="font:700 11px 'Nunito',sans-serif;color:#8A6E4B;flex:none;white-space:nowrap">{{ setupStepLabel }}</div>
+          </div>
+          <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">O que te interessa?</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Escolha ao menos 3 temas para personalizar seu feed.</div>
+          <div style="margin-top:24px;display:flex;flex-wrap:wrap;gap:10px">
+            <sc-for list="{{ preferenciasChips }}" as="c" hint-placeholder-count="11">
+              <div onClick="{{ c.onClick }}" style="padding:12px 18px;border-radius:20px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ prefSubmitAttempted }}"><sc-if value="{{ !prefValida }}">
+            <div style="margin-top:16px;padding:12px 14px;border-radius:14px;background:rgba(184,92,76,.1);font:600 12px/1.5 'Nunito',sans-serif;color:#B85C4C">Escolha pelo menos 3 temas para continuarmos.</div>
+          </sc-if></sc-if>
+          <div style="flex:1;min-height:20px"></div>
+          <div onClick="{{ tentarContinuarPreferencias }}" style="height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Continuar</div>
+        </div>
+      </sc-if>
+
+      <!-- 13 PERMISSOES -->
+      <sc-if value="{{ s13 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:70px 28px 40px;display:flex;flex-direction:column">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+            <div style="flex:1;height:4px;border-radius:2px;background:rgba(43,41,36,.08)"><div style="height:100%;border-radius:2px;width:{{ setupStepPercent }}%;background:#C9A15A"></div></div>
+            <div style="font:700 11px 'Nunito',sans-serif;color:#8A6E4B;flex:none;white-space:nowrap">{{ setupStepLabel }}</div>
+          </div>
+          <div onClick="{{ toTour }}" style="align-self:flex-end;font:700 13px 'Nunito',sans-serif;color:#6b6558;cursor:pointer;margin:8px 0">Pular</div>
+          <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Permissões</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Só pedimos o que realmente ajuda sua experiência.</div>
+          <div style="margin-top:22px;display:flex;flex-direction:column;gap:16px">
+            <sc-for list="{{ permissaoList }}" as="p" hint-placeholder-count="6">
+              <div style="display:flex;align-items:center;gap:14px">
+                <div style="flex:1;min-width:0">
+                  <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">{{ p.label }}</div>
+                  <div style="margin-top:2px;font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">{{ p.desc }}</div>
+                </div>
+                <div onClick="{{ p.toggle }}" style="width:46px;height:26px;border-radius:14px;background:{{ p.bg }};position:relative;cursor:pointer;flex:none">
+                  <div style="width:22px;height:22px;border-radius:50%;background:#fff;position:absolute;top:2px;left:{{ p.knobLeft }};box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="flex:1;min-height:20px"></div>
+          <div onClick="{{ toTour }}" style="height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Continuar</div>
+        </div>
+      </sc-if>
+
+      <!-- 14 TOUR INTELIGENTE -->
+      <sc-if value="{{ s14 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:54px 28px 40px">
+          <div onClick="{{ toCheckin }}" style="align-self:flex-end;font:700 13px 'Nunito',sans-serif;color:#6b6558;cursor:pointer">Pular</div>
+          <div style="flex:1;border-radius:24px;margin-top:20px" class="placeholder">
+            <div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">destaque · {{ tourCurrent.title }}</div>
+          </div>
+          <div style="margin-top:26px;font:800 22px 'Nunito',sans-serif;color:#2B2924">{{ tourCurrent.title }}</div>
+          <div style="margin-top:10px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">{{ tourCurrent.text }}</div>
+          <div style="margin-top:20px;display:flex;justify-content:center;gap:6px">
+            <sc-for list="{{ tourDots }}" as="d" hint-placeholder-count="5">
+              <div onClick="{{ d.onClick }}" style="width:{{ d.width }}px;height:6px;border-radius:3px;background:{{ d.bg }};cursor:pointer"></div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ tourIsLast }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ toCheckin }}" style="margin-top:20px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Concluir</div>
+          </sc-if>
+          <sc-if value="{{ tourNotLast }}" hint-placeholder-val="{{ true }}">
+            <div onClick="{{ tourNext }}" style="margin-top:20px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Próximo</div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- 15 PRIMEIRO CHECK-IN -->
+      <sc-if value="{{ s15 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:70px 28px 40px;display:flex;flex-direction:column">
+          <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Seu primeiro registro</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Nada elaborado — só o suficiente para começar.</div>
+          <div style="margin-top:22px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Como seu cavalo parece hoje?</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ humorCavaloChips }}" as="c" hint-placeholder-count="4">
+              <div onClick="{{ c.onClick }}" style="padding:10px 16px;border-radius:20px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Como você está se sentindo?</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ humorUsuarioChips }}" as="c" hint-placeholder-count="5">
+              <div onClick="{{ c.onClick }}" style="padding:10px 16px;border-radius:20px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">O que pretendem fazer hoje?</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ atividadeChips }}" as="c" hint-placeholder-count="5">
+              <div onClick="{{ c.onClick }}" style="padding:10px 16px;border-radius:20px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div onClick="{{ toggleCheckinFoto }}" style="margin-top:20px;height:70px;border-radius:18px;border:1.5px dashed rgba(43,41,36,.2);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;background:{{ fotoBg }}">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A6E4B" stroke-width="1.8"><path d="M4 7h4l2-3h4l2 3h4v13H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+            <div style="font:700 13px 'Nunito',sans-serif;color:#8A6E4B">{{ fotoLabel }}</div>
+          </div>
+          <div style="margin-top:14px">
+            <textarea value="{{ checkinNotaTexto }}" onChange="{{ checkinNotaTextoChange }}" placeholder="Adicionar uma observação (opcional)" rows="3" style="width:100%;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:12px 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924;resize:none"></textarea>
+          </div>
+          <div onClick="{{ toCarta }}" style="margin-top:22px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Concluir check-in</div>
+        </div>
+      </sc-if>
+
+      <!-- 16 PRIMEIRA CARTA DA IA -->
+      <sc-if value="{{ s16 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;background:#2B2924;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 30px">
+          <sc-if value="{{ !cartaAberta }}" hint-placeholder-val="{{ true }}">
+            <div onClick="{{ abrirCarta }}" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:22px">
+              <div style="width:140px;height:100px;border:1.6px solid #C9A15A;border-radius:8px;position:relative;display:flex;align-items:center;justify-content:center">
+                <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#C9A15A" stroke-width="1.5"><path d="M3 6h18v12H3z"/><path d="M3 6l9 7 9-7"/></svg>
+              </div>
+              <div style="font:700 14px 'Nunito',sans-serif;color:#FBF9F4;text-align:center">Toque para abrir sua primeira carta</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ cartaAberta }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:24px;width:100%">
+              <div style="font:600 11px ui-monospace,monospace;color:#C9A15A;text-transform:uppercase;letter-spacing:.06em;text-align:center">Carta do seu cavalo</div>
+              <div style="font:600 18px/1.7 'Nunito',sans-serif;color:#FBF9F4;text-align:center;font-style:italic">"Hoje começamos nossa história aqui. Ainda não sei quantas trilhas vamos percorrer juntos, mas sinto que este será um lugar onde nossas lembranças viverão para sempre."</div>
+              <div style="display:flex;flex-direction:column;gap:12px;margin-top:10px">
+                <div onClick="{{ toDashboard }}" style="height:52px;border-radius:26px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;cursor:pointer">Continuar</div>
+                <div style="display:flex;gap:10px">
+                  <div style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(251,249,244,.25);color:#FBF9F4;display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;cursor:pointer">Salvar</div>
+                  <div style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(251,249,244,.25);color:#FBF9F4;display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;cursor:pointer">Compartilhar</div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- 17 DASHBOARD INICIAL -->
+      <sc-if value="{{ s17 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 130px">
+            <div style="font:700 13px 'Nunito',sans-serif;color:#8A6E4B">Bem-vindo ao EquiSoul</div>
+            <div style="margin-top:4px;font:800 24px 'Nunito',sans-serif;color:#2B2924">Sua jornada começa agora</div>
+            <div style="margin-top:20px;display:flex;flex-direction:column;gap:16px">
+              <div style="border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 6px 20px rgba(43,41,36,.06)">
+                <div style="height:160px" class="placeholder">
+                  <div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · seu cavalo</div>
+                </div>
+                <div style="padding:14px 16px">
+                  <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Seu cavalo</div>
+                  <div style="margin-top:4px;font:500 12px 'Nunito',sans-serif;color:#6b6558">Perfil criado — comece a registrar a jornada de vocês</div>
+                </div>
+              </div>
+              <div style="border-radius:22px;padding:18px;background:#2B2924;color:#FBF9F4">
+                <div style="font:600 11px 'Nunito',sans-serif;color:#C9A15A;text-transform:uppercase;letter-spacing:.05em">Carta da IA</div>
+                <div style="margin-top:8px;font:600 14px/1.6 'Nunito',sans-serif">Sua primeira memória já está guardada para sempre.</div>
+              </div>
+              <div style="border-radius:22px;padding:18px;background:#fff;box-shadow:0 6px 20px rgba(43,41,36,.06)">
+                <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Próximo objetivo</div>
+                <div style="margin-top:6px;font:500 13px 'Nunito',sans-serif;color:#6b6558">Registre 3 dias seguidos para conquistar seu primeiro selo</div>
+              </div>
+              <div style="border-radius:22px;padding:18px;background:#fff;box-shadow:0 6px 20px rgba(43,41,36,.06)">
+                <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Sugestões da comunidade</div>
+                <div style="margin-top:6px;font:500 13px 'Nunito',sans-serif;color:#6b6558">Pessoas com interesses parecidos com os seus</div>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+            <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+            <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+            <div onClick="{{ restart }}" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
+            <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+            <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <div onClick="{{ next }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+
+  </div>
+
+  <div style="display:flex;align-items:center;gap:16px;font:600 12px ui-monospace,Menlo,monospace;color:#6b6558">
+    <span>{{ screenLabel }} · tela {{ screenDisplay }} / {{ totalScreens }}</span>
+    <span onClick="{{ restart }}" style="cursor:pointer;text-decoration:underline">reiniciar</span>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    screen: 0,
+    cadastroNome: '', cadastroEmail: '', cadastroSenha: '', cadastroConfirmar: '', aceiteTermos: false, aceitePrivacidade: false,
+    submitAttemptedCadastro: false, showTermosModal: false, showPrivacidadeModal: false,
+    recEmail: '', recEnviado: false,
+    novaSenha: '', novaSenhaConfirmar: '', submitAttemptedNovaSenha: false,
+    perfilNome: '', perfilCidade: '', perfilEstado: '', perfilPais: '', perfilBio: '', perfilModalidade: null, perfilNivel: null,
+    cavaloNome: '', cavaloRaca: '', cavaloPelagem: '', cavaloNascimento: '', cavaloCuriosidade: '', cavaloSexo: null, cavaloModalidade: null,
+    personalidade: [],
+    relTempoJuntos: '', relQuemMonta: '', relSonho: '', relTempoSemana: '', relPalavra: '', relCompetem: null,
+    preferencias: [], prefSubmitAttempted: false,
+    permissoes: { localizacao: false, notificacoes: false, camera: false, galeria: false, microfone: false, calendario: false },
+    tourStep: 0,
+    checkinHumorCavalo: null, checkinHumorUsuario: null, checkinAtividade: null, checkinFoto: false, checkinNotaTexto: '',
+    cartaAberta: false,
+  };
+
+  componentDidMount() {
+    setTimeout(() => { if (this.state.screen === 0) this.goTo(1); }, 2400);
+    window.addEventListener('keydown', this.handleKey);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.handleKey);
+  }
+  handleKey = (e) => {
+    if (e.key === 'ArrowRight') this.goTo(this.state.screen + 1);
+    if (e.key === 'ArrowLeft') this.goTo(this.state.screen - 1);
+  };
+
+  goTo(n) { this.setState({ screen: Math.max(0, Math.min(17, n)) }); }
+  next = () => this.goTo(this.state.screen + 1);
+  restart = () => this.goTo(0);
+
+  bind(key) { return (e) => this.setState({ [key]: e.target.value }); }
+  toggleBool(key) { return () => this.setState(s => ({ [key]: !s[key] })); }
+  toggleArr(key, value) {
+    return () => this.setState(s => {
+      const arr = s[key];
+      return { [key]: arr.includes(value) ? arr.filter(v => v !== value) : [...arr, value] };
+    });
+  }
+  setVal(key, value) { return () => this.setState({ [key]: value }); }
+  togglePermissao(key) {
+    return () => this.setState(s => ({ permissoes: { ...s.permissoes, [key]: !s.permissoes[key] } }));
+  }
+
+  buildChips(options, isSelected, onToggle) {
+    return options.map(label => ({
+      label,
+      bg: isSelected(label) ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: isSelected(label) ? '#C9A15A' : '#2B2924',
+      onClick: onToggle(label),
+    }));
+  }
+
+  renderVals() {
+    const s = this.state;
+    const screenIs = {};
+    for (let i = 0; i <= 17; i++) screenIs['s' + i] = s.screen === i;
+
+    const fieldNames = ['cadastroNome','cadastroEmail','cadastroSenha','cadastroConfirmar','recEmail','novaSenha','novaSenhaConfirmar','perfilNome','perfilCidade','perfilEstado','perfilPais','perfilBio','cavaloNome','cavaloRaca','cavaloPelagem','cavaloNascimento','cavaloCuriosidade','relTempoJuntos','relQuemMonta','relSonho','relTempoSemana','relPalavra','checkinNotaTexto'];
+    const fields = {};
+    fieldNames.forEach(k => { fields[k] = s[k]; fields[k + 'Change'] = this.bind(k); });
+
+    const personalidadeOptions = ['Curioso','Calmo','Energético','Corajoso','Carinhoso','Sensível','Outro'];
+    const modalidadeOptions = ['Salto','Adestramento','Trilha','Tambor','Laço','Hipismo Clássico'];
+    const nivelOptions = ['Iniciante','Amador','Profissional'];
+    const sexoOptions = ['Macho','Fêmea'];
+    const competemOptions = ['Sim','Não'];
+    const preferenciasOptions = ['Salto','Adestramento','Trilhas','Bem-estar','Treinamento','Competições','Fotografia','Cuidados','Eventos','Marketplace','Comunidade'];
+    const atividadeOptions = ['Passeio','Treino','Competição','Carinho','Outro'];
+    const humorCavaloOptions = ['Tranquilo','Brincalhão','Cansado','Enérgico'];
+    const humorUsuarioOptions = ['Feliz','Grato','Cansado','Ansioso','Em paz'];
+
+    const personalidadeChips = this.buildChips(personalidadeOptions, l => s.personalidade.includes(l), l => this.toggleArr('personalidade', l));
+    const modalidadePerfilChips = this.buildChips(modalidadeOptions, l => s.perfilModalidade === l, l => this.setVal('perfilModalidade', l));
+    const nivelChips = this.buildChips(nivelOptions, l => s.perfilNivel === l, l => this.setVal('perfilNivel', l));
+    const sexoChips = this.buildChips(sexoOptions, l => s.cavaloSexo === l, l => this.setVal('cavaloSexo', l));
+    const modalidadeCavaloChips = this.buildChips(modalidadeOptions, l => s.cavaloModalidade === l, l => this.setVal('cavaloModalidade', l));
+    const competemChips = this.buildChips(competemOptions, l => s.relCompetem === l, l => this.setVal('relCompetem', l));
+    const preferenciasChips = this.buildChips(preferenciasOptions, l => s.preferencias.includes(l), l => this.toggleArr('preferencias', l));
+    const humorCavaloChips = this.buildChips(humorCavaloOptions, l => s.checkinHumorCavalo === l, l => this.setVal('checkinHumorCavalo', l));
+    const humorUsuarioChips = this.buildChips(humorUsuarioOptions, l => s.checkinHumorUsuario === l, l => this.setVal('checkinHumorUsuario', l));
+    const atividadeChips = this.buildChips(atividadeOptions, l => s.checkinAtividade === l, l => this.setVal('checkinAtividade', l));
+
+    const senhaLen = s.cadastroSenha.length;
+    const strengthLabel = senhaLen === 0 ? '' : senhaLen < 6 ? 'Fraca' : senhaLen < 10 ? 'Média' : 'Forte';
+    const strengthColor = senhaLen < 6 ? '#B85C4C' : senhaLen < 10 ? '#C9A15A' : '#6B7353';
+    const strengthWidth = Math.min(100, senhaLen * 10);
+
+    const emailTouched = s.cadastroEmail.length > 0;
+    const emailValid = /\S+@\S+\.\S+/.test(s.cadastroEmail);
+    const nomeErro = s.submitAttemptedCadastro && s.cadastroNome.trim().length < 2;
+    const confirmarErro = s.submitAttemptedCadastro && s.cadastroConfirmar !== s.cadastroSenha;
+    const nomeBorder = nomeErro ? '#B85C4C' : 'rgba(43,41,36,.12)';
+    const confirmarBorder = confirmarErro ? '#B85C4C' : 'rgba(43,41,36,.12)';
+    const cadastroValido = s.cadastroNome.trim().length >= 2 && emailValid && s.cadastroSenha.length >= 6 && s.cadastroSenha === s.cadastroConfirmar && s.aceiteTermos && s.aceitePrivacidade;
+
+    const novaSenhaValida = s.novaSenha.length >= 6 && s.novaSenha === s.novaSenhaConfirmar;
+    const novaSenhaErro = s.submitAttemptedNovaSenha && !novaSenhaValida;
+    const novaSenhaBorder = novaSenhaErro ? '#B85C4C' : 'rgba(43,41,36,.12)';
+
+    const prefValida = s.preferencias.length >= 3;
+
+    const permissaoDefs = [
+      { key: 'localizacao', label: 'Localização', desc: 'Para registrar passeios e sugerir eventos próximos' },
+      { key: 'notificacoes', label: 'Notificações', desc: 'Para cartas, lembretes e atividades da comunidade' },
+      { key: 'camera', label: 'Câmera', desc: 'Para fotos e vídeos dos seus momentos' },
+      { key: 'galeria', label: 'Galeria', desc: 'Para anexar memórias já existentes' },
+      { key: 'microfone', label: 'Microfone', desc: 'Para notas em áudio no diário' },
+      { key: 'calendario', label: 'Calendário (opcional)', desc: 'Para integração com eventos' },
+    ];
+    const permissaoList = permissaoDefs.map(p => ({
+      ...p,
+      toggle: this.togglePermissao(p.key),
+      bg: s.permissoes[p.key] ? '#6B7353' : 'rgba(43,41,36,.15)',
+      knobLeft: s.permissoes[p.key] ? '22px' : '2px',
+    }));
+
+    const tourItems = [
+      { title: 'Home', text: 'Sua tela inicial com memórias e sugestões do dia.' },
+      { title: 'Diário', text: 'Registre treinos, passeios e sentimentos.' },
+      { title: 'Criação rápida', text: 'Toque no + para adicionar um novo registro a qualquer momento.' },
+      { title: 'Comunidade', text: 'Acompanhe e inspire outros cavaleiros.' },
+      { title: 'Perfil', text: 'Seu histórico, conquistas e o perfil do seu cavalo.' },
+    ];
+    const tourDots = tourItems.map((_, i) => ({ width: i === s.tourStep ? 22 : 6, bg: i === s.tourStep ? '#C9A15A' : 'rgba(43,41,36,.15)', onClick: this.setVal('tourStep', i) }));
+    const tourCurrent = tourItems[s.tourStep];
+    const tourIsLast = s.tourStep === tourItems.length - 1;
+    const tourNotLast = !tourIsLast;
+
+    const jump = (n) => () => this.goTo(n);
+
+    const screenNames = ['Splash','Boas-vindas','Storytelling 1','Storytelling 2','Storytelling 3','Login','Cadastro','Recuperar senha','Nova senha','Criar perfil','Adicionar cavalo','Relacionamento','Preferências','Permissões','Tour inteligente','Primeiro check-in','Primeira carta da IA','Dashboard inicial'];
+
+    const setupSteps = { 9: 1, 10: 2, 11: 3, 12: 4, 13: 5 };
+    const setupTotalSteps = 5;
+    const curStep = setupSteps[s.screen];
+    const setupStepLabel = curStep ? `Passo ${curStep} de ${setupTotalSteps}` : '';
+    const setupStepPercent = curStep ? Math.round((curStep / setupTotalSteps) * 100) : 0;
+
+    const goBackMap = { 7: 5, 9: 5 };
+
+    return {
+      ...screenIs,
+      ...fields,
+      screenDisplay: s.screen + 1,
+      totalScreens: 18,
+      screenLabel: screenNames[s.screen],
+      goTo: (n) => this.goTo(n),
+      next: this.next, restart: this.restart,
+      goBack: () => this.goTo(goBackMap[s.screen] !== undefined ? goBackMap[s.screen] : s.screen - 1),
+      toStorytelling1: jump(2), toLogin: jump(5), toCadastro: jump(6), toRecSenha: jump(7), toNovaSenha: jump(8), toPerfil: jump(9),
+      toDashboard: jump(17), toCavalo: jump(10), toRelacionamento: jump(11), toPreferencias: jump(12),
+      toPermissoes: jump(13), toTour: jump(14), toCheckin: jump(15), toCarta: jump(16),
+      aceiteTermos: s.aceiteTermos, toggleTermos: this.toggleBool('aceiteTermos'),
+      aceitePrivacidade: s.aceitePrivacidade, togglePrivacidade: this.toggleBool('aceitePrivacidade'),
+      termosBg: s.aceiteTermos ? '#6B7353' : 'rgba(43,41,36,.12)',
+      privacidadeBg: s.aceitePrivacidade ? '#6B7353' : 'rgba(43,41,36,.12)',
+      showTermosModal: s.showTermosModal, abrirTermos: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ showTermosModal: true }); },
+      fecharTermos: () => this.setState({ showTermosModal: false }),
+      showPrivacidadeModal: s.showPrivacidadeModal, abrirPrivacidade: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState({ showPrivacidadeModal: true }); },
+      fecharPrivacidade: () => this.setState({ showPrivacidadeModal: false }),
+      cadastroValido, submitAttemptedCadastro: s.submitAttemptedCadastro,
+      tentarCriarConta: () => { if (cadastroValido) { this.setState({ screen: 9 }); } else { this.setState({ submitAttemptedCadastro: true }); } },
+      nomeErro, confirmarErro, nomeBorder, confirmarBorder,
+      emailTouched, emailValid,
+      strengthLabel, strengthColor, strengthWidth,
+      recEnviado: s.recEnviado, enviarRecuperacao: () => this.setState({ recEnviado: true }),
+      novaSenhaErro, novaSenhaBorder,
+      tentarNovaSenha: () => { if (novaSenhaValida) { this.setState({ screen: 5, submitAttemptedNovaSenha: false }); } else { this.setState({ submitAttemptedNovaSenha: true }); } },
+      personalidadeChips, modalidadePerfilChips, nivelChips, sexoChips, modalidadeCavaloChips, competemChips, preferenciasChips, humorCavaloChips, humorUsuarioChips, atividadeChips,
+      prefValida, prefSubmitAttempted: s.prefSubmitAttempted,
+      tentarContinuarPreferencias: () => { if (prefValida) { this.setState({ screen: 13 }); } else { this.setState({ prefSubmitAttempted: true }); } },
+      permissaoList,
+      setupStepLabel, setupStepPercent,
+      tourItems, tourDots, tourCurrent, tourIsLast, tourNotLast, tourStep: s.tourStep,
+      tourNext: () => this.setState(st => ({ tourStep: Math.min(tourItems.length - 1, st.tourStep + 1) })),
+      cartaAberta: s.cartaAberta, abrirCarta: () => this.setState({ cartaAberta: true }),
+      checkinFoto: s.checkinFoto, toggleCheckinFoto: this.toggleBool('checkinFoto'),
+      fotoBg: s.checkinFoto ? 'rgba(107,115,83,.12)' : 'transparent',
+      fotoLabel: s.checkinFoto ? 'Foto adicionada' : 'Adicionar uma foto (opcional)',
+    };
+  }
+}
+
+</script>
+</body>
+</html>

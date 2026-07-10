@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#EDE8DE;font-family:'Nunito',sans-serif;-webkit-font-smoothing:antialiased}
+  .placeholder{background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.06) 0px,rgba(0,0,0,.06) 2px,transparent 2px,transparent 12px);background-color:#EAE4D6}
+  .ph-label{font:600 10px ui-monospace,Menlo,monospace;letter-spacing:.02em;text-transform:uppercase;text-align:center;padding:0 30px}
+  input::placeholder, textarea::placeholder{color:#a39c8a}
+  input, textarea{font-family:'Nunito',sans-serif;outline:none;box-sizing:border-box}
+  a{color:#6B7353}
+  a:hover{color:#4F5D45}
+  ::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:56px 20px;font-family:'Nunito',sans-serif">
+
+  <div style="display:flex;align-items:center;gap:22px">
+
+    <div onClick="{{ toUsuario }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+
+    <div style="width:390px;height:844px;background:#FBF9F4;position:relative;overflow:hidden;box-shadow:0 30px 70px rgba(43,41,36,.22);flex:none">
+
+      <!-- 0 PERFIL DO USUARIO -->
+      <sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding-bottom:150px">
+            <div style="height:280px;position:relative" class="placeholder">
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · Mauro com Bela</div>
+              <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(43,41,36,.05),rgba(43,41,36,.7))"></div>
+            </div>
+            <div style="padding:0 24px">
+              <div style="display:flex;align-items:flex-end;gap:14px;margin-top:-40px;position:relative">
+                <div style="width:84px;height:84px;border-radius:50%;border:3px solid #FBF9F4;flex:none" class="placeholder"></div>
+                <div style="padding-bottom:4px">
+                  <div style="font:800 19px 'Nunito',sans-serif;color:#2B2924;display:flex;align-items:center;gap:6px">Mauro Andrade <svg viewBox="0 0 24 24" width="15" height="15" fill="#C9A15A" stroke="none"><circle cx="12" cy="12" r="10"/></svg></div>
+                  <div style="margin-top:2px;font:600 12px 'Nunito',sans-serif;color:#6b6558">São Paulo, SP · Adestramento</div>
+                </div>
+              </div>
+              <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+                <div style="padding:6px 12px;border-radius:14px;background:rgba(201,161,90,.18);color:#8A6E4B;font:700 11px 'Nunito',sans-serif">Premium</div>
+                <div style="padding:6px 12px;border-radius:14px;background:rgba(43,41,36,.06);color:#2B2924;font:700 11px 'Nunito',sans-serif">Nível Amador</div>
+                <div style="padding:6px 12px;border-radius:14px;background:rgba(43,41,36,.06);color:#2B2924;font:700 11px 'Nunito',sans-serif">412 dias no EquiSoul</div>
+              </div>
+              <div style="margin-top:18px;display:flex;gap:10px">
+                <div onClick="{{ toEditar }}" style="flex:1;height:48px;border-radius:24px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Editar perfil</div>
+                <div onClick="{{ shareToast }}" style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Compartilhar</div>
+              </div>
+              <div style="margin-top:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center">
+                <div><div style="font:800 17px 'Nunito',sans-serif;color:#2B2924">3</div><div style="font:600 10px 'Nunito',sans-serif;color:#6b6558;text-transform:uppercase">Cavalos</div></div>
+                <div><div style="font:800 17px 'Nunito',sans-serif;color:#2B2924">128</div><div style="font:600 10px 'Nunito',sans-serif;color:#6b6558;text-transform:uppercase">Seguidores</div></div>
+                <div><div style="font:800 17px 'Nunito',sans-serif;color:#2B2924">96</div><div style="font:600 10px 'Nunito',sans-serif;color:#6b6558;text-transform:uppercase">Seguindo</div></div>
+              </div>
+
+              <div style="margin-top:22px;display:flex;gap:8px;overflow-x:auto">
+                <sc-for list="{{ perfilTabChips }}" as="c" hint-placeholder-count="7">
+                  <div onClick="{{ c.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+                </sc-for>
+              </div>
+
+              <!-- TIMELINE TAB -->
+              <sc-if value="{{ tabIsTimeline }}">
+                <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+                  <div onClick="{{ toCavalos }}" style="display:flex;gap:12px;border-radius:18px;background:#fff;padding:12px;box-shadow:0 4px 14px rgba(43,41,36,.05);cursor:pointer;align-items:center">
+                    <div style="width:52px;height:52px;border-radius:14px;flex:none" class="placeholder"></div>
+                    <div><div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Meus cavalos</div><div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">3 cavalos cadastrados</div></div>
+                  </div>
+                  <div style="display:flex;gap:12px;border-radius:18px;background:#fff;padding:12px;box-shadow:0 4px 14px rgba(43,41,36,.05);align-items:center">
+                    <div style="width:52px;height:52px;border-radius:14px;flex:none" class="placeholder"></div>
+                    <div><div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Coleções</div><div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">Primeiras competições, Trilhas, Pôr do sol</div></div>
+                  </div>
+                </div>
+                <div style="margin-top:22px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Pessoas parecidas com você</div>
+                <div style="margin-top:10px;display:flex;gap:14px;overflow-x:auto">
+                  <sc-for list="{{ sugestaoUsuarios }}" as="u" hint-placeholder-count="3">
+                    <div onClick="{{ toPublico }}" style="flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;width:76px;cursor:pointer">
+                      <div style="width:56px;height:56px;border-radius:50%" class="placeholder"></div>
+                      <div style="font:600 11px 'Nunito',sans-serif;color:#6b6558;text-align:center">{{ u }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <!-- FOTOS TAB -->
+              <sc-if value="{{ tabIsFotos }}">
+                <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+                  <sc-for list="{{ nineItems }}" as="i" hint-placeholder-count="9">
+                    <div style="height:110px;border-radius:12px" class="placeholder"></div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <!-- VIDEOS TAB -->
+              <sc-if value="{{ tabIsVideos }}">
+                <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+                  <sc-for list="{{ sixItems }}" as="i" hint-placeholder-count="6">
+                    <div style="height:110px;border-radius:12px;position:relative" class="placeholder">
+                      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
+                        <div style="width:28px;height:28px;border-radius:50%;background:rgba(43,41,36,.55);display:flex;align-items:center;justify-content:center">
+                          <svg viewBox="0 0 24 24" width="11" height="11" fill="#FBF9F4" stroke="none"><path d="M6 4l14 8-14 8z"/></svg>
+                        </div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <!-- CONQUISTAS TAB -->
+              <sc-if value="{{ tabIsConquistas }}">
+                <div style="margin-top:18px;display:flex;flex-direction:column;gap:12px">
+                  <sc-for list="{{ conquistasList }}" as="cq" hint-placeholder-count="4">
+                    <div style="display:flex;align-items:center;gap:14px;border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px 16px">
+                      <div style="width:44px;height:44px;border-radius:14px;background:rgba(201,161,90,.15);display:flex;align-items:center;justify-content:center;flex:none">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#C9A15A" stroke-width="1.8"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 01-10 0V4z"/></svg>
+                      </div>
+                      <div><div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">{{ cq.titulo }}</div><div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ cq.data }}</div></div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <!-- ESTATISTICAS TAB -->
+              <sc-if value="{{ tabIsEstatisticas }}">
+                <div style="margin-top:18px;display:flex;flex-direction:column;gap:14px">
+                  <sc-for list="{{ statsList }}" as="st" hint-placeholder-count="3">
+                    <div>
+                      <div style="display:flex;justify-content:space-between;font:600 13px 'Nunito',sans-serif;color:#2B2924"><span>{{ st.label }}</span><span style="color:#6b6558">{{ st.value }}</span></div>
+                      <div style="margin-top:6px;height:8px;border-radius:4px;background:rgba(43,41,36,.08)"><div style="width:{{ st.pct }};height:100%;border-radius:4px;background:{{ st.color }}"></div></div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <!-- COLECOES TAB -->
+              <sc-if value="{{ tabIsColecoes }}">
+                <div style="margin-top:18px;display:flex;flex-direction:column;gap:12px">
+                  <sc-for list="{{ colecoesList }}" as="cl" hint-placeholder-count="3">
+                    <div style="display:flex;gap:12px;border-radius:18px;background:#fff;padding:12px;box-shadow:0 4px 14px rgba(43,41,36,.05);align-items:center">
+                      <div style="width:56px;height:56px;border-radius:14px;flex:none" class="placeholder"></div>
+                      <div><div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">{{ cl.titulo }}</div><div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ cl.qtd }}</div></div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <!-- SOBRE TAB -->
+              <sc-if value="{{ tabIsSobre }}">
+                <div style="margin-top:18px;font:600 13px/1.7 'Nunito',sans-serif;color:#2B2924;font-style:italic">"Apaixonado por adestramento e trilhas — sempre em busca de conexão de verdade com meus cavalos."</div>
+                <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+                  <div style="display:flex;justify-content:space-between;font:600 13px 'Nunito',sans-serif"><span style="color:#6b6558">Localização</span><span style="color:#2B2924">São Paulo, SP</span></div>
+                  <div style="display:flex;justify-content:space-between;font:600 13px 'Nunito',sans-serif"><span style="color:#6b6558">Modalidade</span><span style="color:#2B2924">Adestramento</span></div>
+                  <div style="display:flex;justify-content:space-between;font:600 13px 'Nunito',sans-serif"><span style="color:#6b6558">Membro desde</span><span style="color:#2B2924">Maio de 2025</span></div>
+                  <div style="display:flex;justify-content:space-between;font:600 13px 'Nunito',sans-serif"><span style="color:#6b6558">Cavalos</span><span style="color:#2B2924">Bela, Trovão, Estrela</span></div>
+                </div>
+              </sc-if>
+
+            </div>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+            <div onClick="{{ goHome }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></div>
+            <div onClick="{{ goDiario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></div>
+            <div onClick="{{ goCriar }}" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
+            <div onClick="{{ goComunidade }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+            <div onClick="{{ toUsuario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 1 EDITAR PERFIL -->
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:70px 24px 40px;display:flex;flex-direction:column">
+            <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Editar perfil</div>
+            <div style="margin-top:20px;display:flex;align-items:center;gap:16px">
+              <div style="width:76px;height:76px;border-radius:50%;flex:none" class="placeholder"></div>
+              <div style="font:700 13px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Trocar foto</div>
+            </div>
+            <div style="margin-top:20px;display:flex;flex-direction:column;gap:14px">
+              <input placeholder="Nome" value="Mauro Andrade" style="height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+              <input placeholder="Usuário" value="@mauro.andrade" style="height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+              <div style="display:flex;gap:10px">
+                <input placeholder="Cidade" value="São Paulo" style="flex:1;min-width:0;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+                <input placeholder="Estado" value="SP" style="width:80px;flex:none;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+              </div>
+              <textarea placeholder="Biografia" rows="3" style="width:100%;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:12px 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924;resize:none">Apaixonado por adestramento e trilhas com a Bela.</textarea>
+              <input placeholder="Instagram" value="@mauro.eq" style="height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+            <div style="margin-top:22px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Privacidade</div>
+            <div style="margin-top:10px;display:flex;flex-direction:column;gap:14px">
+              <sc-for list="{{ privacidadeToggles }}" as="p" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:14px">
+                  <div style="flex:1;font:600 13px 'Nunito',sans-serif;color:#2B2924">{{ p.label }}</div>
+                  <div onClick="{{ p.toggle }}" style="width:46px;height:26px;border-radius:14px;background:{{ p.bg }};position:relative;cursor:pointer;flex:none">
+                    <div style="width:22px;height:22px;border-radius:50%;background:#fff;position:absolute;top:2px;left:{{ p.knobLeft }};box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div onClick="{{ saveProfileToast }}" style="margin-top:24px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Salvar alterações</div>
+          </div>
+          <div onClick="{{ toUsuario }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 2 PERFIL PUBLICO -->
+      <sc-if value="{{ s2 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding-bottom:150px">
+            <div style="height:260px;position:relative" class="placeholder">
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · Helena com Trovão</div>
+              <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(43,41,36,.05),rgba(43,41,36,.7))"></div>
+            </div>
+            <div style="padding:0 24px">
+              <div style="display:flex;align-items:flex-end;gap:14px;margin-top:-38px;position:relative">
+                <div style="width:80px;height:80px;border-radius:50%;border:3px solid #FBF9F4;flex:none" class="placeholder"></div>
+                <div style="padding-bottom:4px">
+                  <div style="font:800 18px 'Nunito',sans-serif;color:#2B2924">Helena Ribeiro</div>
+                  <div style="margin-top:2px;font:600 12px 'Nunito',sans-serif;color:#6b6558">Proprietária de haras · Adestramento</div>
+                </div>
+              </div>
+              <div style="margin-top:18px;display:flex;gap:10px">
+                <div onClick="{{ toggleSeguir }}" style="flex:1;height:48px;border-radius:24px;background:{{ seguirBg }};display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:{{ seguirColor }};cursor:pointer">{{ seguirLabel }}</div>
+                <div style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Mensagem</div>
+              </div>
+              <div style="margin-top:16px;display:flex;gap:16px">
+                <div onClick="{{ openDenunciar }}" style="font:600 12px 'Nunito',sans-serif;color:#6b6558;cursor:pointer">Denunciar</div>
+                <div onClick="{{ openBloquear }}" style="font:600 12px 'Nunito',sans-serif;color:#6b6558;cursor:pointer">Bloquear</div>
+                <div onClick="{{ shareToast }}" style="font:600 12px 'Nunito',sans-serif;color:#6b6558;cursor:pointer">Compartilhar</div>
+              </div>
+              <div onClick="{{ toggleHelenaPrivada }}" style="margin-top:14px;font:600 10px ui-monospace,Menlo,monospace;color:#a39c8a;cursor:pointer">[prototype] perfil está {{ helenaPrivadaLabel }} · clique para alternar</div>
+
+              <sc-if value="{{ helenaLocked }}">
+                <div style="margin-top:26px;border-radius:20px;background:rgba(43,41,36,.04);padding:30px 20px;text-align:center">
+                  <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#6b6558" stroke-width="1.8" style="margin:0 auto"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>
+                  <div style="margin-top:10px;font:700 14px 'Nunito',sans-serif;color:#2B2924">Perfil privado</div>
+                  <div style="margin-top:4px;font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">Siga Helena para ver os cavalos e conquistas dela.</div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ helenaNotLocked }}">
+                <div style="margin-top:22px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Cavalos</div>
+                <div style="margin-top:10px;display:flex;gap:12px;overflow-x:auto">
+                  <div onClick="{{ selectTrovao }}" style="flex:none;width:96px;cursor:pointer">
+                    <div style="height:96px;border-radius:16px" class="placeholder"></div>
+                    <div style="margin-top:6px;font:700 12px 'Nunito',sans-serif;color:#2B2924">Trovão</div>
+                  </div>
+                  <div onClick="{{ selectEstrela }}" style="flex:none;width:96px;cursor:pointer">
+                    <div style="height:96px;border-radius:16px" class="placeholder"></div>
+                    <div style="margin-top:6px;font:700 12px 'Nunito',sans-serif;color:#2B2924">Estrela</div>
+                  </div>
+                </div>
+                <div style="margin-top:22px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Conquistas recentes</div>
+                <div style="margin-top:10px;display:flex;gap:12px">
+                  <div style="width:64px;height:64px;border-radius:16px;background:rgba(201,161,90,.15);display:flex;align-items:center;justify-content:center">
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#C9A15A" stroke-width="1.8"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 01-10 0V4z"/><path d="M5 6H3v2a4 4 0 004 4M19 6h2v2a4 4 0 01-4 4"/></svg>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+            <div onClick="{{ goHome }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></div>
+            <div onClick="{{ goDiario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></div>
+            <div onClick="{{ goCriar }}" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></div>
+            <div onClick="{{ goComunidade }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+            <div onClick="{{ toUsuario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></div>
+          </div>
+          <div onClick="{{ toUsuario }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <sc-if value="{{ confirmModalOpen }}">
+            <div style="position:absolute;inset:0;background:rgba(43,41,36,.55);z-index:30;display:flex;align-items:center;justify-content:center;padding:24px">
+              <div style="background:#FBF9F4;border-radius:20px;padding:22px;width:100%;max-width:300px">
+                <div style="font:800 16px 'Nunito',sans-serif;color:#2B2924">{{ confirmModalTitle }}</div>
+                <div style="margin-top:8px;font:500 13px/1.5 'Nunito',sans-serif;color:#6b6558">{{ confirmModalDesc }}</div>
+                <div style="margin-top:18px;display:flex;gap:10px">
+                  <div onClick="{{ closeConfirm }}" style="flex:1;height:44px;border-radius:22px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Cancelar</div>
+                  <div onClick="{{ confirmYes }}" style="flex:1;height:44px;border-radius:22px;background:#2B2924;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#FBF9F4;cursor:pointer">Confirmar</div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- 3 LISTA DE CAVALOS -->
+      <sc-if value="{{ s3 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:70px 24px 150px">
+            <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Meus cavalos</div>
+            <div style="margin-top:18px;display:flex;flex-direction:column;gap:14px">
+              <sc-for list="{{ cavalosList }}" as="cv" hint-placeholder-count="3">
+                <div onClick="{{ cv.onClick }}" style="border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 4px 16px rgba(43,41,36,.06);cursor:pointer">
+                  <div style="height:150px" class="placeholder">
+                    <div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · {{ cv.nome }}</div>
+                  </div>
+                  <div style="padding:14px 16px">
+                    <div style="font:800 16px 'Nunito',sans-serif;color:#2B2924">{{ cv.nome }}</div>
+                    <div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ cv.raca }} · {{ cv.idade }} · humor {{ cv.humor }}</div>
+                  </div>
+                </div>
+              </sc-for>
+              <div onClick="{{ toAdicionarCavalo }}" style="height:56px;border-radius:28px;border:1.5px dashed rgba(43,41,36,.2);display:flex;align-items:center;justify-content:center;font:700 14px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">+ Adicionar cavalo</div>
+            </div>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+            <div onClick="{{ goHome }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></div>
+            <div onClick="{{ goDiario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></div>
+            <div onClick="{{ goCriar }}" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></div>
+            <div onClick="{{ goComunidade }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+            <div onClick="{{ toUsuario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></div>
+          </div>
+          <div onClick="{{ toUsuario }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 4 PERFIL DO CAVALO -->
+      <sc-if value="{{ s4 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding-bottom:150px">
+            <div style="height:400px;position:relative" class="placeholder">
+              <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto grande · {{ ac.nome }}, parallax</div>
+              <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(43,41,36,0) 50%,rgba(43,41,36,.75))"></div>
+              <div style="position:absolute;left:24px;right:24px;bottom:18px">
+                <div style="font:800 26px 'Nunito',sans-serif;color:#FBF9F4">{{ ac.nome }}</div>
+                <div style="margin-top:4px;font:600 12px 'Nunito',sans-serif;color:rgba(251,249,244,.85)">{{ ac.raca }} · {{ ac.pelagem }} · {{ ac.sexo }} · {{ ac.idade }} · {{ ac.diasJuntos }} dias juntos</div>
+                <div style="margin-top:14px;display:flex;gap:10px">
+                  <div onClick="{{ registrarMemoriaToast }}" style="flex:1;height:44px;border-radius:22px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Registrar memória</div>
+                  <div onClick="{{ toCompartilharCavalo }}" style="flex:1;height:44px;border-radius:22px;background:rgba(251,249,244,.15);border:1.3px solid rgba(251,249,244,.4);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#FBF9F4;cursor:pointer">Compartilhar</div>
+                </div>
+              </div>
+            </div>
+            <div style="padding:22px 24px 40px">
+              <div style="border-radius:18px;padding:16px;background:rgba(107,115,83,.1)">
+                <div style="font:600 10px 'Nunito',sans-serif;color:#4F5D45;text-transform:uppercase;letter-spacing:.05em">A IA resume</div>
+                <div style="margin-top:6px;font:600 13px/1.6 'Nunito',sans-serif;color:#2B2924;font-style:italic">"{{ ac.aiResumo }}"</div>
+              </div>
+              <div style="margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+                <div onClick="{{ toTimelineCavalo }}" style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px 10px;text-align:center;cursor:pointer">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6B7353" stroke-width="1.8" style="margin:0 auto"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                  <div style="margin-top:6px;font:700 11px 'Nunito',sans-serif;color:#2B2924">Linha do tempo</div>
+                </div>
+                <div onClick="{{ toGaleria }}" style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px 10px;text-align:center;cursor:pointer">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6B7353" stroke-width="1.8" style="margin:0 auto"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5-4 4-3-3-4 4"/></svg>
+                  <div style="margin-top:6px;font:700 11px 'Nunito',sans-serif;color:#2B2924">Galeria</div>
+                </div>
+                <div onClick="{{ toSaude }}" style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px 10px;text-align:center;cursor:pointer">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6B7353" stroke-width="1.8" style="margin:0 auto"><path d="M12 21s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 11c0 5.5-7 10-7 10z"/></svg>
+                  <div style="margin-top:6px;font:700 11px 'Nunito',sans-serif;color:#2B2924">Saúde</div>
+                </div>
+                <div onClick="{{ toEvolucao }}" style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px 10px;text-align:center;cursor:pointer">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6B7353" stroke-width="1.8" style="margin:0 auto"><path d="M4 19h16M7 15l4-5 3 3 4-7"/></svg>
+                  <div style="margin-top:6px;font:700 11px 'Nunito',sans-serif;color:#2B2924">Evolução</div>
+                </div>
+                <div onClick="{{ toCartas }}" style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px 10px;text-align:center;cursor:pointer">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6B7353" stroke-width="1.8" style="margin:0 auto"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg>
+                  <div style="margin-top:6px;font:700 11px 'Nunito',sans-serif;color:#2B2924">Cartas</div>
+                </div>
+                <div style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px 10px;text-align:center">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6B7353" stroke-width="1.8" style="margin:0 auto"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 01-10 0V4z"/></svg>
+                  <div style="margin-top:6px;font:700 11px 'Nunito',sans-serif;color:#2B2924">Conquistas</div>
+                </div>
+              </div>
+              <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Sobre {{ ac.nome }}</div>
+              <div style="margin-top:10px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;justify-content:space-between;font:600 13px 'Nunito',sans-serif"><span style="color:#6b6558">Nascimento</span><span style="color:#2B2924">{{ ac.nascimento }}</span></div>
+                <div style="display:flex;justify-content:space-between;font:600 13px 'Nunito',sans-serif"><span style="color:#6b6558">Personalidade</span><span style="color:#2B2924">{{ ac.personalidade }}</span></div>
+                <div style="display:flex;justify-content:space-between;font:600 13px 'Nunito',sans-serif"><span style="color:#6b6558">Apelido</span><span style="color:#2B2924">{{ ac.apelido }}</span></div>
+                <div style="display:flex;justify-content:space-between;font:600 13px 'Nunito',sans-serif"><span style="color:#6b6558">Comida favorita</span><span style="color:#2B2924">{{ ac.comida }}</span></div>
+              </div>
+            </div>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+            <div onClick="{{ goHome }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></div>
+            <div onClick="{{ goDiario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></div>
+            <div onClick="{{ goCriar }}" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></div>
+            <div onClick="{{ goComunidade }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+            <div onClick="{{ toUsuario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></div>
+          </div>
+          <div onClick="{{ toCavalos }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 5 LINHA DO TEMPO DO CAVALO -->
+      <sc-if value="{{ s5 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:70px 24px 150px">
+            <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Linha do tempo · {{ ac.nome }}</div>
+            <div style="margin-top:14px;display:flex;gap:8px">
+              <sc-for list="{{ cavaloTimelineFiltros }}" as="c" hint-placeholder-count="3">
+                <div onClick="{{ c.onClick }}" style="padding:9px 16px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ ac.novo }}">
+              <div style="margin-top:30px;border-radius:20px;background:rgba(43,41,36,.04);padding:30px 20px;text-align:center">
+                <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Ainda não há registros</div>
+                <div style="margin-top:4px;font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">Comece a linha do tempo de {{ ac.nome }} registrando a primeira memória.</div>
+                <div onClick="{{ registrarMemoriaToast }}" style="margin-top:14px;height:44px;border-radius:22px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Registrar memória</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ ac.temHistorico }}">
+              <div style="margin-top:22px;position:relative;padding-left:20px">
+                <div style="position:absolute;left:5px;top:6px;bottom:6px;width:1.5px;background:rgba(43,41,36,.12)"></div>
+                <sc-for list="{{ cavaloTimelineItems }}" as="it" hint-placeholder-count="5">
+                  <div style="position:relative;margin-bottom:22px">
+                    <div style="position:absolute;left:-20px;top:6px;width:11px;height:11px;border-radius:50%;background:#C9A15A;border:2px solid #FBF9F4"></div>
+                    <div style="font:600 11px 'Nunito',sans-serif;color:#8A6E4B;margin-bottom:8px">{{ it.date }}</div>
+                    <div style="display:flex;gap:12px;border-radius:18px;background:#fff;padding:12px;box-shadow:0 4px 14px rgba(43,41,36,.05)">
+                      <div style="width:56px;height:56px;border-radius:14px;flex:none" class="placeholder"></div>
+                      <div><div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">{{ it.title }}</div></div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+            <div onClick="{{ goHome }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></div>
+            <div onClick="{{ goDiario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></div>
+            <div onClick="{{ goCriar }}" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></div>
+            <div onClick="{{ goComunidade }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+            <div onClick="{{ toUsuario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></div>
+          </div>
+          <div onClick="{{ toCavalo }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 6 SAUDE -->
+      <sc-if value="{{ s6 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:70px 24px 150px">
+            <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Saúde · {{ ac.nome }}</div>
+            <div style="margin-top:8px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Organização de cuidados — nunca substitui seu veterinário.</div>
+            <sc-if value="{{ ac.novo }}">
+              <div style="margin-top:24px;border-radius:20px;background:rgba(43,41,36,.04);padding:30px 20px;text-align:center">
+                <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Nenhum registro de saúde ainda</div>
+                <div style="margin-top:4px;font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">Adicione vacinas, casqueamento e outros cuidados de {{ ac.nome }}.</div>
+                <div onClick="{{ addSaudeToast }}" style="margin-top:14px;height:44px;border-radius:22px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Adicionar registro</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ ac.temHistorico }}">
+              <div style="margin-top:20px;display:flex;flex-direction:column;gap:12px">
+                <sc-for list="{{ saudeCards }}" as="c" hint-placeholder-count="6">
+                  <div style="display:flex;align-items:center;gap:14px;border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px 16px">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#6B7353" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+                    <div style="flex:1"><div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">{{ c.label }}</div><div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ c.info }}</div></div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+            <div onClick="{{ goHome }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></div>
+            <div onClick="{{ goDiario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></div>
+            <div onClick="{{ goCriar }}" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></div>
+            <div onClick="{{ goComunidade }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+            <div onClick="{{ toUsuario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></div>
+          </div>
+          <div onClick="{{ toCavalo }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 7 EVOLUCAO -->
+      <sc-if value="{{ s7 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:70px 24px 150px">
+            <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Evolução · {{ ac.nome }}</div>
+            <div style="margin-top:16px;border-radius:18px;padding:16px;background:#2B2924;color:#FBF9F4">
+              <div style="font:600 10px 'Nunito',sans-serif;color:#C9A15A;text-transform:uppercase;letter-spacing:.05em">Insight da IA</div>
+              <div style="margin-top:6px;font:600 14px/1.6 'Nunito',sans-serif">Vocês aumentaram a frequência de treinos em 18% neste mês.</div>
+            </div>
+            <div style="margin-top:20px;display:flex;flex-direction:column;gap:14px">
+              <div>
+                <div style="display:flex;justify-content:space-between;font:600 13px 'Nunito',sans-serif;color:#2B2924"><span>Treinos por mês</span><span style="color:#6b6558">12</span></div>
+                <div style="margin-top:6px;height:8px;border-radius:4px;background:rgba(43,41,36,.08)"><div style="width:78%;height:100%;border-radius:4px;background:#6B7353"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font:600 13px 'Nunito',sans-serif;color:#2B2924"><span>Horas montadas</span><span style="color:#6b6558">34h</span></div>
+                <div style="margin-top:6px;height:8px;border-radius:4px;background:rgba(43,41,36,.08)"><div style="width:60%;height:100%;border-radius:4px;background:#8A6E4B"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font:600 13px 'Nunito',sans-serif;color:#2B2924"><span>Distância percorrida</span><span style="color:#6b6558">96km</span></div>
+                <div style="margin-top:6px;height:8px;border-radius:4px;background:rgba(43,41,36,.08)"><div style="width:45%;height:100%;border-radius:4px;background:#C9A15A"></div></div>
+              </div>
+            </div>
+            <div style="margin-top:22px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Antes e depois</div>
+            <div style="margin-top:10px;display:flex;gap:10px">
+              <div style="flex:1;height:140px;border-radius:16px" class="placeholder"><div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">há 6 meses</div></div>
+              <div style="flex:1;height:140px;border-radius:16px" class="placeholder"><div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">hoje</div></div>
+            </div>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+            <div onClick="{{ goHome }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></div>
+            <div onClick="{{ goDiario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></div>
+            <div onClick="{{ goCriar }}" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></div>
+            <div onClick="{{ goComunidade }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+            <div onClick="{{ toUsuario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></div>
+          </div>
+          <div onClick="{{ toCavalo }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 8 GALERIA -->
+      <sc-if value="{{ s8 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:70px 24px 150px">
+            <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Galeria · {{ ac.nome }}</div>
+            <div style="margin-top:14px;display:flex;gap:8px">
+              <sc-for list="{{ galeriaFiltros }}" as="c" hint-placeholder-count="4">
+                <div onClick="{{ c.onClick }}" style="padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ ac.novo }}">
+              <div style="margin-top:24px;border-radius:20px;background:rgba(43,41,36,.04);padding:30px 20px;text-align:center">
+                <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Nenhuma foto ainda</div>
+                <div style="margin-top:4px;font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">Adicione a primeira foto de {{ ac.nome }} para começar a galeria.</div>
+                <div onClick="{{ registrarMemoriaToast }}" style="margin-top:14px;height:44px;border-radius:22px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Adicionar foto</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ ac.temHistorico }}">
+              <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+                <sc-for list="{{ galeriaItems }}" as="i" hint-placeholder-count="9">
+                  <div style="height:110px;border-radius:12px" class="placeholder"></div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+            <div onClick="{{ goHome }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></div>
+            <div onClick="{{ goDiario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></div>
+            <div onClick="{{ goCriar }}" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></div>
+            <div onClick="{{ goComunidade }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+            <div onClick="{{ toUsuario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></div>
+          </div>
+          <div onClick="{{ toCavalo }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 9 CARTAS -->
+      <sc-if value="{{ s9 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:70px 24px 150px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Cartas · {{ ac.nome }}</div>
+              <a href="./Home e Diario - EquiSoul.dc.html" style="font:700 12px 'Nunito',sans-serif;text-decoration:none">Ver no Diário →</a>
+            </div>
+            <div onClick="{{ toggleNovaCarta }}" style="margin-top:16px;height:48px;border-radius:24px;border:1.5px dashed rgba(43,41,36,.2);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">+ Nova carta</div>
+            <sc-if value="{{ novaCartaAberta }}">
+              <div style="margin-top:14px;border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px">
+                <div style="font:600 12px 'Nunito',sans-serif;color:#6b6558">Como você está se sentindo hoje?</div>
+                <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+                  <sc-for list="{{ humorChips }}" as="h" hint-placeholder-count="4">
+                    <div onClick="{{ h.onClick }}" style="padding:8px 13px;border-radius:16px;background:{{ h.bg }};color:{{ h.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ h.label }}</div>
+                  </sc-for>
+                </div>
+                <textarea placeholder="Escreva sua carta..." rows="3" style="margin-top:10px;width:100%;border-radius:14px;border:1px solid rgba(43,41,36,.12);padding:10px 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924;resize:none"></textarea>
+                <div onClick="{{ addCarta }}" style="margin-top:10px;height:44px;border-radius:22px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Salvar carta</div>
+              </div>
+            </sc-if>
+            <div style="margin-top:18px;display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ cartasList }}" as="c" hint-placeholder-count="4">
+                <div onClick="{{ c.toggle }}" style="border-radius:18px;background:#2B2924;color:#FBF9F4;padding:16px;cursor:pointer">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#C9A15A" stroke-width="1.8"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg>
+                    <div style="flex:1;font:700 13px 'Nunito',sans-serif">{{ c.date }} · {{ c.humor }}</div>
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#C9A15A" stroke-width="2" style="transform:{{ c.arrowRotate }}"><path d="M6 9l6 6 6-6"/></svg>
+                  </div>
+                  <sc-if value="{{ c.open }}">
+                    <div style="margin-top:12px;font:600 13px/1.7 'Nunito',sans-serif;font-style:italic;color:rgba(251,249,244,.9)">{{ c.texto }}</div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+            <div onClick="{{ goHome }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></div>
+            <div onClick="{{ goDiario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></div>
+            <div onClick="{{ goCriar }}" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></div>
+            <div onClick="{{ goComunidade }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+            <div onClick="{{ toUsuario }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></div>
+          </div>
+          <div onClick="{{ toCavalo }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 10 COMPARTILHAR PERFIL DO CAVALO -->
+      <sc-if value="{{ s10 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;background:#2B2924;display:flex;flex-direction:column;align-items:center;padding:70px 28px 40px">
+          <div style="font:800 20px 'Nunito',sans-serif;color:#FBF9F4">Compartilhar perfil</div>
+          <div style="margin-top:20px;width:100%;border-radius:22px;overflow:hidden;background:#FBF9F4">
+            <div style="height:180px" class="placeholder"><div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · {{ ac.nome }}</div></div>
+            <div style="padding:16px">
+              <div style="font:800 18px 'Nunito',sans-serif;color:#2B2924">{{ ac.nome }}</div>
+              <div style="margin-top:2px;font:600 12px 'Nunito',sans-serif;color:#6b6558">{{ ac.raca }} · {{ ac.diasJuntos }} dias com Mauro</div>
+              <div style="margin-top:12px;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(5,1fr);gap:2px;width:64px;height:64px;margin-left:auto;margin-right:auto">
+                <sc-for list="{{ qrCells }}" as="q" hint-placeholder-count="25">
+                  <div style="background:{{ q }}"></div>
+                </sc-for>
+              </div>
+              <div style="margin-top:8px;font:600 10px ui-monospace,monospace;color:#a39c8a;text-align:center">equisoul.app/{{ ac.slug }}</div>
+            </div>
+          </div>
+          <div style="margin-top:22px;display:flex;flex-direction:column;gap:12px;width:100%">
+            <div onClick="{{ storyToast }}" style="height:52px;border-radius:26px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;cursor:pointer">Compartilhar no story</div>
+            <div style="display:flex;gap:10px">
+              <div onClick="{{ copyLinkToast }}" style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(251,249,244,.25);color:#FBF9F4;display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;cursor:pointer">Copiar link</div>
+              <div onClick="{{ downloadImgToast }}" style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(251,249,244,.25);color:#FBF9F4;display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;cursor:pointer">Baixar imagem</div>
+            </div>
+          </div>
+          <div onClick="{{ toCavalo }}" style="position:absolute;top:20px;right:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(251,249,244,.12);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#FBF9F4" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 11 ADICIONAR CAVALO -->
+      <sc-if value="{{ s11 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:70px 24px 40px;display:flex;flex-direction:column">
+            <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Adicionar cavalo</div>
+            <div style="margin-top:20px;display:flex;align-items:center;gap:16px">
+              <div style="width:76px;height:76px;border-radius:16px;flex:none" class="placeholder"></div>
+              <div style="font:700 13px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Adicionar foto</div>
+            </div>
+            <div style="margin-top:20px;display:flex;flex-direction:column;gap:14px">
+              <input placeholder="Nome" value="Luna" style="height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+              <input placeholder="Apelido" value="Lu" style="height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+              <div style="display:flex;gap:10px">
+                <input placeholder="Raça" value="Puro Sangue Árabe" style="flex:1;min-width:0;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+                <input placeholder="Pelagem" value="Alazã" style="flex:1;min-width:0;height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+              </div>
+              <div style="display:flex;gap:8px">
+                <sc-for list="{{ sexoChips }}" as="sx" hint-placeholder-count="2">
+                  <div onClick="{{ sx.onClick }}" style="flex:1;height:48px;border-radius:16px;background:{{ sx.bg }};color:{{ sx.color }};display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ sx.label }}</div>
+                </sc-for>
+              </div>
+              <input placeholder="Data de nascimento" value="Janeiro de 2024" style="height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+            </div>
+            <div onClick="{{ addCavalo }}" style="margin-top:26px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Salvar cavalo</div>
+          </div>
+          <div onClick="{{ toCavalos }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ toastVisible }}">
+        <div style="position:absolute;left:24px;right:24px;bottom:100px;z-index:60;background:#2B2924;color:#FBF9F4;padding:14px 18px;border-radius:16px;font:700 13px 'Nunito',sans-serif;text-align:center;box-shadow:0 10px 30px rgba(43,41,36,.3)">{{ toastMsg }}</div>
+      </sc-if>
+
+    </div>
+
+    <div onClick="{{ next }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+
+  </div>
+
+  <div style="display:flex;align-items:center;gap:16px;font:600 12px ui-monospace,Menlo,monospace;color:#6b6558">
+    <span>{{ screenLabel }} · tela {{ screenDisplay }} / {{ totalScreens }}</span>
+    <span onClick="{{ toUsuario }}" style="cursor:pointer;text-decoration:underline">início</span>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+
+class Component extends DCLogic {
+  state = {
+    screen: 0,
+    perfilTab: 'Timeline',
+    seguindo: false,
+    helenaPrivada: true,
+    activeCavalo: 'Bela',
+    cavaloTimelineFiltro: 'Ano',
+    galeriaFiltro: 'Fotos',
+    privacidade: { publica: true, ocultarCidade: false, ocultarStats: false, permitirMsg: true, permitirMarcacoes: true },
+    cartas: [
+      { date: 'Hoje', humor: 'grata', texto: '"Hoje começamos nossa história aqui. Sinto que este será um lugar onde nossas lembranças viverão para sempre."', open: false },
+      { date: '3 de julho', humor: 'animada', texto: '"Adorei nosso passeio de hoje — o vento na crina me deixou ainda mais leve."', open: false },
+      { date: '28 de junho', humor: 'orgulhosa', texto: '"Nosso primeiro salto juntos! Vou lembrar disso para sempre."', open: false },
+      { date: '15 de junho', humor: 'tranquila', texto: '"Um dia calmo, só nós dois no campo."', open: false },
+    ],
+    novaCartaAberta: false,
+    novaCartaHumor: 'grata',
+    confirmModal: null,
+    toastMsg: null,
+    novoSexo: 'Fêmea',
+    cavalos: [
+      { nome: 'Bela', raca: 'Mangalarga', pelagem: 'Baia', sexo: 'Fêmea', idade: '6 anos', diasJuntos: 412, humor: 'tranquila', personalidade: 'Curiosa, calma', apelido: 'Belinha', comida: 'Maçã', nascimento: 'Março de 2020', aiResumo: 'Bela é uma égua extremamente curiosa que demonstra grande confiança durante trilhas e fica mais animada quando percebe que estão indo para a pista.', slug: 'bela', novo: false, temHistorico: true },
+      { nome: 'Trovão', raca: 'Quarto de Milha', pelagem: 'Alazão', sexo: 'Macho', idade: '9 anos', diasJuntos: 350, humor: 'energético', personalidade: 'Enérgico, leal', apelido: 'Trovinha', comida: 'Cenoura', nascimento: 'Janeiro de 2017', aiResumo: 'Trovão é um cavalo enérgico e leal, sempre disposto para o trabalho e muito apegado à rotina.', slug: 'trovao', novo: false, temHistorico: true },
+      { nome: 'Estrela', raca: 'Crioulo', pelagem: 'Tordilha', sexo: 'Fêmea', idade: '4 anos', diasJuntos: 12, humor: 'curiosa', personalidade: 'Curiosa, tímida', apelido: '—', comida: '—', nascimento: 'Maio de 2022', aiResumo: 'Ainda conhecendo a Estrela — poucos registros até agora.', slug: 'estrela', novo: true, temHistorico: false },
+    ],
+  };
+
+  goTo(n) { this.setState({ screen: Math.max(0, Math.min(11, n)) }); }
+  next = () => this.goTo(this.state.screen + 1);
+
+  setVal(key, value) { return () => this.setState({ [key]: value }); }
+  toggleBool(key) { return () => this.setState(s => ({ [key]: !s[key] })); }
+  togglePriv(key) { return () => this.setState(s => ({ privacidade: { ...s.privacidade, [key]: !s.privacidade[key] } })); }
+  buildChips(options, isSelected, onToggle) {
+    return options.map(label => ({
+      label,
+      bg: isSelected(label) ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: isSelected(label) ? '#C9A15A' : '#2B2924',
+      onClick: onToggle(label),
+    }));
+  }
+  goToFile(path) { return () => { window.location.href = path; }; }
+
+  showToast(msg) {
+    this.setState({ toastMsg: msg });
+    clearTimeout(this._toastTimer);
+    this._toastTimer = setTimeout(() => this.setState({ toastMsg: null }), 2200);
+  }
+
+  selectCavalo(nome) {
+    return () => { this.setState({ activeCavalo: nome }); this.goTo(4); };
+  }
+
+  addCavalo = () => {
+    const novo = { nome: 'Luna', raca: 'Puro Sangue Árabe', pelagem: 'Alazã', sexo: this.state.novoSexo, idade: '2 anos', diasJuntos: 0, humor: 'tímida', personalidade: 'Tímida, gentil', apelido: 'Lu', comida: 'Cenoura', nascimento: 'Janeiro de 2024', aiResumo: 'Ainda conhecendo a Luna — poucos registros até agora.', slug: 'luna', novo: true, temHistorico: false };
+    this.setState(s => ({ cavalos: [...s.cavalos, novo], activeCavalo: novo.nome, screen: 3 }));
+    this.showToast('Luna adicionado(a)! 🎉');
+  };
+
+  addCarta = () => {
+    this.setState(s => {
+      const ac = s.cavalos.find(c => c.nome === s.activeCavalo) || s.cavalos[0];
+      const nova = { date: 'Hoje', humor: s.novaCartaHumor, texto: '"Mais um dia especial ao lado de ' + ac.nome + '."', open: false };
+      return { cartas: [nova, ...s.cartas], novaCartaAberta: false };
+    });
+    this.showToast('Carta salva!');
+  };
+
+  toggleCarta(i) {
+    return () => this.setState(s => ({ cartas: s.cartas.map((c, idx) => idx === i ? { ...c, open: !c.open } : c) }));
+  }
+
+  openConfirm(type) { return () => this.setState({ confirmModal: type }); }
+  closeConfirm = () => this.setState({ confirmModal: null });
+  confirmYes = () => {
+    const t = this.state.confirmModal;
+    this.setState({ confirmModal: null });
+    this.showToast(t === 'denunciar' ? 'Denúncia enviada.' : t === 'bloquear' ? 'Usuário bloqueado.' : 'Feito.');
+  };
+
+  toggleHelenaPrivada = () => this.setState(s => ({ helenaPrivada: !s.helenaPrivada }));
+
+  renderVals() {
+    const s = this.state;
+    const screenIs = {};
+    for (let i = 0; i <= 11; i++) screenIs['s' + i] = s.screen === i;
+    const jump = (n) => () => this.goTo(n);
+
+    const screenNames = ['Perfil do usuário', 'Editar perfil', 'Perfil público', 'Lista de cavalos', 'Perfil do cavalo', 'Linha do tempo do cavalo', 'Saúde', 'Evolução', 'Galeria', 'Cartas', 'Compartilhar perfil do cavalo', 'Adicionar cavalo'];
+
+    const perfilTabOptions = ['Timeline', 'Fotos', 'Vídeos', 'Conquistas', 'Estatísticas', 'Coleções', 'Sobre'];
+    const perfilTabChips = this.buildChips(perfilTabOptions, l => s.perfilTab === l, l => this.setVal('perfilTab', l));
+
+    const sugestaoUsuarios = ['Ana Ferraz', 'Carlos Melo', 'Julia Prado'];
+
+    const privacidadeDefs = [
+      { key: 'publica', label: 'Conta pública' },
+      { key: 'ocultarCidade', label: 'Ocultar cidade' },
+      { key: 'ocultarStats', label: 'Ocultar estatísticas' },
+      { key: 'permitirMsg', label: 'Permitir mensagens' },
+      { key: 'permitirMarcacoes', label: 'Permitir marcações' },
+    ];
+    const privacidadeToggles = privacidadeDefs.map(p => ({
+      ...p,
+      toggle: this.togglePriv(p.key),
+      bg: s.privacidade[p.key] ? '#6B7353' : 'rgba(43,41,36,.15)',
+      knobLeft: s.privacidade[p.key] ? '22px' : '2px',
+    }));
+
+    const ac = s.cavalos.find(c => c.nome === s.activeCavalo) || s.cavalos[0];
+
+    const cavalosList = s.cavalos.map(cv => ({ ...cv, onClick: this.selectCavalo(cv.nome) }));
+
+    const cavaloTimelineFiltroOptions = ['Ano', 'Tipo', 'Local'];
+    const cavaloTimelineFiltros = this.buildChips(cavaloTimelineFiltroOptions, l => s.cavaloTimelineFiltro === l, l => this.setVal('cavaloTimelineFiltro', l));
+    const cavaloTimelineItems = [
+      { date: 'Março 2020', title: 'Nascimento de ' + ac.nome },
+      { date: 'Junho 2020', title: 'Primeiro registro no EquiSoul' },
+      { date: 'Setembro 2021', title: 'Primeiro passeio na trilha' },
+      { date: 'Abril 2023', title: 'Primeira competição' },
+      { date: 'Hoje', title: 'Primeiro treino da semana' },
+    ];
+
+    const saudeCards = [
+      { label: 'Vacinas', info: 'Em dia · próxima em 45 dias' },
+      { label: 'Casqueamento', info: 'Última visita há 20 dias' },
+      { label: 'Dentista equino', info: 'Revisão anual agendada' },
+      { label: 'Peso', info: '480 kg · estável' },
+    ];
+
+    const galeriaFiltroOptions = ['Fotos', 'Vídeos', 'Mapa', 'Favoritos'];
+    const galeriaFiltros = this.buildChips(galeriaFiltroOptions, l => s.galeriaFiltro === l, l => this.setVal('galeriaFiltro', l));
+    const galeriaItems = Array.from({ length: 9 }, (_, i) => i);
+    const nineItems = Array.from({ length: 9 }, (_, i) => i);
+    const sixItems = Array.from({ length: 6 }, (_, i) => i);
+
+    const cartasList = s.cartas.map((c, i) => ({
+      ...c,
+      arrowRotate: c.open ? 'rotate(180deg)' : 'rotate(0deg)',
+      toggle: this.toggleCarta(i),
+    }));
+
+    const humorOptions = ['grata', 'animada', 'tranquila', 'orgulhosa'];
+    const humorChips = this.buildChips(humorOptions, l => s.novaCartaHumor === l, l => this.setVal('novaCartaHumor', l));
+
+    const sexoOptions = ['Fêmea', 'Macho'];
+    const sexoChips = this.buildChips(sexoOptions, l => s.novoSexo === l, l => this.setVal('novoSexo', l));
+
+    const conquistasList = [
+      { titulo: 'Primeira trilha completa', data: 'Há 2 meses' },
+      { titulo: '10 memórias registradas', data: 'Há 1 mês' },
+      { titulo: 'Selo de dedicação', data: 'Há 3 semanas' },
+      { titulo: 'Primeira competição', data: 'Há 5 dias' },
+    ];
+
+    const statsList = [
+      { label: 'Treinos por mês', value: '12', pct: '78%', color: '#6B7353' },
+      { label: 'Horas montadas', value: '34h', pct: '60%', color: '#8A6E4B' },
+      { label: 'Distância percorrida', value: '96km', pct: '45%', color: '#C9A15A' },
+    ];
+
+    const colecoesList = [
+      { titulo: 'Primeiras competições', qtd: '8 fotos' },
+      { titulo: 'Trilhas', qtd: '23 fotos' },
+      { titulo: 'Pôr do sol', qtd: '6 fotos' },
+    ];
+
+    const qrSeed = [1,0,1,1,0,0,1,0,1,1,1,0,0,1,0,0,1,1,0,1,1,0,0,1,1];
+    const qrCells = qrSeed.map(v => v ? '#2B2924' : 'transparent');
+
+    const helenaLocked = s.helenaPrivada && !s.seguindo;
+
+    return {
+      ...screenIs,
+      screenDisplay: s.screen + 1,
+      totalScreens: 12,
+      screenLabel: screenNames[s.screen],
+      next: this.next,
+      toUsuario: jump(0), toEditar: jump(1), toPublico: jump(2), toCavalos: jump(3), toCavalo: jump(4),
+      toTimelineCavalo: jump(5), toSaude: jump(6), toEvolucao: jump(7), toGaleria: jump(8), toCartas: jump(9), toCompartilharCavalo: jump(10), toAdicionarCavalo: jump(11),
+      perfilTabChips,
+      tabIsTimeline: s.perfilTab === 'Timeline',
+      tabIsFotos: s.perfilTab === 'Fotos',
+      tabIsVideos: s.perfilTab === 'Vídeos',
+      tabIsConquistas: s.perfilTab === 'Conquistas',
+      tabIsEstatisticas: s.perfilTab === 'Estatísticas',
+      tabIsColecoes: s.perfilTab === 'Coleções',
+      tabIsSobre: s.perfilTab === 'Sobre',
+      nineItems, sixItems, conquistasList, statsList, colecoesList,
+      sugestaoUsuarios,
+      privacidadeToggles,
+      saveProfileToast: () => { this.showToast('Perfil atualizado!'); this.goTo(0); },
+      shareToast: () => this.showToast('Link copiado!'),
+      seguindo: s.seguindo, toggleSeguir: this.toggleBool('seguindo'),
+      seguirBg: s.seguindo ? 'rgba(43,41,36,.08)' : '#C9A15A',
+      seguirColor: '#2B2924',
+      seguirLabel: s.seguindo ? 'Seguindo' : 'Seguir',
+      helenaPrivada: s.helenaPrivada,
+      helenaPrivadaLabel: s.helenaPrivada ? 'PRIVADO' : 'PÚBLICO',
+      toggleHelenaPrivada: this.toggleHelenaPrivada,
+      helenaLocked, helenaNotLocked: !helenaLocked,
+      selectTrovao: this.selectCavalo('Trovão'),
+      selectEstrela: this.selectCavalo('Estrela'),
+      openDenunciar: this.openConfirm('denunciar'),
+      openBloquear: this.openConfirm('bloquear'),
+      confirmModalOpen: !!s.confirmModal,
+      confirmModalTitle: s.confirmModal === 'denunciar' ? 'Denunciar Helena?' : 'Bloquear Helena?',
+      confirmModalDesc: s.confirmModal === 'denunciar' ? 'Vamos analisar o perfil dela com nossa equipe. Isso não a notifica.' : 'Ela não poderá mais ver seu perfil nem entrar em contato com você.',
+      closeConfirm: this.closeConfirm,
+      confirmYes: this.confirmYes,
+      cavalosList,
+      ac,
+      cavaloTimelineFiltros, cavaloTimelineItems,
+      saudeCards,
+      galeriaFiltros, galeriaItems,
+      cartasList,
+      novaCartaAberta: s.novaCartaAberta,
+      toggleNovaCarta: this.toggleBool('novaCartaAberta'),
+      humorChips,
+      addCarta: this.addCarta,
+      addCavalo: this.addCavalo,
+      sexoChips,
+      qrCells,
+      registrarMemoriaToast: () => this.showToast('Abrindo criação de memória...'),
+      addSaudeToast: () => this.showToast('Registro de saúde adicionado!'),
+      storyToast: () => this.showToast('Compartilhado no story!'),
+      copyLinkToast: () => this.showToast('Link copiado!'),
+      downloadImgToast: () => this.showToast('Imagem salva!'),
+      toastMsg: s.toastMsg,
+      toastVisible: !!s.toastMsg,
+      goHome: this.goToFile('./Home e Diario - EquiSoul.dc.html'),
+      goDiario: this.goToFile('./Home e Diario - EquiSoul.dc.html'),
+      goCriar: this.goToFile('./Criar Memoria - EquiSoul.dc.html'),
+      goComunidade: this.goToFile('./Comunidade - EquiSoul.dc.html'),
+    };
+  }
+}
+
+</script>
+</body>
+</html>

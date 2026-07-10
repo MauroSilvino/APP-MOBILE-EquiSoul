@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#EDE8DE;font-family:'Nunito',sans-serif;-webkit-font-smoothing:antialiased}
+  .placeholder{background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.06) 0px,rgba(0,0,0,.06) 2px,transparent 2px,transparent 12px);background-color:#EAE4D6}
+  .ph-label{font:600 10px ui-monospace,Menlo,monospace;letter-spacing:.02em;text-transform:uppercase;text-align:center;padding:0 30px}
+  input::placeholder, textarea::placeholder{color:#a39c8a}
+  input, textarea{font-family:'Nunito',sans-serif;outline:none;box-sizing:border-box}
+  a{color:#6B7353}
+  a:hover{color:#4F5D45}
+  ::-webkit-scrollbar{display:none}
+  @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  @keyframes bounce{0%,60%,100%{opacity:.35}30%{opacity:1}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:56px 20px;font-family:'Nunito',sans-serif">
+
+  <div style="display:flex;align-items:center;gap:22px">
+
+    <div onClick="{{ goBack }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+
+    <div style="width:390px;height:844px;background:#FBF9F4;position:relative;overflow:hidden;box-shadow:0 30px 70px rgba(43,41,36,.22);flex:none">
+
+      <!-- 0 IA HUB -->
+      <sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          <div style="font:800 25px 'Nunito',sans-serif;color:#2B2924">Inteligência Artificial</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Um companheiro silencioso, guardando a história de vocês dois.</div>
+          <div style="margin-top:12px;display:flex;align-items:center;gap:8px">
+            <div style="width:7px;height:7px;border-radius:50%;background:{{ contaDotColor }};flex:none"></div>
+            <div style="font:600 12px 'Nunito',sans-serif;color:#6b6558">{{ contaResumo }}</div>
+          </div>
+          <div style="margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <sc-for list="{{ hubCards }}" as="h" hint-placeholder-count="8">
+              <div onClick="{{ h.onClick }}" style="position:relative;border-radius:20px;background:#fff;box-shadow:0 4px 16px rgba(43,41,36,.06);padding:18px 14px;display:flex;flex-direction:column;gap:10px;cursor:pointer">
+                <sc-if value="{{ h.showLock }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute;top:12px;right:12px;padding:3px 8px;border-radius:8px;background:rgba(201,161,90,.18);color:#8A6E4B;font:700 9px 'Nunito',sans-serif">Premium</div>
+                </sc-if>
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#6B7353" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
+                <div style="font:800 13px 'Nunito',sans-serif;color:#2B2924">{{ h.label }}</div>
+                <div style="font:500 11px/1.4 'Nunito',sans-serif;color:#6b6558">{{ h.desc }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:26px;padding-top:16px;border-top:1px dashed rgba(43,41,36,.15);display:flex;flex-direction:column;gap:8px">
+            <div style="font:600 10px ui-monospace,Menlo,monospace;color:#a39c8a;text-transform:uppercase;letter-spacing:.04em">Prévia do protótipo</div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <div onClick="{{ toggleVazio }}" style="padding:8px 14px;border-radius:14px;background:rgba(43,41,36,.06);font:700 11px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Dados: {{ modoVazioLabel }}</div>
+              <div onClick="{{ togglePremium }}" style="padding:8px 14px;border-radius:14px;background:rgba(43,41,36,.06);font:700 11px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Conta: {{ contaLabel }}</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 1 CARTAS -->
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          <div onClick="{{ backToHub }}" style="position:absolute;top:16px;left:20px;z-index:2;width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Cartas</div>
+          <div style="margin-top:14px;display:flex;gap:8px;overflow-x:auto">
+            <sc-for list="{{ cartaFiltros }}" as="c" hint-placeholder-count="5">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ cartasVazio }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:60px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center">
+              <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#a39c8a" stroke-width="1.6"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg>
+              <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Ainda não há cartas</div>
+              <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558;max-width:220px">Continue registrando momentos — a IA escreve a primeira carta em breve.</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ !cartasVazio }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:18px;display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ cartasList }}" as="c" hint-placeholder-count="4">
+                <div onClick="{{ c.onClick }}" style="border-radius:18px;background:#2B2924;color:#FBF9F4;padding:16px;cursor:pointer;display:flex;gap:14px;align-items:center">
+                  <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#C9A15A" stroke-width="1.6"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg>
+                  <div style="flex:1;min-width:0">
+                    <div style="font:700 14px 'Nunito',sans-serif">{{ c.tipo }}</div>
+                    <div style="margin-top:2px;font:500 11px 'Nunito',sans-serif;color:rgba(251,249,244,.65)">{{ c.data }} · humor {{ c.humor }} · {{ c.tempo }}</div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- 2 LEITURA DA CARTA -->
+      <sc-if value="{{ s2 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;background:#2B2924;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 30px">
+          <div onClick="{{ fecharCarta }}" style="position:absolute;top:16px;right:20px;z-index:2;width:38px;height:38px;border-radius:50%;background:rgba(251,249,244,.12);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#FBF9F4" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </div>
+          <sc-if value="{{ cartaCarregando }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:18px">
+              <div style="width:34px;height:34px;border-radius:50%;border:3px solid rgba(201,161,90,.25);border-top-color:#C9A15A;animation:spin 0.9s linear infinite"></div>
+              <div style="font:600 13px 'Nunito',sans-serif;color:rgba(251,249,244,.7)">A IA está lendo a carta…</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ mostraCapa }}" hint-placeholder-val="{{ true }}">
+            <div onClick="{{ abrirCarta }}" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:22px">
+              <div style="width:140px;height:100px;border:1.6px solid #C9A15A;border-radius:8px;display:flex;align-items:center;justify-content:center">
+                <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#C9A15A" stroke-width="1.5"><path d="M3 6h18v12H3z"/><path d="M3 6l9 7 9-7"/></svg>
+              </div>
+              <div style="font:700 14px 'Nunito',sans-serif;color:#FBF9F4;text-align:center">Toque para abrir a carta</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ cartaAberta }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:22px;width:100%">
+              <div style="font:600 11px ui-monospace,monospace;color:#C9A15A;text-transform:uppercase;letter-spacing:.06em;text-align:center">{{ cartaSelecionada.tipo }}</div>
+              <div style="font:600 17px/1.8 'Nunito',sans-serif;color:#FBF9F4;text-align:center;font-style:italic">{{ cartaSelecionada.texto }}</div>
+              <div style="display:flex;flex-direction:column;gap:12px;margin-top:6px">
+                <div style="display:flex;gap:10px">
+                  <div onClick="{{ toggleFavorita }}" style="flex:1;height:48px;border-radius:24px;background:{{ favoritaBg }};display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:{{ favoritaColor }};cursor:pointer">{{ favoritaLabel }}</div>
+                  <div onClick="{{ compartilharCarta }}" style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(251,249,244,.25);color:#FBF9F4;display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;cursor:pointer">Compartilhar</div>
+                </div>
+                <div style="display:flex;gap:10px">
+                  <div onClick="{{ salvarCarta }}" style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(251,249,244,.25);color:#FBF9F4;display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ salvarCartaLabel }}</div>
+                  <div onClick="{{ adicionarAlbum }}" style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(251,249,244,.25);color:#FBF9F4;display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ albumLabel }}</div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- 3 INSIGHTS -->
+      <sc-if value="{{ s3 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          <div onClick="{{ backToHub }}" style="position:absolute;top:16px;left:20px;z-index:2;width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+            <div>
+              <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Insights</div>
+              <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">O que a IA percebeu na jornada de vocês.</div>
+            </div>
+            <div onClick="{{ atualizarInsights }}" style="flex:none;margin-top:6px;width:34px;height:34px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;cursor:pointer">
+              <svg style="{{ refreshSpinStyle }}" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="1.8"><path d="M20 12a8 8 0 10-2.5 5.8"/><path d="M20 6v6h-6"/></svg>
+            </div>
+          </div>
+          <div style="margin-top:2px;font:600 11px 'Nunito',sans-serif;color:#a39c8a">{{ insightsAtualizado }}</div>
+          <sc-if value="{{ insightsCarregando }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:40px;display:flex;flex-direction:column;align-items:center;gap:12px">
+              <div style="width:28px;height:28px;border-radius:50%;border:3px solid rgba(107,115,83,.2);border-top-color:#6B7353;animation:spin 0.9s linear infinite"></div>
+              <div style="font:600 12px 'Nunito',sans-serif;color:#6b6558">Revendo os registros recentes…</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ !insightsCarregando }}" hint-placeholder-val="{{ true }}">
+            <sc-if value="{{ insightsVazio }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:50px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center">
+                <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#a39c8a" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
+                <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Nenhum insight por enquanto</div>
+                <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558;max-width:220px">Continue registrando momentos para a IA encontrar padrões.</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ !insightsVazio }}" hint-placeholder-val="{{ true }}">
+              <div style="margin-top:18px;display:flex;flex-direction:column;gap:14px">
+                <sc-for list="{{ insightsList }}" as="i" hint-placeholder-count="4">
+                  <div style="border-radius:18px;padding:16px;background:rgba(107,115,83,.1)">
+                    <div style="font:600 13px/1.6 'Nunito',sans-serif;color:#2B2924">{{ i.texto }}</div>
+                    <div style="margin-top:12px;display:flex;gap:16px">
+                      <div onClick="{{ i.verDetalhes }}" style="font:700 12px 'Nunito',sans-serif;color:#4F5D45;cursor:pointer">{{ i.detalhesLabel }}</div>
+                      <div onClick="{{ i.salvar }}" style="font:700 12px 'Nunito',sans-serif;color:#4F5D45;cursor:pointer">{{ i.salvarLabel }}</div>
+                      <div onClick="{{ i.ignorar }}" style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Ignorar</div>
+                    </div>
+                    <sc-if value="{{ i.detalhesAbertos }}" hint-placeholder-val="{{ false }}">
+                      <div style="margin-top:10px;font:500 12px/1.6 'Nunito',sans-serif;color:#6b6558;border-top:1px solid rgba(43,41,36,.08);padding-top:10px">{{ i.detalheTexto }}</div>
+                    </sc-if>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- 4 LINHA DO TEMPO EMOCIONAL -->
+      <sc-if value="{{ s4 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          <div onClick="{{ backToHub }}" style="position:absolute;top:16px;left:20px;z-index:2;width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Linha do tempo emocional</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">A narrativa contínua da parceria de vocês.</div>
+          <div style="margin-top:22px;position:relative;padding-left:20px">
+            <div style="position:absolute;left:5px;top:6px;bottom:6px;width:1.5px;background:rgba(43,41,36,.12)"></div>
+            <sc-for list="{{ emocionalItems }}" as="it" hint-placeholder-count="6">
+              <div style="position:relative;margin-bottom:24px">
+                <div style="position:absolute;left:-20px;top:6px;width:11px;height:11px;border-radius:50%;background:#C9A15A;border:2px solid #FBF9F4"></div>
+                <div style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B">{{ it.mes }}</div>
+                <div style="margin-top:4px;font:700 15px 'Nunito',sans-serif;color:#2B2924">{{ it.titulo }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 5 RETROSPECTIVAS -->
+      <sc-if value="{{ s5 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          <div onClick="{{ backToHub }}" style="position:absolute;top:16px;left:20px;z-index:2;width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Retrospectivas</div>
+          <div style="margin-top:14px;display:flex;gap:8px">
+            <sc-for list="{{ retroChips }}" as="c" hint-placeholder-count="3">
+              <div onClick="{{ c.onClick }}" style="padding:9px 16px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ retroCarregando }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:18px;height:220px;border-radius:22px;background:rgba(43,41,36,.04);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px">
+              <div style="width:28px;height:28px;border-radius:50%;border:3px solid rgba(201,161,90,.25);border-top-color:#C9A15A;animation:spin 0.9s linear infinite"></div>
+              <div style="font:600 12px 'Nunito',sans-serif;color:#6b6558">Montando a retrospectiva {{ retroTipo }}…</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ !retroCarregando }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:18px;border-radius:22px;overflow:hidden;position:relative" class="placeholder">
+              <div style="height:220px"></div>
+              <div style="position:absolute;top:12px;left:12px;padding:5px 10px;border-radius:10px;background:rgba(43,41,36,.55);color:#FBF9F4" class="ph-label">retrospectiva {{ retroTipo }}</div>
+              <div onClick="{{ toggleRetroPlay }}" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;cursor:pointer">
+                <div style="width:56px;height:56px;border-radius:50%;background:rgba(43,41,36,.5);display:flex;align-items:center;justify-content:center">
+                  <sc-if value="{{ !retroPlaying }}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 24 24" width="22" height="22" fill="#FBF9F4"><path d="M8 5v14l11-7z"/></svg></sc-if>
+                  <sc-if value="{{ retroPlaying }}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 24 24" width="20" height="20" fill="#FBF9F4"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></sc-if>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+          <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ retroIngredientes }}" as="r" hint-placeholder-count="4">
+              <div onClick="{{ r.onClick }}" style="padding:6px 12px;border-radius:14px;background:{{ r.bg }};font:600 11px 'Nunito',sans-serif;color:{{ r.color }};cursor:pointer">{{ r.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:20px;display:flex;gap:10px">
+            <div onClick="{{ toggleRetroPlay }}" style="flex:1;height:52px;border-radius:26px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">{{ assistirLabel }}</div>
+            <div onClick="{{ compartilharRetro }}" style="flex:1;height:52px;border-radius:26px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Compartilhar</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 6 HISTORIAS -->
+      <sc-if value="{{ s6 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          <div onClick="{{ backToHub }}" style="position:absolute;top:16px;left:20px;z-index:2;width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Histórias</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Capítulos escritos pela IA a partir das memórias de vocês.</div>
+          <sc-if value="{{ historiasVazio }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:60px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center">
+              <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#a39c8a" stroke-width="1.6"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+              <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Ainda sem capítulos</div>
+              <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558;max-width:220px">Quando houver memórias suficientes, a IA escreve o primeiro capítulo.</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ !historiasVazio }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:18px;display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ historiaCapitulos }}" as="c" hint-placeholder-count="3">
+                <div onClick="{{ c.toggle }}" style="border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);cursor:pointer">
+                  <div style="height:110px" class="placeholder"><div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">capítulo</div></div>
+                  <div style="padding:14px 16px">
+                    <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">{{ c.titulo }}</div>
+                    <sc-if value="{{ c.open }}">
+                      <div style="margin-top:8px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">{{ c.texto }}</div>
+                    </sc-if>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- 7 SUGESTOES -->
+      <sc-if value="{{ s7 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          <div onClick="{{ backToHub }}" style="position:absolute;top:16px;left:20px;z-index:2;width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Sugestões</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Só ideias — nunca obrigações.</div>
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ sugestoesList }}" as="s" hint-placeholder-count="3">
+              <div style="border-radius:18px;padding:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05)">
+                <div style="font:600 13px/1.6 'Nunito',sans-serif;color:#2B2924">{{ s.texto }}</div>
+                <div style="margin-top:12px;display:flex;gap:10px">
+                  <div onClick="{{ s.aceitar }}" style="padding:8px 16px;border-radius:16px;background:{{ s.bg }};color:{{ s.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ s.label }}</div>
+                  <div onClick="{{ s.depois }}" style="padding:8px 16px;border-radius:16px;color:#6b6558;font:700 12px 'Nunito',sans-serif;cursor:pointer">Depois</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 8 ESTUDIO CRIATIVO -->
+      <sc-if value="{{ s8 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          <div onClick="{{ backToHub }}" style="position:absolute;top:16px;left:20px;z-index:2;width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Estúdio criativo</div>
+            <div style="padding:5px 10px;border-radius:10px;background:rgba(201,161,90,.18);color:#8A6E4B;font:700 10px 'Nunito',sans-serif">Premium</div>
+          </div>
+          <div style="margin-top:14px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">O que criar?</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ estudioTipos }}" as="c" hint-placeholder-count="9">
+              <div onClick="{{ c.onClick }}" style="padding:9px 14px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Formato</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ estudioPlataformas }}" as="c" hint-placeholder-count="5">
+              <div onClick="{{ c.onClick }}" style="padding:9px 14px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ estudioCarregando }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:20px;border-radius:20px;height:220px;background:rgba(43,41,36,.04);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px">
+              <div style="width:28px;height:28px;border-radius:50%;border:3px solid rgba(201,161,90,.25);border-top-color:#C9A15A;animation:spin 0.9s linear infinite"></div>
+              <div style="font:600 12px 'Nunito',sans-serif;color:#6b6558">A IA está criando…</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ !estudioCarregando && !estudioGerado }}" hint-placeholder-val="{{ true }}">
+            <div style="margin-top:20px;border-radius:20px;overflow:hidden" class="placeholder">
+              <div style="height:220px;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">prévia · {{ estudioTipoSel }} para {{ estudioPlataformaSel }}</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ estudioGerado }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:20px;border-radius:20px;overflow:hidden;position:relative" class="placeholder">
+              <div style="height:220px;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">pronto · {{ estudioTipoSel }} para {{ estudioPlataformaSel }}</div>
+              <div style="position:absolute;top:12px;left:12px;padding:5px 10px;border-radius:10px;background:rgba(107,115,83,.85);color:#FBF9F4;font:700 10px 'Nunito',sans-serif">Gerado ✓</div>
+            </div>
+            <div style="margin-top:12px;display:flex;gap:10px">
+              <div onClick="{{ baixarConteudo }}" style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Baixar</div>
+              <div onClick="{{ compartilharConteudo }}" style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Compartilhar</div>
+            </div>
+          </sc-if>
+
+          <div onClick="{{ gerarConteudo }}" style="margin-top:18px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">{{ gerarLabel }}</div>
+        </div>
+      </sc-if>
+
+      <!-- 9 ASSISTENTE INTELIGENTE -->
+      <sc-if value="{{ s9 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column;padding:60px 0 0">
+          <div onClick="{{ backToHub }}" style="position:absolute;top:16px;left:20px;z-index:2;width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="padding:0 24px 0 66px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Assistente</div>
+          <div style="padding:4px 24px 0 66px;font:600 11px 'Nunito',sans-serif;color:#6b6558">{{ limiteLabel }}</div>
+          <div style="flex:1;overflow-y:auto;padding:16px 24px;display:flex;flex-direction:column;gap:12px">
+            <sc-if value="{{ semMensagens }}">
+              <div style="font:500 13px/1.7 'Nunito',sans-serif;color:#6b6558;text-align:center;margin-top:20px">Pergunte algo sobre a jornada de vocês — o assistente responde com base no seu diário.</div>
+            </sc-if>
+            <sc-for list="{{ mensagens }}" as="m" hint-placeholder-count="0">
+              <div style="align-self:{{ m.align }};max-width:80%;border-radius:18px;padding:12px 16px;background:{{ m.bg }};color:{{ m.color }};font:600 13px/1.6 'Nunito',sans-serif">{{ m.texto }}</div>
+            </sc-for>
+            <sc-if value="{{ assistenteDigitando }}" hint-placeholder-val="{{ false }}">
+              <div style="align-self:flex-start;border-radius:18px;padding:12px 16px;background:#2B2924;display:flex;gap:4px">
+                <div style="width:6px;height:6px;border-radius:50%;background:#C9A15A;animation:bounce 1.1s infinite"></div>
+                <div style="width:6px;height:6px;border-radius:50%;background:#C9A15A;animation:bounce 1.1s infinite .15s"></div>
+                <div style="width:6px;height:6px;border-radius:50%;background:#C9A15A;animation:bounce 1.1s infinite .3s"></div>
+              </div>
+            </sc-if>
+          </div>
+          <div style="padding:14px 24px;display:flex;gap:8px;overflow-x:auto">
+            <sc-for list="{{ perguntasSugeridas }}" as="p" hint-placeholder-count="6">
+              <div onClick="{{ p.onClick }}" style="flex:none;padding:9px 14px;border-radius:16px;background:rgba(43,41,36,.06);color:#2B2924;font:600 12px 'Nunito',sans-serif;cursor:pointer">{{ p.texto }}</div>
+            </sc-for>
+          </div>
+          <div style="padding:0 24px 30px;display:flex;align-items:center;gap:8px;height:52px;border-radius:26px;margin:0 24px 30px;background:#fff;border:1px solid rgba(43,41,36,.12)">
+            <input value="{{ inputMensagem }}" onChange="{{ inputMensagemChange }}" onKeyDown="{{ inputMensagemKeyDown }}" placeholder="Escreva sua pergunta…" style="flex:1;border:none;background:transparent;padding:0 0 0 18px;font:600 13px 'Nunito',sans-serif;color:#2B2924;height:100%"/>
+            <div onClick="{{ enviarMensagem }}" style="width:38px;height:38px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;margin-right:7px">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M4 12l16-8-6 8 6 8-16-8z"/></svg>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- TOAST -->
+      <sc-if value="{{ toastVisible }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:20px;right:20px;bottom:26px;z-index:40;background:#2B2924;color:#FBF9F4;border-radius:16px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 10px 30px rgba(43,41,36,.3)">
+          <div style="font:600 13px 'Nunito',sans-serif">{{ toastText }}</div>
+          <sc-if value="{{ toastHasUndo }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ toastUndo }}" style="font:800 12px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer;flex:none">Desfazer</div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- PAYWALL -->
+      <sc-if value="{{ paywallOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;background:rgba(43,41,36,.5);z-index:45;display:flex;align-items:flex-end">
+          <div style="width:100%;background:#FBF9F4;border-radius:24px 24px 0 0;padding:28px 24px 34px;display:flex;flex-direction:column;gap:14px">
+            <div style="width:40px;height:4px;border-radius:2px;background:rgba(43,41,36,.15);margin:0 auto 6px"></div>
+            <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924">Estúdio criativo é Premium</div>
+            <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Gere vídeos, reels e posts com IA a partir das memórias de vocês. Disponível na assinatura Premium.</div>
+            <a href="./Premium%20-%20EquiSoul.dc.html" style="text-decoration:none;height:52px;border-radius:26px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif">Assinar Premium</a>
+            <div onClick="{{ closePaywall }}" style="text-align:center;font:700 13px 'Nunito',sans-serif;color:#6b6558;cursor:pointer">Agora não</div>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <div onClick="{{ next }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+
+  </div>
+
+  <div style="display:flex;align-items:center;gap:16px;font:600 12px ui-monospace,Menlo,monospace;color:#6b6558">
+    <span>{{ screenLabel }} · tela {{ screenDisplay }} / {{ totalScreens }}</span>
+    <span onClick="{{ toHub }}" style="cursor:pointer;text-decoration:underline">início</span>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+
+class Component extends DCLogic {
+  state = {
+    screen: 0,
+    cartaFiltro: 'Todas',
+    mostraCapa: true, cartaCarregando: false, cartaAberta: false, cartaFavorita: false, cartaSalva: false, cartaNoAlbum: false, cartaSelecionadaIdx: 0,
+    insightsIgnorados: [], insightsCarregando: false, insightsDetalhesAbertos: [], insightsSalvos: [],
+    retroTipo: 'Mensal', retroPlaying: false, retroCarregando: false, retroIngredientesSel: { Vídeo: true, Fotos: true, Música: false, Mapa: false },
+    historiasAbertas: [false, false, false],
+    sugestoesAceitas: [false, false, false], sugestoesDepois: [false, false, false],
+    estudioTipo: 'Vídeo', estudioPlataforma: 'Instagram', estudioCarregando: false, estudioGerado: false,
+    mensagens: [], inputMensagem: '', assistenteDigitando: false, perguntasUsadas: 0,
+    modoVazio: false, contaPremium: false,
+    toast: null, paywallOpen: false,
+  };
+
+  FREE_LIMIT = 5;
+
+  goTo(n) {
+    this.setState({ screen: Math.max(0, Math.min(9, n)) });
+    if (n === 9 && this.state.mensagens.length === 0) {
+      setTimeout(() => this.setState(s => s.mensagens.length === 0 ? { mensagens: [{ role: 'ai', texto: 'Oi! Posso contar o que percebi na jornada de vocês, ou responder perguntas sobre o diário. Por onde começamos?' }] } : null), 300);
+    }
+  }
+  next = () => this.goTo(this.state.screen + 1);
+  backToHub = () => this.goTo(0);
+
+  setVal(key, value) { return () => this.setState({ [key]: value }); }
+  toggleBool(key) { return () => this.setState(s => ({ [key]: !s[key] })); }
+  buildChips(options, isSelected, onToggle) {
+    return options.map(label => ({
+      label,
+      bg: isSelected(label) ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: isSelected(label) ? '#C9A15A' : '#2B2924',
+      onClick: onToggle(label),
+    }));
+  }
+
+  showToast(text, undo) {
+    clearTimeout(this._toastTimer);
+    this.setState({ toast: { text, undo } });
+    this._toastTimer = setTimeout(() => this.setState(s => (s.toast && s.toast.text === text) ? { toast: null } : null), 3200);
+  }
+
+  abrirCarta = () => {
+    this.setState({ mostraCapa: false, cartaCarregando: true });
+    setTimeout(() => this.setState({ cartaCarregando: false, cartaAberta: true }), 850);
+  };
+  fecharCarta = () => {
+    this.setState({ mostraCapa: true, cartaCarregando: false, cartaAberta: false, cartaFavorita: false, cartaSalva: false, cartaNoAlbum: false });
+    this.goTo(1);
+  };
+
+  atualizarInsights = () => {
+    this.setState({ insightsCarregando: true });
+    setTimeout(() => this.setState({ insightsCarregando: false, insightsAtualizadoAgora: true }), 900);
+  };
+
+  toggleRetroPlay = () => this.setState(s => ({ retroPlaying: !s.retroPlaying }));
+  compartilharRetro = () => this.showToast('Link da retrospectiva copiado');
+  onRetroTipoClick(label) {
+    return () => {
+      this.setState({ retroTipo: label, retroCarregando: true, retroPlaying: false });
+      setTimeout(() => this.setState({ retroCarregando: false }), 700);
+    };
+  }
+  toggleIngrediente(label) {
+    return () => this.setState(s => ({ retroIngredientesSel: { ...s.retroIngredientesSel, [label]: !s.retroIngredientesSel[label] } }));
+  }
+
+  gerarConteudo = () => {
+    this.setState({ estudioCarregando: true, estudioGerado: false });
+    setTimeout(() => this.setState({ estudioCarregando: false, estudioGerado: true }), 1500);
+  };
+  onEstudioChipClick(key, label) {
+    return () => this.setState({ [key]: label, estudioGerado: false });
+  }
+
+  enviarMensagem = () => {
+    const texto = (this.state.inputMensagem || '').trim();
+    if (!texto) return;
+    this.perguntar(texto, null);
+    this.setState({ inputMensagem: '' });
+  };
+  inputMensagemChange = (e) => this.setState({ inputMensagem: e.target.value });
+  inputMensagemKeyDown = (e) => { if (e.key === 'Enter') this.enviarMensagem(); };
+
+  perguntar(texto, resposta) {
+    const s = this.state;
+    if (!s.contaPremium && s.perguntasUsadas >= this.FREE_LIMIT) {
+      this.setState(st => ({ mensagens: [...st.mensagens, { role: 'user', texto }, { role: 'ai', texto: 'Você atingiu o limite gratuito de perguntas este mês. Assine o Premium para perguntas ilimitadas.' }] }));
+      return;
+    }
+    this.setState(st => ({ mensagens: [...st.mensagens, { role: 'user', texto }], assistenteDigitando: true, perguntasUsadas: st.perguntasUsadas + 1 }));
+    setTimeout(() => {
+      const final = resposta || 'Ainda estou aprendendo sobre esse tema com o diário de vocês — em breve terei uma resposta melhor.';
+      this.setState(st => ({ assistenteDigitando: false, mensagens: [...st.mensagens, { role: 'ai', texto: final }] }));
+    }, 900);
+  }
+
+  toggleVazio = () => this.setState(s => ({ modoVazio: !s.modoVazio }));
+  togglePremium = () => this.setState(s => ({ contaPremium: !s.contaPremium }));
+  closePaywall = () => this.setState({ paywallOpen: false });
+
+  baixarConteudo = () => this.showToast('Download iniciado');
+  compartilharConteudo = () => this.showToast('Pronto para compartilhar');
+
+  renderVals() {
+    const s = this.state;
+    const screenIs = {};
+    for (let i = 0; i <= 9; i++) screenIs['s' + i] = s.screen === i;
+    const jump = (n) => () => this.goTo(n);
+
+    const screenNames = ['Inteligência Artificial','Cartas','Leitura da carta','Insights','Linha do tempo emocional','Retrospectivas','Histórias','Sugestões','Estúdio criativo','Assistente inteligente'];
+
+    const hubDefs = [
+      { label: 'Cartas', desc: 'Mensagens emocionantes do seu cavalo', target: 1, premium: false },
+      { label: 'Insights', desc: 'Descobertas sobre a parceria', target: 3, premium: false },
+      { label: 'Linha do tempo emocional', desc: 'A narrativa contínua da jornada', target: 4, premium: false },
+      { label: 'Retrospectivas', desc: 'Mensal, semestral e anual', target: 5, premium: false },
+      { label: 'Histórias', desc: 'Capítulos escritos pela IA', target: 6, premium: false },
+      { label: 'Sugestões', desc: 'Ideias, nunca obrigações', target: 7, premium: false },
+      { label: 'Estúdio criativo', desc: 'Vídeos e posts prontos para compartilhar', target: 8, premium: true },
+      { label: 'Assistente', desc: 'Converse sobre a história de vocês', target: 9, premium: false },
+    ];
+    const hubCards = hubDefs.map(h => ({
+      ...h,
+      showLock: h.premium && !s.contaPremium,
+      onClick: (h.premium && !s.contaPremium) ? (() => this.setState({ paywallOpen: true })) : jump(h.target),
+    }));
+
+    const cartaFiltroOptions = ['Todas', 'Treinos', 'Passeios', 'Competições', 'Momentos especiais'];
+    const cartaFiltros = this.buildChips(cartaFiltroOptions, l => s.cartaFiltro === l, l => this.setVal('cartaFiltro', l));
+
+    const cartasData = [
+      { tipo: 'Carta do cavalo', data: 'Hoje', humor: 'grato', tempo: '1 min de leitura', texto: '"Hoje senti você mais confiante do que na semana passada. Mesmo quando hesitamos naquele obstáculo, você não desistiu de mim. Foi um bom dia."' },
+      { tipo: 'Carta para o cavaleiro', data: 'Ontem', humor: 'orgulhoso', tempo: '2 min de leitura', texto: '"Você não viu, mas percebi como ficou mais calmo depois do treino de ontem. Isso muda tudo entre nós dois."' },
+      { tipo: 'Carta de conquista', data: '28 de junho', humor: 'animado', tempo: '1 min de leitura', texto: '"Aquele salto que vocês conquistaram juntos hoje ficará guardado — foi o resultado de meses de confiança construída devagar."' },
+      { tipo: 'Carta motivacional', data: '15 de junho', humor: 'esperançoso', tempo: '1 min de leitura', texto: '"Os dias difíceis também contam. Vocês voltaram ao picadeiro depois do tropeço, e isso já é uma vitória silenciosa."' },
+    ];
+    const cartasVazio = s.modoVazio;
+    const cartasList = cartasData.map((c, i) => ({ ...c, onClick: () => { this.setState({ cartaSelecionadaIdx: i, mostraCapa: true, cartaCarregando: false, cartaAberta: false, cartaFavorita: false, cartaSalva: false, cartaNoAlbum: false }); this.goTo(2); } }));
+    const cartaSelecionada = cartasData[s.cartaSelecionadaIdx];
+
+    const insightsData = s.modoVazio ? [] : [
+      { texto: 'Vocês costumam treinar melhor pela manhã — os registros desses dias são mais positivos.', detalhe: 'Nos últimos 30 dias, 8 de 10 treinos matinais tiveram humor "feliz" ou "orgulhoso" registrado, contra 3 de 9 treinos à tarde.' },
+      { texto: 'Seu cavalo parece mais tranquilo depois das trilhas do que depois dos treinos na pista.', detalhe: 'As anotações após trilhas mencionam palavras como "calmo" e "relaxado" com o dobro da frequência.' },
+      { texto: 'Os passeios em grupo geram mais registros felizes do que os passeios sozinhos.', detalhe: 'Passeios acompanhados têm 70% de registros com humor positivo, contra 45% dos passeios sozinhos.' },
+      { texto: 'Vocês estão há 20 dias consecutivos criando memórias juntos.', detalhe: 'Uma sequência assim aumenta a chance de a IA identificar novos padrões emocionais na parceria.' },
+    ];
+    const insightsList = insightsData
+      .map((d, i) => ({ ...d, i }))
+      .filter(d => !s.insightsIgnorados.includes(d.i))
+      .map(d => ({
+        ...d,
+        detalhesAbertos: s.insightsDetalhesAbertos.includes(d.i),
+        detalheTexto: d.detalhe,
+        detalhesLabel: s.insightsDetalhesAbertos.includes(d.i) ? 'Ocultar detalhes' : 'Ver detalhes',
+        verDetalhes: () => this.setState(st => ({ insightsDetalhesAbertos: st.insightsDetalhesAbertos.includes(d.i) ? st.insightsDetalhesAbertos.filter(x => x !== d.i) : [...st.insightsDetalhesAbertos, d.i] })),
+        salvarLabel: s.insightsSalvos.includes(d.i) ? 'Salvo ✓' : 'Salvar',
+        salvar: () => { this.setState(st => ({ insightsSalvos: st.insightsSalvos.includes(d.i) ? st.insightsSalvos : [...st.insightsSalvos, d.i] })); this.showToast('Insight salvo'); },
+        ignorar: () => {
+          this.setState(st => ({ insightsIgnorados: [...st.insightsIgnorados, d.i] }));
+          this.showToast('Insight removido', () => this.setState(st2 => ({ insightsIgnorados: st2.insightsIgnorados.filter(x => x !== d.i) })));
+        },
+      }));
+    const insightsVazio = insightsList.length === 0;
+    const insightsAtualizado = s.insightsAtualizadoAgora ? 'Atualizado agora' : 'Atualizado há 2 horas';
+
+    const emocionalItems = [
+      { mes: 'Janeiro', titulo: 'Conhecimento' },
+      { mes: 'Março', titulo: 'Primeiras trilhas' },
+      { mes: 'Junho', titulo: 'Primeira competição' },
+      { mes: 'Agosto', titulo: 'Superação' },
+      { mes: 'Outubro', titulo: 'Maior evolução' },
+      { mes: 'Dezembro', titulo: 'Retrospectiva' },
+    ];
+
+    const retroOptions = ['Mensal', 'Semestral', 'Anual'];
+    const retroChips = this.buildChips(retroOptions, l => s.retroTipo === l, l => this.onRetroTipoClick(l));
+    const retroIngredienteOptions = ['Vídeo', 'Fotos', 'Música', 'Mapa'];
+    const retroIngredientes = retroIngredienteOptions.map(label => ({
+      label,
+      bg: s.retroIngredientesSel[label] ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: s.retroIngredientesSel[label] ? '#C9A15A' : '#2B2924',
+      onClick: this.toggleIngrediente(label),
+    }));
+
+    const historiasData = s.modoVazio ? [] : [
+      { titulo: 'O verão em que vocês descobriram as trilhas', texto: 'Entre junho e agosto, os passeios se tornaram o momento favorito da semana — e Bela aprendeu a confiar nos caminhos novos.' },
+      { titulo: 'A temporada das primeiras competições', texto: 'Nervosismo, orgulho e uma medalha guardada para sempre na memória de vocês dois.' },
+      { titulo: 'O ano em que vocês aprenderam a confiar um no outro', texto: 'Do primeiro treino inseguro à parceria de hoje — doze meses de evolução silenciosa.' },
+    ];
+    const historiasVazio = historiasData.length === 0;
+    const historiaCapitulos = historiasData.map((h, i) => ({
+      ...h,
+      open: s.historiasAbertas[i],
+      toggle: () => this.setState(st => { const a = [...st.historiasAbertas]; a[i] = !a[i]; return { historiasAbertas: a }; }),
+    }));
+
+    const sugestoesData = [
+      { texto: 'Hoje pode ser um ótimo dia para uma trilha curta.' },
+      { texto: 'Há um tempo vocês não registram uma foto juntos.' },
+      { texto: 'Seu cavalo costuma responder bem a treinos leves após competições.' },
+    ];
+    const sugestoesList = sugestoesData.map((sg, i) => ({
+      ...sg,
+      label: s.sugestoesAceitas[i] ? 'Combinado ✓' : (s.sugestoesDepois[i] ? 'Lembrete guardado' : 'Boa ideia'),
+      bg: s.sugestoesAceitas[i] ? 'rgba(107,115,83,.15)' : '#C9A15A',
+      color: s.sugestoesAceitas[i] ? '#4F5D45' : '#2B2924',
+      aceitar: () => { this.setState(st => { const a = [...st.sugestoesAceitas]; a[i] = true; return { sugestoesAceitas: a }; }); this.showToast('Combinado! Vamos lembrar vocês.'); },
+      depois: () => { this.setState(st => { const a = [...st.sugestoesDepois]; a[i] = true; return { sugestoesDepois: a }; }); this.showToast('Vamos sugerir de novo mais tarde'); },
+    }));
+
+    const estudioTipoOptions = ['Vídeo', 'Story', 'Reel', 'Carrossel', 'Colagem', 'Capa', 'Pôster', 'Frase', 'Legenda'];
+    const estudioTipos = this.buildChips(estudioTipoOptions, l => s.estudioTipo === l, l => this.onEstudioChipClick('estudioTipo', l));
+    const estudioPlataformaOptions = ['Instagram', 'TikTok', 'WhatsApp', 'Pinterest', 'Facebook'];
+    const estudioPlataformas = this.buildChips(estudioPlataformaOptions, l => s.estudioPlataforma === l, l => this.onEstudioChipClick('estudioPlataforma', l));
+
+    const perguntasData = [
+      { texto: 'Como evoluímos este mês?', resposta: 'Vocês aumentaram a frequência de treinos em 18% e os registros ficaram visivelmente mais tranquilos.' },
+      { texto: 'Qual foi nosso momento mais marcante?', resposta: 'A primeira competição em abril — o dia em que a Bela mostrou toda a confiança que construíram juntos.' },
+      { texto: 'Quais memórias você recomenda rever?', resposta: 'A trilha de setembro de 2021 e o vídeo do primeiro salto — dois marcos bonitos da jornada de vocês.' },
+      { texto: 'Existe algum padrão interessante?', resposta: 'Sim — os treinos pela manhã costumam terminar com registros mais positivos que os da tarde.' },
+      { texto: 'Quais foram nossos maiores desafios?', resposta: 'Os primeiros meses de adaptação às trilhas, quando a Bela ainda estava insegura em terrenos novos.' },
+      { texto: 'Crie uma retrospectiva da nossa história.', resposta: 'Já comecei a reunir fotos, cartas e conquistas de vocês dois — a retrospectiva estará pronta em instantes.' },
+    ];
+    const perguntasSugeridas = perguntasData.map(p => ({
+      texto: p.texto,
+      onClick: () => this.perguntar(p.texto, p.resposta),
+    }));
+    const mensagens = s.mensagens.map(m => ({
+      texto: m.texto,
+      align: m.role === 'user' ? 'flex-end' : 'flex-start',
+      bg: m.role === 'user' ? '#C9A15A' : '#2B2924',
+      color: m.role === 'user' ? '#2B2924' : '#FBF9F4',
+    }));
+    const semMensagens = s.mensagens.length === 0 && !s.assistenteDigitando;
+    const limiteLabel = s.contaPremium ? 'Premium · perguntas ilimitadas' : `${s.perguntasUsadas}/${this.FREE_LIMIT} perguntas gratuitas este mês`;
+
+    return {
+      ...screenIs,
+      screenDisplay: s.screen + 1,
+      totalScreens: 10,
+      screenLabel: screenNames[s.screen],
+      next: this.next,
+      goBack: () => this.goTo(s.screen === 2 ? 1 : 0),
+      backToHub: this.backToHub,
+      toHub: jump(0),
+      hubCards,
+      contaLabel: s.contaPremium ? 'Premium' : 'Free',
+      contaDotColor: s.contaPremium ? '#C9A15A' : '#a39c8a',
+      contaResumo: s.contaPremium ? 'Conta Premium — uso ilimitado de IA' : `Conta gratuita — ${this.FREE_LIMIT} perguntas de IA por mês`,
+      modoVazioLabel: s.modoVazio ? 'Vazio (novo usuário)' : 'Exemplo',
+      toggleVazio: this.toggleVazio, togglePremium: this.togglePremium,
+      paywallOpen: s.paywallOpen, closePaywall: this.closePaywall,
+
+      cartaFiltros, cartasList, cartaSelecionada, cartasVazio,
+      mostraCapa: s.mostraCapa, cartaCarregando: s.cartaCarregando,
+      cartaAberta: s.cartaAberta, abrirCarta: this.abrirCarta, fecharCarta: this.fecharCarta,
+      toggleFavorita: this.toggleBool('cartaFavorita'),
+      favoritaBg: s.cartaFavorita ? 'rgba(201,161,90,.2)' : '#C9A15A',
+      favoritaColor: '#2B2924',
+      favoritaLabel: s.cartaFavorita ? 'Favoritada ✓' : 'Favoritar',
+      compartilharCarta: () => this.showToast('Carta pronta para compartilhar'),
+      salvarCarta: () => { this.setState({ cartaSalva: true }); this.showToast('Carta salva'); },
+      salvarCartaLabel: s.cartaSalva ? 'Salva ✓' : 'Salvar',
+      adicionarAlbum: () => { this.setState({ cartaNoAlbum: true }); this.showToast('Adicionada ao álbum'); },
+      albumLabel: s.cartaNoAlbum ? 'No álbum ✓' : 'Adicionar ao álbum',
+
+      insightsList, insightsVazio, insightsCarregando: s.insightsCarregando, insightsAtualizado, atualizarInsights: this.atualizarInsights,
+      refreshSpinStyle: s.insightsCarregando ? 'animation:spin 0.9s linear infinite' : '',
+      emocionalItems,
+      retroChips, retroTipo: s.retroTipo, retroIngredientes, retroPlaying: s.retroPlaying, retroCarregando: s.retroCarregando,
+      toggleRetroPlay: this.toggleRetroPlay, compartilharRetro: this.compartilharRetro,
+      assistirLabel: s.retroPlaying ? 'Pausar' : 'Assistir',
+      historiaCapitulos, historiasVazio,
+      sugestoesList,
+      estudioTipos, estudioPlataformas, estudioTipoSel: s.estudioTipo, estudioPlataformaSel: s.estudioPlataforma,
+      estudioCarregando: s.estudioCarregando, estudioGerado: s.estudioGerado,
+      gerarLabel: s.estudioCarregando ? 'Gerando…' : (s.estudioGerado ? 'Gerar novamente' : 'Gerar com IA'),
+      gerarConteudo: this.gerarConteudo, baixarConteudo: this.baixarConteudo, compartilharConteudo: this.compartilharConteudo,
+
+      perguntasSugeridas, mensagens, semMensagens, assistenteDigitando: s.assistenteDigitando,
+      inputMensagem: s.inputMensagem, inputMensagemChange: this.inputMensagemChange, inputMensagemKeyDown: this.inputMensagemKeyDown,
+      enviarMensagem: this.enviarMensagem, limiteLabel,
+
+      toastVisible: !!s.toast, toastText: s.toast ? s.toast.text : '', toastHasUndo: !!(s.toast && s.toast.undo),
+      toastUndo: () => { if (s.toast && s.toast.undo) s.toast.undo(); this.setState({ toast: null }); },
+    };
+  }
+}
+
+</script>
+</body>
+</html>
