@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#EDE8DE;font-family:'Nunito',sans-serif;-webkit-font-smoothing:antialiased}
+  .placeholder{background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.06) 0px,rgba(0,0,0,.06) 2px,transparent 2px,transparent 12px);background-color:#EAE4D6}
+  .ph-label{font:600 10px ui-monospace,Menlo,monospace;letter-spacing:.02em;text-transform:uppercase;text-align:center;padding:0 30px}
+  input::placeholder, textarea::placeholder{color:#a39c8a}
+  input, textarea{font-family:'Nunito',sans-serif;outline:none;box-sizing:border-box}
+  input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:rgba(43,41,36,.1)}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:#C9A15A;cursor:pointer;border:2px solid #FBF9F4;box-shadow:0 1px 4px rgba(0,0,0,.25)}
+  a{color:#6B7353}
+  a:hover{color:#4F5D45}
+  ::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:56px 20px;font-family:'Nunito',sans-serif">
+
+  <div style="display:flex;align-items:center;gap:22px">
+
+    <div onClick="{{ goBack }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+
+    <div style="width:390px;height:844px;background:#FBF9F4;position:relative;overflow:hidden;box-shadow:0 30px 70px rgba(43,41,36,.22);flex:none">
+
+      <!-- 0 TIPO DE MEMORIA -->
+      <sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between">
+            <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Nova memória</div>
+            <div onClick="{{ toRascunhos }}" style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Rascunhos</div>
+          </div>
+          <div style="margin-top:10px;height:4px;border-radius:2px;background:rgba(43,41,36,.08)"><div style="width:{{ progressPct }};height:100%;border-radius:2px;background:#C9A15A"></div></div>
+          <div style="margin-top:6px;font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">Passo {{ progressStep }} de {{ progressTotal }}</div>
+          <div style="margin-top:14px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">O que vocês viveram hoje?</div>
+          <div style="margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <sc-for list="{{ tipoCards }}" as="t" hint-placeholder-count="8">
+              <div onClick="{{ t.onClick }}" style="border-radius:20px;background:{{ t.bg }};padding:18px 14px;display:flex;flex-direction:column;gap:10px;cursor:pointer">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="{{ t.iconColor }}" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+                <div style="font:800 14px 'Nunito',sans-serif;color:{{ t.textColor }}">{{ t.label }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 1 CAPTURA DE MIDIA -->
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px;display:flex;flex-direction:column">
+          <div style="height:4px;border-radius:2px;background:rgba(43,41,36,.08)"><div style="width:{{ progressPct }};height:100%;border-radius:2px;background:#C9A15A"></div></div>
+          <div style="margin-top:6px;font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">Passo {{ progressStep }} de {{ progressTotal }}</div>
+          <div style="margin-top:12px;font:800 24px 'Nunito',sans-serif;color:#2B2924">Adicione a mídia</div>
+          <div style="margin-top:6px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Fotos, vídeos ou áudio deste momento com {{ tipoLabel }}.</div>
+          <div style="margin-top:20px;display:flex;gap:10px">
+            <sc-for list="{{ midiaChips }}" as="m" hint-placeholder-count="4">
+              <div onClick="{{ m.onClick }}" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px;border-radius:16px;background:{{ m.bg }};cursor:pointer;position:relative">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="{{ m.color }}" stroke-width="1.8"><path d="M4 7h4l2-3h4l2 3h4v13H4z"/><circle cx="12" cy="13" r="3.5"/></svg>
+                <div style="font:700 11px 'Nunito',sans-serif;color:{{ m.color }}">{{ m.label }}</div>
+                <sc-if value="{{ m.count }}"><div style="position:absolute;top:6px;right:8px;min-width:16px;height:16px;border-radius:8px;background:#C9A15A;color:#2B2924;font:800 10px 'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;padding:0 4px">{{ m.count }}</div></sc-if>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ midiaCount }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:20px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+              <sc-for list="{{ midiaThumbs }}" as="i" hint-placeholder-count="4">
+                <div style="height:70px;border-radius:12px;position:relative;background:{{ i.bg }}" class="{{ i.phClass }}">
+                  <sc-if value="{{ i.isVideo }}">
+                    <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center"><div style="width:22px;height:22px;border-radius:50%;background:rgba(43,41,36,.55);display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="9" height="9" fill="#FBF9F4" stroke="none"><path d="M6 4l14 8-14 8z"/></svg></div></div>
+                    <div style="position:absolute;bottom:4px;right:6px;font:700 9px 'Nunito',sans-serif;color:#FBF9F4;background:rgba(43,41,36,.55);padding:1px 5px;border-radius:6px">0:12</div>
+                  </sc-if>
+                  <sc-if value="{{ i.isAudio }}">
+                    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#C9A15A" stroke-width="1.8"><path d="M4 12h2l2-6 3 12 3-9 2 3h4"/></svg>
+                      <div style="font:700 9px 'Nunito',sans-serif;color:#C9A15A">0:34</div>
+                    </div>
+                  </sc-if>
+                  <div onClick="{{ i.remove }}" style="position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:rgba(43,41,36,.55);display:flex;align-items:center;justify-content:center;cursor:pointer">
+                    <svg viewBox="0 0 24 24" width="9" height="9" fill="none" stroke="#FBF9F4" stroke-width="2.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="margin-top:20px;border-radius:18px;padding:14px 16px;background:rgba(107,115,83,.1)">
+              <div style="font:600 10px 'Nunito',sans-serif;color:#4F5D45;text-transform:uppercase;letter-spacing:.05em">IA detectou</div>
+              <div style="margin-top:6px;font:600 13px/1.6 'Nunito',sans-serif;color:#2B2924">1 cavalo · área externa · luz da manhã. Sugestão de título: "{{ tipoLabel }} de hoje".</div>
+            </div>
+          </sc-if>
+          <div style="flex:1;min-height:16px"></div>
+          <div onClick="{{ next }}" style="height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Continuar</div>
+        </div>
+      </sc-if>
+
+      <!-- 2 INFORMACOES RAPIDAS -->
+      <sc-if value="{{ s2 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px;display:flex;flex-direction:column">
+          <div style="height:4px;border-radius:2px;background:rgba(43,41,36,.08)"><div style="width:{{ progressPct }};height:100%;border-radius:2px;background:#C9A15A"></div></div>
+          <div style="margin-top:6px;font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">Passo {{ progressStep }} de {{ progressTotal }}</div>
+          <div style="margin-top:12px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Perguntas rápidas</div>
+
+          <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Como foi o dia?</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ diaChips }}" as="c" hint-placeholder-count="5">
+              <div onClick="{{ c.onClick }}" style="padding:9px 14px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.emoji }} {{ c.label }}</div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Como parecia seu cavalo?</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ cavaloHumorChips }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="padding:9px 14px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.emoji }} {{ c.label }}</div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Como você estava?</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ usuarioHumorChips }}" as="c" hint-placeholder-count="5">
+              <div onClick="{{ c.onClick }}" style="padding:9px 14px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.emoji }} {{ c.label }}</div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Intensidade</div>
+          <div style="margin-top:10px;display:flex;gap:8px">
+            <sc-for list="{{ intensidadeChips }}" as="c" hint-placeholder-count="3">
+              <div onClick="{{ c.onClick }}" style="flex:1;text-align:center;padding:10px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:18px;display:flex;justify-content:space-between;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em"><span>Duração</span><span style="color:#8A6E4B;text-transform:none">{{ duracaoLabel }}</span></div>
+          <input type="range" min="10" max="180" step="5" value="{{ duracao }}" onChange="{{ duracaoChange }}" style="margin-top:12px;width:100%"/>
+
+          <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Local</div>
+          <div style="margin-top:10px;display:flex;align-items:center;gap:10px;height:52px;border-radius:16px;background:#fff;border:1px solid rgba(43,41,36,.12);padding:0 16px">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6B7353" stroke-width="1.8"><circle cx="12" cy="10" r="3"/><path d="M12 21s7-6.5 7-11a7 7 0 10-14 0c0 4.5 7 11 7 11z"/></svg>
+            <input value="{{ local }}" onChange="{{ localChange }}" placeholder="Usar GPS ou digitar local" style="flex:1;border:none;background:transparent;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+            <div onClick="{{ useGps }}" style="font:700 11px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer;flex:none">usar GPS</div>
+          </div>
+          <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+            <sc-for list="{{ locaisRecentes }}" as="l" hint-placeholder-count="3">
+              <div onClick="{{ l.onClick }}" style="padding:7px 12px;border-radius:14px;background:rgba(43,41,36,.06);color:#6b6558;font:600 11px 'Nunito',sans-serif;cursor:pointer">📍 {{ l.nome }}</div>
+            </sc-for>
+          </div>
+
+          <div onClick="{{ next }}" style="margin-top:22px;height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Continuar</div>
+        </div>
+      </sc-if>
+
+      <!-- 3 DESCRICAO -->
+      <sc-if value="{{ s3 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px;display:flex;flex-direction:column">
+          <div style="height:4px;border-radius:2px;background:rgba(43,41,36,.08)"><div style="width:{{ progressPct }};height:100%;border-radius:2px;background:#C9A15A"></div></div>
+          <div style="margin-top:6px;font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">Passo {{ progressStep }} de {{ progressTotal }}</div>
+          <div style="margin-top:12px;font:800 24px 'Nunito',sans-serif;color:#2B2924">Conte a história</div>
+          <div style="margin-top:16px">
+            <textarea value="{{ descricao }}" onChange="{{ descricaoChange }}" placeholder="O que tornou esse momento especial?" rows="5" style="width:100%;border-radius:18px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:16px;font:600 14px/1.6 'Nunito',sans-serif;color:#2B2924;resize:none"></textarea>
+          </div>
+          <div style="margin-top:8px;font:500 11px 'Nunito',sans-serif;color:#a39c8a">Toque em uma sugestão para adicionar à sua história.</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ descricaoChips }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="padding:9px 14px;border-radius:18px;background:rgba(43,41,36,.06);color:#2B2924;font:700 12px 'Nunito',sans-serif;cursor:pointer">+ {{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="flex:1;min-height:16px"></div>
+          <div onClick="{{ next }}" style="height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Continuar</div>
+        </div>
+      </sc-if>
+
+      <!-- 4 MARCACAO -->
+      <sc-if value="{{ s4 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px;display:flex;flex-direction:column">
+          <div style="height:4px;border-radius:2px;background:rgba(43,41,36,.08)"><div style="width:{{ progressPct }};height:100%;border-radius:2px;background:#C9A15A"></div></div>
+          <div style="margin-top:6px;font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">Passo {{ progressStep }} de {{ progressTotal }}</div>
+          <div style="margin-top:12px;font:800 24px 'Nunito',sans-serif;color:#2B2924">Marcar</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Quem ou o que fez parte desse momento?</div>
+          <div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ marcacaoChips }}" as="c" hint-placeholder-count="8">
+              <div onClick="{{ c.onClick }}" style="padding:10px 16px;border-radius:20px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ marcacaoCategoriaAberta }}">
+            <div style="margin-top:12px;border-radius:16px;background:rgba(43,41,36,.04);padding:12px;display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ entidadeChips }}" as="e" hint-placeholder-count="3">
+                <div onClick="{{ e.onClick }}" style="padding:8px 14px;border-radius:16px;background:{{ e.bg }};color:{{ e.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ e.label }}</div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ marcacoesCount }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Marcados</div>
+            <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ marcadosPills }}" as="p" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;gap:6px;padding:7px 8px 7px 14px;border-radius:16px;background:#2B2924;color:#FBF9F4;font:700 12px 'Nunito',sans-serif">
+                  {{ p.nome }}
+                  <div onClick="{{ p.remove }}" style="width:16px;height:16px;border-radius:50%;background:rgba(251,249,244,.2);display:flex;align-items:center;justify-content:center;cursor:pointer">
+                    <svg viewBox="0 0 24 24" width="8" height="8" fill="none" stroke="#FBF9F4" stroke-width="3"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <div style="flex:1;min-height:16px"></div>
+          <div onClick="{{ next }}" style="height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Continuar</div>
+        </div>
+      </sc-if>
+
+      <!-- 5 PRIVACIDADE -->
+      <sc-if value="{{ s5 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 40px;display:flex;flex-direction:column">
+          <div style="height:4px;border-radius:2px;background:rgba(43,41,36,.08)"><div style="width:{{ progressPct }};height:100%;border-radius:2px;background:#C9A15A"></div></div>
+          <div style="margin-top:6px;font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">Passo {{ progressStep }} de {{ progressTotal }}</div>
+          <div style="margin-top:12px;font:800 24px 'Nunito',sans-serif;color:#2B2924">Privacidade</div>
+          <div style="margin-top:16px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Quem pode ver?</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ quemVeChips }}" as="c" hint-placeholder-count="4">
+              <div onClick="{{ c.onClick }}" style="padding:10px 16px;border-radius:20px;background:{{ c.bg }};color:{{ c.color }};font:700 13px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:20px;display:flex;flex-direction:column;gap:14px">
+            <sc-for list="{{ privToggles }}" as="p" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:14px">
+                <div style="flex:1;font:600 13px 'Nunito',sans-serif;color:#2B2924">{{ p.label }}</div>
+                <div onClick="{{ p.toggle }}" style="width:46px;height:26px;border-radius:14px;background:{{ p.bg }};position:relative;cursor:pointer;flex:none">
+                  <div style="width:22px;height:22px;border-radius:50%;background:#fff;position:absolute;top:2px;left:{{ p.knobLeft }};box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="flex:1;min-height:16px"></div>
+          <div onClick="{{ next }}" style="height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Ver prévia</div>
+        </div>
+      </sc-if>
+
+      <!-- 6 PREVIA -->
+      <sc-if value="{{ s6 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;display:flex;flex-direction:column">
+          <div style="padding:60px 24px 0">
+            <div style="height:4px;border-radius:2px;background:rgba(43,41,36,.08)"><div style="width:{{ progressPct }};height:100%;border-radius:2px;background:#C9A15A"></div></div>
+            <div style="margin-top:6px;font:700 10px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">Passo {{ progressStep }} de {{ progressTotal }}</div>
+            <div style="margin-top:10px;font:800 22px 'Nunito',sans-serif;color:#2B2924">Prévia</div>
+          </div>
+          <div style="padding:16px 24px 30px;flex:1">
+            <div style="border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 8px 26px rgba(43,41,36,.08)">
+              <div style="height:220px" class="placeholder"><div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · sua memória</div></div>
+              <div style="padding:16px">
+                <div style="font:800 17px 'Nunito',sans-serif;color:#2B2924">{{ previewTitle }}</div>
+                <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">{{ previewTexto }}</div>
+                <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+                  <div style="padding:6px 12px;border-radius:14px;background:rgba(43,41,36,.06);font:600 11px 'Nunito',sans-serif;color:#2B2924">{{ tipoLabel }}</div>
+                  <sc-if value="{{ local }}"><div style="padding:6px 12px;border-radius:14px;background:rgba(43,41,36,.06);font:600 11px 'Nunito',sans-serif;color:#2B2924">{{ local }}</div></sc-if>
+                </div>
+                <div style="margin-top:14px;border-radius:14px;padding:12px 14px;background:rgba(107,115,83,.1)">
+                  <div style="font:600 9px 'Nunito',sans-serif;color:#4F5D45;text-transform:uppercase;letter-spacing:.05em">IA</div>
+                  <div style="margin-top:4px;font:600 12px/1.5 'Nunito',sans-serif;color:#2B2924">{{ aiInsight }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:0 24px 40px;display:flex;flex-direction:column;gap:10px">
+            <div onClick="{{ publicar }}" style="height:56px;border-radius:28px;background:#C9A15A;color:#2B2924;display:flex;align-items:center;justify-content:center;font:800 15px 'Nunito',sans-serif;cursor:pointer">Publicar</div>
+            <div style="display:flex;gap:10px">
+              <div onClick="{{ toTipoEdit }}" style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Editar</div>
+              <div onClick="{{ salvarRascunho }}" style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Salvar rascunho</div>
+            </div>
+          </div>
+        </div>
+        <sc-if value="{{ publishCelebration }}">
+          <div style="position:absolute;inset:0;background:rgba(43,41,36,.9);z-index:60;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px">
+            <div style="width:64px;height:64px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center">
+              <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#2B2924" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div style="font:800 17px 'Nunito',sans-serif;color:#FBF9F4">Memória publicada!</div>
+          </div>
+        </sc-if>
+      </sc-if>
+
+      <!-- 7 MEMORIA PUBLICADA -->
+      <sc-if value="{{ s7 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding-bottom:110px">
+          <div style="height:280px;position:relative" class="placeholder">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · {{ previewTitle }}</div>
+          </div>
+          <div style="padding:20px 24px">
+            <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924">{{ previewTitle }}</div>
+            <div style="margin-top:8px;font:500 14px/1.7 'Nunito',sans-serif;color:#6b6558">{{ previewTexto }}</div>
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+              <div style="padding:6px 12px;border-radius:14px;background:rgba(43,41,36,.06);font:600 11px 'Nunito',sans-serif;color:#2B2924">☀ 24°C</div>
+              <sc-if value="{{ local }}"><div style="padding:6px 12px;border-radius:14px;background:rgba(43,41,36,.06);font:600 11px 'Nunito',sans-serif;color:#2B2924">{{ local }}</div></sc-if>
+            </div>
+            <div style="margin-top:16px;display:flex;align-items:center;gap:20px">
+              <div onClick="{{ toggleLiked }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="{{ likedFill }}" stroke="#C9A15A" stroke-width="2"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+              <div onClick="{{ commentToast }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2B2924" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 01-8.5 8.4A8.3 8.3 0 015 17l-2 1 1-3.6A8.4 8.4 0 1121 11.5z"/></svg></div>
+              <div onClick="{{ shareToast }}" style="cursor:pointer;display:flex"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2B2924" stroke-width="1.8"><path d="M4 4l16 8-16 8V4z"/></svg></div>
+              <div style="flex:1"></div>
+              <div onClick="{{ toTipoEdit }}" style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Editar</div>
+            </div>
+            <div style="margin-top:18px;border-radius:18px;padding:16px;background:#2B2924;color:#FBF9F4">
+              <div style="font:600 10px 'Nunito',sans-serif;color:#C9A15A;text-transform:uppercase;letter-spacing:.05em">A IA percebeu</div>
+              <div style="margin-top:6px;font:600 13px/1.6 'Nunito',sans-serif">{{ aiInsight }}</div>
+              <div style="margin-top:12px;display:flex;gap:16px;flex-wrap:wrap">
+                <div onClick="{{ gerarCartaToast }}" style="font:700 12px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">Gerar carta</div>
+                <div onClick="{{ criarVideoToast }}" style="font:700 12px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">Criar vídeo</div>
+                <div onClick="{{ addAlbumToast }}" style="font:700 12px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">Adicionar ao álbum</div>
+              </div>
+            </div>
+            <div style="margin-top:20px;display:flex;gap:10px">
+              <div onClick="{{ toHistorico }}" style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Ver histórico</div>
+              <div onClick="{{ toAlbuns }}" style="flex:1;height:48px;border-radius:24px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Ver álbuns</div>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+          <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <div style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 8 HISTORICO -->
+      <sc-if value="{{ s8 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 110px">
+          <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Histórico de memórias</div>
+          <div style="margin-top:14px;display:flex;gap:8px;overflow-x:auto">
+            <sc-for list="{{ historicoFiltros }}" as="c" hint-placeholder-count="4">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:14px;display:flex;gap:8px">
+            <sc-for list="{{ visualizacaoChips }}" as="c" hint-placeholder-count="2">
+              <div onClick="{{ c.onClick }}" style="padding:8px 14px;border-radius:14px;background:{{ c.bg }};color:{{ c.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ historicoIsGrid }}">
+            <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <sc-for list="{{ historicoItems }}" as="h" hint-placeholder-count="6">
+                <div style="border-radius:16px;overflow:hidden" class="placeholder">
+                  <div style="height:110px;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">{{ h.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ historicoIsLista }}">
+            <div style="margin-top:18px;display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ historicoItems }}" as="h" hint-placeholder-count="6">
+                <div style="display:flex;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:10px;align-items:center">
+                  <div style="width:56px;height:56px;border-radius:12px;flex:none" class="placeholder"></div>
+                  <div><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ h.label }}</div><div style="margin-top:2px;font:500 11px 'Nunito',sans-serif;color:#6b6558">{{ h.tipo }}</div></div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <sc-if value="{{ historicoVazio }}">
+            <div style="margin-top:30px;text-align:center;font:600 13px 'Nunito',sans-serif;color:#6b6558">Nenhuma memória com esse filtro ainda.</div>
+          </sc-if>
+          <div onClick="{{ toComparacao }}" style="margin-top:18px;height:52px;border-radius:26px;border:1.5px dashed rgba(43,41,36,.2);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Comparar duas memórias</div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+          <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <div style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 9 ALBUNS INTELIGENTES -->
+      <sc-if value="{{ s9 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 110px">
+          <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Álbuns inteligentes</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Criados automaticamente pela IA a partir das suas memórias.</div>
+          <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <sc-for list="{{ albunsList }}" as="a" hint-placeholder-count="6">
+              <div onClick="{{ a.onClick }}" style="border-radius:18px;overflow:hidden;cursor:pointer" class="placeholder">
+                <div style="height:110px;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">álbum</div>
+                <div style="padding:10px 12px;background:#FBF9F4"><div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ a.nome }}</div></div>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ novoAlbumAberto }}">
+            <div style="margin-top:16px;border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px;display:flex;gap:8px">
+              <input value="{{ novoAlbumNome }}" onChange="{{ novoAlbumChange }}" placeholder="Nome do álbum" style="flex:1;height:44px;border-radius:14px;border:1px solid rgba(43,41,36,.12);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+              <div onClick="{{ addAlbum }}" style="height:44px;padding:0 18px;border-radius:14px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 12px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Criar</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ novoAlbumFechado }}">
+            <div onClick="{{ toggleNovoAlbum }}" style="margin-top:16px;height:52px;border-radius:26px;border:1.5px dashed rgba(43,41,36,.2);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">+ Criar álbum personalizado</div>
+          </sc-if>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+          <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <div style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 10 COMPARACAO -->
+      <sc-if value="{{ s10 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 110px">
+          <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Comparação</div>
+          <div style="margin-top:14px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Memória A</div>
+          <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ compareAChips }}" as="c" hint-placeholder-count="4">
+              <div onClick="{{ c.onClick }}" style="padding:8px 13px;border-radius:16px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:14px;font:700 11px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Memória B</div>
+          <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ compareBChips }}" as="c" hint-placeholder-count="4">
+              <div onClick="{{ c.onClick }}" style="padding:8px 13px;border-radius:16px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;display:flex;gap:10px">
+            <div style="flex:1;border-radius:16px;overflow:hidden" class="placeholder"><div style="height:150px;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · {{ compareA }}</div></div>
+            <div style="flex:1;border-radius:16px;overflow:hidden" class="placeholder"><div style="height:150px;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · {{ compareB }}</div></div>
+          </div>
+          <div style="margin-top:18px;border-radius:18px;padding:16px;background:#2B2924;color:#FBF9F4">
+            <div style="font:600 10px 'Nunito',sans-serif;color:#C9A15A;text-transform:uppercase;letter-spacing:.05em">IA</div>
+            <div style="margin-top:6px;font:600 13px/1.6 'Nunito',sans-serif">{{ compareInsight }}</div>
+          </div>
+          <div style="margin-top:18px;height:52px;border-radius:26px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Ver vídeo lado a lado</div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+          <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <div style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 11 RASCUNHOS -->
+      <sc-if value="{{ s11 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:60px 24px 110px">
+          <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">Rascunhos</div>
+          <div style="margin-top:8px;font:500 14px/1.6 'Nunito',sans-serif;color:#6b6558">Salvos automaticamente — sincronizados quando você estiver online.</div>
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ rascunhosList }}" as="r" hint-placeholder-count="2">
+              <div style="display:flex;gap:12px;border-radius:18px;background:#fff;padding:12px;box-shadow:0 4px 14px rgba(43,41,36,.05);align-items:center">
+                <div onClick="{{ r.onClick }}" style="width:56px;height:56px;border-radius:14px;flex:none;cursor:pointer" class="placeholder"></div>
+                <div onClick="{{ r.onClick }}" style="min-width:0;flex:1;cursor:pointer"><div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">{{ r.title }}</div><div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ r.info }}</div></div>
+                <div onClick="{{ r.remove }}" style="width:28px;height:28px;border-radius:50%;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+                  <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#6b6558" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ rascunhosVazio }}">
+              <div style="margin-top:14px;text-align:center;font:600 13px 'Nunito',sans-serif;color:#6b6558">Nenhum rascunho salvo.</div>
+            </sc-if>
+          </div>
+        </div>
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+          <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <div style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+      <!-- 12 ALBUM DETALHE -->
+      <sc-if value="{{ s12 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:70px 24px 40px">
+            <div style="font:800 24px 'Nunito',sans-serif;color:#2B2924">{{ activeAlbum }}</div>
+            <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+              <sc-for list="{{ albumDetalheItems }}" as="i" hint-placeholder-count="9">
+                <div style="height:110px;border-radius:12px" class="placeholder"></div>
+              </sc-for>
+            </div>
+          </div>
+          <div onClick="{{ toAlbuns }}" style="position:absolute;top:20px;left:20px;z-index:10;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 4px 14px rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ exitConfirmOpen }}">
+        <div style="position:absolute;inset:0;background:rgba(43,41,36,.55);z-index:70;display:flex;align-items:center;justify-content:center;padding:24px">
+          <div style="background:#FBF9F4;border-radius:20px;padding:22px;width:100%;max-width:300px">
+            <div style="font:800 16px 'Nunito',sans-serif;color:#2B2924">Sair sem salvar?</div>
+            <div style="margin-top:8px;font:500 13px/1.5 'Nunito',sans-serif;color:#6b6558">Você ainda não publicou essa memória. O que deseja fazer?</div>
+            <div style="margin-top:18px;display:flex;flex-direction:column;gap:10px">
+              <div onClick="{{ saveDraftExit }}" style="height:46px;border-radius:23px;background:#C9A15A;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Salvar rascunho</div>
+              <div onClick="{{ discardExit }}" style="height:46px;border-radius:23px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Descartar</div>
+              <div onClick="{{ closeExitConfirm }}" style="height:40px;display:flex;align-items:center;justify-content:center;font:700 12px 'Nunito',sans-serif;color:#6b6558;cursor:pointer">Continuar editando</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ toastVisible }}">
+        <div style="position:absolute;left:24px;right:24px;bottom:30px;z-index:80;background:#2B2924;color:#FBF9F4;padding:14px 18px;border-radius:16px;font:700 13px 'Nunito',sans-serif;text-align:center;box-shadow:0 10px 30px rgba(43,41,36,.3)">{{ toastMsg }}</div>
+      </sc-if>
+
+    </div>
+
+    <div onClick="{{ next }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+
+  </div>
+
+  <div style="display:flex;align-items:center;gap:16px;font:600 12px ui-monospace,Menlo,monospace;color:#6b6558">
+    <span>{{ screenLabel }} · tela {{ screenDisplay }} / {{ totalScreens }}</span>
+    <span onClick="{{ toTipo }}" style="cursor:pointer;text-decoration:underline">início</span>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+
+class Component extends DCLogic {
+  state = {
+    screen: 0,
+    tipo: null,
+    mediaItems: [],
+    dia: null, cavaloHumor: null, usuarioHumor: null, intensidade: null, duracao: 45, local: '',
+    descricao: '',
+    marcacoesSelecionadas: [],
+    marcacaoCategoriaAberta: null,
+    quemVe: 'Seguidores',
+    privToggles: { comentarios: true, compartilhar: true, download: false, ocultarLoc: false },
+    historicoFiltro: 'Todos',
+    historicoView: 'Grid',
+    compareA: 'Primeiro salto', compareB: 'Último salto',
+    albuns: ['Primeiros Saltos', 'Competições', 'Pôr do Sol', 'Nossa Jornada', 'Melhores Fotos', 'Viagens'],
+    novoAlbumNome: '',
+    novoAlbumAberto: false,
+    activeAlbum: null,
+    rascunhos: [
+      { id: 1, title: 'Passeio de domingo', info: 'Salvo automaticamente · sem publicar', snapshot: { tipo: 'Passeio', descricao: 'Um passeio tranquilo pela trilha do vale.', dia: 'Muito bom', local: 'Trilha do Vale' } },
+      { id: 2, title: 'Sessão de fotos', info: 'Salvo há 2 dias · sem publicar', snapshot: { tipo: 'Sessão de fotos', descricao: '', dia: null, local: '' } },
+    ],
+    exitConfirm: null,
+    publishCelebration: false,
+    liked: false,
+    toastMsg: null,
+  };
+
+  goTo(n) { this.setState({ screen: Math.max(0, Math.min(12, n)) }); }
+  next = () => this.goTo(this.state.screen + 1);
+
+  bind(key) { return (e) => this.setState({ [key]: e.target.value }); }
+  setVal(key, value) { return () => this.setState({ [key]: value }); }
+  toggleArr(key, value) {
+    return () => this.setState(s => {
+      const arr = s[key];
+      return { [key]: arr.includes(value) ? arr.filter(v => v !== value) : [...arr, value] };
+    });
+  }
+  togglePriv(key) { return () => this.setState(s => ({ privToggles: { ...s.privToggles, [key]: !s.privToggles[key] } })); }
+  buildChips(options, isSelected, onToggle) {
+    return options.map(label => ({
+      label,
+      bg: isSelected(label) ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: isSelected(label) ? '#C9A15A' : '#2B2924',
+      onClick: onToggle(label),
+    }));
+  }
+
+  showToast(msg) {
+    this.setState({ toastMsg: msg });
+    clearTimeout(this._toastTimer);
+    this._toastTimer = setTimeout(() => this.setState({ toastMsg: null }), 2200);
+  }
+
+  hasDraftData() {
+    const s = this.state;
+    return !!(s.tipo || s.descricao || s.mediaItems.length || s.dia || s.cavaloHumor || s.usuarioHumor || s.marcacoesSelecionadas.length || s.local);
+  }
+
+  requestNav(target) {
+    if (this.state.screen >= 1 && this.state.screen <= 6 && this.hasDraftData()) {
+      this.setState({ exitConfirm: target });
+    } else {
+      this.goTo(target);
+    }
+  }
+
+  resetDraft() {
+    this.setState({
+      tipo: null, mediaItems: [], dia: null, cavaloHumor: null, usuarioHumor: null, intensidade: null, duracao: 45, local: '',
+      descricao: '', marcacoesSelecionadas: [], marcacaoCategoriaAberta: null, quemVe: 'Seguidores',
+      privToggles: { comentarios: true, compartilhar: true, download: false, ocultarLoc: false },
+    });
+  }
+
+  saveDraft() {
+    const s = this.state;
+    const novo = {
+      id: Date.now(),
+      title: s.tipo ? (s.tipo + ' de hoje') : 'Memória sem título',
+      info: 'Salvo agora · sem publicar',
+      snapshot: { tipo: s.tipo, descricao: s.descricao, dia: s.dia, cavaloHumor: s.cavaloHumor, usuarioHumor: s.usuarioHumor, intensidade: s.intensidade, duracao: s.duracao, local: s.local },
+    };
+    this.setState(st => ({ rascunhos: [novo, ...st.rascunhos] }));
+    this.resetDraft();
+  }
+
+  closeExitConfirm = () => this.setState({ exitConfirm: null });
+  discardExit = () => { const t = this.state.exitConfirm; this.resetDraft(); this.setState({ exitConfirm: null }); this.goTo(t); };
+  saveDraftExit = () => { const t = this.state.exitConfirm; this.saveDraft(); this.setState({ exitConfirm: null }); this.showToast('Rascunho salvo!'); this.goTo(t); };
+
+  addMedia(type) {
+    return () => this.setState(s => ({ mediaItems: [...s.mediaItems, { id: Date.now() + Math.random(), type }] }));
+  }
+  removeMedia(id) {
+    return (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.setState(s => ({ mediaItems: s.mediaItems.filter(m => m.id !== id) })); };
+  }
+
+  useGps = () => { this.setState({ local: 'Haras Bela Vista, Cotia - SP' }); this.showToast('Localização detectada!'); };
+
+  toggleCategoria(cat) { return () => this.setState(s => ({ marcacaoCategoriaAberta: s.marcacaoCategoriaAberta === cat ? null : cat })); }
+  toggleEntidade(categoria, nome) {
+    return () => this.setState(s => {
+      const exists = s.marcacoesSelecionadas.some(m => m.categoria === categoria && m.nome === nome);
+      return { marcacoesSelecionadas: exists ? s.marcacoesSelecionadas.filter(m => !(m.categoria === categoria && m.nome === nome)) : [...s.marcacoesSelecionadas, { categoria, nome }] };
+    });
+  }
+  removeMarcacao(categoria, nome) {
+    return () => this.setState(s => ({ marcacoesSelecionadas: s.marcacoesSelecionadas.filter(m => !(m.categoria === categoria && m.nome === nome)) }));
+  }
+
+  toggleLiked = () => this.setState(s => ({ liked: !s.liked }));
+
+  toggleNovoAlbum = () => this.setState(s => ({ novoAlbumAberto: !s.novoAlbumAberto }));
+  addAlbum = () => {
+    const nome = this.state.novoAlbumNome.trim() || 'Álbum sem nome';
+    this.setState(s => ({ albuns: [...s.albuns, nome], novoAlbumNome: '', novoAlbumAberto: false }));
+    this.showToast('Álbum "' + nome + '" criado!');
+  };
+
+  deleteDraft(id) {
+    return () => { this.setState(s => ({ rascunhos: s.rascunhos.filter(r => r.id !== id) })); this.showToast('Rascunho excluído.'); };
+  }
+  loadDraft(snap) {
+    return () => { this.setState({ ...snap }); this.goTo(6); };
+  }
+
+  publicar = () => {
+    this.setState({ publishCelebration: true });
+    setTimeout(() => this.setState({ publishCelebration: false, screen: 7 }), 1100);
+  };
+
+  renderVals() {
+    const s = this.state;
+    const screenIs = {};
+    for (let i = 0; i <= 12; i++) screenIs['s' + i] = s.screen === i;
+    const jump = (n) => () => this.goTo(n);
+
+    const screenNames = ['Escolha do tipo', 'Captura de mídia', 'Informações rápidas', 'Descrição', 'Marcação', 'Privacidade', 'Prévia', 'Memória publicada', 'Histórico de memórias', 'Álbuns inteligentes', 'Comparação', 'Rascunhos', 'Álbum'];
+
+    const progressTotal = 7;
+    const progressStep = Math.min(s.screen, 6) + 1;
+    const progressPct = Math.round((progressStep / progressTotal) * 100) + '%';
+
+    const tipoOptions = ['Treino', 'Trilha', 'Competição', 'Momento especial', 'Passeio', 'Banho', 'Sessão de fotos', 'Conquista'];
+    const tipoCards = tipoOptions.map(label => ({
+      label,
+      bg: s.tipo === label ? '#2B2924' : 'rgba(43,41,36,.05)',
+      textColor: s.tipo === label ? '#FBF9F4' : '#2B2924',
+      iconColor: s.tipo === label ? '#C9A15A' : '#6B7353',
+      onClick: () => { this.setState({ tipo: label }); this.goTo(1); },
+    }));
+    const tipoLabel = s.tipo || 'seu cavalo';
+
+    const midiaDefs = [
+      { key: 'camera', label: 'Câmera' }, { key: 'video', label: 'Vídeo' },
+      { key: 'galeria', label: 'Galeria' }, { key: 'audio', label: 'Áudio' },
+    ];
+    const midiaChips = midiaDefs.map(m => {
+      const count = s.mediaItems.filter(i => i.type === m.key).length;
+      return { ...m, count, bg: count ? '#2B2924' : 'rgba(43,41,36,.06)', color: count ? '#C9A15A' : '#6B7353', onClick: this.addMedia(m.key) };
+    });
+    const midiaCount = s.mediaItems.length;
+    const midiaThumbs = s.mediaItems.map(m => ({
+      isVideo: m.type === 'video',
+      isAudio: m.type === 'audio',
+      bg: m.type === 'audio' ? '#2B2924' : undefined,
+      phClass: m.type === 'audio' ? '' : 'placeholder',
+      remove: this.removeMedia(m.id),
+    }));
+
+    const diaOptions = [{ e: '😊', l: 'Excelente' }, { e: '🙂', l: 'Muito bom' }, { e: '😐', l: 'Normal' }, { e: '😓', l: 'Difícil' }, { e: '😔', l: 'Cansativo' }];
+    const diaChips = diaOptions.map(o => ({ label: o.l, emoji: o.e, bg: s.dia === o.l ? '#2B2924' : 'rgba(43,41,36,.06)', color: s.dia === o.l ? '#C9A15A' : '#2B2924', onClick: this.setVal('dia', o.l) }));
+
+    const cavaloHumorOptions = [{ e: '😄', l: 'Feliz' }, { e: '😌', l: 'Relaxado' }, { e: '🔥', l: 'Energético' }, { e: '😴', l: 'Sonolento' }, { e: '🤍', l: 'Carinhoso' }, { e: '😬', l: 'Inseguro' }];
+    const cavaloHumorChips = cavaloHumorOptions.map(o => ({ label: o.l, emoji: o.e, bg: s.cavaloHumor === o.l ? '#2B2924' : 'rgba(43,41,36,.06)', color: s.cavaloHumor === o.l ? '#C9A15A' : '#2B2924', onClick: this.setVal('cavaloHumor', o.l) }));
+
+    const usuarioHumorOptions = [{ e: '😊', l: 'Feliz' }, { e: '😌', l: 'Tranquilo' }, { e: '😅', l: 'Ansioso' }, { e: '🏆', l: 'Motivado' }, { e: '😴', l: 'Cansado' }];
+    const usuarioHumorChips = usuarioHumorOptions.map(o => ({ label: o.l, emoji: o.e, bg: s.usuarioHumor === o.l ? '#2B2924' : 'rgba(43,41,36,.06)', color: s.usuarioHumor === o.l ? '#C9A15A' : '#2B2924', onClick: this.setVal('usuarioHumor', o.l) }));
+
+    const intensidadeOptions = ['Leve', 'Moderada', 'Intensa'];
+    const intensidadeChips = this.buildChips(intensidadeOptions, l => s.intensidade === l, l => this.setVal('intensidade', l));
+
+    const duracaoLabel = s.duracao + ' min';
+
+    const descricaoChips = ['Primeiro salto', 'Primeira trilha', 'Nova conquista', 'Superação', 'Treino difícil', 'Dia inesquecível'].map(label => ({
+      label,
+      onClick: () => this.setState(st => ({ descricao: (st.descricao ? st.descricao + ' ' : '') + label })),
+    }));
+
+    const locaisRecentesOptions = ['Haras Bela Vista', 'Parque do Vale', 'Sítio da Serra'];
+    const locaisRecentes = locaisRecentesOptions.map(nome => ({ nome, onClick: this.setVal('local', nome) }));
+
+    const marcacaoOptions = ['Pessoas', 'Instrutores', 'Haras', 'Eventos', 'Outros cavalos', 'Amigos', 'Produtos', 'Equipamentos'];
+    const marcacaoChips = marcacaoOptions.map(label => ({
+      label,
+      bg: s.marcacaoCategoriaAberta === label ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: s.marcacaoCategoriaAberta === label ? '#C9A15A' : '#2B2924',
+      onClick: this.toggleCategoria(label),
+    }));
+    const entidadeMap = {
+      'Pessoas': ['Ana Ferraz', 'Carlos Melo', 'Julia Prado'],
+      'Instrutores': ['Prof. Ricardo'],
+      'Haras': ['Haras Bela Vista'],
+      'Eventos': ['Copa Adestramento SP'],
+      'Outros cavalos': ['Trovão', 'Estrela'],
+      'Amigos': ['Marina Costa'],
+      'Produtos': ['Sela nova'],
+      'Equipamentos': ['Proteção de casco'],
+    };
+    const catAberta = s.marcacaoCategoriaAberta;
+    const entidadeChips = catAberta ? (entidadeMap[catAberta] || []).map(nome => {
+      const selected = s.marcacoesSelecionadas.some(m => m.categoria === catAberta && m.nome === nome);
+      return { label: nome, bg: selected ? '#2B2924' : '#fff', color: selected ? '#C9A15A' : '#2B2924', onClick: this.toggleEntidade(catAberta, nome) };
+    }) : [];
+    const marcacoesCount = s.marcacoesSelecionadas.length;
+    const marcadosPills = s.marcacoesSelecionadas.map(m => ({ nome: m.nome, remove: this.removeMarcacao(m.categoria, m.nome) }));
+
+    const quemVeOptions = ['Somente eu', 'Amigos', 'Seguidores', 'Todos'];
+    const quemVeChips = this.buildChips(quemVeOptions, l => s.quemVe === l, l => this.setVal('quemVe', l));
+
+    const privTogglesDefs = [
+      { key: 'comentarios', label: 'Permitir comentários' },
+      { key: 'compartilhar', label: 'Permitir compartilhamento' },
+      { key: 'download', label: 'Permitir download' },
+      { key: 'ocultarLoc', label: 'Ocultar localização' },
+    ];
+    const privToggles = privTogglesDefs.map(p => ({
+      ...p,
+      toggle: this.togglePriv(p.key),
+      bg: s.privToggles[p.key] ? '#6B7353' : 'rgba(43,41,36,.15)',
+      knobLeft: s.privToggles[p.key] ? '22px' : '2px',
+    }));
+
+    const previewTitle = s.tipo ? (s.tipo + ' de hoje') : 'Sua memória de hoje';
+    const previewTexto = s.descricao || 'Uma página a mais na história de vocês dois.';
+
+    // dynamic AI insight
+    const fragments = [];
+    fragments.push(s.tipo ? ('Este registro de ' + s.tipo.toLowerCase()) : 'Este momento');
+    if (s.cavaloHumor) fragments.push('mostra seu cavalo se sentindo ' + s.cavaloHumor.toLowerCase());
+    if (s.duracao) fragments.push('ao longo de ' + s.duracao + ' minutos juntos');
+    if (s.local) fragments.push('em ' + s.local);
+    const aiInsight = fragments.join(', ') + '.';
+
+    const historicoItemsData = [
+      { label: 'Treino matinal', tipo: 'Treino' },
+      { label: 'Trilha do vale', tipo: 'Trilha' },
+      { label: 'Competição SP', tipo: 'Competição' },
+      { label: 'Banho da Bela', tipo: 'Banho' },
+      { label: 'Sessão de fotos', tipo: 'Sessão de fotos' },
+      { label: 'Carinho no curral', tipo: 'Momento especial' },
+    ];
+    const historicoFiltroOptions = ['Todos', 'Treino', 'Trilha', 'Competição'];
+    const historicoFiltros = historicoFiltroOptions.map(label => ({
+      label, bg: s.historicoFiltro === label ? '#2B2924' : 'rgba(43,41,36,.06)', color: s.historicoFiltro === label ? '#C9A15A' : '#2B2924',
+      onClick: this.setVal('historicoFiltro', label),
+    }));
+    const historicoItems = s.historicoFiltro === 'Todos' ? historicoItemsData : historicoItemsData.filter(h => h.tipo === s.historicoFiltro);
+    const historicoVazio = historicoItems.length === 0;
+    const visualizacaoOptions = ['Grid', 'Lista'];
+    const visualizacaoChips = visualizacaoOptions.map(label => ({
+      label, bg: s.historicoView === label ? '#2B2924' : 'rgba(43,41,36,.06)', color: s.historicoView === label ? '#C9A15A' : '#2B2924',
+      onClick: this.setVal('historicoView', label),
+    }));
+
+    const compareOptions = ['Primeiro salto', 'Salto intermediário', 'Último salto', 'Treino de hoje'];
+    const compareAChips = compareOptions.map(label => ({ label, bg: s.compareA === label ? '#2B2924' : 'rgba(43,41,36,.06)', color: s.compareA === label ? '#C9A15A' : '#2B2924', onClick: this.setVal('compareA', label) }));
+    const compareBChips = compareOptions.map(label => ({ label, bg: s.compareB === label ? '#2B2924' : 'rgba(43,41,36,.06)', color: s.compareB === label ? '#C9A15A' : '#2B2924', onClick: this.setVal('compareB', label) }));
+    const compareInsight = 'Entre "' + s.compareA + '" e "' + s.compareB + '", a altura média aumentou e a postura ficou muito mais confiante.';
+
+    const albunsList = s.albuns.map(nome => ({ nome, onClick: () => { this.setState({ activeAlbum: nome }); this.goTo(12); } }));
+    const albumDetalheItems = Array.from({ length: 9 }, (_, i) => i);
+
+    const rascunhosList = s.rascunhos.map(r => ({
+      title: r.title, info: r.info,
+      onClick: this.loadDraft(r.snapshot),
+      remove: this.deleteDraft(r.id),
+    }));
+    const rascunhosVazio = s.rascunhos.length === 0;
+
+    return {
+      ...screenIs,
+      screenDisplay: s.screen + 1,
+      totalScreens: 13,
+      screenLabel: screenNames[s.screen],
+      next: this.next,
+      goBack: () => this.requestNav(s.screen <= 6 ? Math.max(0, s.screen - 1) : s.screen === 7 ? 0 : (s.screen === 12 ? 9 : 7)),
+      toTipo: () => this.requestNav(0),
+      toTipoEdit: jump(0),
+      toHistorico: jump(8), toAlbuns: jump(9), toComparacao: jump(10), toRascunhos: jump(11),
+      progressTotal, progressStep, progressPct,
+      tipoCards, tipoLabel,
+      midiaChips, midiaCount, midiaThumbs,
+      diaChips, cavaloHumorChips, usuarioHumorChips, intensidadeChips,
+      duracao: s.duracao, duracaoChange: (e) => this.setState({ duracao: Number(e.target.value) }), duracaoLabel,
+      local: s.local, localChange: this.bind('local'), useGps: this.useGps, locaisRecentes,
+      descricao: s.descricao, descricaoChange: this.bind('descricao'), descricaoChips,
+      marcacaoChips, marcacaoCategoriaAberta: catAberta, entidadeChips, marcacoesCount, marcadosPills,
+      quemVeChips, privToggles,
+      previewTitle, previewTexto, aiInsight,
+      publicar: this.publicar,
+      publishCelebration: s.publishCelebration,
+      salvarRascunho: () => { this.saveDraft(); this.showToast('Rascunho salvo!'); this.goTo(11); },
+      liked: s.liked, likedFill: s.liked ? '#C9A15A' : 'none', toggleLiked: this.toggleLiked,
+      commentToast: () => this.showToast('Abrindo comentários...'),
+      shareToast: () => this.showToast('Compartilhado!'),
+      gerarCartaToast: () => this.showToast('Carta gerada pela IA!'),
+      criarVideoToast: () => this.showToast('Gerando vídeo...'),
+      addAlbumToast: () => this.showToast('Adicionado ao álbum "Nossa Jornada"!'),
+      historicoFiltros, historicoItems, historicoVazio, visualizacaoChips,
+      historicoIsGrid: s.historicoView === 'Grid', historicoIsLista: s.historicoView === 'Lista',
+      albunsList,
+      novoAlbumAberto: s.novoAlbumAberto, novoAlbumFechado: !s.novoAlbumAberto,
+      novoAlbumNome: s.novoAlbumNome, novoAlbumChange: this.bind('novoAlbumNome'), addAlbum: this.addAlbum, toggleNovoAlbum: this.toggleNovoAlbum,
+      compareA: s.compareA, compareB: s.compareB, compareAChips, compareBChips, compareInsight,
+      rascunhosList, rascunhosVazio,
+      activeAlbum: s.activeAlbum, albumDetalheItems,
+      exitConfirmOpen: !!s.exitConfirm,
+      closeExitConfirm: this.closeExitConfirm, discardExit: this.discardExit, saveDraftExit: this.saveDraftExit,
+      toastMsg: s.toastMsg, toastVisible: !!s.toastMsg,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

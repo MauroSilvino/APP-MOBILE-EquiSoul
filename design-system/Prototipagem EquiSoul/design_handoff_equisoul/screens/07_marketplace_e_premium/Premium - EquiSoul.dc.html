@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#EDE8DE;font-family:'Nunito',sans-serif;-webkit-font-smoothing:antialiased}
+  .placeholder{background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.06) 0px,rgba(0,0,0,.06) 2px,transparent 2px,transparent 12px);background-color:#EAE4D6}
+  .ph-label{font:600 10px ui-monospace,Menlo,monospace;letter-spacing:.02em;text-transform:uppercase;text-align:center;padding:0 30px}
+  input::placeholder, textarea::placeholder{color:#a39c8a}
+  input, textarea{font-family:'Nunito',sans-serif;outline:none;box-sizing:border-box}
+  a{color:#6B7353}
+  a:hover{color:#4F5D45}
+  ::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:56px 20px;font-family:'Nunito',sans-serif">
+
+  <div style="display:flex;align-items:center;gap:22px">
+
+    <div onClick="{{ goBack }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+
+    <div style="width:390px;height:844px;background:#FBF9F4;position:relative;overflow:hidden;box-shadow:0 30px 70px rgba(43,41,36,.22);flex:none">
+
+      <!-- 0 HOME PREMIUM -->
+      <sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto">
+          <div style="height:320px;position:relative" class="placeholder">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto cinematográfica · cavaleiro e cavalo ao entardecer</div>
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(43,41,36,.1),rgba(43,41,36,.85))"></div>
+            <div style="position:absolute;left:20px;right:20px;bottom:18px">
+              <div style="font:700 11px 'Nunito',sans-serif;color:#C9A15A;text-transform:uppercase;letter-spacing:.08em">Clube EquiSoul</div>
+              <div style="margin-top:6px;font:800 22px 'Nunito',sans-serif;color:#FBF9F4">Bem-vindo ao Clube EquiSoul</div>
+            </div>
+          </div>
+          <div style="padding:18px 20px 100px">
+            <div style="font:500 13px/1.7 'Nunito',sans-serif;color:#6b6558">Um espaço dedicado a quem deseja preservar, da melhor forma possível, a história vivida com seu cavalo.</div>
+            <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+              <sc-for list="{{ homeCards }}" as="c" hint-placeholder-count="7">
+                <div onClick="{{ c.onClick }}" style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:14px;cursor:pointer">
+                  <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ c.label }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div onClick="{{ toAssinatura }}" style="margin-top:18px;height:54px;border-radius:27px;background:#2B2924;display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">Ver planos</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 1 BENEFICIOS -->
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Benefícios</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ beneficiosList }}" as="b" hint-placeholder-count="12">
+              <div style="border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05)">
+                <div style="height:76px" class="placeholder"></div>
+                <div style="padding:12px 14px;font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ b }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 2 IA PREMIUM -->
+      <sc-if value="{{ s2 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">IA Premium</div>
+          <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Storytelling avançado para a história de vocês.</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ iaPremiumRecursos }}" as="r" hint-placeholder-count="8">
+              <div style="display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#8A6E4B" stroke-width="1.8"><path d="M12 3a9 9 0 100 18 9 9 0 000-18z"/><path d="M12 8v4l2.5 2.5"/></svg>
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ r }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">A IA pode criar</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ iaPremiumCriacoes }}" as="c" hint-placeholder-count="7">
+              <div style="padding:9px 14px;border-radius:16px;background:rgba(201,161,90,.16);color:#8A6E4B;font:700 12px 'Nunito',sans-serif">{{ c }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 3 TEMAS -->
+      <sc-if value="{{ s3 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Temas exclusivos</div>
+          <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <sc-for list="{{ temasList }}" as="t" hint-placeholder-count="9">
+              <div onClick="{{ t.onClick }}" style="border-radius:16px;overflow:hidden;border:2px solid {{ t.border }};cursor:pointer">
+                <div style="height:70px;background:{{ t.bg }};position:relative">
+                  <sc-if value="{{ t.selecionado }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute;top:6px;right:6px;width:20px;height:20px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center">
+                      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="#2B2924" stroke-width="3"><path d="M4 12l6 6L20 6"/></svg>
+                    </div>
+                  </sc-if>
+                </div>
+                <div style="padding:8px 10px;background:#fff;font:700 11px 'Nunito',sans-serif;color:#2B2924">{{ t.nome }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 4 LIVROS DIGITAIS -->
+      <sc-if value="{{ s4 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Livros digitais</div>
+          <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">A IA transforma sua jornada em capítulos.</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:14px">
+            <sc-for list="{{ livrosList }}" as="l" hint-placeholder-count="4">
+              <div style="border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 4px 16px rgba(43,41,36,.06)">
+                <div style="height:100px" class="placeholder"><div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">capa · {{ l.titulo }}</div></div>
+                <div style="padding:14px 16px">
+                  <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">{{ l.titulo }}</div>
+                  <div style="margin-top:4px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ l.capitulos }} capítulos</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 5 VIDEOS PREMIUM -->
+      <sc-if value="{{ s5 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Vídeos Premium</div>
+          <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">A IA monta filmes com sua história.</div>
+          <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <sc-for list="{{ videoEstilos }}" as="v" hint-placeholder-count="6">
+              <div onClick="{{ v.onClick }}" style="border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);cursor:pointer;border:2px solid {{ v.borderColor }}">
+                <div style="height:64px;position:relative" class="placeholder">
+                  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="18" height="18" fill="#8A6E4B" stroke="none"><path d="M8 5v14l11-7z"/></svg></div>
+                </div>
+                <div style="padding:8px 10px;display:flex;align-items:center;justify-content:space-between">
+                  <div style="font:700 11px 'Nunito',sans-serif;color:#2B2924">{{ v.nome }}</div>
+                  <sc-if value="{{ v.selecionado }}" hint-placeholder-val="{{ false }}">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#6B7353" stroke-width="2.6"><path d="M4 12l6 6L20 6"/></svg>
+                  </sc-if>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 6 BIBLIOTECA PREMIUM -->
+      <sc-if value="{{ s6 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Biblioteca Premium</div>
+          <div style="margin-top:14px;display:flex;gap:8px;overflow-x:auto">
+            <sc-for list="{{ bibliotecaCategoriaChips }}" as="c" hint-placeholder-count="6">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ bibliotecaList }}" as="b" hint-placeholder-count="5">
+              <div onClick="{{ b.onClick }}" style="display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px;cursor:pointer">
+                <div style="width:44px;height:44px;border-radius:12px;flex:none" class="placeholder"></div>
+                <div style="flex:1"><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ b.titulo }}</div><div style="margin-top:2px;font:600 11px 'Nunito',sans-serif;color:#8A6E4B">{{ b.statusLabel }}</div></div>
+                <sc-if value="{{ b.iniciado }}" hint-placeholder-val="{{ false }}">
+                  <svg viewBox="0 0 24 24" width="16" height="16" style="flex:none" fill="none" stroke="#6B7353" stroke-width="2.4"><path d="M4 12l6 6L20 6"/></svg>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 7 CLUBE PREMIUM -->
+      <sc-if value="{{ s7 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Clube Premium</div>
+          <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Uma comunidade exclusiva de cavaleiros.</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ clubeItens }}" as="c" hint-placeholder-count="7">
+              <div style="display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:13px 14px;cursor:pointer">
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="#8A6E4B" stroke-width="1.8"><circle cx="9" cy="9" r="3.2"/><circle cx="17" cy="9" r="2.4"/><path d="M4 20c.5-3.5 2.5-5.5 5-5.5s4.5 2 5 5.5"/></svg>
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ c }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 8 EVENTOS PREMIUM -->
+      <sc-if value="{{ s8 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Eventos Premium</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:14px">
+            <sc-for list="{{ eventosPremiumList }}" as="e" hint-placeholder-count="5">
+              <div style="border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 4px 16px rgba(43,41,36,.06)">
+                <div style="height:90px" class="placeholder"></div>
+                <div style="padding:12px 16px">
+                  <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ e.titulo }}</div>
+                  <div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ e.data }} · {{ e.tipo }}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 9 PERSONALIZACAO -->
+      <sc-if value="{{ s9 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Personalização</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:2px">
+            <sc-for list="{{ personalizacaoItens }}" as="p" hint-placeholder-count="8">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 4px;border-bottom:1px solid rgba(43,41,36,.06);cursor:pointer">
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ p }}</div>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#a39c8a" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 10 BACKUP PREMIUM -->
+      <sc-if value="{{ s10 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Backup Premium</div>
+          <div style="margin-top:16px;border-radius:20px;background:#fff;box-shadow:0 4px 16px rgba(43,41,36,.06);padding:18px">
+            <div style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">Armazenamento</div>
+            <div style="margin-top:8px;height:8px;border-radius:4px;background:rgba(43,41,36,.08);overflow:hidden"><div style="height:100%;width:18%;border-radius:4px;background:#C9A15A"></div></div>
+            <div style="margin-top:8px;font:600 12px 'Nunito',sans-serif;color:#6b6558">36 GB de 200 GB utilizados</div>
+          </div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ backupPremiumItens }}" as="b" hint-placeholder-count="7">
+              <div style="display:flex;align-items:center;gap:10px">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6B7353" stroke-width="2"><path d="M4 12l6 6L20 6"/></svg>
+                <div style="font:600 13px 'Nunito',sans-serif;color:#2B2924">{{ b }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 11 ASSINATURA -->
+      <sc-if value="{{ s11 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 100px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Assinatura</div>
+          <div style="margin-top:4px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Escolha o plano ideal para você e seu cavalo.</div>
+
+          <div onClick="{{ toGerenciar }}" style="margin-top:14px;display:flex;align-items:center;justify-content:space-between;border-radius:14px;background:rgba(107,115,83,.12);padding:12px 14px;cursor:pointer">
+            <div style="font:700 12px 'Nunito',sans-serif;color:#4F5D45">Já é assinante? Gerenciar assinatura</div>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#4F5D45" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+          </div>
+
+          <div style="margin-top:16px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr;gap:5px">
+            <sc-for list="{{ comparativoResumo }}" as="r" hint-placeholder-count="5">
+              <div style="border-radius:12px;background:{{ r.highlight }};padding:8px 4px;text-align:center">
+                <div style="font:800 9.5px/1.2 'Nunito',sans-serif;color:#2B2924">{{ r.nome }}</div>
+                <div style="margin-top:4px;font:700 10px 'Nunito',sans-serif;color:#8A6E4B">{{ r.preco }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:18px;display:flex;flex-direction:column;gap:12px">
+            <sc-for list="{{ planosComparativo }}" as="p" hint-placeholder-count="5">
+              <div style="border-radius:22px;background:{{ p.bg }};border:2px solid {{ p.border }};padding:16px 18px;cursor:pointer">
+                <div onClick="{{ p.onToggle }}" style="display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer">
+                  <div style="display:flex;align-items:center;gap:8px">
+                    <div style="font:800 15px 'Nunito',sans-serif;color:#2B2924">{{ p.nome }}</div>
+                    <sc-if value="{{ p.badge }}"><div style="flex:none;padding:4px 10px;border-radius:10px;background:#C9A15A;color:#2B2924;font:800 10px 'Nunito',sans-serif">{{ p.badge }}</div></sc-if>
+                  </div>
+                  <svg viewBox="0 0 24 24" width="15" height="15" style="flex:none;transform:{{ p.chevronRotate }}" fill="none" stroke="#8A6E4B" stroke-width="2.2"><path d="M9 6l6 6-6 6"/></svg>
+                </div>
+
+                <sc-if value="{{ p.isIndividual }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:10px;display:flex;gap:6px">
+                    <sc-for list="{{ billingChips }}" as="c" hint-placeholder-count="2">
+                      <div onClick="{{ c.onClick }}" style="flex:1;text-align:center;padding:8px 0;border-radius:14px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+
+                <div style="margin-top:12px;font:700 22px 'Nunito',sans-serif;color:#2B2924">{{ p.precoMain }}</div>
+                <div style="margin-top:2px;font:600 12px 'Nunito',sans-serif;color:#8A6E4B">{{ p.precoNote }}</div>
+
+                <sc-if value="{{ p.expanded }}" hint-placeholder-val="{{ true }}">
+                  <sc-if value="{{ p.socialProof }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:10px;font:600 11.5px 'Nunito',sans-serif;color:#6B7353">{{ p.socialProof }}</div>
+                  </sc-if>
+
+                  <sc-if value="{{ p.tags }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:6px">
+                      <sc-for list="{{ p.tags }}" as="t" hint-placeholder-count="6">
+                        <div style="padding:6px 11px;border-radius:12px;background:rgba(43,41,36,.06);color:#2B2924;font:700 11px 'Nunito',sans-serif">{{ t }}</div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+
+                  <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:8px 10px">
+                    <sc-for list="{{ p.features }}" as="f" hint-placeholder-count="8">
+                      <div style="display:flex;align-items:flex-start;gap:6px">
+                        <svg viewBox="0 0 24 24" width="13" height="13" style="flex:none;margin-top:2px" fill="none" stroke="#6B7353" stroke-width="2.4"><path d="M4 12l6 6L20 6"/></svg>
+                        <div style="font:600 11.5px/1.3 'Nunito',sans-serif;color:#2B2924">{{ f }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+
+                  <div onClick="{{ p.onClick }}" style="margin-top:16px;height:48px;border-radius:24px;background:{{ p.btnBg }};border:{{ p.btnBorder }};display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:{{ p.btnColor }};cursor:pointer">{{ p.botao }}</div>
+
+                  <sc-if value="{{ p.cancelNote }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:8px;text-align:center;font:600 11px 'Nunito',sans-serif;color:#a39c8a">{{ p.cancelNote }}</div>
+                  </sc-if>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+
+          <div onClick="{{ toAvulsos }}" style="margin-top:20px;display:flex;align-items:center;justify-content:space-between;border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:16px;cursor:pointer">
+            <div><div style="font:800 13px 'Nunito',sans-serif;color:#2B2924">Criações Exclusivas</div><div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">Recursos avulsos de IA</div></div>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#a39c8a" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+          </div>
+
+          <div onClick="{{ toFundador }}" style="margin-top:12px;border-radius:18px;background:#2B2924;padding:16px;cursor:pointer">
+            <div style="font:700 11px 'Nunito',sans-serif;color:#C9A15A;text-transform:uppercase;letter-spacing:.06em">Founding Members</div>
+            <div style="margin-top:6px;display:flex;align-items:center;justify-content:space-between">
+              <div style="font:800 14px 'Nunito',sans-serif;color:#FBF9F4">Seja um Fundador do EquiSoul</div>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#C9A15A" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+            </div>
+          </div>
+
+          <div onClick="{{ toFAQ }}" style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:16px;cursor:pointer">
+            <div style="font:800 13px 'Nunito',sans-serif;color:#2B2924">Perguntas Frequentes</div>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#a39c8a" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+          </div>
+
+          <div style="margin-top:22px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Métodos de pagamento</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ pagamentoChips }}" as="c" hint-placeholder-count="5">
+              <div onClick="{{ c.onClick }}" style="padding:9px 14px;border-radius:16px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+
+          <div onClick="{{ toHistoricoFinanceiro }}" style="margin-top:18px;height:52px;border-radius:26px;background:#2B2924;display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">Ver histórico financeiro</div>
+        </div>
+      </sc-if>
+
+      <!-- 12 CRIACOES EXCLUSIVAS (AVULSOS IA) -->
+      <sc-if value="{{ s12 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 100px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Criações Exclusivas</div>
+          <div style="margin-top:4px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Recursos avulsos de IA, sem precisar assinar o Premium.</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:14px">
+            <sc-for list="{{ avulsosList }}" as="a" hint-placeholder-count="5">
+              <div style="border-radius:18px;overflow:hidden;background:#fff;box-shadow:0 4px 16px rgba(43,41,36,.06)">
+                <div style="height:100px" class="placeholder"><div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">{{ a.imagemLabel }}</div></div>
+                <div style="padding:14px 16px">
+                  <div style="display:flex;align-items:center;justify-content:space-between">
+                    <div style="font:800 14px 'Nunito',sans-serif;color:#2B2924">{{ a.titulo }}</div>
+                    <div style="font:800 14px 'Nunito',sans-serif;color:#8A6E4B">{{ a.preco }}</div>
+                  </div>
+                  <div style="margin-top:6px;font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">{{ a.descricao }}</div>
+                  <div onClick="{{ a.onClick }}" style="margin-top:12px;height:44px;border-radius:22px;background:#2B2924;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">Criar Agora</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 13 FOUNDING MEMBERS -->
+      <sc-if value="{{ s13 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 100px">
+          <div style="border-radius:20px;background:#2B2924;padding:22px">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#C9A15A" stroke-width="1.8"><path d="M12 3l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 15.6 6.6 18.2l1.2-5.6L3.6 8.8l5.6-.6z"/></svg>
+            <div style="margin-top:14px;font:800 20px/1.25 'Nunito',sans-serif;color:#FBF9F4">Seja um Fundador do EquiSoul</div>
+            <div style="margin-top:8px;font:500 13px/1.6 'Nunito',sans-serif;color:rgba(251,249,244,.72)">Faça parte do grupo que ajudou a construir a maior plataforma do mundo para amantes de cavalos.</div>
+          </div>
+
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ fundadorBeneficios }}" as="b" hint-placeholder-count="6">
+              <div style="display:flex;align-items:center;gap:12px;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:13px 14px">
+                <svg viewBox="0 0 24 24" width="16" height="16" style="flex:none" fill="none" stroke="#6B7353" stroke-width="2.4"><path d="M4 12l6 6L20 6"/></svg>
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ b }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:16px;border-radius:20px;background:#fff;box-shadow:0 4px 16px rgba(43,41,36,.06);padding:18px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">Vagas de Fundador</div>
+              <sc-if value="{{ vagasEsgotadas }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:3px 9px;border-radius:9px;background:rgba(43,41,36,.08);color:#2B2924;font:800 10px 'Nunito',sans-serif">Esgotado</div>
+              </sc-if>
+            </div>
+            <div style="margin-top:10px;height:8px;border-radius:4px;background:rgba(43,41,36,.08);overflow:hidden"><div style="height:100%;width:{{ vagasPercent }}%;border-radius:4px;background:#C9A15A"></div></div>
+            <div style="margin-top:8px;font:600 12px 'Nunito',sans-serif;color:#6b6558">{{ vagasOcupadas }} de 500 vagas disponíveis</div>
+          </div>
+
+          <div style="margin-top:16px;text-align:center;font:800 24px 'Nunito',sans-serif;color:#2B2924">R$ 497 <span style="font:600 13px 'Nunito',sans-serif;color:#6b6558">pagamento único</span></div>
+
+          <sc-if value="{{ vagasEsgotadas }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:14px;border-radius:16px;background:rgba(107,115,83,.12);padding:14px;font:500 12.5px/1.6 'Nunito',sans-serif;color:#4F5D45">Todas as vagas de Fundador foram preenchidas. Entre na lista de espera e avisaremos se surgir uma vaga.</div>
+          </sc-if>
+
+          <div onClick="{{ fundadorOnClick }}" style="margin-top:16px;height:52px;border-radius:26px;background:{{ fundadorBotaoBg }};display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">{{ fundadorBotaoLabel }}</div>
+
+          <sc-if value="{{ waitlisted }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:10px;text-align:center;font:700 12px 'Nunito',sans-serif;color:#6B7353">Você entrou na lista de espera ✓</div>
+          </sc-if>
+
+          <div onClick="{{ toggleVagasEsgotadasDemo }}" style="margin-top:22px;text-align:center;font:600 11px 'Nunito',sans-serif;color:#a39c8a;cursor:pointer;text-decoration:underline">simular vagas esgotadas (demo)</div>
+        </div>
+      </sc-if>
+
+      <!-- 14 FAQ -->
+      <sc-if value="{{ s14 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 100px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Perguntas Frequentes</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ faqList }}" as="q" hint-placeholder-count="6">
+              <div style="border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);overflow:hidden">
+                <div onClick="{{ q.onClick }}" style="display:flex;align-items:center;justify-content:space-between;padding:15px 16px;cursor:pointer">
+                  <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ q.pergunta }}</div>
+                  <svg viewBox="0 0 24 24" width="14" height="14" style="flex:none;transform:{{ q.iconRotate }}" fill="none" stroke="#8A6E4B" stroke-width="2.2"><path d="M9 6l6 6-6 6"/></svg>
+                </div>
+                <sc-if value="{{ q.open }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:0 16px 16px;font:500 12.5px/1.6 'Nunito',sans-serif;color:#6b6558">{{ q.resposta }}</div>
+                </sc-if>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 15 HISTORICO FINANCEIRO -->
+      <sc-if value="{{ s15 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 100px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Histórico financeiro</div>
+          <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ faturasList }}" as="f" hint-placeholder-count="5">
+              <div style="display:flex;align-items:center;justify-content:space-between;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px">
+                <div><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ f.plano }}</div><div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ f.data }}</div></div>
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ f.valor }}</div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:18px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Fidelidade</div>
+          <div style="margin-top:10px;display:flex;align-items:center;gap:12px;border-radius:16px;background:rgba(201,161,90,.14);padding:14px">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8A6E4B" stroke-width="1.8"><path d="M12 3l2.4 5.2 5.6.6-4.2 3.8 1.2 5.6L12 15.6 6.6 18.2l1.2-5.6L3.6 8.8l5.6-.6z"/></svg>
+            <div style="font:500 12px/1.5 'Nunito',sans-serif;color:#6b6558">12 meses de assinatura — você desbloqueou a capa exclusiva "Haras Clássico".</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 16 CHECKOUT -->
+      <sc-if value="{{ s16 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 40px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Finalizar pagamento</div>
+
+          <div style="margin-top:16px;border-radius:18px;background:#fff;box-shadow:0 4px 16px rgba(43,41,36,.06);padding:16px">
+            <div style="font:700 12px 'Nunito',sans-serif;color:#8A6E4B;text-transform:uppercase;letter-spacing:.04em">Resumo</div>
+            <div style="margin-top:8px;display:flex;align-items:center;justify-content:space-between">
+              <div style="font:800 15px 'Nunito',sans-serif;color:#2B2924">{{ checkout.titulo }}</div>
+              <div style="font:800 15px 'Nunito',sans-serif;color:#2B2924">{{ checkout.preco }}</div>
+            </div>
+            <div style="margin-top:4px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ checkout.nota }}</div>
+          </div>
+
+          <div style="margin-top:20px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Método de pagamento</div>
+          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ pagamentoChipsCheckout }}" as="c" hint-placeholder-count="5">
+              <div onClick="{{ c.onClick }}" style="padding:9px 14px;border-radius:16px;background:{{ c.bg }};color:{{ c.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ isCartao }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px">
+              <input type="text" placeholder="Número do cartão" style="height:48px;border-radius:14px;border:1px solid rgba(43,41,36,.14);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924;background:#fff"/>
+              <div style="display:flex;gap:10px">
+                <input type="text" placeholder="Validade" style="flex:1;height:48px;border-radius:14px;border:1px solid rgba(43,41,36,.14);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924;background:#fff"/>
+                <input type="text" placeholder="CVV" style="flex:1;height:48px;border-radius:14px;border:1px solid rgba(43,41,36,.14);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924;background:#fff"/>
+              </div>
+              <input type="text" placeholder="Nome impresso no cartão" style="height:48px;border-radius:14px;border:1px solid rgba(43,41,36,.14);padding:0 14px;font:600 13px 'Nunito',sans-serif;color:#2B2924;background:#fff"/>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isPix }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:16px;border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:18px;display:flex;flex-direction:column;align-items:center;gap:10px">
+              <div style="width:140px;height:140px" class="placeholder"><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">QR code PIX</div></div>
+              <div style="font:600 12px 'Nunito',sans-serif;color:#6b6558">Escaneie ou copie o código para pagar</div>
+              <div style="width:100%;height:44px;border-radius:22px;background:rgba(43,41,36,.06);display:flex;align-items:center;justify-content:center;font:800 12px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Copiar código PIX</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isWallet }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:16px;border-radius:18px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:18px;text-align:center;font:600 12.5px/1.6 'Nunito',sans-serif;color:#6b6558">Confirme com biometria para pagar com {{ metodoAtual }}.</div>
+          </sc-if>
+
+          <div onClick="{{ confirmarPagamento }}" style="margin-top:24px;height:52px;border-radius:26px;background:#2B2924;display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">Confirmar pagamento</div>
+
+          <div onClick="{{ toggleFalha }}" style="margin-top:22px;text-align:center;font:600 11px 'Nunito',sans-serif;color:#a39c8a;cursor:pointer;text-decoration:underline">{{ falhaLabel }}</div>
+        </div>
+      </sc-if>
+
+      <!-- 17 SUCESSO -->
+      <sc-if value="{{ s17 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:80px 24px 40px;display:flex;flex-direction:column;align-items:center;text-align:center">
+          <div style="width:64px;height:64px;border-radius:50%;background:rgba(107,115,83,.14);display:flex;align-items:center;justify-content:center">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="#6B7353" stroke-width="2.4"><path d="M4 12l6 6L20 6"/></svg>
+          </div>
+          <div style="margin-top:18px;font:800 20px 'Nunito',sans-serif;color:#2B2924">{{ checkout.tituloConfirmacao }}</div>
+          <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Obrigado por apoiar a jornada do EquiSoul.</div>
+
+          <div style="margin-top:22px;width:100%;border-radius:18px;background:#fff;box-shadow:0 4px 16px rgba(43,41,36,.06);padding:18px;text-align:left">
+            <div style="display:flex;align-items:center;justify-content:space-between"><div style="font:600 12px 'Nunito',sans-serif;color:#6b6558">Item</div><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ checkout.titulo }}</div></div>
+            <div style="margin-top:8px;display:flex;align-items:center;justify-content:space-between"><div style="font:600 12px 'Nunito',sans-serif;color:#6b6558">Valor</div><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ checkout.preco }}</div></div>
+            <sc-if value="{{ checkout.recorrente }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:8px;display:flex;align-items:center;justify-content:space-between"><div style="font:600 12px 'Nunito',sans-serif;color:#6b6558">Próxima cobrança</div><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ checkout.proximaCobranca }}</div></div>
+            </sc-if>
+          </div>
+
+          <div onClick="{{ concluirCompra }}" style="margin-top:22px;width:100%;height:52px;border-radius:26px;background:#2B2924;display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">Concluir</div>
+          <sc-if value="{{ checkout.recorrente }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ irParaGerenciar }}" style="margin-top:14px;font:700 12px 'Nunito',sans-serif;color:#6B7353;cursor:pointer;text-decoration:underline">Gerenciar assinatura</div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- 18 GERENCIAR ASSINATURA -->
+      <sc-if value="{{ s18 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 100px">
+          <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Gerenciar assinatura</div>
+
+          <div style="margin-top:16px;border-radius:20px;background:#fff;box-shadow:0 4px 16px rgba(43,41,36,.06);padding:18px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font:800 15px 'Nunito',sans-serif;color:#2B2924">{{ assinatura.plano }}</div>
+              <div style="padding:4px 10px;border-radius:10px;background:{{ statusBg }};color:{{ statusColor }};font:800 10px 'Nunito',sans-serif">{{ statusLabel }}</div>
+            </div>
+            <div style="margin-top:6px;font:700 18px 'Nunito',sans-serif;color:#2B2924">{{ assinatura.preco }}</div>
+            <div style="margin-top:4px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ proximaCobrancaLabel }}</div>
+          </div>
+
+          <div onClick="{{ trocarPlano }}" style="margin-top:16px;height:50px;border-radius:25px;border:2px solid #2B2924;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Trocar de plano</div>
+
+          <sc-if value="{{ cancelada }}" hint-placeholder-val="{{ false }}">
+            <div onClick="{{ reativarAssinatura }}" style="margin-top:12px;height:50px;border-radius:25px;background:#2B2924;display:flex;align-items:center;justify-content:center;font:800 13px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">Reativar assinatura</div>
+          </sc-if>
+
+          <sc-if value="{{ cancelavel }}" hint-placeholder-val="{{ true }}">
+            <sc-if value="{{ cancelConfirmOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:16px;border-radius:18px;background:rgba(201,161,90,.14);padding:16px">
+                <div style="font:700 13px/1.5 'Nunito',sans-serif;color:#2B2924">Tem certeza que deseja cancelar? Você perde acesso aos recursos Premium ao fim do período pago.</div>
+                <div style="margin-top:12px;display:flex;gap:10px">
+                  <div onClick="{{ manterAssinatura }}" style="flex:1;height:44px;border-radius:22px;background:#fff;display:flex;align-items:center;justify-content:center;font:800 12px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Manter</div>
+                  <div onClick="{{ confirmarCancelamento }}" style="flex:1;height:44px;border-radius:22px;background:#2B2924;display:flex;align-items:center;justify-content:center;font:800 12px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">Confirmar cancelamento</div>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ cancelConfirmClosed }}" hint-placeholder-val="{{ true }}">
+              <div onClick="{{ abrirCancelamento }}" style="margin-top:12px;text-align:center;font:700 12px 'Nunito',sans-serif;color:#a1503a;cursor:pointer;text-decoration:underline">Cancelar assinatura</div>
+            </sc-if>
+          </sc-if>
+
+          <div style="margin-top:22px;font:700 12px 'Nunito',sans-serif;color:#2B2924;text-transform:uppercase;letter-spacing:.04em">Faturas recentes</div>
+          <div style="margin-top:10px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ faturasList }}" as="f" hint-placeholder-count="3">
+              <div style="display:flex;align-items:center;justify-content:space-between;border-radius:16px;background:#fff;box-shadow:0 4px 14px rgba(43,41,36,.05);padding:12px 14px">
+                <div><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ f.plano }}</div><div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ f.data }}</div></div>
+                <div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">{{ f.valor }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 19 ERRO PAGAMENTO -->
+      <sc-if value="{{ s19 }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;overflow-y:auto;padding:80px 24px 40px;display:flex;flex-direction:column;align-items:center;text-align:center">
+          <div style="width:64px;height:64px;border-radius:50%;background:rgba(161,80,58,.14);display:flex;align-items:center;justify-content:center">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#a1503a" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </div>
+          <div style="margin-top:18px;font:800 20px 'Nunito',sans-serif;color:#2B2924">Não foi possível concluir o pagamento</div>
+          <div style="margin-top:6px;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Verifique os dados do seu método de pagamento e tente novamente.</div>
+
+          <div onClick="{{ tentarNovamente }}" style="margin-top:24px;width:100%;height:52px;border-radius:26px;background:#2B2924;display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;color:#C9A15A;cursor:pointer">Tentar novamente</div>
+          <div onClick="{{ usarOutroMetodo }}" style="margin-top:14px;font:700 12px 'Nunito',sans-serif;color:#6B7353;cursor:pointer;text-decoration:underline">Usar outro método de pagamento</div>
+        </div>
+      </sc-if>
+
+      <!-- TAB BAR FLUTUANTE -->
+      <sc-if value="{{ showTabBar }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around">
+          <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+          <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+          <a href="./Criar%20Memoria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></a>
+          <a href="./Comunidade%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></a>
+          <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <div onClick="{{ next }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+
+  </div>
+
+  <div style="display:flex;align-items:center;gap:16px;font:600 12px ui-monospace,Menlo,monospace;color:#6b6558">
+    <span>{{ screenLabel }} · tela {{ screenDisplay }} / {{ totalScreens }}</span>
+    <span onClick="{{ toHome }}" style="cursor:pointer;text-decoration:underline">início</span>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    screen: 0,
+    historyStack: [],
+    bibliotecaCategoria: 'Bem-estar',
+    bibliotecaIniciados: {},
+    pagamento: 'PIX',
+    individualBilling: 'Anual',
+    faqOpen: 0,
+    expandedPlano: 'individual',
+    temaSelecionado: 'Campo Dourado',
+    videoEstiloSelecionado: 'Documentário',
+    checkoutContext: null,
+    paymentFailDemo: false,
+    vagasEsgotadasDemo: false,
+    waitlisted: false,
+    assinaturaAtiva: { plano: 'Premium Individual', preco: 'R$ 399,90/ano', proximaCobranca: '14 ago 2026', status: 'ativa' },
+    cancelConfirmOpen: false,
+  };
+
+  goTo = (n, push = true) => {
+    const cur = this.state.screen;
+    const target = Math.max(0, Math.min(19, n));
+    if (push && cur !== target) {
+      this.setState(s => ({ screen: target, historyStack: [...s.historyStack, cur] }));
+    } else {
+      this.setState({ screen: target });
+    }
+  };
+  next = () => this.goTo(this.state.screen + 1);
+  goBack = () => {
+    const stack = [...this.state.historyStack];
+    const prev = stack.pop();
+    if (prev != null) this.setState({ screen: prev, historyStack: stack });
+    else this.goTo(0, false);
+  };
+  setVal(key, value) { return () => this.setState({ [key]: value }); }
+  toggleVal(key) { return () => this.setState(s => ({ [key]: !s[key] })); }
+  startCheckout(context) { return () => { this.setState({ checkoutContext: context }); this.goTo(16); }; }
+  buildChips(options, isSelected, onToggle) {
+    return options.map(label => ({
+      label,
+      bg: isSelected(label) ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: isSelected(label) ? '#C9A15A' : '#2B2924',
+      onClick: onToggle(label),
+    }));
+  }
+
+  renderVals() {
+    const s = this.state;
+    const screenIs = {};
+    for (let i = 0; i <= 19; i++) screenIs['s' + i] = s.screen === i;
+    const jump = (n) => () => this.goTo(n);
+    const showTabBar = [0, 11, 12, 13, 14, 15, 18].includes(s.screen);
+
+    const screenNames = ['Home Premium','Benefícios','IA Premium','Temas','Livros digitais','Vídeos Premium','Biblioteca Premium','Clube Premium','Eventos Premium','Personalização','Backup Premium','Assinatura','Criações Exclusivas','Founding Members','FAQ','Histórico financeiro','Checkout','Confirmação','Gerenciar Assinatura','Pagamento Recusado'];
+
+    const homeCardsDefs = [
+      ['Benefícios', 1], ['IA Premium', 2], ['Temas', 3], ['Retrospectivas', 4], ['Eventos', 8], ['Biblioteca', 6], ['Estatísticas avançadas', null],
+    ];
+    const homeCards = homeCardsDefs.map(([label, target]) => ({ label, onClick: target != null ? jump(target) : () => {} }));
+
+    const beneficiosList = ['IA Premium', 'Retrospectivas cinematográficas', 'Livros digitais', 'Temas exclusivos', 'Mais armazenamento', 'Backup ilimitado', 'Widgets exclusivos', 'Personalização avançada', 'Exportações premium', 'Eventos exclusivos', 'Cursos', 'Prioridade em novos recursos'];
+
+    const iaPremiumRecursos = ['Cartas ilimitadas', 'Vídeos automáticos', 'Storytelling avançado', 'Livros anuais', 'Narrador em voz natural', 'Resumo anual cinematográfico', 'Linha do tempo animada', 'Análise completa da evolução'];
+    const iaPremiumCriacoes = ['Livro', 'Documentário', 'Vídeo', 'Trailer', 'Podcast', 'Álbum', 'Revista'];
+
+    const temasDefs = [
+      { nome: 'Campo Dourado', bg: 'linear-gradient(135deg,#C9A15A,#8A6E4B)' },
+      { nome: 'Madeira', bg: 'linear-gradient(135deg,#8A6E4B,#5c4a34)' },
+      { nome: 'Couro', bg: 'linear-gradient(135deg,#6b4f36,#3d2f21)' },
+      { nome: 'Minimal White', bg: 'linear-gradient(135deg,#FBF9F4,#EDE8DE)' },
+      { nome: 'Noite', bg: 'linear-gradient(135deg,#2B2924,#14130f)' },
+      { nome: 'Floresta', bg: 'linear-gradient(135deg,#6B7353,#4F5D45)' },
+      { nome: 'Outono', bg: 'linear-gradient(135deg,#C9A15A,#a1503a)' },
+      { nome: 'Primavera', bg: 'linear-gradient(135deg,#8FA06B,#C9A15A)' },
+      { nome: 'Haras Clássico', bg: 'linear-gradient(135deg,#2B2924,#8A6E4B)' },
+    ];
+    const temasList = temasDefs.map(t => ({
+      ...t,
+      selecionado: s.temaSelecionado === t.nome,
+      border: s.temaSelecionado === t.nome ? '#C9A15A' : 'rgba(43,41,36,.08)',
+      onClick: this.setVal('temaSelecionado', t.nome),
+    }));
+
+    const livrosList = [
+      { titulo: 'Nosso Primeiro Ano', capitulos: 12 },
+      { titulo: 'Cinco Anos Juntos', capitulos: 28 },
+      { titulo: 'Temporada de Competições', capitulos: 9 },
+      { titulo: 'Nossa História', capitulos: 40 },
+    ];
+
+    const videoEstilosDefs = ['Documentário', 'Trailer', 'Slow Cinema', 'Clássico', 'Minimalista', 'Emocional'];
+    const videoEstilos = videoEstilosDefs.map(nome => {
+      const selecionado = s.videoEstiloSelecionado === nome;
+      return {
+        nome,
+        selecionado,
+        borderColor: selecionado ? '#C9A15A' : 'transparent',
+        onClick: this.setVal('videoEstiloSelecionado', nome),
+      };
+    });
+
+    const bibliotecaCategoriaOptions = ['Bem-estar', 'Fotografia', 'Treinamento', 'Gestão', 'Viagens', 'Equipamentos'];
+    const bibliotecaCategoriaChips = this.buildChips(bibliotecaCategoriaOptions, l => s.bibliotecaCategoria === l, l => this.setVal('bibliotecaCategoria', l));
+    const bibliotecaDefs = [
+      { titulo: 'Fotografia equestre para iniciantes', tipo: 'Curso' },
+      { titulo: 'Bem-estar e rotina do cavalo', tipo: 'Masterclass' },
+      { titulo: 'Viagens com seu cavalo', tipo: 'Guia' },
+      { titulo: 'Gestão de haras pequenos', tipo: 'E-book' },
+      { titulo: 'Live: preparação para competições', tipo: 'Live' },
+    ];
+    const bibliotecaList = bibliotecaDefs.map(b => {
+      const iniciado = !!s.bibliotecaIniciados[b.titulo];
+      return {
+        ...b,
+        iniciado,
+        statusLabel: iniciado ? 'Iniciado' : b.tipo,
+        onClick: () => this.setState(st => ({ bibliotecaIniciados: { ...st.bibliotecaIniciados, [b.titulo]: !st.bibliotecaIniciados[b.titulo] } })),
+      };
+    });
+
+    const clubeItens = ['Feed exclusivo', 'Eventos exclusivos', 'Chat do clube', 'Networking', 'Mentorias', 'Perguntas e respostas', 'Encontros presenciais'];
+
+    const eventosPremiumDefs = [
+      { titulo: 'Masterclass de Adestramento', data: '14 ago', tipo: 'Masterclass' },
+      { titulo: 'Encontro do Clube EquiSoul', data: '22 ago', tipo: 'Encontro' },
+      { titulo: 'Webinar: Fotografia Equestre', data: '02 set', tipo: 'Webinar' },
+    ];
+
+    const personalizacaoItens = ['Tema', 'Fonte', 'Ícones', 'Capas', 'Widgets', 'Timeline', 'Animações', 'Tela inicial'];
+
+    const backupPremiumItens = ['Fotos', 'Vídeos', 'Documentos', 'Livros', 'Retrospectivas', 'Cartas', 'Histórico completo'];
+
+    const individualAnual = s.individualBilling === 'Anual';
+    const billingChips = this.buildChips(['Mensal', 'Anual'], l => s.individualBilling === l, l => this.setVal('individualBilling', l));
+
+    const planosComparativoDefs = [
+      {
+        id: 'gratuito', nome: 'Gratuito', badge: null,
+        precoMain: 'R$ 0', precoNote: 'Para sempre', cancelNote: null, socialProof: null,
+        features: ['Diário', 'Perfil do Cavalo', 'Comunidade', 'Agenda', 'Marketplace', 'Eventos', 'Registro de Memórias', 'Cartas IA limitadas', 'Backup básico'],
+        botao: 'Continuar Gratuito', highlight: false, recorrente: false,
+      },
+      {
+        id: 'individual', isIndividual: true, nome: 'Premium Individual', badge: 'Mais Popular',
+        precoMain: individualAnual ? 'R$ 399,90/ano' : 'R$ 39,90/mês',
+        precoNote: individualAnual ? 'Equivalente a R$ 33,32/mês · economize 17%' : 'Cobrança mensal',
+        cancelNote: 'Cancele quando quiser, sem multas.', socialProof: null,
+        features: ['IA ilimitada', 'Cartas ilimitadas', 'Storytelling avançado', 'Livros digitais', 'Documentários automáticos', 'Podcast narrado', 'Linha do tempo premium', 'Estatísticas avançadas', 'Temas exclusivos', 'Widgets Premium', 'Backup ilimitado', 'Mais armazenamento', 'Exportações premium', 'Clube Premium', 'Eventos exclusivos', 'Biblioteca de cursos', 'Prioridade em novos recursos'],
+        botao: 'Assinar Premium', highlight: true, recorrente: true,
+      },
+      {
+        id: 'familia', nome: 'Premium Família', badge: null,
+        precoMain: 'R$ 89,90/mês', precoNote: 'Até 5 membros',
+        cancelNote: 'Cancele quando quiser, sem multas.', socialProof: null,
+        features: ['Até 5 membros', 'Até 10 cavalos', 'Biblioteca compartilhada', 'Agenda compartilhada', 'Álbuns compartilhados', 'IA compartilhada', 'Espaço de armazenamento ampliado', 'Todos os benefícios do Individual'],
+        botao: 'Assinar Família', highlight: false, recorrente: true,
+      },
+      {
+        id: 'profissional', nome: 'Premium Profissional', badge: null,
+        precoMain: 'R$ 99,90/mês', precoNote: '7 dias grátis para testar',
+        cancelNote: 'Cancele quando quiser, sem multas.', socialProof: 'Mais de 2.400 profissionais já usam o EquiSoul',
+        tags: ['Veterinários', 'Treinadores', 'Ferradores', 'Dentistas', 'Fotógrafos', 'Instrutores'],
+        features: ['Agenda profissional', 'CRM de clientes', 'Gestão de cavalos atendidos', 'Reservas online', 'Analytics', 'Perfil verificado', 'Portfólio', 'Financeiro', 'Mensagens', 'Relatórios'],
+        botao: 'Assinar Profissional', highlight: false, recorrente: true,
+      },
+      {
+        id: 'haras', nome: 'Premium Haras', badge: null,
+        precoMain: 'R$ 399,90/mês', precoNote: 'Gestão completa do haras',
+        cancelNote: 'Cancele quando quiser, sem multas.', socialProof: null,
+        features: ['Funcionários', 'Treinadores', 'Clientes', 'Agenda', 'Financeiro', 'Analytics', 'Gestão de eventos', 'Marketplace', 'Controle de cavalos', 'Painel administrativo'],
+        botao: 'Conhecer Plano Haras', highlight: false, recorrente: true,
+      },
+    ];
+    const planosComparativo = planosComparativoDefs.map(p => {
+      const expanded = s.expandedPlano === p.id;
+      return {
+        ...p,
+        expanded,
+        chevronRotate: expanded ? 'rotate(90deg)' : 'rotate(0deg)',
+        bg: p.highlight ? 'rgba(201,161,90,.10)' : '#fff',
+        border: p.highlight ? '#C9A15A' : 'rgba(43,41,36,.08)',
+        btnBg: p.highlight ? '#2B2924' : (p.id === 'gratuito' ? 'transparent' : '#2B2924'),
+        btnBorder: p.id === 'gratuito' ? '2px solid #2B2924' : 'none',
+        btnColor: p.highlight ? '#C9A15A' : (p.id === 'gratuito' ? '#2B2924' : '#C9A15A'),
+        onToggle: () => this.setState({ expandedPlano: expanded ? null : p.id }),
+        onClick: p.id === 'gratuito'
+          ? jump(0)
+          : this.startCheckout({ tipo: 'plano', titulo: p.nome, preco: p.precoMain, recorrente: true, proximaCobranca: individualAnual && p.id === 'individual' ? '14 jul 2027' : '14 ago 2026' }),
+      };
+    });
+    const comparativoResumo = planosComparativoDefs.map(p => ({ id: p.id, nome: p.nome, preco: p.precoMain, highlight: p.highlight ? 'rgba(201,161,90,.16)' : 'rgba(43,41,36,.04)' }));
+
+    const pagamentoOptions = ['Apple Pay', 'Google Pay', 'PIX', 'Cartão de Crédito', 'Cartão de Débito'];
+    const pagamentoChips = this.buildChips(pagamentoOptions, l => s.pagamento === l, l => this.setVal('pagamento', l));
+
+    const avulsosDefs = [
+      { titulo: 'Livro Digital', preco: 'R$ 29,90', descricao: 'Todo o capítulo da sua jornada, em um livro ilustrado pela IA.', imagemLabel: 'capa · livro digital' },
+      { titulo: 'Documentário IA', preco: 'R$ 49,90', descricao: 'Um filme narrado com os melhores momentos vividos com seu cavalo.', imagemLabel: 'still · documentário' },
+      { titulo: 'Podcast Narrado', preco: 'R$ 19,90', descricao: 'Sua história narrada em áudio, como um episódio exclusivo.', imagemLabel: 'capa · podcast' },
+      { titulo: 'Retrospectiva Cinematográfica', preco: 'R$ 39,90', descricao: 'Um resumo emocionante do ano, em formato de vídeo.', imagemLabel: 'still · retrospectiva' },
+      { titulo: 'Linha do Tempo Ilustrada', preco: 'R$ 24,90', descricao: 'Sua jornada em uma linha do tempo ilustrada e afetiva.', imagemLabel: 'preview · linha do tempo' },
+    ];
+    const avulsosList = avulsosDefs.map(a => ({
+      ...a,
+      onClick: this.startCheckout({ tipo: 'avulso', titulo: a.titulo, preco: a.preco, recorrente: false }),
+    }));
+
+    const fundadorBeneficios = ['Premium Vitalício', 'Badge exclusiva "Fundador"', 'Nome na página de agradecimentos', 'Acesso antecipado a novos recursos', 'Participação em testes fechados', 'Votação em funcionalidades futuras'];
+    const vagasOcupadas = s.vagasEsgotadasDemo ? 500 : 312;
+    const vagasEsgotadas = vagasOcupadas >= 500;
+    const fundadorOnClick = vagasEsgotadas
+      ? () => this.setState({ waitlisted: true })
+      : this.startCheckout({ tipo: 'fundador', titulo: 'Founding Member EquiSoul', preco: 'R$ 497', recorrente: false });
+    const fundadorBotaoLabel = vagasEsgotadas ? 'Entrar na lista de espera' : 'Quero ser Fundador';
+    const fundadorBotaoBg = vagasEsgotadas ? 'rgba(43,41,36,.1)' : '#C9A15A';
+
+    const faqDefs = [
+      { pergunta: 'Posso cancelar quando quiser?', resposta: 'Sim. Você pode cancelar em qualquer momento, sem multas ou taxas extras.' },
+      { pergunta: 'O que acontece com meus dados?', resposta: 'Seus dados continuam seguros e disponíveis. Nada é excluído automaticamente após o cancelamento.' },
+      { pergunta: 'Perco minhas memórias ao cancelar?', resposta: 'Não. Suas memórias, fotos e diários continuam com você — apenas os recursos exclusivos do Premium deixam de estar disponíveis.' },
+      { pergunta: 'Posso mudar de plano?', resposta: 'Sim, você pode alternar entre os planos Individual, Família, Profissional ou Haras quando quiser.' },
+      { pergunta: 'Como funciona o plano anual?', resposta: 'O valor é cobrado uma vez por ano, com economia de 17% em relação ao plano mensal.' },
+      { pergunta: 'Como funciona o plano Família?', resposta: 'Até 5 membros e 10 cavalos compartilham agenda, álbuns e IA em um único espaço.' },
+    ];
+    const faqList = faqDefs.map((q, i) => ({
+      ...q,
+      open: s.faqOpen === i,
+      iconRotate: s.faqOpen === i ? 'rotate(90deg)' : 'rotate(0deg)',
+      onClick: () => this.setState({ faqOpen: s.faqOpen === i ? null : i }),
+    }));
+
+    const faturasList = individualAnual
+      ? [
+          { plano: 'EquiSoul Premium · Anual', data: '14 jul 2026', valor: 'R$ 399,90' },
+          { plano: 'EquiSoul Premium · Anual', data: '14 jul 2025', valor: 'R$ 399,90' },
+          { plano: 'EquiSoul Premium · Anual', data: '14 jul 2024', valor: 'R$ 359,90' },
+        ]
+      : [
+          { plano: 'EquiSoul Premium · Mensal', data: '14 jun 2026', valor: 'R$ 39,90' },
+          { plano: 'EquiSoul Premium · Mensal', data: '14 mai 2026', valor: 'R$ 39,90' },
+          { plano: 'EquiSoul Premium · Mensal', data: '14 abr 2026', valor: 'R$ 39,90' },
+        ];
+
+    // ---- Checkout (16) ----
+    const checkoutRaw = s.checkoutContext || { tipo: 'plano', titulo: 'Premium Individual', preco: 'R$ 399,90/ano', recorrente: true, proximaCobranca: '14 jul 2027' };
+    const checkout = {
+      ...checkoutRaw,
+      nota: checkoutRaw.recorrente ? 'Cobrança recorrente · cancele quando quiser' : 'Pagamento único',
+      tituloConfirmacao: checkoutRaw.tipo === 'plano' ? 'Assinatura confirmada!' : 'Compra confirmada!',
+    };
+    const metodoAtual = s.pagamento;
+    const isCartao = metodoAtual === 'Cartão de Crédito' || metodoAtual === 'Cartão de Débito';
+    const isPix = metodoAtual === 'PIX';
+    const isWallet = metodoAtual === 'Apple Pay' || metodoAtual === 'Google Pay';
+    const confirmarPagamento = () => this.goTo(s.paymentFailDemo ? 19 : 17);
+    const falhaLabel = s.paymentFailDemo ? 'Simulação de falha ativada — tocar para desativar (demo)' : 'Simular falha no pagamento (demo)';
+
+    // ---- Gerenciar assinatura (18) ----
+    const assinatura = s.assinaturaAtiva;
+    const cancelada = assinatura.status === 'cancelada';
+    const cancelavel = !cancelada;
+    const cancelConfirmClosed = !s.cancelConfirmOpen;
+    const statusBg = cancelada ? 'rgba(43,41,36,.08)' : 'rgba(107,115,83,.16)';
+    const statusColor = cancelada ? '#6b6558' : '#4F5D45';
+    const statusLabel = cancelada ? 'Cancelada' : 'Ativa';
+    const proximaCobrancaLabel = cancelada ? `Acesso Premium até ${assinatura.proximaCobranca}` : `Próxima cobrança em ${assinatura.proximaCobranca}`;
+
+    return {
+      ...screenIs,
+      screenDisplay: s.screen + 1,
+      totalScreens: 20,
+      screenLabel: screenNames[s.screen],
+      next: this.next,
+      goBack: this.goBack,
+      toHome: jump(0), toAssinatura: jump(11), toAvulsos: jump(12), toFundador: jump(13), toFAQ: jump(14), toHistoricoFinanceiro: jump(15), toGerenciar: jump(18),
+      showTabBar,
+      homeCards,
+      beneficiosList,
+      iaPremiumRecursos, iaPremiumCriacoes,
+      temasList,
+      livrosList,
+      videoEstilos,
+      bibliotecaCategoriaChips, bibliotecaList,
+      clubeItens,
+      eventosPremiumList: eventosPremiumDefs,
+      personalizacaoItens,
+      backupPremiumItens,
+      planosComparativo, comparativoResumo, billingChips, pagamentoChips,
+      avulsosList,
+      fundadorBeneficios,
+      vagasOcupadas, vagasEsgotadas, vagasPercent: Math.round((vagasOcupadas / 500) * 100), fundadorOnClick, fundadorBotaoLabel, fundadorBotaoBg,
+      waitlisted: s.waitlisted,
+      toggleVagasEsgotadasDemo: this.toggleVal('vagasEsgotadasDemo'), vagasEsgotadasDemo: s.vagasEsgotadasDemo,
+      faqList,
+      faturasList,
+      // checkout
+      checkout, metodoAtual, isCartao, isPix, isWallet, pagamentoChipsCheckout: pagamentoChips, falhaLabel,
+      confirmarPagamento, toggleFalha: this.toggleVal('paymentFailDemo'), paymentFailDemo: s.paymentFailDemo,
+      tentarNovamente: jump(16), usarOutroMetodo: () => { this.setState({ pagamento: 'PIX' }); this.goTo(16); },
+      // sucesso
+      concluirCompra: () => this.goTo(0, false),
+      irParaGerenciar: jump(18),
+      // gerenciar
+      assinatura, cancelada, cancelavel, cancelConfirmClosed, statusBg, statusColor, statusLabel, proximaCobrancaLabel,
+      trocarPlano: jump(11),
+      abrirCancelamento: this.setVal('cancelConfirmOpen', true),
+      manterAssinatura: this.setVal('cancelConfirmOpen', false),
+      confirmarCancelamento: () => this.setState({ assinaturaAtiva: { ...s.assinaturaAtiva, status: 'cancelada' }, cancelConfirmOpen: false }),
+      reativarAssinatura: () => this.setState({ assinaturaAtiva: { ...s.assinaturaAtiva, status: 'ativa' } }),
+      cancelConfirmOpen: s.cancelConfirmOpen,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

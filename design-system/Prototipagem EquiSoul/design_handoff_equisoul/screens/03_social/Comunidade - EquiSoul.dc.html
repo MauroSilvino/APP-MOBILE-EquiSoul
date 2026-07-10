@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+
+<helmet data-dc-atomics>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#EDE8DE;font-family:'Nunito',sans-serif;-webkit-font-smoothing:antialiased}
+  .placeholder{background-image:repeating-linear-gradient(135deg,rgba(0,0,0,.06) 0px,rgba(0,0,0,.06) 2px,transparent 2px,transparent 12px);background-color:#EAE4D6}
+  .ph-label{font:600 10px ui-monospace,Menlo,monospace;letter-spacing:.02em;text-transform:uppercase;text-align:center;padding:0 30px}
+  input::placeholder, textarea::placeholder{color:#a39c8a}
+  input, textarea{font-family:'Nunito',sans-serif;outline:none;box-sizing:border-box}
+  a{color:#6B7353}
+  a:hover{color:#4F5D45}
+  ::-webkit-scrollbar{display:none}
+  @keyframes navpop{from{transform:scale(.9);opacity:0}to{transform:scale(1);opacity:1}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:56px 20px;font-family:'Nunito',sans-serif">
+
+  <div style="display:flex;align-items:center;gap:22px">
+
+    <div onClick="{{ goBack }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+    </div>
+
+    <div style="width:390px;height:844px;background:#FBF9F4;position:relative;overflow:hidden;box-shadow:0 30px 70px rgba(43,41,36,.22);flex:none">
+
+      <!-- 0 FEED -->
+      <sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding-bottom:130px">
+            <div style="padding:54px 20px 0;display:flex;align-items:center;justify-content:space-between">
+              <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Comunidade</div>
+              <div onClick="{{ toReels }}" style="cursor:pointer"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#2B2924" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4l3 5 3-5M9 20l3-5 3 5"/></svg></div>
+            </div>
+            <div style="margin-top:14px;padding:0 20px;display:flex;gap:8px;overflow-x:auto">
+              <sc-for list="{{ tabChips }}" as="t" hint-placeholder-count="5">
+                <div onClick="{{ t.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ t.bg }};color:{{ t.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ t.label }}</div>
+              </sc-for>
+            </div>
+            <div style="margin-top:16px;padding:0 20px;display:flex;gap:14px;overflow-x:auto">
+              <sc-for list="{{ storiesRing }}" as="st" hint-placeholder-count="4">
+                <div onClick="{{ st.onClick }}" style="flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer">
+                  <div style="width:58px;height:58px;border-radius:50%;background:conic-gradient(#C9A15A,#8A6E4B,#6B7353,#C9A15A);padding:2.5px">
+                    <div style="width:100%;height:100%;border-radius:50%;background:#FBF9F4;padding:2px" class="placeholder"></div>
+                  </div>
+                  <div style="font:600 10px 'Nunito',sans-serif;color:#6b6558">{{ st.nome }}</div>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="margin-top:18px;padding:0 20px;display:flex;flex-direction:column;gap:18px">
+              <div style="border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 6px 20px rgba(43,41,36,.06)">
+                <div style="padding:14px 16px;display:flex;align-items:center;gap:10px">
+                  <div style="width:36px;height:36px;border-radius:50%;flex:none" class="placeholder"></div>
+                  <div style="min-width:0"><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">Ana Ferraz <span style="color:#6b6558;font-weight:500">com Luna</span></div><div style="font:500 11px 'Nunito',sans-serif;color:#6b6558">Haras Boa Vista</div></div>
+                </div>
+                <div style="height:340px" class="placeholder"><div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · primeiro salto da Luna</div></div>
+                <div style="padding:14px 16px">
+                  <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#2B2924">Depois de meses de treino, finalmente aconteceu. 🐴</div>
+                  <div style="margin-top:12px;display:flex;align-items:center;gap:16px">
+                    <div onClick="{{ post1.toggleLike }}" style="cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="{{ post1.heartFill }}" stroke="{{ post1.heartStroke }}" stroke-width="2"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+                    <div onClick="{{ toComentarios }}" style="cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 01-8.5 8.4A8.3 8.3 0 015 17l-2 1 1-3.6A8.4 8.4 0 1121 11.5z"/></svg></div>
+                    <div onClick="{{ post1.compartilhar }}" style="cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="1.8"><path d="M4 4l16 8-16 8V4z"/></svg></div>
+                    <div style="flex:1"></div>
+                    <div onClick="{{ post1.toggleSave }}" style="cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="{{ post1.saveFill }}" stroke="#2B2924" stroke-width="1.8"><path d="M19 21l-7-4-7 4V5a2 2 0 012-2h10a2 2 0 012 2z"/></svg></div>
+                  </div>
+                  <div style="margin-top:8px;font:700 12px 'Nunito',sans-serif;color:#6b6558">{{ post1.likesLabel }} · 24 comentários</div>
+                </div>
+              </div>
+
+              <sc-if value="{{ !sugestaoDispensada }}" hint-placeholder-val="{{ true }}">
+                <div style="border-radius:20px;padding:16px;background:rgba(201,161,90,.1);display:flex;align-items:center;gap:12px;position:relative">
+                  <div style="width:44px;height:44px;border-radius:50%;flex:none" class="placeholder"></div>
+                  <div style="flex:1;min-width:0"><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">Sugestão para você</div><div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">Carlos Melo · adestramento, como você</div></div>
+                  <div onClick="{{ toggleSeguir }}" style="padding:8px 14px;border-radius:14px;background:{{ seguirBg }};color:{{ seguirColor }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ seguirLabel }}</div>
+                  <div onClick="{{ dispensarSugestao }}" style="position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;background:#2B2924;display:flex;align-items:center;justify-content:center;cursor:pointer">
+                    <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="#FBF9F4" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18"/></svg>
+                  </div>
+                </div>
+              </sc-if>
+
+              <div style="border-radius:22px;overflow:hidden;background:#fff;box-shadow:0 6px 20px rgba(43,41,36,.06)">
+                <div style="padding:14px 16px;display:flex;align-items:center;gap:10px">
+                  <div style="width:36px;height:36px;border-radius:50%;flex:none" class="placeholder"></div>
+                  <div style="min-width:0"><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">Carlos Melo <span style="color:#6b6558;font-weight:500">com Trovão</span></div><div style="font:500 11px 'Nunito',sans-serif;color:#6b6558">Prova de tambor · Ribeirão Preto</div></div>
+                </div>
+                <div style="height:340px" class="placeholder"><div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · competição de tambor</div></div>
+                <div style="padding:14px 16px">
+                  <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#2B2924">1º lugar hoje — a persistência valeu a pena.</div>
+                  <div style="margin-top:10px;border-radius:14px;padding:10px 12px;background:rgba(107,115,83,.1)">
+                    <div style="font:600 9px 'Nunito',sans-serif;color:#4F5D45;text-transform:uppercase;letter-spacing:.05em">IA</div>
+                    <div style="margin-top:4px;font:600 12px/1.5 'Nunito',sans-serif;color:#2B2924">Um momento inspirador de superação para toda a comunidade.</div>
+                  </div>
+                  <div style="margin-top:10px;display:flex;align-items:center;gap:16px">
+                    <div onClick="{{ post2.toggleLike }}" style="cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="{{ post2.heartFill }}" stroke="{{ post2.heartStroke }}" stroke-width="2"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+                    <div onClick="{{ toComentarios }}" style="cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 01-8.5 8.4A8.3 8.3 0 015 17l-2 1 1-3.6A8.4 8.4 0 1121 11.5z"/></svg></div>
+                    <div onClick="{{ post2.compartilhar }}" style="cursor:pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="1.8"><path d="M4 4l16 8-16 8V4z"/></svg></div>
+                  </div>
+                  <div style="margin-top:8px;font:700 12px 'Nunito',sans-serif;color:#6b6558">{{ post2.likesLabel }}</div>
+                </div>
+              </div>
+
+              <div onClick="{{ toEventoDetalhe }}" style="border-radius:20px;overflow:hidden;background:#2B2924;color:#FBF9F4;cursor:pointer;display:flex;gap:12px;padding:14px">
+                <div style="width:70px;height:70px;border-radius:14px;flex:none" class="placeholder"></div>
+                <div style="min-width:0">
+                  <div style="font:600 10px 'Nunito',sans-serif;color:#C9A15A;text-transform:uppercase;letter-spacing:.05em">Evento próximo</div>
+                  <div style="margin-top:4px;font:700 14px 'Nunito',sans-serif">Encontro de Trilhas · Serra Verde</div>
+                  <div style="margin-top:2px;font:500 11px 'Nunito',sans-serif;color:rgba(251,249,244,.7)">Sáb, 12 de julho · 48 participantes</div>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top:26px;padding:0 20px;display:flex;flex-direction:column;gap:8px">
+              <div style="font:600 10px ui-monospace,Menlo,monospace;color:#a39c8a;text-transform:uppercase;letter-spacing:.04em">Prévia do protótipo</div>
+              <div onClick="{{ toggleVazio }}" style="align-self:flex-start;padding:8px 14px;border-radius:14px;background:rgba(43,41,36,.06);font:700 11px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Dados: {{ modoVazioLabel }}</div>
+            </div>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:3">
+            <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+            <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+            <a href="./Criar%20Memoria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></a>
+            <div onClick="{{ toFeed }}" style="cursor:pointer;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+            <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 1 STORIES VIEWER -->
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;background:#000">
+          <div style="position:absolute;top:14px;left:14px;right:14px;display:flex;gap:4px;z-index:2">
+            <sc-for list="{{ storySegments }}" as="seg" hint-placeholder-count="4">
+              <div style="flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,.3)"><div style="height:100%;width:{{ seg.pct }}%;background:#fff;border-radius:2px"></div></div>
+            </sc-for>
+          </div>
+          <div style="position:absolute;top:26px;left:14px;display:flex;align-items:center;gap:8px;z-index:2">
+            <div style="width:30px;height:30px;border-radius:50%" class="placeholder"></div>
+            <div style="font:700 12px 'Nunito',sans-serif;color:#fff">{{ storyUser }}</div>
+          </div>
+          <div onClick="{{ fecharStory }}" style="position:absolute;top:22px;right:14px;z-index:3;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+          </div>
+          <div style="position:absolute;inset:0" class="placeholder">
+            <div style="height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.6)" class="ph-label">story · {{ storyCaption }}</div>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:30px;font:600 13px 'Nunito',sans-serif;color:#fff;text-align:center">{{ storyCaption }}</div>
+          <div style="position:absolute;inset:0;display:flex;z-index:1">
+            <div onClick="{{ storyPrev }}" style="flex:1;cursor:pointer"></div>
+            <div onClick="{{ storyNext }}" style="flex:1;cursor:pointer"></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 2 REELS -->
+      <sc-if value="{{ s2 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;background:#000">
+          <div onClick="{{ toFeed }}" style="position:absolute;top:54px;left:16px;z-index:3;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#fff" stroke-width="2.2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="position:absolute;top:54px;left:58px;right:0;display:flex;gap:8px;padding:0 20px 0 0;overflow-x:auto;z-index:2">
+            <sc-for list="{{ reelCategorias }}" as="c" hint-placeholder-count="4">
+              <div onClick="{{ c.onClick }}" style="flex:none;padding:7px 14px;border-radius:14px;background:{{ c.bg }};color:{{ c.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+            </sc-for>
+          </div>
+          <div onClick="{{ reelNext }}" style="position:absolute;inset:0;cursor:pointer" class="placeholder">
+            <div style="height:100%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.55)" class="ph-label">reel · {{ reelCaption }}</div>
+          </div>
+          <div style="position:absolute;left:20px;right:80px;bottom:40px">
+            <div style="font:700 13px 'Nunito',sans-serif;color:#fff">@{{ reelUser }}</div>
+            <div style="margin-top:6px;font:500 12px/1.5 'Nunito',sans-serif;color:rgba(255,255,255,.85)">{{ reelCaption }}</div>
+          </div>
+          <div style="position:absolute;right:16px;bottom:40px;display:flex;flex-direction:column;gap:18px;align-items:center">
+            <div onClick="{{ reelLikeToggle }}" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px">
+              <svg viewBox="0 0 24 24" width="26" height="26" fill="{{ reelHeartFill }}" stroke="#fff" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg>
+              <div style="font:700 10px 'Nunito',sans-serif;color:#fff">{{ reelLikeCount }}</div>
+            </div>
+            <div onClick="{{ toComentarios }}" style="cursor:pointer"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 01-8.5 8.4A8.3 8.3 0 015 17l-2 1 1-3.6A8.4 8.4 0 1121 11.5z"/></svg></div>
+            <div onClick="{{ compartilharReel }}" style="cursor:pointer"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="#fff" stroke-width="1.8"><path d="M4 4l16 8-16 8V4z"/></svg></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 3 EXPLORAR -->
+      <sc-if value="{{ s3 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding-bottom:130px">
+            <div style="padding:54px 20px 0;font:800 22px 'Nunito',sans-serif;color:#2B2924">Comunidade</div>
+            <div style="margin-top:14px;padding:0 20px;display:flex;gap:8px;overflow-x:auto">
+              <sc-for list="{{ tabChips }}" as="t" hint-placeholder-count="5">
+                <div onClick="{{ t.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ t.bg }};color:{{ t.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ t.label }}</div>
+              </sc-for>
+            </div>
+            <div style="margin-top:14px;padding:0 20px">
+              <div style="display:flex;align-items:center;gap:8px;height:44px;border-radius:16px;background:rgba(43,41,36,.06);padding:0 14px">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6b6558" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                <input value="{{ explorarBusca }}" onChange="{{ explorarBuscaChange }}" placeholder="Buscar na comunidade" style="flex:1;border:none;background:transparent;font:600 13px 'Nunito',sans-serif;color:#2B2924;height:100%"/>
+              </div>
+            </div>
+            <div style="margin-top:14px;padding:0 20px;display:flex;gap:8px;overflow-x:auto">
+              <sc-for list="{{ explorarCategorias }}" as="c" hint-placeholder-count="6">
+                <div onClick="{{ c.onClick }}" style="flex:none;padding:8px 14px;border-radius:14px;background:{{ c.bg }};color:{{ c.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ explorarSemResultado }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:50px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding:0 30px">
+                <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Nada encontrado</div>
+                <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Tente buscar por outro termo.</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ !explorarSemResultado }}" hint-placeholder-val="{{ true }}">
+              <div style="margin-top:16px;padding:0 20px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <sc-for list="{{ explorarItems }}" as="i" hint-placeholder-count="8">
+                  <div onClick="{{ i.onClick }}" style="height:{{ i.h }}px;border-radius:14px;position:relative;cursor:pointer" class="placeholder">
+                    <div style="position:absolute;left:8px;right:8px;bottom:8px;font:600 9px ui-monospace,monospace;color:#8A6E4B;text-transform:uppercase">{{ i.titulo }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:3">
+            <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+            <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+            <a href="./Criar%20Memoria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></a>
+            <div onClick="{{ toFeed }}" style="cursor:pointer;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+            <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 4 EVENTOS -->
+      <sc-if value="{{ s4 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 130px">
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Comunidade</div>
+            <div style="margin-top:14px;display:flex;gap:8px;overflow-x:auto">
+              <sc-for list="{{ tabChips }}" as="t" hint-placeholder-count="5">
+                <div onClick="{{ t.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ t.bg }};color:{{ t.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ t.label }}</div>
+              </sc-for>
+            </div>
+            <div style="margin-top:14px;display:flex;gap:8px">
+              <sc-for list="{{ eventoModoChips }}" as="c" hint-placeholder-count="3">
+                <div onClick="{{ c.onClick }}" style="padding:8px 14px;border-radius:14px;background:{{ c.bg }};color:{{ c.color }};font:700 11px 'Nunito',sans-serif;cursor:pointer">{{ c.label }}</div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ eventoModoNaoLista }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:16px;height:150px;border-radius:18px;position:relative" class="placeholder">
+                <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">{{ eventoModoLabel }}</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ eventosVazio }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:50px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
+                <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Nenhum evento por perto</div>
+                <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Volte em breve — novos encontros aparecem toda semana.</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ !eventosVazio }}" hint-placeholder-val="{{ true }}">
+              <div style="margin-top:16px;display:flex;flex-direction:column;gap:14px">
+                <sc-for list="{{ eventosList }}" as="e" hint-placeholder-count="4">
+                  <div onClick="{{ e.onClick }}" style="border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 4px 16px rgba(43,41,36,.06);cursor:pointer">
+                    <div style="height:120px" class="placeholder"><div style="height:100%;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">{{ e.tipo }}</div></div>
+                    <div style="padding:14px 16px">
+                      <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">{{ e.titulo }}</div>
+                      <div style="margin-top:4px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ e.data }} · {{ e.cidade }} · {{ e.participantes }} participantes</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:3">
+            <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+            <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+            <a href="./Criar%20Memoria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></a>
+            <div onClick="{{ toFeed }}" style="cursor:pointer;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+            <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 5 EVENTO DETALHE -->
+      <sc-if value="{{ s5 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto">
+          <div onClick="{{ toEventos }}" style="position:absolute;top:16px;left:20px;z-index:2;width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="height:220px;position:relative" class="placeholder">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">foto · encontro de trilhas</div>
+          </div>
+          <div style="padding:20px 24px 40px">
+            <div style="font:800 21px 'Nunito',sans-serif;color:#2B2924">Encontro de Trilhas · Serra Verde</div>
+            <div style="margin-top:8px;font:500 13px 'Nunito',sans-serif;color:#6b6558">Sábado, 12 de julho · 9h · Serra Verde, MG</div>
+            <div style="margin-top:14px;display:flex;gap:20px">
+              <div><div style="font:800 16px 'Nunito',sans-serif;color:#2B2924">48</div><div style="font:600 10px 'Nunito',sans-serif;color:#6b6558;text-transform:uppercase">Participantes</div></div>
+              <div><div style="font:800 16px 'Nunito',sans-serif;color:#2B2924">12km</div><div style="font:600 10px 'Nunito',sans-serif;color:#6b6558;text-transform:uppercase">Percurso</div></div>
+            </div>
+            <div style="margin-top:16px;font:500 13px/1.7 'Nunito',sans-serif;color:#6b6558">Um passeio tranquilo entre cachoeiras, com parada para fotos e um piquenique ao meio-dia. Aberto a todos os níveis.</div>
+            <div style="margin-top:20px;display:flex;gap:10px">
+              <div onClick="{{ toggleParticipar }}" style="flex:1;height:52px;border-radius:26px;background:{{ participarBg }};display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">{{ participarLabel }}</div>
+              <div onClick="{{ compartilharEvento }}" style="flex:1;height:52px;border-radius:26px;border:1.5px solid rgba(43,41,36,.15);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Compartilhar</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 6 GRUPOS -->
+      <sc-if value="{{ s6 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 130px">
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Comunidade</div>
+            <div style="margin-top:14px;display:flex;gap:8px;overflow-x:auto">
+              <sc-for list="{{ tabChips }}" as="t" hint-placeholder-count="5">
+                <div onClick="{{ t.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ t.bg }};color:{{ t.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ t.label }}</div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ gruposVazio }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:50px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
+                <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Você ainda não faz parte de grupos</div>
+                <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Crie o primeiro ou volte quando o modo de exemplo estiver ativo.</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ !gruposVazio }}" hint-placeholder-val="{{ true }}">
+              <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+                <sc-for list="{{ gruposList }}" as="g" hint-placeholder-count="5">
+                  <div onClick="{{ g.onClick }}" style="display:flex;gap:12px;align-items:center;border-radius:18px;background:#fff;padding:12px;box-shadow:0 4px 14px rgba(43,41,36,.05);cursor:pointer">
+                    <div style="width:56px;height:56px;border-radius:16px;flex:none" class="placeholder"></div>
+                    <div style="min-width:0"><div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">{{ g.nome }}</div><div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">{{ g.membros }} membros</div></div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <div onClick="{{ abrirCriarGrupo }}" style="margin-top:16px;height:52px;border-radius:26px;border:1.5px dashed rgba(43,41,36,.2);display:flex;align-items:center;justify-content:center;font:700 13px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">+ Criar grupo</div>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:3">
+            <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+            <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+            <a href="./Criar%20Memoria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></a>
+            <div onClick="{{ toFeed }}" style="cursor:pointer;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+            <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+          </div>
+
+          <sc-if value="{{ criarGrupoOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;background:rgba(43,41,36,.5);z-index:45;display:flex;align-items:flex-end">
+              <div style="width:100%;background:#FBF9F4;border-radius:24px 24px 0 0;padding:28px 24px 34px;display:flex;flex-direction:column;gap:14px">
+                <div style="width:40px;height:4px;border-radius:2px;background:rgba(43,41,36,.15);margin:0 auto 6px"></div>
+                <div style="font:800 18px 'Nunito',sans-serif;color:#2B2924">Criar novo grupo</div>
+                <input value="{{ novoGrupoNome }}" onChange="{{ novoGrupoNomeChange }}" placeholder="Nome do grupo" style="height:52px;border-radius:16px;border:1px solid rgba(43,41,36,.15);background:#fff;padding:0 16px;font:600 14px 'Nunito',sans-serif;color:#2B2924"/>
+                <div onClick="{{ criarGrupo }}" style="height:52px;border-radius:26px;background:{{ criarGrupoBg }};display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">Criar grupo</div>
+                <div onClick="{{ fecharCriarGrupo }}" style="text-align:center;font:700 13px 'Nunito',sans-serif;color:#6b6558;cursor:pointer">Cancelar</div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- 7 GRUPO DETALHE -->
+      <sc-if value="{{ s7 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;overflow-y:auto">
+          <div onClick="{{ toGrupos }}" style="position:absolute;top:16px;left:20px;z-index:2;width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(43,41,36,.1);display:flex;align-items:center;justify-content:center;cursor:pointer">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+          </div>
+          <div style="height:160px;position:relative" class="placeholder">
+            <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#8A6E4B" class="ph-label">capa · grupo</div>
+          </div>
+          <div style="padding:18px 24px 40px">
+            <div style="font:800 20px 'Nunito',sans-serif;color:#2B2924">Amantes de Mangalarga</div>
+            <div style="margin-top:4px;font:500 12px 'Nunito',sans-serif;color:#6b6558">2.340 membros · grupo público</div>
+            <div onClick="{{ toggleEntrar }}" style="margin-top:16px;height:52px;border-radius:26px;background:{{ entrarBg }};display:flex;align-items:center;justify-content:center;font:800 14px 'Nunito',sans-serif;color:#2B2924;cursor:pointer">{{ entrarLabel }}</div>
+            <div style="margin-top:18px;display:flex;gap:16px">
+              <sc-for list="{{ grupoTabs }}" as="gt" hint-placeholder-count="4">
+                <div onClick="{{ gt.onClick }}" style="font:700 12px 'Nunito',sans-serif;color:{{ gt.color }};cursor:pointer">{{ gt.label }}</div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ grupoTabFeed }}" hint-placeholder-val="{{ true }}">
+              <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;gap:12px;border-radius:18px;background:#fff;padding:12px;box-shadow:0 4px 14px rgba(43,41,36,.05)">
+                  <div style="width:52px;height:52px;border-radius:14px;flex:none" class="placeholder"></div>
+                  <div style="min-width:0"><div style="font:700 13px 'Nunito',sans-serif;color:#2B2924">Beatriz Souza</div><div style="margin-top:2px;font:500 12px 'Nunito',sans-serif;color:#6b6558">Alguém tem dicas de casqueamento para potros?</div></div>
+                </div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ grupoTabOutro }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:40px;text-align:center;font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">{{ grupoTabVazioLabel }}</div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 8 MENSAGENS -->
+      <sc-if value="{{ s8 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0">
+          <div style="position:absolute;inset:0;overflow-y:auto;padding:54px 20px 130px">
+            <div style="font:800 22px 'Nunito',sans-serif;color:#2B2924">Comunidade</div>
+            <div style="margin-top:14px;display:flex;gap:8px;overflow-x:auto">
+              <sc-for list="{{ tabChips }}" as="t" hint-placeholder-count="5">
+                <div onClick="{{ t.onClick }}" style="flex:none;padding:9px 15px;border-radius:18px;background:{{ t.bg }};color:{{ t.color }};font:700 12px 'Nunito',sans-serif;cursor:pointer">{{ t.label }}</div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ conversasVazio }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:50px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
+                <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Nenhuma mensagem ainda</div>
+                <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Converse com quem você segue na comunidade.</div>
+              </div>
+            </sc-if>
+            <sc-if value="{{ !conversasVazio }}" hint-placeholder-val="{{ true }}">
+              <div style="margin-top:16px;display:flex;flex-direction:column;gap:4px">
+                <sc-for list="{{ conversasList }}" as="c" hint-placeholder-count="5">
+                  <div onClick="{{ c.onClick }}" style="display:flex;align-items:center;gap:12px;padding:10px 4px;cursor:pointer">
+                    <div style="position:relative;flex:none">
+                      <div style="width:48px;height:48px;border-radius:50%" class="placeholder"></div>
+                      <sc-if value="{{ c.unread }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:-1px;right:-1px;width:11px;height:11px;border-radius:50%;background:#C9A15A;border:2px solid #FBF9F4"></div></sc-if>
+                    </div>
+                    <div style="flex:1;min-width:0"><div style="font:{{ c.weight }} 13px 'Nunito',sans-serif;color:#2B2924">{{ c.nome }}</div><div style="margin-top:2px;font:{{ c.weight }} 12px 'Nunito',sans-serif;color:#6b6558;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ c.msg }}</div></div>
+                    <div style="font:600 10px 'Nunito',sans-serif;color:#a39c8a">{{ c.hora }}</div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+          <div style="position:absolute;left:20px;right:20px;bottom:20px;height:64px;border-radius:32px;background:#2B2924;box-shadow:0 10px 30px rgba(43,41,36,.25);display:flex;align-items:center;justify-content:space-around;z-index:3">
+            <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M4 11L12 4l8 7"/><path d="M6 10v9h12v-9"/></svg></a>
+            <a href="./Home%20e%20Diario%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><path d="M5 4h11l3 3v13H5z"/><path d="M9 4v6l3-2 3 2V4"/></svg></a>
+            <a href="./Criar%20Memoria%20-%20EquiSoul.dc.html" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#2B2924" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg></a>
+            <div onClick="{{ toFeed }}" style="cursor:pointer;display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#C9A15A" stroke-width="1.8"><path d="M20.8 8.6c0 5-8.8 10-8.8 10s-8.8-5-8.8-10a4.6 4.6 0 018.8-2 4.6 4.6 0 018.8 2z"/></svg></div>
+            <a href="./Perfis%20-%20EquiSoul.dc.html" style="display:flex;align-items:center;justify-content:center;text-decoration:none"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="rgba(247,243,236,.5)" stroke-width="1.8"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1-4 4-6 7-6s6 2 7 6"/></svg></a>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 9 CHAT CONVERSA -->
+      <sc-if value="{{ s9 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column">
+          <div style="padding:54px 20px 14px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(43,41,36,.06)">
+            <div onClick="{{ toMensagens }}" style="width:34px;height:34px;border-radius:50%;background:rgba(43,41,36,.05);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#2B2924" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+            </div>
+            <div style="width:38px;height:38px;border-radius:50%" class="placeholder"></div>
+            <div><div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">{{ chatNome }}</div><div style="font:500 11px 'Nunito',sans-serif;color:#6B7353">online</div></div>
+          </div>
+          <div key="{{ chatNome }}" style="flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:10px">
+            <sc-for list="{{ chatMensagens }}" as="m" hint-placeholder-count="4">
+              <div style="align-self:{{ m.align }};max-width:75%;border-radius:16px;padding:10px 14px;background:{{ m.bg }};color:{{ m.color }};font:600 13px/1.5 'Nunito',sans-serif">{{ m.texto }}</div>
+            </sc-for>
+          </div>
+          <div style="padding:12px 20px 30px;display:flex;gap:10px;align-items:center">
+            <input value="{{ chatInput }}" onChange="{{ chatInputChange }}" onKeyDown="{{ chatInputKeyDown }}" placeholder="Escrever mensagem..." style="flex:1;height:48px;border-radius:24px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 18px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            <div onClick="{{ enviarChat }}" style="width:48px;height:48px;border-radius:50%;background:#C9A15A;display:flex;align-items:center;justify-content:center;cursor:pointer">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- 10 COMENTARIOS -->
+      <sc-if value="{{ s10 }}" hint-placeholder-val="{{ true }}">
+        <div style="position:absolute;inset:0;display:flex;flex-direction:column">
+          <div style="padding:54px 20px 14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(43,41,36,.06)">
+            <div onClick="{{ fecharComentarios }}" style="width:34px;height:34px;border-radius:50%;background:rgba(43,41,36,.05);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none">
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#2B2924" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </div>
+            <div style="font:800 18px 'Nunito',sans-serif;color:#2B2924">Comentários</div>
+          </div>
+          <sc-if value="{{ comentariosVazio }}" hint-placeholder-val="{{ false }}">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:0 30px">
+              <div style="font:700 14px 'Nunito',sans-serif;color:#2B2924">Nenhum comentário ainda</div>
+              <div style="font:500 13px/1.6 'Nunito',sans-serif;color:#6b6558">Seja o primeiro a comentar.</div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ !comentariosVazio }}" hint-placeholder-val="{{ true }}">
+            <div style="flex:1;overflow-y:auto;padding:16px 20px;display:flex;flex-direction:column;gap:14px">
+              <sc-for list="{{ comentariosList }}" as="c" hint-placeholder-count="4">
+                <div style="display:flex;gap:10px">
+                  <div style="width:34px;height:34px;border-radius:50%;flex:none" class="placeholder"></div>
+                  <div style="min-width:0">
+                    <div style="font:700 12px 'Nunito',sans-serif;color:#2B2924">{{ c.nome }} <span style="font-weight:500;color:#2B2924">{{ c.texto }}</span></div>
+                    <div style="margin-top:4px;display:flex;gap:14px;font:600 11px 'Nunito',sans-serif;color:#6b6558"><span>{{ c.tempo }}</span><span style="cursor:pointer">Curtir</span><span style="cursor:pointer">Responder</span></div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+          <div style="padding:12px 20px 30px;display:flex;gap:10px;align-items:center">
+            <input value="{{ comentarioInput }}" onChange="{{ comentarioInputChange }}" onKeyDown="{{ comentarioInputKeyDown }}" placeholder="Adicionar um comentário..." style="flex:1;height:48px;border-radius:24px;border:1px solid rgba(43,41,36,.12);background:#fff;padding:0 18px;font:600 13px 'Nunito',sans-serif;color:#2B2924"/>
+            <div onClick="{{ enviarComentario }}" style="font:800 13px 'Nunito',sans-serif;color:#8A6E4B;cursor:pointer">Enviar</div>
+          </div>
+        </div>
+      </sc-if>
+
+      <!-- TOAST -->
+      <sc-if value="{{ toastVisible }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;left:20px;right:20px;bottom:96px;z-index:50;background:#2B2924;color:#FBF9F4;border-radius:16px;padding:14px 16px;box-shadow:0 10px 30px rgba(43,41,36,.3)">
+          <div style="font:600 13px 'Nunito',sans-serif">{{ toastText }}</div>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <div onClick="{{ next }}" style="width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 10px rgba(43,41,36,.12);flex:none">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#2B2924" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+
+  </div>
+
+  <div style="display:flex;align-items:center;gap:16px;font:600 12px ui-monospace,Menlo,monospace;color:#6b6558">
+    <span>{{ screenLabel }} · tela {{ screenDisplay }} / {{ totalScreens }}</span>
+    <span onClick="{{ toFeed }}" style="cursor:pointer;text-decoration:underline">início</span>
+  </div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+
+class Component extends DCLogic {
+  state = {
+    screen: 0,
+    modoVazio: false,
+    toast: null,
+    storyIndex: 0,
+    reelIndex: 0, reelCategoria: 'Saltos', reelsLiked: {},
+    explorarCategoria: 'Saltos', explorarBusca: '',
+    eventoModo: 'Lista',
+    participando: false,
+    entrouGrupo: false,
+    grupoTab: 'Feed',
+    criarGrupoOpen: false, novoGrupoNome: '', gruposExtras: [],
+    post1Liked: false, post1Likes: 128, post1Saved: false,
+    post2Liked: false, post2Likes: 96,
+    seguindoSugestao: false, sugestaoDispensada: false,
+    conversaAtivaId: 'ana',
+    conversas: [
+      { id: 'ana', nome: 'Ana Ferraz', hora: '14:32', unread: false, mensagens: [
+        { role: 'them', texto: 'Oi! Vi que a Bela deu o primeiro salto essa semana 🎉' },
+        { role: 'me', texto: 'Sim! Foi um momento incrível, estava nervosa haha' },
+        { role: 'them', texto: 'Com certeza vai render uma carta linda da IA' },
+      ] },
+      { id: 'grupo-trilhas', nome: 'Grupo Trilhas RJ', hora: '12:10', unread: true, mensagens: [
+        { role: 'them', texto: 'Carlos: alguém vai no encontro de sábado?' },
+      ] },
+      { id: 'helena', nome: 'Helena Ribeiro', hora: 'ontem', unread: false, mensagens: [
+        { role: 'them', texto: 'Combinado! Te vejo no haras' },
+      ] },
+      { id: 'rafael', nome: 'Rafael Dias', hora: 'ontem', unread: true, mensagens: [
+        { role: 'them', texto: 'Aquele vídeo do salto ficou incrível 🔥' },
+      ] },
+    ],
+    chatInput: '',
+    comentarioInput: '', comentariosList: [
+      { nome: 'Helena Ribeiro', texto: 'Que orgulho, parabéns aos dois! 🐴', tempo: '2h' },
+      { nome: 'Rafael Dias', texto: 'A Luna estava linda nesse salto', tempo: '1h' },
+    ],
+  };
+
+  goTo(n) { this.setState({ screen: Math.max(0, Math.min(10, n)) }); }
+  next = () => this.goTo(this.state.screen + 1);
+
+  bind(key) { return (e) => this.setState({ [key]: e.target.value }); }
+  setVal(key, value) { return () => this.setState({ [key]: value }); }
+  toggleBool(key) { return () => this.setState(s => ({ [key]: !s[key] })); }
+  buildChips(options, isSelected, onToggle) {
+    return options.map(label => ({
+      label,
+      bg: isSelected(label) ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: isSelected(label) ? '#C9A15A' : '#2B2924',
+      onClick: onToggle(label),
+    }));
+  }
+
+  showToast(text) {
+    clearTimeout(this._toastTimer);
+    this.setState({ toast: text });
+    this._toastTimer = setTimeout(() => this.setState({ toast: null }), 2600);
+  }
+
+  toggleVazio = () => this.setState(s => ({ modoVazio: !s.modoVazio }));
+
+  fecharStory = () => this.goTo(0);
+  fecharComentarios = () => this.goTo(0);
+
+  reelLikeToggle = () => {
+    const s = this.state;
+    const key = s.reelIndex % 3;
+    this.setState({ reelsLiked: { ...s.reelsLiked, [key]: !s.reelsLiked[key] } });
+  };
+  compartilharReel = () => this.showToast('Link do reel copiado');
+
+  toggleSeguir = () => { this.setState(s => ({ seguindoSugestao: !s.seguindoSugestao })); };
+  dispensarSugestao = () => this.setState({ sugestaoDispensada: true });
+
+  abrirCriarGrupo = () => this.setState({ criarGrupoOpen: true, novoGrupoNome: '' });
+  fecharCriarGrupo = () => this.setState({ criarGrupoOpen: false });
+  criarGrupo = () => {
+    const nome = this.state.novoGrupoNome.trim();
+    if (!nome) return;
+    this.setState(s => ({ gruposExtras: [...s.gruposExtras, { nome, membros: '1' }], criarGrupoOpen: false, novoGrupoNome: '' }));
+    this.showToast('Grupo criado');
+  };
+
+  abrirConversa(id) {
+    return () => {
+      this.setState(s => ({
+        conversaAtivaId: id,
+        conversas: s.conversas.map(c => c.id === id ? { ...c, unread: false } : c),
+      }));
+      this.goTo(9);
+    };
+  }
+  enviarChat = () => {
+    const s = this.state;
+    const texto = s.chatInput.trim();
+    if (!texto) return;
+    this.setState(st => ({
+      conversas: st.conversas.map(c => c.id === st.conversaAtivaId ? { ...c, mensagens: [...c.mensagens, { role: 'me', texto }] } : c),
+      chatInput: '',
+    }));
+  };
+
+  renderVals() {
+    const s = this.state;
+    const screenIs = {};
+    for (let i = 0; i <= 10; i++) screenIs['s' + i] = s.screen === i;
+    const jump = (n) => () => this.goTo(n);
+
+    const screenNames = ['Feed','Stories','Reels','Explorar','Eventos','Evento detalhe','Grupos','Grupo detalhe','Mensagens','Chat','Comentários'];
+
+    const tabDefs = [
+      { label: 'Feed', target: 0 }, { label: 'Explorar', target: 3 }, { label: 'Eventos', target: 4 },
+      { label: 'Grupos', target: 6 }, { label: 'Mensagens', target: 8 },
+    ];
+    const tabChips = tabDefs.map(t => ({
+      label: t.label,
+      bg: s.screen === t.target ? '#2B2924' : 'rgba(43,41,36,.06)',
+      color: s.screen === t.target ? '#C9A15A' : '#2B2924',
+      onClick: jump(t.target),
+    }));
+
+    const storiesData = [
+      { nome: 'Ana', user: 'ana.ferraz', caption: 'Manhã de trilha com a Bela 🌤️' },
+      { nome: 'Carlos', user: 'carlos.melo', caption: 'Treino de adestramento hoje' },
+      { nome: 'Helena', user: 'helena.ribeiro', caption: 'Preparando a Luna para amanhã' },
+      { nome: 'Julia', user: 'julia.santos', caption: 'Um dia de descanso merecido' },
+    ];
+    const storiesRing = storiesData.map((st, i) => ({ ...st, onClick: () => { this.setState({ storyIndex: i }); this.goTo(1); } }));
+    const storySegments = storiesData.map((_, i) => ({ pct: i <= s.storyIndex ? 100 : 0 }));
+    const storyCaption = storiesData[s.storyIndex].caption;
+    const storyUser = storiesData[s.storyIndex].user;
+
+    const reelCategoriaOptions = ['Saltos', 'Trilhas', 'Treinos', 'Bastidores'];
+    const reelCategorias = this.buildChips(reelCategoriaOptions, l => s.reelCategoria === l, l => this.setVal('reelCategoria', l));
+    const reelCaptions = ['Salto de 1,10m na pista principal 🏇', 'Trilha ao amanhecer com o grupo', 'Bastidores do treino de hoje'];
+    const reelBaseLikes = [340, 812, 156];
+    const reelKey = s.reelIndex % reelCaptions.length;
+    const reelCaption = reelCaptions[reelKey];
+    const reelUser = 'carlos.melo';
+    const reelLiked = !!s.reelsLiked[reelKey];
+    const reelLikeCount = reelBaseLikes[reelKey] + (reelLiked ? 1 : 0);
+
+    const explorarCategoriaOptions = ['Saltos', 'Trilhas', 'Raças', 'Equipamentos', 'Fotografia', 'Haras'];
+    const explorarCategorias = this.buildChips(explorarCategoriaOptions, l => s.explorarCategoria === l, l => this.setVal('explorarCategoria', l));
+    const explorarData = [
+      { h: 140, titulo: 'salto grande' }, { h: 100, titulo: 'trilha matinal' }, { h: 100, titulo: 'raça mangalarga' },
+      { h: 140, titulo: 'equipamento novo' }, { h: 120, titulo: 'fotografia equestre' }, { h: 120, titulo: 'haras aberto' },
+      { h: 140, titulo: 'salto competição' }, { h: 100, titulo: 'trilha em grupo' },
+    ];
+    const query = s.explorarBusca.trim().toLowerCase();
+    const explorarFiltrado = query ? explorarData.filter(i => i.titulo.includes(query)) : explorarData;
+    const explorarItems = explorarFiltrado.map(i => ({ ...i, onClick: jump(10) }));
+    const explorarSemResultado = explorarItems.length === 0;
+
+    const eventoModoOptions = ['Calendário', 'Mapa', 'Lista'];
+    const eventoModoChips = this.buildChips(eventoModoOptions, l => s.eventoModo === l, l => this.setVal('eventoModo', l));
+    const eventosData = s.modoVazio ? [] : [
+      { tipo: 'Encontro de trilhas', titulo: 'Encontro de Trilhas · Serra Verde', data: 'Sáb, 12 jul', cidade: 'Serra Verde, MG', participantes: 48 },
+      { tipo: 'Competição', titulo: 'Copa Regional de Salto', data: 'Dom, 20 jul', cidade: 'Ribeirão Preto, SP', participantes: 132 },
+      { tipo: 'Clínica', titulo: 'Clínica de Adestramento com Marina Kist', data: 'Sáb, 26 jul', cidade: 'Campinas, SP', participantes: 22 },
+    ];
+    const eventosList = eventosData.map(e => ({ ...e, onClick: jump(5) }));
+    const eventosVazio = eventosList.length === 0;
+    const eventoModoNaoLista = s.eventoModo !== 'Lista';
+    const eventoModoLabel = s.eventoModo === 'Calendário' ? 'vista calendário · julho' : 'mapa com pins dos eventos';
+
+    const gruposBase = [
+      { nome: 'Amantes de Mangalarga', membros: '2.340' },
+      { nome: 'Salto 1,20m', membros: '860' },
+      { nome: 'Trilhas RJ', membros: '1.120' },
+      { nome: 'Amazonas Iniciantes', membros: '640' },
+    ];
+    const gruposData = s.modoVazio ? [] : [...gruposBase, ...s.gruposExtras];
+    const gruposList = gruposData.map(g => ({ ...g, onClick: jump(7) }));
+    const gruposVazio = gruposList.length === 0;
+
+    const grupoTabOptions = ['Feed', 'Eventos', 'Arquivos', 'Chat'];
+    const grupoTabs = grupoTabOptions.map(label => ({
+      label, color: s.grupoTab === label ? '#2B2924' : '#a39c8a',
+      onClick: this.setVal('grupoTab', label),
+    }));
+    const grupoTabFeed = s.grupoTab === 'Feed';
+    const grupoTabOutro = !grupoTabFeed;
+    const grupoTabVazioLabelMap = { Eventos: 'Nenhum evento marcado por este grupo ainda.', Arquivos: 'Nenhum arquivo compartilhado ainda.', Chat: 'O chat do grupo abre em breve.' };
+    const grupoTabVazioLabel = grupoTabVazioLabelMap[s.grupoTab] || '';
+
+    const conversasVazio = s.modoVazio || s.conversas.length === 0;
+    const conversasList = s.modoVazio ? [] : s.conversas.map(c => ({
+      nome: c.nome,
+      msg: c.mensagens[c.mensagens.length - 1].texto,
+      hora: c.hora,
+      unread: c.unread,
+      weight: c.unread ? 800 : 500,
+      onClick: this.abrirConversa(c.id),
+    }));
+    const chatAtiva = s.conversas.find(c => c.id === s.conversaAtivaId) || s.conversas[0];
+    const chatNome = chatAtiva.nome;
+    const chatMensagens = chatAtiva.mensagens.map(m => ({
+      texto: m.texto,
+      align: m.role === 'me' ? 'flex-end' : 'flex-start',
+      bg: m.role === 'me' ? '#C9A15A' : 'rgba(43,41,36,.06)',
+      color: '#2B2924',
+    }));
+
+    const comentariosVazio = s.modoVazio || s.comentariosList.length === 0;
+
+    const post1Likes = s.post1Likes + (s.post1Liked ? 1 : 0);
+    const post2Likes = s.post2Likes + (s.post2Liked ? 1 : 0);
+
+    return {
+      ...screenIs,
+      screenDisplay: s.screen + 1,
+      totalScreens: 11,
+      screenLabel: screenNames[s.screen],
+      next: this.next,
+      goBack: () => this.goTo(s.screen === 5 ? 4 : s.screen === 7 ? 6 : s.screen === 9 ? 8 : s.screen === 10 ? 0 : 0),
+      toFeed: jump(0), toStories: jump(1), toReels: jump(2), toExplorar: jump(3), toEventos: jump(4),
+      toEventoDetalhe: jump(5), toGrupos: jump(6), toGrupoDetalhe: jump(7), toMensagens: jump(8), toChat: jump(9), toComentarios: jump(10),
+      tabChips,
+      modoVazio: s.modoVazio, modoVazioLabel: s.modoVazio ? 'Vazio (novo usuário)' : 'Exemplo', toggleVazio: this.toggleVazio,
+      toastVisible: !!s.toast, toastText: s.toast || '',
+
+      storiesRing, storySegments, storyCaption, storyUser, fecharStory: this.fecharStory,
+      storyNext: () => { if (s.storyIndex < storiesData.length - 1) this.setState({ storyIndex: s.storyIndex + 1 }); else this.goTo(0); },
+      storyPrev: () => this.setState({ storyIndex: Math.max(0, s.storyIndex - 1) }),
+
+      reelCategorias, reelCaption, reelUser, reelHeartFill: reelLiked ? '#C9A15A' : 'none', reelLikeCount,
+      reelNext: () => this.setState({ reelIndex: s.reelIndex + 1 }),
+      reelLikeToggle: this.reelLikeToggle, compartilharReel: this.compartilharReel,
+
+      explorarCategorias, explorarItems, explorarSemResultado,
+      explorarBusca: s.explorarBusca, explorarBuscaChange: this.bind('explorarBusca'),
+
+      eventoModoChips, eventosList, eventosVazio, eventoModoNaoLista, eventoModoLabel,
+      participando: s.participando, toggleParticipar: this.toggleBool('participando'),
+      participarBg: s.participando ? 'rgba(107,115,83,.2)' : '#C9A15A',
+      participarLabel: s.participando ? 'Participando ✓' : 'Participar',
+      compartilharEvento: () => this.showToast('Link do evento copiado'),
+
+      gruposList, gruposVazio, abrirCriarGrupo: this.abrirCriarGrupo, fecharCriarGrupo: this.fecharCriarGrupo,
+      criarGrupoOpen: s.criarGrupoOpen, novoGrupoNome: s.novoGrupoNome, novoGrupoNomeChange: this.bind('novoGrupoNome'),
+      criarGrupoBg: s.novoGrupoNome.trim() ? '#C9A15A' : 'rgba(43,41,36,.15)', criarGrupo: this.criarGrupo,
+
+      entrouGrupo: s.entrouGrupo, toggleEntrar: this.toggleBool('entrouGrupo'),
+      entrarBg: s.entrouGrupo ? 'rgba(107,115,83,.2)' : '#C9A15A',
+      entrarLabel: s.entrouGrupo ? 'Você faz parte ✓' : 'Entrar no grupo',
+      grupoTabs, grupoTabFeed, grupoTabOutro, grupoTabVazioLabel,
+
+      conversasVazio, conversasList, chatNome,
+      chatInput: s.chatInput, chatInputChange: this.bind('chatInput'),
+      chatInputKeyDown: (e) => { if (e.key === 'Enter') this.enviarChat(); },
+      chatMensagens, enviarChat: this.enviarChat, toMensagens: jump(8),
+
+      comentariosVazio, comentariosList: s.comentariosList, fecharComentarios: this.fecharComentarios,
+      comentarioInput: s.comentarioInput, comentarioInputChange: this.bind('comentarioInput'),
+      comentarioInputKeyDown: (e) => { if (e.key === 'Enter') this.enviarComentario(); },
+      enviarComentario: () => { if (s.comentarioInput.trim()) this.setState(st => ({ comentariosList: [...st.comentariosList, { nome: 'Você', texto: st.comentarioInput, tempo: 'agora' }], comentarioInput: '' })); },
+
+      post1: {
+        toggleLike: () => this.setState({ post1Liked: !s.post1Liked }),
+        heartFill: s.post1Liked ? '#C9A15A' : 'none', heartStroke: s.post1Liked ? '#C9A15A' : '#C9A15A',
+        toggleSave: () => this.setState({ post1Saved: !s.post1Saved }),
+        saveFill: s.post1Saved ? '#2B2924' : 'none',
+        compartilhar: () => this.showToast('Link do post copiado'),
+        likesLabel: `${post1Likes} curtidas`,
+      },
+      post2: {
+        toggleLike: () => this.setState({ post2Liked: !s.post2Liked }),
+        heartFill: s.post2Liked ? '#C9A15A' : 'none', heartStroke: s.post2Liked ? '#C9A15A' : '#C9A15A',
+        compartilhar: () => this.showToast('Link do post copiado'),
+        likesLabel: `${post2Likes} curtidas`,
+      },
+      seguindoSugestao: s.seguindoSugestao, sugestaoDispensada: s.sugestaoDispensada,
+      toggleSeguir: this.toggleSeguir, dispensarSugestao: this.dispensarSugestao,
+      seguirBg: s.seguindoSugestao ? 'rgba(107,115,83,.15)' : '#C9A15A',
+      seguirColor: s.seguindoSugestao ? '#4F5D45' : '#2B2924',
+      seguirLabel: s.seguindoSugestao ? 'Seguindo ✓' : 'Seguir',
+    };
+  }
+}
+
+</script>
+</body>
+</html>

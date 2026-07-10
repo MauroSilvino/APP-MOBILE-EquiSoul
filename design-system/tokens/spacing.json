@@ -1,17 +1,27 @@
 {
-  "_comment": "Placeholder. Substitua pela escala de spacing/radius exata do Claude Design.",
+  "_comment": "Fonte: design-system/Prototipagem EquiSoul/design_handoff_equisoul/tokens.md.",
   "spacing": {
     "xs": 4,
     "sm": 8,
-    "md": 16,
-    "lg": 24,
-    "xl": 32,
-    "xxl": 48
+    "md": 12,
+    "lg": 16,
+    "xl": 24,
+    "xxl": 32
   },
   "radius": {
-    "sm": 4,
-    "md": 8,
-    "lg": 16,
+    "card": 18,
+    "cardLarge": 22,
+    "chip": 19,
     "full": 999
+  },
+  "cardPadding": { "min": 12, "max": 18 },
+  "listGap": { "min": 8, "max": 12 },
+  "sectionGap": { "min": 16, "max": 24 },
+  "chipPadding": { "vertical": 9, "horizontal": 15 },
+  "buttonHeight": { "min": 44, "max": 56 },
+  "shadow": {
+    "card": "0 4px 14px rgba(43,41,36,0.05)",
+    "deviceElevation": "0 30px 70px rgba(43,41,36,0.22)",
+    "tabBar": "0 10px 30px rgba(43,41,36,0.25)"
   }
 }

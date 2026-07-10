@@ -20,6 +20,23 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-font",
+      "expo-splash-screen",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permitir que o $(PRODUCT_NAME) acesse sua câmera para fotos do diário do seu cavalo."
+        }
+      ],
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Permitir que o $(PRODUCT_NAME) acesse sua localização para sugerir eventos e prestadores próximos."
+        }
+      ],
+      "expo-notifications"
+    ]
   }
 }
