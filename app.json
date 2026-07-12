@@ -36,7 +36,14 @@
           "locationWhenInUsePermission": "Permitir que o $(PRODUCT_NAME) acesse sua localização para sugerir eventos e prestadores próximos."
         }
       ],
-      "expo-notifications"
+      "expo-notifications",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permitir que o $(PRODUCT_NAME) acesse suas fotos e vídeos para criar memórias do diário.",
+          "cameraPermission": "Permitir que o $(PRODUCT_NAME) acesse sua câmera para capturar memórias do diário."
+        }
+      ]
     ]
   }
 }

@@ -1,6 +1,18 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { HomeScreen } from '../screens/HomeScreen';
+import { CapturaMidiaScreen } from '../screens/criarMemoria/CapturaMidiaScreen';
+import { InformacoesRapidasScreen } from '../screens/criarMemoria/InformacoesRapidasScreen';
+import { TipoMemoriaScreen } from '../screens/criarMemoria/TipoMemoriaScreen';
+import { CalendarioScreen } from '../screens/diario/CalendarioScreen';
+import { DashboardHomeScreen } from '../screens/diario/DashboardHomeScreen';
+import { FavoritosScreen } from '../screens/diario/FavoritosScreen';
+import { MemoriaCompletaScreen } from '../screens/diario/MemoriaCompletaScreen';
+import { NovoRegistroScreen } from '../screens/diario/NovoRegistroScreen';
+import { PesquisaMemoriasScreen } from '../screens/diario/PesquisaMemoriasScreen';
+import { TimelineScreen } from '../screens/diario/TimelineScreen';
+import { ComunidadeScreen } from '../screens/ComunidadeScreen';
+import { NotificacoesScreen } from '../screens/NotificacoesScreen';
+import { PerfisScreen } from '../screens/PerfisScreen';
 import { AdicionarCavaloScreen } from '../screens/onboarding/AdicionarCavaloScreen';
 import { CadastroScreen } from '../screens/onboarding/CadastroScreen';
 import { CriarPerfilScreen } from '../screens/onboarding/CriarPerfilScreen';
@@ -39,7 +51,19 @@ export function RootNavigator() {
         <Stack.Screen name="TourInteligente" component={TourInteligenteScreen} />
         <Stack.Screen name="PrimeiroCheckin" component={PrimeiroCheckinScreen} />
         <Stack.Screen name="PrimeiraCartaIA" component={PrimeiraCartaIAScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Home" component={DashboardHomeScreen} />
+        <Stack.Screen name="NovoRegistro" component={NovoRegistroScreen} />
+        <Stack.Screen name="MemoriaCompleta" component={MemoriaCompletaScreen} />
+        <Stack.Screen name="Timeline" component={TimelineScreen} />
+        <Stack.Screen name="Calendario" component={CalendarioScreen} />
+        <Stack.Screen name="PesquisaMemorias" component={PesquisaMemoriasScreen} />
+        <Stack.Screen name="Favoritos" component={FavoritosScreen} />
+        <Stack.Screen name="TipoMemoria" component={TipoMemoriaScreen} />
+        <Stack.Screen name="CapturaMidia" component={CapturaMidiaScreen} />
+        <Stack.Screen name="InformacoesRapidas" component={InformacoesRapidasScreen} />
+        <Stack.Screen name="Notificacoes" component={NotificacoesScreen} />
+        <Stack.Screen name="Comunidade" component={ComunidadeScreen} />
+        <Stack.Screen name="Perfis" component={PerfisScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
