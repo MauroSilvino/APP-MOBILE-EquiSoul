@@ -20,7 +20,17 @@ import { MemoriaCompletaScreen } from '../screens/diario/MemoriaCompletaScreen';
 import { NovoRegistroScreen } from '../screens/diario/NovoRegistroScreen';
 import { PesquisaMemoriasScreen } from '../screens/diario/PesquisaMemoriasScreen';
 import { TimelineScreen } from '../screens/diario/TimelineScreen';
-import { ComunidadeScreen } from '../screens/ComunidadeScreen';
+import { ChatConversaScreen } from '../screens/comunidade/ChatConversaScreen';
+import { ComentariosScreen } from '../screens/comunidade/ComentariosScreen';
+import { EventoDetalheScreen } from '../screens/comunidade/EventoDetalheScreen';
+import { EventosScreen } from '../screens/comunidade/EventosScreen';
+import { ExplorarScreen } from '../screens/comunidade/ExplorarScreen';
+import { FeedScreen } from '../screens/comunidade/FeedScreen';
+import { GrupoDetalheScreen } from '../screens/comunidade/GrupoDetalheScreen';
+import { GruposScreen } from '../screens/comunidade/GruposScreen';
+import { MensagensScreen } from '../screens/comunidade/MensagensScreen';
+import { ReelsScreen } from '../screens/comunidade/ReelsScreen';
+import { StoriesViewerScreen } from '../screens/comunidade/StoriesViewerScreen';
 import { NotificacoesScreen } from '../screens/NotificacoesScreen';
 import { PerfisScreen } from '../screens/PerfisScreen';
 import { AdicionarCavaloScreen } from '../screens/onboarding/AdicionarCavaloScreen';
@@ -82,7 +92,17 @@ export function RootNavigator() {
         <Stack.Screen name="Rascunhos" component={RascunhosScreen} />
         <Stack.Screen name="AlbumDetalhe" component={AlbumDetalheScreen} />
         <Stack.Screen name="Notificacoes" component={NotificacoesScreen} />
-        <Stack.Screen name="Comunidade" component={ComunidadeScreen} />
+        <Stack.Screen name="Comunidade" component={FeedScreen} />
+        <Stack.Screen name="StoriesViewer" component={StoriesViewerScreen} />
+        <Stack.Screen name="Reels" component={ReelsScreen} />
+        <Stack.Screen name="Explorar" component={ExplorarScreen} />
+        <Stack.Screen name="Eventos" component={EventosScreen} />
+        <Stack.Screen name="EventoDetalhe" component={EventoDetalheScreen} />
+        <Stack.Screen name="Grupos" component={GruposScreen} />
+        <Stack.Screen name="GrupoDetalhe" component={GrupoDetalheScreen} />
+        <Stack.Screen name="Mensagens" component={MensagensScreen} />
+        <Stack.Screen name="ChatConversa" component={ChatConversaScreen} />
+        <Stack.Screen name="Comentarios" component={ComentariosScreen} />
         <Stack.Screen name="Perfis" component={PerfisScreen} />
       </Stack.Navigator>
     </NavigationContainer>
