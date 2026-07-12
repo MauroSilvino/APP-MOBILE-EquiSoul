@@ -74,7 +74,6 @@ function EmojiChipRow({
 export function InformacoesRapidasScreen({ navigation }: Props) {
   const draft = useMemoriesStore((state) => state.criarMemoriaDraft);
   const setCriarMemoriaDraft = useMemoriesStore((state) => state.setCriarMemoriaDraft);
-  const finalizarCriarMemoria = useMemoriesStore((state) => state.finalizarCriarMemoria);
 
   async function usarGps() {
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -89,8 +88,7 @@ export function InformacoesRapidasScreen({ navigation }: Props) {
   }
 
   function continuar() {
-    const id = finalizarCriarMemoria();
-    navigation.navigate('MemoriaCompleta', { id });
+    navigation.navigate('Descricao');
   }
 
   return (

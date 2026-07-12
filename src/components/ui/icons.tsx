@@ -187,6 +187,15 @@ export function TypeBadgeIcon({ size = 22, color = '#6B7353', strokeWidth = 1.8 
   );
 }
 
+export function ClockIcon({ size = 20, color = '#2B2924', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Circle cx="12" cy="12" r="9" />
+      <Path d="M12 7v5l3.5 2" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
 export function LocationIcon({ size = 16, color = '#6B7353', strokeWidth = 1.8 }: IconProps) {
   return (
     <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>

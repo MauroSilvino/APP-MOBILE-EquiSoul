@@ -24,6 +24,18 @@ export interface MidiaItem {
   tipo: 'image' | 'video';
 }
 
+export interface MarcacaoSelecionada {
+  categoria: string;
+  nome: string;
+}
+
+export interface PrivacidadeToggles {
+  comentarios: boolean;
+  compartilhar: boolean;
+  download: boolean;
+  ocultarLocalizacao: boolean;
+}
+
 export interface CriarMemoriaDraft {
   tipo: string | null;
   midiaItems: MidiaItem[];
@@ -33,15 +45,32 @@ export interface CriarMemoriaDraft {
   intensidade: string | null;
   duracao: number;
   local: string;
+  descricao: string;
+  marcacoes: MarcacaoSelecionada[];
+  quemVe: string;
+  privToggles: PrivacidadeToggles;
+}
+
+export interface RascunhoMemoria {
+  id: string;
+  titulo: string;
+  info: string;
+  snapshot: CriarMemoriaDraft;
 }
 
 interface MemoriesState {
   memorias: Memoria[];
   ultimaMemoriaId: string | null;
   criarMemoriaDraft: CriarMemoriaDraft;
+  rascunhos: RascunhoMemoria[];
+  customAlbuns: string[];
   setCriarMemoriaDraft: (patch: Partial<CriarMemoriaDraft>) => void;
   resetCriarMemoriaDraft: () => void;
   finalizarCriarMemoria: () => string;
+  salvarRascunho: () => void;
+  carregarRascunho: (id: string) => void;
+  removerRascunho: (id: string) => void;
+  criarAlbum: (nome: string) => void;
   atualizarMemoria: (id: string, patch: { tipo: string; emocao: string | null; nota: string }) => void;
   toggleFavorito: (id: string) => void;
   removerMemoria: (id: string) => void;
@@ -56,6 +85,10 @@ const initialDraft: CriarMemoriaDraft = {
   intensidade: null,
   duracao: 45,
   local: '',
+  descricao: '',
+  marcacoes: [],
+  quemVe: 'Seguidores',
+  privToggles: { comentarios: true, compartilhar: true, download: false, ocultarLocalizacao: false },
 };
 
 const initialMemorias: Memoria[] = [
@@ -144,10 +177,14 @@ const HUMOR_EMOJI: Record<string, string> = {
   Cansativo: '😔',
 };
 
+const initialCustomAlbuns: string[] = ['Nossa Jornada', 'Melhores Fotos'];
+
 export const useMemoriesStore = create<MemoriesState>((set, get) => ({
   memorias: initialMemorias,
   ultimaMemoriaId: null,
   criarMemoriaDraft: initialDraft,
+  rascunhos: [],
+  customAlbuns: initialCustomAlbuns,
 
   setCriarMemoriaDraft: (patch) =>
     set((state) => ({ criarMemoriaDraft: { ...state.criarMemoriaDraft, ...patch } })),
@@ -162,12 +199,13 @@ export const useMemoriesStore = create<MemoriesState>((set, get) => ({
     const subtituloPartes = [draft.local, draft.intensidade ? `intensidade ${draft.intensidade.toLowerCase()}` : null, `${draft.duracao} min`].filter(
       (parte): parte is string => !!parte
     );
+    const tags = [tipo, ...(draft.local ? [draft.local] : []), ...draft.marcacoes.map((marcacao) => marcacao.nome)];
     const memoria: Memoria = {
       id,
       tipo,
       titulo: `${tipo} de hoje`,
       subtitulo: subtituloPartes.join(' · '),
-      nota: '',
+      nota: draft.descricao,
       emocao: draft.dia ? HUMOR_EMOJI[draft.dia] ?? null : null,
       local: draft.local,
       midiaCount,
@@ -175,7 +213,7 @@ export const useMemoriesStore = create<MemoriesState>((set, get) => ({
       favoritoCategoria: midiaCount > 0 ? 'Fotos' : 'Posts',
       relativeLabel: 'Hoje',
       diaDoMes: new Date().getDate(),
-      tags: draft.local ? [tipo, draft.local] : [tipo],
+      tags,
     };
     set((state) => ({
       memorias: [memoria, ...state.memorias],
@@ -184,6 +222,29 @@ export const useMemoriesStore = create<MemoriesState>((set, get) => ({
     }));
     return id;
   },
+
+  salvarRascunho: () => {
+    const draft = get().criarMemoriaDraft;
+    const rascunho: RascunhoMemoria = {
+      id: `rascunho-${Date.now()}`,
+      titulo: draft.tipo ? `${draft.tipo} de hoje` : 'Memória sem título',
+      info: 'Salvo agora · sem publicar',
+      snapshot: draft,
+    };
+    set((state) => ({ rascunhos: [rascunho, ...state.rascunhos], criarMemoriaDraft: initialDraft }));
+  },
+
+  carregarRascunho: (id) => {
+    const rascunho = get().rascunhos.find((item) => item.id === id);
+    if (!rascunho) return;
+    set({ criarMemoriaDraft: rascunho.snapshot });
+  },
+
+  removerRascunho: (id) =>
+    set((state) => ({ rascunhos: state.rascunhos.filter((rascunho) => rascunho.id !== id) })),
+
+  criarAlbum: (nome) =>
+    set((state) => ({ customAlbuns: [...state.customAlbuns, nome.trim() || 'Álbum sem nome'] })),
 
   atualizarMemoria: (id, patch) =>
     set((state) => ({
