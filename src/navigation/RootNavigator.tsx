@@ -1,7 +1,17 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { AlbumDetalheScreen } from '../screens/criarMemoria/AlbumDetalheScreen';
+import { AlbunsInteligentesScreen } from '../screens/criarMemoria/AlbunsInteligentesScreen';
 import { CapturaMidiaScreen } from '../screens/criarMemoria/CapturaMidiaScreen';
+import { ComparacaoScreen } from '../screens/criarMemoria/ComparacaoScreen';
+import { DescricaoScreen } from '../screens/criarMemoria/DescricaoScreen';
+import { HistoricoScreen } from '../screens/criarMemoria/HistoricoScreen';
 import { InformacoesRapidasScreen } from '../screens/criarMemoria/InformacoesRapidasScreen';
+import { MarcacaoScreen } from '../screens/criarMemoria/MarcacaoScreen';
+import { MemoriaPublicadaScreen } from '../screens/criarMemoria/MemoriaPublicadaScreen';
+import { PreviaScreen } from '../screens/criarMemoria/PreviaScreen';
+import { PrivacidadeScreen } from '../screens/criarMemoria/PrivacidadeScreen';
+import { RascunhosScreen } from '../screens/criarMemoria/RascunhosScreen';
 import { TipoMemoriaScreen } from '../screens/criarMemoria/TipoMemoriaScreen';
 import { CalendarioScreen } from '../screens/diario/CalendarioScreen';
 import { DashboardHomeScreen } from '../screens/diario/DashboardHomeScreen';
@@ -61,6 +71,16 @@ export function RootNavigator() {
         <Stack.Screen name="TipoMemoria" component={TipoMemoriaScreen} />
         <Stack.Screen name="CapturaMidia" component={CapturaMidiaScreen} />
         <Stack.Screen name="InformacoesRapidas" component={InformacoesRapidasScreen} />
+        <Stack.Screen name="Descricao" component={DescricaoScreen} />
+        <Stack.Screen name="Marcacao" component={MarcacaoScreen} />
+        <Stack.Screen name="Privacidade" component={PrivacidadeScreen} />
+        <Stack.Screen name="Previa" component={PreviaScreen} />
+        <Stack.Screen name="MemoriaPublicada" component={MemoriaPublicadaScreen} />
+        <Stack.Screen name="Historico" component={HistoricoScreen} />
+        <Stack.Screen name="AlbunsInteligentes" component={AlbunsInteligentesScreen} />
+        <Stack.Screen name="Comparacao" component={ComparacaoScreen} />
+        <Stack.Screen name="Rascunhos" component={RascunhosScreen} />
+        <Stack.Screen name="AlbumDetalhe" component={AlbumDetalheScreen} />
         <Stack.Screen name="Notificacoes" component={NotificacoesScreen} />
         <Stack.Screen name="Comunidade" component={ComunidadeScreen} />
         <Stack.Screen name="Perfis" component={PerfisScreen} />

@@ -24,6 +24,16 @@ export type RootStackParamList = {
   TipoMemoria: undefined;
   CapturaMidia: undefined;
   InformacoesRapidas: undefined;
+  Descricao: undefined;
+  Marcacao: undefined;
+  Privacidade: undefined;
+  Previa: undefined;
+  MemoriaPublicada: { id?: string } | undefined;
+  Historico: undefined;
+  AlbunsInteligentes: undefined;
+  Comparacao: undefined;
+  Rascunhos: undefined;
+  AlbumDetalhe: { nome: string; tipo?: string };
   Notificacoes: undefined;
   Comunidade: undefined;
   Perfis: undefined;

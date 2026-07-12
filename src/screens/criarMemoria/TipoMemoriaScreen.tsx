@@ -33,10 +33,17 @@ export function TipoMemoriaScreen({ navigation }: Props) {
   return (
     <Screen padded={false} style={styles.screen}>
       <ScrollView contentContainerStyle={styles.content}>
+        <View style={styles.header}>
+          <Text variant="xxl" weight="extraBold">
+            Nova memória
+          </Text>
+          <Pressable onPress={() => navigation.navigate('Rascunhos')}>
+            <Text variant="sm" weight="bold" color={theme.colors.accent.leather}>
+              Rascunhos
+            </Text>
+          </Pressable>
+        </View>
         <ProgressBar step={1} total={7} />
-        <Text variant="xxl" weight="extraBold">
-          Nova memória
-        </Text>
         <Text variant="md" weight="medium" color="secondary" style={styles.subtitle}>
           O que vocês viveram hoje?
         </Text>
@@ -71,6 +78,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: theme.spacing.xl,
     paddingTop: theme.spacing.xxl,
     paddingBottom: theme.spacing.xxl,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    justifyContent: 'space-between',
+    marginBottom: theme.spacing.md,
   },
   subtitle: {
     marginTop: theme.spacing.sm,

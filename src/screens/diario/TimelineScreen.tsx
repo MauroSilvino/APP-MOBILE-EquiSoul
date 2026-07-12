@@ -6,7 +6,7 @@ import { Chip } from '../../components/ui/Chip';
 import { FavoriteToggle } from '../../components/ui/FavoriteToggle';
 import { Screen } from '../../components/ui/Screen';
 import { Text } from '../../components/ui/Text';
-import { CalendarIcon, HeartIcon, SearchIcon } from '../../components/ui/icons';
+import { CalendarIcon, ClockIcon, HeartIcon, SearchIcon } from '../../components/ui/icons';
 import { RootStackParamList } from '../../navigation/types';
 import { theme } from '../../theme';
 import { Memoria, useMemoriesStore } from '../../store/useMemoriesStore';
@@ -49,6 +49,9 @@ export function TimelineScreen({ navigation }: Props) {
             </Pressable>
             <Pressable onPress={() => navigation.navigate('Calendario')}>
               <CalendarIcon />
+            </Pressable>
+            <Pressable onPress={() => navigation.navigate('Historico')}>
+              <ClockIcon size={20} color={theme.colors.text.primary} />
             </Pressable>
           </View>
         </View>
