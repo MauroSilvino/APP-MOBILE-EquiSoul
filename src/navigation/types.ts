@@ -15,6 +15,18 @@ export type RootStackParamList = {
   PrimeiroCheckin: undefined;
   PrimeiraCartaIA: undefined;
   Home: undefined;
+  NovoRegistro: { tipoInicial?: string } | undefined;
+  MemoriaCompleta: { id?: string } | undefined;
+  Timeline: undefined;
+  Calendario: undefined;
+  PesquisaMemorias: undefined;
+  Favoritos: undefined;
+  TipoMemoria: undefined;
+  CapturaMidia: undefined;
+  InformacoesRapidas: undefined;
+  Notificacoes: undefined;
+  Comunidade: undefined;
+  Perfis: undefined;
 };
 
 declare global {
