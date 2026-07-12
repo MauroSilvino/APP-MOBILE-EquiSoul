@@ -204,3 +204,28 @@ export function LocationIcon({ size = 16, color = '#6B7353', strokeWidth = 1.8 }
     </Svg>
   );
 }
+
+export function ReelsIcon({ size = 22, color = '#2B2924', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Rect x="3" y="4" width="18" height="16" rx="3" />
+      <Path d="M9 4l3 5 3-5M9 20l3-5 3 5" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function SaveIcon({ size = 20, color = '#2B2924', strokeWidth = 1.8, filled = false }: IconProps & { filled?: boolean }) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill={filled ? color : 'none'} stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M19 21l-7-4-7 4V5a2 2 0 012-2h10a2 2 0 012 2z" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function SendIcon({ size = 18, color = '#2B2924', strokeWidth = 2 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M4 12h16M14 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}

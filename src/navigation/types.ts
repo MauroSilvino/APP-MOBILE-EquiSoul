@@ -36,6 +36,16 @@ export type RootStackParamList = {
   AlbumDetalhe: { nome: string; tipo?: string };
   Notificacoes: undefined;
   Comunidade: undefined;
+  StoriesViewer: { startIndex?: number } | undefined;
+  Reels: undefined;
+  Explorar: undefined;
+  Eventos: undefined;
+  EventoDetalhe: { id: string };
+  Grupos: undefined;
+  GrupoDetalhe: { id: string };
+  Mensagens: undefined;
+  ChatConversa: { id: string };
+  Comentarios: { postId: string };
   Perfis: undefined;
 };
 
