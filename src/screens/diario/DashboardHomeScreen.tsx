@@ -6,7 +6,7 @@ import { Button } from '../../components/ui/Button';
 import { ImagePlaceholder } from '../../components/ui/ImagePlaceholder';
 import { Screen } from '../../components/ui/Screen';
 import { Text } from '../../components/ui/Text';
-import { BellIcon, SearchIcon } from '../../components/ui/icons';
+import { BellIcon, CalendarIcon, SearchIcon } from '../../components/ui/icons';
 import { RootStackParamList } from '../../navigation/types';
 import { theme } from '../../theme';
 import { getHorseAgeYears, useHorseStore } from '../../store/useHorseStore';
@@ -59,6 +59,9 @@ export function DashboardHomeScreen({ navigation }: Props) {
           </View>
           <Pressable style={styles.headerIcon} onPress={() => navigation.navigate('PesquisaMemorias')}>
             <SearchIcon />
+          </Pressable>
+          <Pressable style={styles.headerIcon} onPress={() => navigation.navigate('AgendaDashboard')}>
+            <CalendarIcon />
           </Pressable>
           <Pressable style={styles.headerIcon} onPress={() => navigation.navigate('Notificacoes')}>
             <BellIcon />
