@@ -8,13 +8,19 @@ import { Text } from '../../components/ui/Text';
 import {
   BackIcon,
   BowlIcon,
+  CalendarIcon,
   CheckIcon,
+  DocumentIcon,
+  ExamIcon,
   HorseshoeIcon,
+  InjuryIcon,
   ParasiteIcon,
   PillIcon,
+  PulseHeartIcon,
   ScaleIcon,
   ToothIcon,
   VaccineIcon,
+  VetIcon,
 } from '../../components/ui/icons';
 import { RootStackParamList } from '../../navigation/types';
 import { theme } from '../../theme';
@@ -86,6 +92,28 @@ export function SaudeDashboardScreen({ navigation, route }: Props) {
       onPress: () => navigation.navigate('Alimentacao', { id: horse.id }),
     },
     { label: 'Peso', icon: <ScaleIcon />, onPress: () => navigation.navigate('Peso', { id: horse.id }) },
+    { label: 'Exames', icon: <ExamIcon />, onPress: () => navigation.navigate('Exames', { id: horse.id }) },
+    { label: 'Lesões', icon: <InjuryIcon />, onPress: () => navigation.navigate('Lesoes', { id: horse.id }) },
+    {
+      label: 'Recuperação',
+      icon: <PulseHeartIcon size={17} />,
+      onPress: () => navigation.navigate('Recuperacao', { id: horse.id }),
+    },
+    {
+      label: 'Veterinários',
+      icon: <VetIcon />,
+      onPress: () => navigation.navigate('Veterinarios', { id: horse.id }),
+    },
+    {
+      label: 'Documentos',
+      icon: <DocumentIcon />,
+      onPress: () => navigation.navigate('Documentos', { id: horse.id }),
+    },
+    {
+      label: 'Calendário',
+      icon: <CalendarIcon size={17} />,
+      onPress: () => navigation.navigate('CalendarioSaude', { id: horse.id }),
+    },
   ];
 
   const ultimoFerrageamento = records?.ferrageamentos[0];
@@ -153,13 +181,16 @@ export function SaudeDashboardScreen({ navigation, route }: Props) {
             )}
           </View>
 
-          {ultimoFerrageamento && (
-            <View style={styles.insightBanner}>
-              <Text variant="sm" weight="medium" color="secondary" style={styles.insightText}>
-                O último ferrageamento ({ultimoFerrageamento.tipo}) ocorreu em {ultimoFerrageamento.data}.
-              </Text>
-            </View>
-          )}
+          <Pressable
+            style={styles.insightBanner}
+            onPress={() => navigation.navigate('IABemEstar', { id: horse.id })}
+          >
+            <Text variant="sm" weight="medium" color="secondary" style={styles.insightText}>
+              {ultimoFerrageamento
+                ? `O último ferrageamento (${ultimoFerrageamento.tipo}) ocorreu em ${ultimoFerrageamento.data}.`
+                : `A IA está de olho na saúde de ${horse.nome}. Toque para ver os insights de bem-estar.`}
+            </Text>
+          </Pressable>
 
           <Pressable style={styles.historicoButton} onPress={() => navigation.navigate('HistoricoSaude', { id: horse.id })}>
             <Text variant="sm" weight="bold">

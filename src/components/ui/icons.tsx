@@ -360,3 +360,56 @@ export function ScaleIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: I
     </Svg>
   );
 }
+
+export function ExamIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path
+        d="M9 3h6a1 1 0 011 1v1h1a2 2 0 012 2v13a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h1V4a1 1 0 011-1z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <Path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function InjuryIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Circle cx="12" cy="12" r="9" />
+      <Path d="M12 8v8M8 12h8" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+export function VetIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M7 3v4a3 3 0 006 0V3" strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="M10 7v3a5 5 0 0010 0v-2" strokeLinecap="round" strokeLinejoin="round" />
+      <Circle cx="20" cy="8" r="2" />
+    </Svg>
+  );
+}
+
+export function DocumentIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.6 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path
+        d="M4 19V6a2 2 0 012-2h9l5 5v10a2 2 0 01-2 2H6a2 2 0 01-2-2z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+}
+
+export function AiIcon({ size = 18, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M12 3a9 9 0 100 18 9 9 0 000-18z" />
+      <Path d="M12 8v4l2.5 2.5" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}

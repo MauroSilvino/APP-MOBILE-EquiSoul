@@ -51,6 +51,14 @@ import { FerrageamentoScreen } from '../screens/saude/FerrageamentoScreen';
 import { OdontologiaScreen } from '../screens/saude/OdontologiaScreen';
 import { AlimentacaoScreen } from '../screens/saude/AlimentacaoScreen';
 import { PesoScreen } from '../screens/saude/PesoScreen';
+import { ExamesScreen } from '../screens/saude/ExamesScreen';
+import { LesoesScreen } from '../screens/saude/LesoesScreen';
+import { RecuperacaoScreen } from '../screens/saude/RecuperacaoScreen';
+import { VeterinariosScreen } from '../screens/saude/VeterinariosScreen';
+import { DocumentosScreen } from '../screens/saude/DocumentosScreen';
+import { CalendarioSaudeScreen } from '../screens/saude/CalendarioSaudeScreen';
+import { IABemEstarScreen } from '../screens/saude/IABemEstarScreen';
+import { InteligenciaArtificialScreen } from '../screens/InteligenciaArtificialScreen';
 import { AdicionarCavaloScreen } from '../screens/onboarding/AdicionarCavaloScreen';
 import { CadastroScreen } from '../screens/onboarding/CadastroScreen';
 import { CriarPerfilScreen } from '../screens/onboarding/CriarPerfilScreen';
@@ -136,6 +144,14 @@ export function RootNavigator() {
         <Stack.Screen name="Odontologia" component={OdontologiaScreen} />
         <Stack.Screen name="Alimentacao" component={AlimentacaoScreen} />
         <Stack.Screen name="Peso" component={PesoScreen} />
+        <Stack.Screen name="Exames" component={ExamesScreen} />
+        <Stack.Screen name="Lesoes" component={LesoesScreen} />
+        <Stack.Screen name="Recuperacao" component={RecuperacaoScreen} />
+        <Stack.Screen name="Veterinarios" component={VeterinariosScreen} />
+        <Stack.Screen name="Documentos" component={DocumentosScreen} />
+        <Stack.Screen name="CalendarioSaude" component={CalendarioSaudeScreen} />
+        <Stack.Screen name="IABemEstar" component={IABemEstarScreen} />
+        <Stack.Screen name="InteligenciaArtificial" component={InteligenciaArtificialScreen} />
         <Stack.Screen name="EvolucaoCavalo" component={EvolucaoCavaloScreen} />
         <Stack.Screen name="GaleriaCavalo" component={GaleriaCavaloScreen} />
         <Stack.Screen name="CartasCavalo" component={CartasCavaloScreen} />

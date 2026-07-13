@@ -50,6 +50,28 @@ export interface RefeicaoPlano {
   horario: string;
 }
 
+export interface Exame {
+  id: string;
+  nome: string;
+  laboratorio: string;
+  data: string;
+  isImaging: boolean;
+}
+
+export interface Lesao {
+  id: string;
+  tipo: string;
+  local: string;
+  data: string;
+  situacao: 'em recuperação' | 'em observação' | 'curada';
+}
+
+export interface Documento {
+  id: string;
+  nome: string;
+  pasta: string;
+}
+
 export interface HorseHealthData {
   vacinas: Vacina[];
   vermifugacoes: Vermifugacao[];
@@ -59,6 +81,9 @@ export interface HorseHealthData {
   pesos: PesoRegistro[];
   refeicoes: RefeicaoPlano[];
   suplementos: string[];
+  exames: Exame[];
+  lesoes: Lesao[];
+  documentos: Documento[];
 }
 
 const EMPTY_HEALTH_DATA: HorseHealthData = {
@@ -70,6 +95,9 @@ const EMPTY_HEALTH_DATA: HorseHealthData = {
   pesos: [],
   refeicoes: [],
   suplementos: [],
+  exames: [],
+  lesoes: [],
+  documentos: [],
 };
 
 function emptyHealthData(): HorseHealthData {
@@ -82,6 +110,8 @@ interface HealthState {
   addVacina: (horseId: string, vacina: Omit<Vacina, 'id'>) => void;
   addVermifugacao: (horseId: string, item: Omit<Vermifugacao, 'id'>) => void;
   addPeso: (horseId: string, mes: string, valorKg: number) => void;
+  addExame: (horseId: string, exame: Omit<Exame, 'id'>) => void;
+  addDocumento: (horseId: string, documento: Omit<Documento, 'id'>) => void;
 }
 
 export const useHealthStore = create<HealthState>((set, get) => ({
@@ -117,6 +147,29 @@ export const useHealthStore = create<HealthState>((set, get) => ({
         recordsByHorse: {
           ...state.recordsByHorse,
           [horseId]: { ...current, pesos: [...current.pesos, { id: `peso-${Date.now()}`, mes, valorKg }] },
+        },
+      };
+    }),
+  addExame: (horseId, exame) =>
+    set((state) => {
+      const current = state.recordsByHorse[horseId] ?? emptyHealthData();
+      return {
+        recordsByHorse: {
+          ...state.recordsByHorse,
+          [horseId]: { ...current, exames: [{ id: `exame-${Date.now()}`, ...exame }, ...current.exames] },
+        },
+      };
+    }),
+  addDocumento: (horseId, documento) =>
+    set((state) => {
+      const current = state.recordsByHorse[horseId] ?? emptyHealthData();
+      return {
+        recordsByHorse: {
+          ...state.recordsByHorse,
+          [horseId]: {
+            ...current,
+            documentos: [{ id: `documento-${Date.now()}`, ...documento }, ...current.documentos],
+          },
         },
       };
     }),

@@ -61,6 +61,14 @@ export type RootStackParamList = {
   Odontologia: { id: string };
   Alimentacao: { id: string };
   Peso: { id: string };
+  Exames: { id: string };
+  Lesoes: { id: string };
+  Recuperacao: { id: string };
+  Veterinarios: { id: string };
+  Documentos: { id: string };
+  CalendarioSaude: { id: string };
+  IABemEstar: { id: string };
+  InteligenciaArtificial: undefined;
   EvolucaoCavalo: { id: string };
   GaleriaCavalo: { id: string };
   CartasCavalo: { id: string };
