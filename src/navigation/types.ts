@@ -109,6 +109,22 @@ export type RootStackParamList = {
   EventoCertificado: { eventId: string };
   RankingEvento: { eventId: string };
   MeusEventos: undefined;
+  MarketplaceHome: undefined;
+  MarketplaceExplorar: { categoriaInicial?: string } | undefined;
+  MarketplaceProduto: { produtoId: string };
+  MarketplaceServico: { servicoId: string };
+  PerfilProfissional: { profissionalId: string };
+  Haras: { harasId: string };
+  MarketplaceReserva: { origem: string; nome: string; precoLabel: string };
+  Carteira: undefined;
+  MarketplaceHistorico: undefined;
+  MarketplaceFavoritos: undefined;
+  MarketplaceChat: { nome: string } | undefined;
+  MarketplaceCheckout: { produtoId?: string } | undefined;
+  MarketplaceAvaliacoes: { nome: string; nota: string } | undefined;
+  MarketplaceCupons: undefined;
+  MarketplaceEventos: undefined;
+  MarketplaceCursos: undefined;
 };
 
 declare global {

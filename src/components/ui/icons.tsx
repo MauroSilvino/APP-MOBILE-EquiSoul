@@ -448,3 +448,47 @@ export function TicketIcon({ size = 20, color = '#2B2924', strokeWidth = 1.8 }: 
     </Svg>
   );
 }
+
+export function StoreIcon({ size = 20, color = '#2B2924', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M4 9l1-5h14l1 5" strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="M4 9a2.5 2.5 0 005 0 2.5 2.5 0 005 0 2.5 2.5 0 005 0 2.5 2.5 0 005 0" strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="M5 9v11h14V9" strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="M10 20v-6h4v6" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function WalletIcon({ size = 20, color = '#2B2924', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Rect x="3" y="6" width="18" height="13" rx="2" />
+      <Path d="M3 10h18M16 14h2" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+export function StarIcon({ size = 14, color = '#C9A15A' }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill={color} stroke="none">
+      <Path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z" />
+    </Svg>
+  );
+}
+
+export function ChevronRightIcon({ size = 16, color = '#2B2924', strokeWidth = 2 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function MinusIcon({ size = 14, color = '#2B2924', strokeWidth = 2.2 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M5 12h14" strokeLinecap="round" />
+    </Svg>
+  );
+}
