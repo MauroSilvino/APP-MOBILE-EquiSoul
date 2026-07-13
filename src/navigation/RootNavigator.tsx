@@ -58,7 +58,16 @@ import { VeterinariosScreen } from '../screens/saude/VeterinariosScreen';
 import { DocumentosScreen } from '../screens/saude/DocumentosScreen';
 import { CalendarioSaudeScreen } from '../screens/saude/CalendarioSaudeScreen';
 import { IABemEstarScreen } from '../screens/saude/IABemEstarScreen';
-import { InteligenciaArtificialScreen } from '../screens/InteligenciaArtificialScreen';
+import { InteligenciaArtificialScreen } from '../screens/ia/InteligenciaArtificialScreen';
+import { CartasIAScreen } from '../screens/ia/CartasIAScreen';
+import { LeituraCartaScreen } from '../screens/ia/LeituraCartaScreen';
+import { InsightsScreen } from '../screens/ia/InsightsScreen';
+import { LinhaTempoEmocionalScreen } from '../screens/ia/LinhaTempoEmocionalScreen';
+import { RetrospectivasScreen } from '../screens/ia/RetrospectivasScreen';
+import { HistoriasIAScreen } from '../screens/ia/HistoriasIAScreen';
+import { SugestoesScreen } from '../screens/ia/SugestoesScreen';
+import { EstudioCriativoScreen } from '../screens/ia/EstudioCriativoScreen';
+import { AssistenteIAScreen } from '../screens/ia/AssistenteIAScreen';
 import { AgendaDashboardScreen } from '../screens/agenda/AgendaDashboardScreen';
 import { AgendaCalendarioScreen } from '../screens/agenda/AgendaCalendarioScreen';
 import { AgendaDoDiaScreen } from '../screens/agenda/AgendaDoDiaScreen';
@@ -177,6 +186,15 @@ export function RootNavigator() {
         <Stack.Screen name="CalendarioSaude" component={CalendarioSaudeScreen} />
         <Stack.Screen name="IABemEstar" component={IABemEstarScreen} />
         <Stack.Screen name="InteligenciaArtificial" component={InteligenciaArtificialScreen} />
+        <Stack.Screen name="CartasIA" component={CartasIAScreen} />
+        <Stack.Screen name="LeituraCarta" component={LeituraCartaScreen} />
+        <Stack.Screen name="Insights" component={InsightsScreen} />
+        <Stack.Screen name="LinhaTempoEmocional" component={LinhaTempoEmocionalScreen} />
+        <Stack.Screen name="Retrospectivas" component={RetrospectivasScreen} />
+        <Stack.Screen name="HistoriasIA" component={HistoriasIAScreen} />
+        <Stack.Screen name="Sugestoes" component={SugestoesScreen} />
+        <Stack.Screen name="EstudioCriativo" component={EstudioCriativoScreen} />
+        <Stack.Screen name="AssistenteIA" component={AssistenteIAScreen} />
         <Stack.Screen name="EvolucaoCavalo" component={EvolucaoCavaloScreen} />
         <Stack.Screen name="GaleriaCavalo" component={GaleriaCavaloScreen} />
         <Stack.Screen name="CartasCavalo" component={CartasCavaloScreen} />

@@ -71,6 +71,15 @@ export type RootStackParamList = {
   CalendarioSaude: { id: string };
   IABemEstar: { id: string };
   InteligenciaArtificial: undefined;
+  CartasIA: undefined;
+  LeituraCarta: { cartaId: string };
+  Insights: undefined;
+  LinhaTempoEmocional: undefined;
+  Retrospectivas: undefined;
+  HistoriasIA: undefined;
+  Sugestoes: undefined;
+  EstudioCriativo: undefined;
+  AssistenteIA: undefined;
   EvolucaoCavalo: { id: string };
   GaleriaCavalo: { id: string };
   CartasCavalo: { id: string };

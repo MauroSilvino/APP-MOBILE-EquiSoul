@@ -35,12 +35,14 @@ interface UserState {
   privacidade: UserPrivacidade;
   tourConcluido: boolean;
   onboardingConcluido: boolean;
+  premium: boolean;
   setProfile: (profile: Partial<UserProfile>) => void;
   setPreferencias: (preferencias: string[]) => void;
   setPermissao: (chave: keyof UserPermissions, valor: boolean) => void;
   setPrivacidade: (chave: keyof UserPrivacidade, valor: boolean) => void;
   setTourConcluido: (concluido: boolean) => void;
   setOnboardingConcluido: (concluido: boolean) => void;
+  setPremium: (premium: boolean) => void;
 }
 
 const initialProfile: UserProfile = {
@@ -78,6 +80,7 @@ export const useUserStore = create<UserState>((set) => ({
   privacidade: initialPrivacidade,
   tourConcluido: false,
   onboardingConcluido: false,
+  premium: false,
   setProfile: (profile) => set((state) => ({ profile: { ...state.profile, ...profile } })),
   setPreferencias: (preferencias) => set({ preferencias }),
   setPermissao: (chave, valor) =>
@@ -86,4 +89,5 @@ export const useUserStore = create<UserState>((set) => ({
     set((state) => ({ privacidade: { ...state.privacidade, [chave]: valor } })),
   setTourConcluido: (tourConcluido) => set({ tourConcluido }),
   setOnboardingConcluido: (onboardingConcluido) => set({ onboardingConcluido }),
+  setPremium: (premium) => set({ premium }),
 }));

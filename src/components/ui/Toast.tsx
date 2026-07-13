@@ -1,35 +1,53 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { theme } from '../../theme';
 import { Text } from './Text';
 
+interface ToastAction {
+  label: string;
+  onPress: () => void;
+}
+
+interface ToastState {
+  message: string;
+  action?: ToastAction;
+}
+
 export function useToast() {
-  const [message, setMessage] = useState<string | null>(null);
+  const [toast, setToast] = useState<ToastState | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-  const show = useCallback((msg: string) => {
-    setMessage(msg);
+  const show = useCallback((msg: string, action?: ToastAction) => {
+    setToast({ message: msg, action });
     clearTimeout(timer.current);
-    timer.current = setTimeout(() => setMessage(null), 2200);
+    timer.current = setTimeout(() => setToast(null), 3200);
   }, []);
 
   useEffect(() => () => clearTimeout(timer.current), []);
 
-  return { message, show };
+  return { message: toast?.message ?? null, action: toast?.action, show };
 }
 
 interface ToastProps {
   message: string | null;
+  action?: ToastAction;
 }
 
-export function Toast({ message }: ToastProps) {
+export function Toast({ message, action }: ToastProps) {
   if (!message) return null;
 
   return (
-    <View style={styles.toast} pointerEvents="none">
+    <View style={styles.toast} pointerEvents={action ? 'box-none' : 'none'}>
       <Text variant="sm" weight="bold" color="inverse" style={styles.text}>
         {message}
       </Text>
+      {!!action && (
+        <Pressable onPress={action.onPress} hitSlop={8}>
+          <Text variant="sm" weight="extraBold" color={theme.colors.accent.gold}>
+            {action.label}
+          </Text>
+        </Pressable>
+      )}
     </View>
   );
 }
