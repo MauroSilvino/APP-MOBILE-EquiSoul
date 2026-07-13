@@ -20,15 +20,25 @@ export interface UserPermissions {
   microfone: boolean;
 }
 
+export interface UserPrivacidade {
+  publica: boolean;
+  ocultarCidade: boolean;
+  ocultarStats: boolean;
+  permitirMsg: boolean;
+  permitirMarcacoes: boolean;
+}
+
 interface UserState {
   profile: UserProfile;
   preferencias: string[];
   permissoes: UserPermissions;
+  privacidade: UserPrivacidade;
   tourConcluido: boolean;
   onboardingConcluido: boolean;
   setProfile: (profile: Partial<UserProfile>) => void;
   setPreferencias: (preferencias: string[]) => void;
   setPermissao: (chave: keyof UserPermissions, valor: boolean) => void;
+  setPrivacidade: (chave: keyof UserPrivacidade, valor: boolean) => void;
   setTourConcluido: (concluido: boolean) => void;
   setOnboardingConcluido: (concluido: boolean) => void;
 }
@@ -53,16 +63,27 @@ const initialPermissoes: UserPermissions = {
   microfone: false,
 };
 
+const initialPrivacidade: UserPrivacidade = {
+  publica: true,
+  ocultarCidade: false,
+  ocultarStats: false,
+  permitirMsg: true,
+  permitirMarcacoes: true,
+};
+
 export const useUserStore = create<UserState>((set) => ({
   profile: initialProfile,
   preferencias: [],
   permissoes: initialPermissoes,
+  privacidade: initialPrivacidade,
   tourConcluido: false,
   onboardingConcluido: false,
   setProfile: (profile) => set((state) => ({ profile: { ...state.profile, ...profile } })),
   setPreferencias: (preferencias) => set({ preferencias }),
   setPermissao: (chave, valor) =>
     set((state) => ({ permissoes: { ...state.permissoes, [chave]: valor } })),
+  setPrivacidade: (chave, valor) =>
+    set((state) => ({ privacidade: { ...state.privacidade, [chave]: valor } })),
   setTourConcluido: (tourConcluido) => set({ tourConcluido }),
   setOnboardingConcluido: (onboardingConcluido) => set({ onboardingConcluido }),
 }));

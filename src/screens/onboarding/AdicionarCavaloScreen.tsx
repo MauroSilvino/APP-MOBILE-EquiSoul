@@ -8,6 +8,7 @@ import { ImagePlaceholder } from '../../components/ui/ImagePlaceholder';
 import { Screen } from '../../components/ui/Screen';
 import { Text } from '../../components/ui/Text';
 import { TextField } from '../../components/ui/TextField';
+import { BackIcon } from '../../components/ui/icons';
 import { theme } from '../../theme';
 import { RootStackParamList } from '../../navigation/types';
 import { HorseSex, useHorseStore } from '../../store/useHorseStore';
@@ -25,8 +26,10 @@ function toggleInArray(list: string[], value: string): string[] {
   return list.includes(value) ? list.filter((item) => item !== value) : [...list, value];
 }
 
-export function AdicionarCavaloScreen({ navigation }: Props) {
+export function AdicionarCavaloScreen({ navigation, route }: Props) {
+  const fromPerfis = !!route.params?.fromPerfis;
   const setHorse = useHorseStore((state) => state.setHorse);
+  const addHorse = useHorseStore((state) => state.addHorse);
 
   const [nome, setNome] = useState('');
   const [raca, setRaca] = useState('');
@@ -38,8 +41,14 @@ export function AdicionarCavaloScreen({ navigation }: Props) {
   const [curiosidade, setCuriosidade] = useState('');
 
   function handleContinuar() {
-    setHorse({ nome, raca, pelagem, nascimento, sexo, personalidade, modalidades, curiosidade });
-    navigation.navigate('Relacionamento');
+    const dados = { nome, raca, pelagem, nascimento, sexo, personalidade, modalidades, curiosidade };
+    if (fromPerfis) {
+      addHorse(dados);
+      navigation.navigate('Cavalos');
+    } else {
+      setHorse(dados);
+      navigation.navigate('Relacionamento');
+    }
   }
 
   function handlePular() {
@@ -51,21 +60,27 @@ export function AdicionarCavaloScreen({ navigation }: Props) {
       <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.hero}>
           <ImagePlaceholder style={StyleSheet.absoluteFill} caption="foto grande · seu cavalo" />
-          <Pressable style={styles.skipButton} onPress={handlePular}>
-            <Text variant="xs" weight="bold" color="inverse">
-              Pular por enquanto
-            </Text>
-          </Pressable>
+          {fromPerfis ? (
+            <Pressable style={styles.backButton} onPress={() => navigation.navigate('Cavalos')} hitSlop={8}>
+              <BackIcon />
+            </Pressable>
+          ) : (
+            <Pressable style={styles.skipButton} onPress={handlePular}>
+              <Text variant="xs" weight="bold" color="inverse">
+                Pular por enquanto
+              </Text>
+            </Pressable>
+          )}
         </View>
 
         <View style={styles.content}>
-          <SetupProgressBar step={2} total={5} />
+          {!fromPerfis && <SetupProgressBar step={2} total={5} />}
 
           <Text variant="xxl" weight="extraBold">
-            Adicione seu primeiro cavalo
+            {fromPerfis ? 'Adicionar cavalo' : 'Adicione seu primeiro cavalo'}
           </Text>
           <Text variant="md" weight="medium" color="secondary" style={styles.subtitle}>
-            Este é o começo da história de vocês dois.
+            {fromPerfis ? 'Conte um pouco sobre o novo integrante.' : 'Este é o começo da história de vocês dois.'}
           </Text>
 
           <View style={styles.fields}>
@@ -151,6 +166,17 @@ const styles = StyleSheet.create({
   },
   hero: {
     height: 220,
+  },
+  backButton: {
+    position: 'absolute',
+    top: theme.spacing.lg,
+    left: theme.spacing.lg,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255,255,255,0.92)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   skipButton: {
     position: 'absolute',
