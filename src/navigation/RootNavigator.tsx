@@ -71,6 +71,19 @@ import { EvolucaoScreen } from '../screens/agenda/EvolucaoScreen';
 import { LinhaTempoAnaliticaScreen } from '../screens/agenda/LinhaTempoAnaliticaScreen';
 import { InsightsInteligentesScreen } from '../screens/agenda/InsightsInteligentesScreen';
 import { RelatoriosScreen } from '../screens/agenda/RelatoriosScreen';
+import { EventosDescobrirScreen } from '../screens/eventos/EventosDescobrirScreen';
+import { EventoPaginaScreen } from '../screens/eventos/EventoPaginaScreen';
+import { EventoInscricaoScreen } from '../screens/eventos/EventoInscricaoScreen';
+import { EventosCalendarioScreen } from '../screens/eventos/EventosCalendarioScreen';
+import { ClubesScreen } from '../screens/eventos/ClubesScreen';
+import { ComunidadesLocaisScreen } from '../screens/eventos/ComunidadesLocaisScreen';
+import { ExperienciasScreen } from '../screens/eventos/ExperienciasScreen';
+import { EventoCheckinScreen } from '../screens/eventos/EventoCheckinScreen';
+import { AlbumColaborativoScreen } from '../screens/eventos/AlbumColaborativoScreen';
+import { EventoNetworkingScreen } from '../screens/eventos/EventoNetworkingScreen';
+import { EventoCertificadoScreen } from '../screens/eventos/EventoCertificadoScreen';
+import { RankingEventoScreen } from '../screens/eventos/RankingEventoScreen';
+import { MeusEventosScreen } from '../screens/eventos/MeusEventosScreen';
 import { AdicionarCavaloScreen } from '../screens/onboarding/AdicionarCavaloScreen';
 import { CadastroScreen } from '../screens/onboarding/CadastroScreen';
 import { CriarPerfilScreen } from '../screens/onboarding/CriarPerfilScreen';
@@ -180,6 +193,19 @@ export function RootNavigator() {
         <Stack.Screen name="LinhaTempoAnalitica" component={LinhaTempoAnaliticaScreen} />
         <Stack.Screen name="InsightsInteligentes" component={InsightsInteligentesScreen} />
         <Stack.Screen name="Relatorios" component={RelatoriosScreen} />
+        <Stack.Screen name="EventosDescobrir" component={EventosDescobrirScreen} />
+        <Stack.Screen name="EventoPagina" component={EventoPaginaScreen} />
+        <Stack.Screen name="EventoInscricao" component={EventoInscricaoScreen} />
+        <Stack.Screen name="EventosCalendario" component={EventosCalendarioScreen} />
+        <Stack.Screen name="Clubes" component={ClubesScreen} />
+        <Stack.Screen name="ComunidadesLocais" component={ComunidadesLocaisScreen} />
+        <Stack.Screen name="Experiencias" component={ExperienciasScreen} />
+        <Stack.Screen name="EventoCheckin" component={EventoCheckinScreen} />
+        <Stack.Screen name="AlbumColaborativo" component={AlbumColaborativoScreen} />
+        <Stack.Screen name="EventoNetworking" component={EventoNetworkingScreen} />
+        <Stack.Screen name="EventoCertificado" component={EventoCertificadoScreen} />
+        <Stack.Screen name="RankingEvento" component={RankingEventoScreen} />
+        <Stack.Screen name="MeusEventos" component={MeusEventosScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

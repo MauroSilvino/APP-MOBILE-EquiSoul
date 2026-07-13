@@ -430,3 +430,21 @@ export function ChartBarIcon({ size = 15, color = '#2B2924', strokeWidth = 1.8 }
     </Svg>
   );
 }
+
+export function PeopleIcon({ size = 20, color = '#2B2924', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Circle cx="9" cy="9" r="3.2" />
+      <Circle cx="17" cy="9" r="2.4" />
+      <Path d="M4 20c.5-3.5 2.5-5.5 5-5.5s4.5 2 5 5.5" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function TicketIcon({ size = 20, color = '#2B2924', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M19 21l-7-4-7 4V5a2 2 0 012-2h10a2 2 0 012 2z" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
