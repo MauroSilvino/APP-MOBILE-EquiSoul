@@ -59,6 +59,18 @@ import { DocumentosScreen } from '../screens/saude/DocumentosScreen';
 import { CalendarioSaudeScreen } from '../screens/saude/CalendarioSaudeScreen';
 import { IABemEstarScreen } from '../screens/saude/IABemEstarScreen';
 import { InteligenciaArtificialScreen } from '../screens/InteligenciaArtificialScreen';
+import { AgendaDashboardScreen } from '../screens/agenda/AgendaDashboardScreen';
+import { AgendaCalendarioScreen } from '../screens/agenda/AgendaCalendarioScreen';
+import { AgendaDoDiaScreen } from '../screens/agenda/AgendaDoDiaScreen';
+import { CriarCompromissoScreen } from '../screens/agenda/CriarCompromissoScreen';
+import { PlanejamentoSemanalScreen } from '../screens/agenda/PlanejamentoSemanalScreen';
+import { MetasScreen } from '../screens/agenda/MetasScreen';
+import { ClimaScreen } from '../screens/agenda/ClimaScreen';
+import { AnalyticsScreen } from '../screens/agenda/AnalyticsScreen';
+import { EvolucaoScreen } from '../screens/agenda/EvolucaoScreen';
+import { LinhaTempoAnaliticaScreen } from '../screens/agenda/LinhaTempoAnaliticaScreen';
+import { InsightsInteligentesScreen } from '../screens/agenda/InsightsInteligentesScreen';
+import { RelatoriosScreen } from '../screens/agenda/RelatoriosScreen';
 import { AdicionarCavaloScreen } from '../screens/onboarding/AdicionarCavaloScreen';
 import { CadastroScreen } from '../screens/onboarding/CadastroScreen';
 import { CriarPerfilScreen } from '../screens/onboarding/CriarPerfilScreen';
@@ -156,6 +168,18 @@ export function RootNavigator() {
         <Stack.Screen name="GaleriaCavalo" component={GaleriaCavaloScreen} />
         <Stack.Screen name="CartasCavalo" component={CartasCavaloScreen} />
         <Stack.Screen name="CompartilharCavalo" component={CompartilharCavaloScreen} />
+        <Stack.Screen name="AgendaDashboard" component={AgendaDashboardScreen} />
+        <Stack.Screen name="AgendaCalendario" component={AgendaCalendarioScreen} />
+        <Stack.Screen name="AgendaDoDia" component={AgendaDoDiaScreen} />
+        <Stack.Screen name="CriarCompromisso" component={CriarCompromissoScreen} />
+        <Stack.Screen name="PlanejamentoSemanal" component={PlanejamentoSemanalScreen} />
+        <Stack.Screen name="Metas" component={MetasScreen} />
+        <Stack.Screen name="Clima" component={ClimaScreen} />
+        <Stack.Screen name="Analytics" component={AnalyticsScreen} />
+        <Stack.Screen name="Evolucao" component={EvolucaoScreen} />
+        <Stack.Screen name="LinhaTempoAnalitica" component={LinhaTempoAnaliticaScreen} />
+        <Stack.Screen name="InsightsInteligentes" component={InsightsInteligentesScreen} />
+        <Stack.Screen name="Relatorios" component={RelatoriosScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

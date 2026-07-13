@@ -413,3 +413,20 @@ export function AiIcon({ size = 18, color = '#8A6E4B', strokeWidth = 1.8 }: Icon
     </Svg>
   );
 }
+
+export function RefreshIcon({ size = 13, color = '#8A6E4B', strokeWidth = 2 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M4 4v6h6M20 20v-6h-6" strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="M5.6 9A7.5 7.5 0 0119 8.5M18.4 15A7.5 7.5 0 015 15.5" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+export function ChartBarIcon({ size = 15, color = '#2B2924', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M4 19V9M12 19V4M20 19v-7" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}

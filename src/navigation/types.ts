@@ -1,3 +1,5 @@
+import { TipoCompromisso } from '../store/useAgendaStore';
+
 export type RootStackParamList = {
   Splash: undefined;
   Welcome: undefined;
@@ -73,6 +75,18 @@ export type RootStackParamList = {
   GaleriaCavalo: { id: string };
   CartasCavalo: { id: string };
   CompartilharCavalo: { id: string };
+  AgendaDashboard: undefined;
+  AgendaCalendario: undefined;
+  AgendaDoDia: { data?: string } | undefined;
+  CriarCompromisso: { data?: string; tipoInicial?: TipoCompromisso } | undefined;
+  PlanejamentoSemanal: undefined;
+  Metas: undefined;
+  Clima: undefined;
+  Analytics: undefined;
+  Evolucao: undefined;
+  LinhaTempoAnalitica: undefined;
+  InsightsInteligentes: undefined;
+  Relatorios: undefined;
 };
 
 declare global {
