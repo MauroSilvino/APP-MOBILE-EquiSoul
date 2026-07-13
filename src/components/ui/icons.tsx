@@ -229,3 +229,67 @@ export function SendIcon({ size = 18, color = '#2B2924', strokeWidth = 2 }: Icon
     </Svg>
   );
 }
+
+export function TrendIcon({ size = 20, color = '#6B7353', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M4 19h16M7 15l4-5 3 3 4-7" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function GalleryIcon({ size = 20, color = '#6B7353', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Rect x="3" y="3" width="18" height="18" rx="3" />
+      <Circle cx="8.5" cy="8.5" r="1.5" />
+      <Path d="M21 15l-5-5-4 4-3-3-4 4" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function TrophyIcon({ size = 20, color = '#C9A15A', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 01-10 0V4z" strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="M5 6H3v2a4 4 0 004 4M19 6h2v2a4 4 0 01-4 4" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function PulseHeartIcon({ size = 20, color = '#6B7353', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path
+        d="M12 21s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 11c0 5.5-7 10-7 10z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+}
+
+export function LockIcon({ size = 26, color = '#6b6558', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Rect x="5" y="11" width="14" height="9" rx="2" />
+      <Path d="M8 11V8a4 4 0 018 0v3" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function PlayIcon({ size = 11, color = '#FBF9F4' }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill={color} stroke="none">
+      <Path d="M6 4l14 8-14 8z" />
+    </Svg>
+  );
+}
+
+export function VerifiedIcon({ size = 15, color = '#C9A15A' }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill={color} stroke="none">
+      <Circle cx="12" cy="12" r="10" />
+    </Svg>
+  );
+}

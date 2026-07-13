@@ -7,7 +7,7 @@ export type RootStackParamList = {
   RecuperarSenha: undefined;
   NovaSenha: undefined;
   CriarPerfil: undefined;
-  AdicionarCavalo: undefined;
+  AdicionarCavalo: { fromPerfis?: boolean } | undefined;
   Relacionamento: undefined;
   Preferencias: undefined;
   Permissoes: undefined;
@@ -47,6 +47,16 @@ export type RootStackParamList = {
   ChatConversa: { id: string };
   Comentarios: { postId: string };
   Perfis: undefined;
+  EditarPerfil: undefined;
+  PerfilPublico: undefined;
+  Cavalos: undefined;
+  PerfilCavalo: { id: string };
+  TimelineCavalo: { id: string };
+  SaudeCavalo: { id: string };
+  EvolucaoCavalo: { id: string };
+  GaleriaCavalo: { id: string };
+  CartasCavalo: { id: string };
+  CompartilharCavalo: { id: string };
 };
 
 declare global {

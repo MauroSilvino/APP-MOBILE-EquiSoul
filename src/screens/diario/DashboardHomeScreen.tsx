@@ -34,7 +34,7 @@ const COMUNIDADE_PREVIEW = [
 
 export function DashboardHomeScreen({ navigation }: Props) {
   const profile = useUserStore((state) => state.profile);
-  const horse = useHorseStore((state) => state.horse);
+  const horse = useHorseStore((state) => state.horses[0] ?? null);
   const memorias = useMemoriesStore((state) => state.memorias);
 
   const [iaExpandido, setIaExpandido] = useState(false);

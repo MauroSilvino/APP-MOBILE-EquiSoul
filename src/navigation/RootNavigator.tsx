@@ -32,7 +32,17 @@ import { MensagensScreen } from '../screens/comunidade/MensagensScreen';
 import { ReelsScreen } from '../screens/comunidade/ReelsScreen';
 import { StoriesViewerScreen } from '../screens/comunidade/StoriesViewerScreen';
 import { NotificacoesScreen } from '../screens/NotificacoesScreen';
-import { PerfisScreen } from '../screens/PerfisScreen';
+import { CartasCavaloScreen } from '../screens/perfis/CartasCavaloScreen';
+import { CavalosScreen } from '../screens/perfis/CavalosScreen';
+import { CompartilharCavaloScreen } from '../screens/perfis/CompartilharCavaloScreen';
+import { EditarPerfilScreen } from '../screens/perfis/EditarPerfilScreen';
+import { EvolucaoCavaloScreen } from '../screens/perfis/EvolucaoCavaloScreen';
+import { GaleriaCavaloScreen } from '../screens/perfis/GaleriaCavaloScreen';
+import { PerfilCavaloScreen } from '../screens/perfis/PerfilCavaloScreen';
+import { PerfilPublicoScreen } from '../screens/perfis/PerfilPublicoScreen';
+import { PerfilUsuarioScreen } from '../screens/perfis/PerfilUsuarioScreen';
+import { SaudeCavaloScreen } from '../screens/perfis/SaudeCavaloScreen';
+import { TimelineCavaloScreen } from '../screens/perfis/TimelineCavaloScreen';
 import { AdicionarCavaloScreen } from '../screens/onboarding/AdicionarCavaloScreen';
 import { CadastroScreen } from '../screens/onboarding/CadastroScreen';
 import { CriarPerfilScreen } from '../screens/onboarding/CriarPerfilScreen';
@@ -103,7 +113,17 @@ export function RootNavigator() {
         <Stack.Screen name="Mensagens" component={MensagensScreen} />
         <Stack.Screen name="ChatConversa" component={ChatConversaScreen} />
         <Stack.Screen name="Comentarios" component={ComentariosScreen} />
-        <Stack.Screen name="Perfis" component={PerfisScreen} />
+        <Stack.Screen name="Perfis" component={PerfilUsuarioScreen} />
+        <Stack.Screen name="EditarPerfil" component={EditarPerfilScreen} />
+        <Stack.Screen name="PerfilPublico" component={PerfilPublicoScreen} />
+        <Stack.Screen name="Cavalos" component={CavalosScreen} />
+        <Stack.Screen name="PerfilCavalo" component={PerfilCavaloScreen} />
+        <Stack.Screen name="TimelineCavalo" component={TimelineCavaloScreen} />
+        <Stack.Screen name="SaudeCavalo" component={SaudeCavaloScreen} />
+        <Stack.Screen name="EvolucaoCavalo" component={EvolucaoCavaloScreen} />
+        <Stack.Screen name="GaleriaCavalo" component={GaleriaCavaloScreen} />
+        <Stack.Screen name="CartasCavalo" component={CartasCavaloScreen} />
+        <Stack.Screen name="CompartilharCavalo" component={CompartilharCavaloScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
