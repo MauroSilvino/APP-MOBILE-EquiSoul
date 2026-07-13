@@ -130,6 +130,11 @@ export function DashboardHomeScreen({ navigation }: Props) {
                 Gerar carta
               </Text>
             </Pressable>
+            <Pressable onPress={() => navigation.navigate('InteligenciaArtificial')}>
+              <Text variant="sm" weight="bold" color={theme.colors.accent.gold}>
+                Ver mais IA
+              </Text>
+            </Pressable>
           </View>
         </View>
 
