@@ -53,6 +53,14 @@ export type RootStackParamList = {
   PerfilCavalo: { id: string };
   TimelineCavalo: { id: string };
   SaudeCavalo: { id: string };
+  HistoricoSaude: { id: string };
+  Vacinas: { id: string };
+  Vermifugacao: { id: string };
+  Medicamentos: { id: string };
+  Ferrageamento: { id: string };
+  Odontologia: { id: string };
+  Alimentacao: { id: string };
+  Peso: { id: string };
   EvolucaoCavalo: { id: string };
   GaleriaCavalo: { id: string };
   CartasCavalo: { id: string };

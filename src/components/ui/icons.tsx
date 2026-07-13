@@ -293,3 +293,70 @@ export function VerifiedIcon({ size = 15, color = '#C9A15A' }: IconProps) {
     </Svg>
   );
 }
+
+export function VaccineIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="M12 9v6M9 12h6" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+export function ParasiteIcon({ size = 17, color = '#4F5D45', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path
+        d="M12 21c-4 0-7-2.5-7-6.5C5 10 12 3 12 3s7 7 7 11.5C19 18.5 16 21 12 21z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+}
+
+export function PillIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M7 17L17 7a3.5 3.5 0 115 5L12 22a3.5 3.5 0 01-5-5z" strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="M9.5 14.5l5-5" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+export function HorseshoeIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M6 20v-8a6 6 0 0112 0v8" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function ToothIcon({ size = 17, color = '#4F5D45', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path
+        d="M12 3c-3 0-5 2-5 5 0 3 1 4 1 7 0 2 1 3 2 3s1-2 2-4c1 2 1 4 2 4s2-1 2-3c0-3 1-4 1-7 0-3-2-5-5-5z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+}
+
+export function BowlIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M4 12a8 8 0 0016 0H4z" strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="M8 12V9M16 12V9" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+export function ScaleIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M12 3v4M7 7h10M5 21h14M7 21l3-10h4l3 10" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
