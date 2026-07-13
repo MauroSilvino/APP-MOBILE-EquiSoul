@@ -93,6 +93,22 @@ import { EventoNetworkingScreen } from '../screens/eventos/EventoNetworkingScree
 import { EventoCertificadoScreen } from '../screens/eventos/EventoCertificadoScreen';
 import { RankingEventoScreen } from '../screens/eventos/RankingEventoScreen';
 import { MeusEventosScreen } from '../screens/eventos/MeusEventosScreen';
+import { MarketplaceHomeScreen } from '../screens/marketplace/MarketplaceHomeScreen';
+import { MarketplaceExplorarScreen } from '../screens/marketplace/MarketplaceExplorarScreen';
+import { MarketplaceProdutoScreen } from '../screens/marketplace/MarketplaceProdutoScreen';
+import { MarketplaceServicoScreen } from '../screens/marketplace/MarketplaceServicoScreen';
+import { PerfilProfissionalScreen } from '../screens/marketplace/PerfilProfissionalScreen';
+import { HarasScreen } from '../screens/marketplace/HarasScreen';
+import { MarketplaceReservaScreen } from '../screens/marketplace/MarketplaceReservaScreen';
+import { CarteiraScreen } from '../screens/marketplace/CarteiraScreen';
+import { MarketplaceHistoricoScreen } from '../screens/marketplace/MarketplaceHistoricoScreen';
+import { MarketplaceFavoritosScreen } from '../screens/marketplace/MarketplaceFavoritosScreen';
+import { MarketplaceChatScreen } from '../screens/marketplace/MarketplaceChatScreen';
+import { MarketplaceCheckoutScreen } from '../screens/marketplace/MarketplaceCheckoutScreen';
+import { MarketplaceAvaliacoesScreen } from '../screens/marketplace/MarketplaceAvaliacoesScreen';
+import { MarketplaceCuponsScreen } from '../screens/marketplace/MarketplaceCuponsScreen';
+import { MarketplaceEventosScreen } from '../screens/marketplace/MarketplaceEventosScreen';
+import { MarketplaceCursosScreen } from '../screens/marketplace/MarketplaceCursosScreen';
 import { AdicionarCavaloScreen } from '../screens/onboarding/AdicionarCavaloScreen';
 import { CadastroScreen } from '../screens/onboarding/CadastroScreen';
 import { CriarPerfilScreen } from '../screens/onboarding/CriarPerfilScreen';
@@ -224,6 +240,22 @@ export function RootNavigator() {
         <Stack.Screen name="EventoCertificado" component={EventoCertificadoScreen} />
         <Stack.Screen name="RankingEvento" component={RankingEventoScreen} />
         <Stack.Screen name="MeusEventos" component={MeusEventosScreen} />
+        <Stack.Screen name="MarketplaceHome" component={MarketplaceHomeScreen} />
+        <Stack.Screen name="MarketplaceExplorar" component={MarketplaceExplorarScreen} />
+        <Stack.Screen name="MarketplaceProduto" component={MarketplaceProdutoScreen} />
+        <Stack.Screen name="MarketplaceServico" component={MarketplaceServicoScreen} />
+        <Stack.Screen name="PerfilProfissional" component={PerfilProfissionalScreen} />
+        <Stack.Screen name="Haras" component={HarasScreen} />
+        <Stack.Screen name="MarketplaceReserva" component={MarketplaceReservaScreen} />
+        <Stack.Screen name="Carteira" component={CarteiraScreen} />
+        <Stack.Screen name="MarketplaceHistorico" component={MarketplaceHistoricoScreen} />
+        <Stack.Screen name="MarketplaceFavoritos" component={MarketplaceFavoritosScreen} />
+        <Stack.Screen name="MarketplaceChat" component={MarketplaceChatScreen} />
+        <Stack.Screen name="MarketplaceCheckout" component={MarketplaceCheckoutScreen} />
+        <Stack.Screen name="MarketplaceAvaliacoes" component={MarketplaceAvaliacoesScreen} />
+        <Stack.Screen name="MarketplaceCupons" component={MarketplaceCuponsScreen} />
+        <Stack.Screen name="MarketplaceEventos" component={MarketplaceEventosScreen} />
+        <Stack.Screen name="MarketplaceCursos" component={MarketplaceCursosScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
