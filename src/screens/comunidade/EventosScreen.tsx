@@ -7,6 +7,7 @@ import { Chip } from '../../components/ui/Chip';
 import { ImagePlaceholder } from '../../components/ui/ImagePlaceholder';
 import { Screen } from '../../components/ui/Screen';
 import { Text } from '../../components/ui/Text';
+import { TicketIcon } from '../../components/ui/icons';
 import { RootStackParamList } from '../../navigation/types';
 import { theme } from '../../theme';
 import { useCommunityStore } from '../../store/useCommunityStore';
@@ -24,9 +25,19 @@ export function EventosScreen({ navigation }: Props) {
   return (
     <Screen style={styles.screen} padded={false}>
       <ScrollView contentContainerStyle={styles.content}>
-        <Text variant="xxl" weight="extraBold">
-          Comunidade
-        </Text>
+        <View style={styles.header}>
+          <Text variant="xxl" weight="extraBold">
+            Comunidade
+          </Text>
+          <Pressable
+            style={styles.descobrirButton}
+            onPress={() => navigation.navigate('EventosDescobrir')}
+            hitSlop={8}
+            accessibilityLabel="Descobrir eventos"
+          >
+            <TicketIcon size={18} />
+          </Pressable>
+        </View>
 
         <View style={styles.tabsSpacing}>
           <CommunityTabs active="Eventos" />
@@ -87,6 +98,19 @@ const styles = StyleSheet.create({
     paddingHorizontal: theme.spacing.xl,
     paddingTop: theme.spacing.xxl,
     paddingBottom: 130,
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  descobrirButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: 'rgba(43,41,36,0.06)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   tabsSpacing: {
     marginTop: theme.spacing.lg,

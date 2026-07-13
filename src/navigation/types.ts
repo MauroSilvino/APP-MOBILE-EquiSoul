@@ -87,6 +87,19 @@ export type RootStackParamList = {
   LinhaTempoAnalitica: undefined;
   InsightsInteligentes: undefined;
   Relatorios: undefined;
+  EventosDescobrir: undefined;
+  EventoPagina: { eventId: string };
+  EventoInscricao: { eventId: string };
+  EventosCalendario: undefined;
+  Clubes: undefined;
+  ComunidadesLocais: undefined;
+  Experiencias: undefined;
+  EventoCheckin: { eventId: string };
+  AlbumColaborativo: { eventId: string };
+  EventoNetworking: { eventId: string };
+  EventoCertificado: { eventId: string };
+  RankingEvento: { eventId: string };
+  MeusEventos: undefined;
 };
 
 declare global {
