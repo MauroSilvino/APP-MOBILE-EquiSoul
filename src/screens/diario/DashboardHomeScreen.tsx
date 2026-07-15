@@ -6,7 +6,7 @@ import { Button } from '../../components/ui/Button';
 import { ImagePlaceholder } from '../../components/ui/ImagePlaceholder';
 import { Screen } from '../../components/ui/Screen';
 import { Text } from '../../components/ui/Text';
-import { BellIcon, CalendarIcon, SearchIcon, StoreIcon } from '../../components/ui/icons';
+import { BellIcon, CalendarIcon, SearchIcon, StoreIcon, TrophyIcon } from '../../components/ui/icons';
 import { RootStackParamList } from '../../navigation/types';
 import { theme } from '../../theme';
 import { getHorseAgeYears, useHorseStore } from '../../store/useHorseStore';
@@ -69,6 +69,13 @@ export function DashboardHomeScreen({ navigation }: Props) {
             onPress={() => navigation.navigate('MarketplaceHome')}
           >
             <StoreIcon />
+          </Pressable>
+          <Pressable
+            accessibilityLabel="Centro de evolução"
+            style={styles.headerIcon}
+            onPress={() => navigation.navigate('GamificacaoHub')}
+          >
+            <TrophyIcon size={20} />
           </Pressable>
           <Pressable style={styles.headerIcon} onPress={() => navigation.navigate('Notificacoes')}>
             <BellIcon />

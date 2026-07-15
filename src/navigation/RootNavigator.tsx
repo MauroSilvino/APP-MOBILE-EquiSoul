@@ -129,6 +129,17 @@ import { PremiumCheckoutScreen } from '../screens/premium/PremiumCheckoutScreen'
 import { PremiumSucessoScreen } from '../screens/premium/PremiumSucessoScreen';
 import { PremiumGerenciarAssinaturaScreen } from '../screens/premium/PremiumGerenciarAssinaturaScreen';
 import { PremiumErroPagamentoScreen } from '../screens/premium/PremiumErroPagamentoScreen';
+import { GamificacaoHubScreen } from '../screens/gamificacao/GamificacaoHubScreen';
+import { GamificacaoConquistasScreen } from '../screens/gamificacao/GamificacaoConquistasScreen';
+import { GamificacaoSelosScreen } from '../screens/gamificacao/GamificacaoSelosScreen';
+import { GamificacaoDesafiosScreen } from '../screens/gamificacao/GamificacaoDesafiosScreen';
+import { GamificacaoStreakScreen } from '../screens/gamificacao/GamificacaoStreakScreen';
+import { GamificacaoJornadasScreen } from '../screens/gamificacao/GamificacaoJornadasScreen';
+import { GamificacaoMissoesScreen } from '../screens/gamificacao/GamificacaoMissoesScreen';
+import { GamificacaoLojaScreen } from '../screens/gamificacao/GamificacaoLojaScreen';
+import { GamificacaoRankingScreen } from '../screens/gamificacao/GamificacaoRankingScreen';
+import { GamificacaoTemporadasScreen } from '../screens/gamificacao/GamificacaoTemporadasScreen';
+import { GamificacaoObjetivosScreen } from '../screens/gamificacao/GamificacaoObjetivosScreen';
 import { AdicionarCavaloScreen } from '../screens/onboarding/AdicionarCavaloScreen';
 import { CadastroScreen } from '../screens/onboarding/CadastroScreen';
 import { CriarPerfilScreen } from '../screens/onboarding/CriarPerfilScreen';
@@ -296,6 +307,17 @@ export function RootNavigator() {
         <Stack.Screen name="PremiumSucesso" component={PremiumSucessoScreen} />
         <Stack.Screen name="PremiumGerenciarAssinatura" component={PremiumGerenciarAssinaturaScreen} />
         <Stack.Screen name="PremiumErroPagamento" component={PremiumErroPagamentoScreen} />
+        <Stack.Screen name="GamificacaoHub" component={GamificacaoHubScreen} />
+        <Stack.Screen name="GamificacaoConquistas" component={GamificacaoConquistasScreen} />
+        <Stack.Screen name="GamificacaoSelos" component={GamificacaoSelosScreen} />
+        <Stack.Screen name="GamificacaoDesafios" component={GamificacaoDesafiosScreen} />
+        <Stack.Screen name="GamificacaoStreak" component={GamificacaoStreakScreen} />
+        <Stack.Screen name="GamificacaoJornadas" component={GamificacaoJornadasScreen} />
+        <Stack.Screen name="GamificacaoMissoes" component={GamificacaoMissoesScreen} />
+        <Stack.Screen name="GamificacaoLoja" component={GamificacaoLojaScreen} />
+        <Stack.Screen name="GamificacaoRanking" component={GamificacaoRankingScreen} />
+        <Stack.Screen name="GamificacaoTemporadas" component={GamificacaoTemporadasScreen} />
+        <Stack.Screen name="GamificacaoObjetivos" component={GamificacaoObjetivosScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

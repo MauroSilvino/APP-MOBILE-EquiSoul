@@ -9,6 +9,7 @@ import { CheckIcon } from '../../components/ui/icons';
 import { RootStackParamList } from '../../navigation/types';
 import { theme } from '../../theme';
 import { useMemoriesStore } from '../../store/useMemoriesStore';
+import { useGamificationStore } from '../../store/useGamificationStore';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Previa'>;
 
@@ -16,6 +17,8 @@ export function PreviaScreen({ navigation }: Props) {
   const draft = useMemoriesStore((state) => state.criarMemoriaDraft);
   const finalizarCriarMemoria = useMemoriesStore((state) => state.finalizarCriarMemoria);
   const salvarRascunho = useMemoriesStore((state) => state.salvarRascunho);
+  const addXP = useGamificationStore((state) => state.addXP);
+  const addPontos = useGamificationStore((state) => state.addPontos);
   const [celebrando, setCelebrando] = useState(false);
 
   const tipoLabel = draft.tipo || 'seu cavalo';
@@ -32,6 +35,8 @@ export function PreviaScreen({ navigation }: Props) {
     setCelebrando(true);
     setTimeout(() => {
       const id = finalizarCriarMemoria();
+      addXP(20);
+      addPontos(15);
       setCelebrando(false);
       navigation.navigate('MemoriaPublicada', { id });
     }, 1100);

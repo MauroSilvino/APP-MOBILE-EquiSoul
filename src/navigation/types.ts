@@ -156,6 +156,17 @@ export type RootStackParamList = {
   PremiumSucesso: PremiumCheckoutContext;
   PremiumGerenciarAssinatura: undefined;
   PremiumErroPagamento: PremiumCheckoutContext;
+  GamificacaoHub: undefined;
+  GamificacaoConquistas: undefined;
+  GamificacaoSelos: undefined;
+  GamificacaoDesafios: undefined;
+  GamificacaoStreak: undefined;
+  GamificacaoJornadas: undefined;
+  GamificacaoMissoes: undefined;
+  GamificacaoLoja: undefined;
+  GamificacaoRanking: undefined;
+  GamificacaoTemporadas: undefined;
+  GamificacaoObjetivos: undefined;
 };
 
 declare global {
