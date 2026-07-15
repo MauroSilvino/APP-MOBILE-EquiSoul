@@ -67,6 +67,33 @@ export interface TransacaoCarteira {
   tipo: 'entrada' | 'saida';
 }
 
+export interface Avaliacao {
+  id: string;
+  autor: string;
+  nota: string;
+  texto: string;
+}
+
+export interface EventoPreview {
+  id: string;
+  titulo: string;
+  quando: string;
+  preco: string;
+}
+
+export interface Curso {
+  id: string;
+  titulo: string;
+  instrutor: string;
+  preco: string;
+}
+
+export interface ChatMensagem {
+  id: string;
+  texto: string;
+  autor: 'usuario' | 'contato';
+}
+
 interface MarketplaceState {
   produtos: CatalogProduto[];
   servicos: CatalogServico[];
@@ -87,6 +114,19 @@ interface MarketplaceState {
   saldoCashback: string;
   metodosPagamento: { id: string; label: string }[];
   transacoesCarteira: TransacaoCarteira[];
+
+  avaliacoes: Avaliacao[];
+
+  eventosPreview: EventoPreview[];
+
+  cursos: Curso[];
+
+  chatMensagens: Record<string, ChatMensagem[]>;
+  sendChatMensagem: (contato: string, texto: string) => void;
+
+  carrinho: { produtoId: string; quantidade: number };
+  incrementarQuantidade: () => void;
+  decrementarQuantidade: () => void;
 }
 
 export const PRODUTOS_SEED: CatalogProduto[] = [
@@ -183,6 +223,25 @@ const TRANSACOES_SEED: TransacaoCarteira[] = [
   { id: 'tx-5', descricao: 'Resgate em nova compra', data: '30 de junho', valorLabel: 'R$ 30,00', tipo: 'saida' },
 ];
 
+const AVALIACOES_SEED: Avaliacao[] = [
+  { id: 'av-1', autor: 'Camila R.', nota: '5.0', texto: 'Atendimento excelente, super atenciosa com meu cavalo.' },
+  { id: 'av-2', autor: 'Rafael T.', nota: '4.5', texto: 'Pontual e explicou tudo com calma. Recomendo.' },
+  { id: 'av-3', autor: 'Beatriz L.', nota: '5.0', texto: 'Resolveu o problema na primeira consulta.' },
+  { id: 'av-4', autor: 'Diego M.', nota: '4.0', texto: 'Bom atendimento, só demorou um pouco para responder.' },
+];
+
+const EVENTOS_PREVIEW_SEED: EventoPreview[] = [
+  { id: 'evt-1', titulo: 'Clínica de adestramento', quando: 'Sáb 12 · 09:00', preco: 'R$ 120,00' },
+  { id: 'evt-2', titulo: 'Encontro de hipismo regional', quando: 'Dom 20 · 08:00', preco: 'Gratuito' },
+  { id: 'evt-3', titulo: 'Feira de produtos equinos', quando: '27 de julho', preco: 'Entrada franca' },
+];
+
+const CURSOS_SEED: Curso[] = [
+  { id: 'curso-1', titulo: 'Fundamentos do manejo equino', instrutor: 'Dra. Marina Kist', preco: 'R$ 149,00' },
+  { id: 'curso-2', titulo: 'Nutrição para cavalos atletas', instrutor: 'Ana Fisioterapeuta', preco: 'R$ 99,00' },
+  { id: 'curso-3', titulo: 'Primeiros socorros equinos', instrutor: 'João Ferrador', preco: 'R$ 79,00' },
+];
+
 const EMPTY_FAVORITOS: Record<FavoritoCategoria, string[]> = {
   Produtos: [],
   Serviços: [],
@@ -231,4 +290,42 @@ export const useMarketplaceStore = create<MarketplaceState>((set, get) => ({
     { id: 'pix', label: 'PIX' },
   ],
   transacoesCarteira: TRANSACOES_SEED,
+
+  avaliacoes: AVALIACOES_SEED,
+
+  eventosPreview: EVENTOS_PREVIEW_SEED,
+
+  cursos: CURSOS_SEED,
+
+  chatMensagens: {},
+  sendChatMensagem: (contato, texto) => {
+    const minha: ChatMensagem = { id: `msg-${Date.now()}`, texto, autor: 'usuario' };
+    set((state) => ({
+      chatMensagens: {
+        ...state.chatMensagens,
+        [contato]: [...(state.chatMensagens[contato] ?? []), minha],
+      },
+    }));
+    setTimeout(() => {
+      const resposta: ChatMensagem = {
+        id: `msg-${Date.now()}-r`,
+        texto: 'Obrigado pela mensagem! Te respondo em breve.',
+        autor: 'contato',
+      };
+      set((state) => ({
+        chatMensagens: {
+          ...state.chatMensagens,
+          [contato]: [...(state.chatMensagens[contato] ?? []), resposta],
+        },
+      }));
+    }, 900);
+  },
+
+  carrinho: { produtoId: 'protetor-canela', quantidade: 1 },
+  incrementarQuantidade: () =>
+    set((state) => ({ carrinho: { ...state.carrinho, quantidade: state.carrinho.quantidade + 1 } })),
+  decrementarQuantidade: () =>
+    set((state) => ({
+      carrinho: { ...state.carrinho, quantidade: Math.max(1, state.carrinho.quantidade - 1) },
+    })),
 }));
