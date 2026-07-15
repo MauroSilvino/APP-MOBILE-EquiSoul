@@ -125,6 +125,16 @@ export type RootStackParamList = {
   MarketplaceCupons: undefined;
   MarketplaceEventos: undefined;
   MarketplaceCursos: undefined;
+  PremiumHome: undefined;
+  PremiumBeneficios: undefined;
+  PremiumIA: undefined;
+  PremiumTemas: undefined;
+  PremiumLivros: undefined;
+  PremiumVideos: undefined;
+  PremiumBiblioteca: undefined;
+  PremiumClube: undefined;
+  PremiumEventos: undefined;
+  PremiumPersonalizacao: undefined;
 };
 
 declare global {

@@ -109,6 +109,16 @@ import { MarketplaceAvaliacoesScreen } from '../screens/marketplace/MarketplaceA
 import { MarketplaceCuponsScreen } from '../screens/marketplace/MarketplaceCuponsScreen';
 import { MarketplaceEventosScreen } from '../screens/marketplace/MarketplaceEventosScreen';
 import { MarketplaceCursosScreen } from '../screens/marketplace/MarketplaceCursosScreen';
+import { PremiumHomeScreen } from '../screens/premium/PremiumHomeScreen';
+import { PremiumBeneficiosScreen } from '../screens/premium/PremiumBeneficiosScreen';
+import { PremiumIAScreen } from '../screens/premium/PremiumIAScreen';
+import { PremiumTemasScreen } from '../screens/premium/PremiumTemasScreen';
+import { PremiumLivrosScreen } from '../screens/premium/PremiumLivrosScreen';
+import { PremiumVideosScreen } from '../screens/premium/PremiumVideosScreen';
+import { PremiumBibliotecaScreen } from '../screens/premium/PremiumBibliotecaScreen';
+import { PremiumClubeScreen } from '../screens/premium/PremiumClubeScreen';
+import { PremiumEventosScreen } from '../screens/premium/PremiumEventosScreen';
+import { PremiumPersonalizacaoScreen } from '../screens/premium/PremiumPersonalizacaoScreen';
 import { AdicionarCavaloScreen } from '../screens/onboarding/AdicionarCavaloScreen';
 import { CadastroScreen } from '../screens/onboarding/CadastroScreen';
 import { CriarPerfilScreen } from '../screens/onboarding/CriarPerfilScreen';
@@ -256,6 +266,16 @@ export function RootNavigator() {
         <Stack.Screen name="MarketplaceCupons" component={MarketplaceCuponsScreen} />
         <Stack.Screen name="MarketplaceEventos" component={MarketplaceEventosScreen} />
         <Stack.Screen name="MarketplaceCursos" component={MarketplaceCursosScreen} />
+        <Stack.Screen name="PremiumHome" component={PremiumHomeScreen} />
+        <Stack.Screen name="PremiumBeneficios" component={PremiumBeneficiosScreen} />
+        <Stack.Screen name="PremiumIA" component={PremiumIAScreen} />
+        <Stack.Screen name="PremiumTemas" component={PremiumTemasScreen} />
+        <Stack.Screen name="PremiumLivros" component={PremiumLivrosScreen} />
+        <Stack.Screen name="PremiumVideos" component={PremiumVideosScreen} />
+        <Stack.Screen name="PremiumBiblioteca" component={PremiumBibliotecaScreen} />
+        <Stack.Screen name="PremiumClube" component={PremiumClubeScreen} />
+        <Stack.Screen name="PremiumEventos" component={PremiumEventosScreen} />
+        <Stack.Screen name="PremiumPersonalizacao" component={PremiumPersonalizacaoScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
