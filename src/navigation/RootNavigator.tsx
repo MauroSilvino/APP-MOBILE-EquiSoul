@@ -119,6 +119,16 @@ import { PremiumBibliotecaScreen } from '../screens/premium/PremiumBibliotecaScr
 import { PremiumClubeScreen } from '../screens/premium/PremiumClubeScreen';
 import { PremiumEventosScreen } from '../screens/premium/PremiumEventosScreen';
 import { PremiumPersonalizacaoScreen } from '../screens/premium/PremiumPersonalizacaoScreen';
+import { PremiumBackupScreen } from '../screens/premium/PremiumBackupScreen';
+import { PremiumAssinaturaScreen } from '../screens/premium/PremiumAssinaturaScreen';
+import { PremiumCriacoesExclusivasScreen } from '../screens/premium/PremiumCriacoesExclusivasScreen';
+import { PremiumFoundingMembersScreen } from '../screens/premium/PremiumFoundingMembersScreen';
+import { PremiumFAQScreen } from '../screens/premium/PremiumFAQScreen';
+import { PremiumHistoricoFinanceiroScreen } from '../screens/premium/PremiumHistoricoFinanceiroScreen';
+import { PremiumCheckoutScreen } from '../screens/premium/PremiumCheckoutScreen';
+import { PremiumSucessoScreen } from '../screens/premium/PremiumSucessoScreen';
+import { PremiumGerenciarAssinaturaScreen } from '../screens/premium/PremiumGerenciarAssinaturaScreen';
+import { PremiumErroPagamentoScreen } from '../screens/premium/PremiumErroPagamentoScreen';
 import { AdicionarCavaloScreen } from '../screens/onboarding/AdicionarCavaloScreen';
 import { CadastroScreen } from '../screens/onboarding/CadastroScreen';
 import { CriarPerfilScreen } from '../screens/onboarding/CriarPerfilScreen';
@@ -276,6 +286,16 @@ export function RootNavigator() {
         <Stack.Screen name="PremiumClube" component={PremiumClubeScreen} />
         <Stack.Screen name="PremiumEventos" component={PremiumEventosScreen} />
         <Stack.Screen name="PremiumPersonalizacao" component={PremiumPersonalizacaoScreen} />
+        <Stack.Screen name="PremiumBackup" component={PremiumBackupScreen} />
+        <Stack.Screen name="PremiumAssinatura" component={PremiumAssinaturaScreen} />
+        <Stack.Screen name="PremiumCriacoesExclusivas" component={PremiumCriacoesExclusivasScreen} />
+        <Stack.Screen name="PremiumFoundingMembers" component={PremiumFoundingMembersScreen} />
+        <Stack.Screen name="PremiumFAQ" component={PremiumFAQScreen} />
+        <Stack.Screen name="PremiumHistoricoFinanceiro" component={PremiumHistoricoFinanceiroScreen} />
+        <Stack.Screen name="PremiumCheckout" component={PremiumCheckoutScreen} />
+        <Stack.Screen name="PremiumSucesso" component={PremiumSucessoScreen} />
+        <Stack.Screen name="PremiumGerenciarAssinatura" component={PremiumGerenciarAssinaturaScreen} />
+        <Stack.Screen name="PremiumErroPagamento" component={PremiumErroPagamentoScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

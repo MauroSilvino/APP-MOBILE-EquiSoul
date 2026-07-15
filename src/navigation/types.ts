@@ -1,4 +1,15 @@
 import { TipoCompromisso } from '../store/useAgendaStore';
+import { PremiumBilling } from '../store/usePremiumStore';
+
+export interface PremiumCheckoutContext {
+  tipo: 'plano' | 'avulso' | 'fundador';
+  planoId?: string;
+  titulo: string;
+  preco: string;
+  recorrente: boolean;
+  proximaCobranca?: string;
+  billing?: PremiumBilling;
+}
 
 export type RootStackParamList = {
   Splash: undefined;
@@ -135,6 +146,16 @@ export type RootStackParamList = {
   PremiumClube: undefined;
   PremiumEventos: undefined;
   PremiumPersonalizacao: undefined;
+  PremiumBackup: undefined;
+  PremiumAssinatura: undefined;
+  PremiumCriacoesExclusivas: undefined;
+  PremiumFoundingMembers: undefined;
+  PremiumFAQ: undefined;
+  PremiumHistoricoFinanceiro: undefined;
+  PremiumCheckout: PremiumCheckoutContext;
+  PremiumSucesso: PremiumCheckoutContext;
+  PremiumGerenciarAssinatura: undefined;
+  PremiumErroPagamento: PremiumCheckoutContext;
 };
 
 declare global {
