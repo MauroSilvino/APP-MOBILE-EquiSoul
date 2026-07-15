@@ -492,3 +492,60 @@ export function MinusIcon({ size = 14, color = '#2B2924', strokeWidth = 2.2 }: I
     </Svg>
   );
 }
+
+export function MountainIcon({ size = 20, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M3 18l6-9 4 5 3-4 5 8z" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function RouteIcon({ size = 18, color = '#8A6E4B', strokeWidth = 1.7 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Circle cx="5" cy="19" r="2.4" />
+      <Circle cx="19" cy="9" r="2.4" />
+      <Path d="M7 16.5l9-6" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+export function ShieldIcon({ size = 18, color = '#8A6E4B', strokeWidth = 1.7 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M12 3l7 3v6c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V6l7-3z" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function TargetIcon({ size = 18, color = '#8A6E4B', strokeWidth = 1.7 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Circle cx="12" cy="12" r="8" />
+      <Circle cx="12" cy="12" r="4" />
+      <Circle cx="12" cy="12" r="1" fill={color} />
+    </Svg>
+  );
+}
+
+export function FlameIcon({ size = 20, color = '#C9A15A', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path
+        d="M12 3c2 3-1 4-1 7a4 4 0 108 0c0-1-.3-2-1-3 1 4-1 6-3 6a4 4 0 01-4-4c0-3 1-4 1-6z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+}
+
+export function SealIcon({ size = 22, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Circle cx="12" cy="12" r="8" />
+      <Path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
