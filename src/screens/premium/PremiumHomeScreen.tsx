@@ -63,7 +63,12 @@ export function PremiumHomeScreen({ navigation }: Props) {
             ))}
           </View>
 
-          <Pressable style={styles.cta} onPress={() => {}}>
+          <Pressable
+            style={styles.cta}
+            onPress={() =>
+              navigation.navigate(premium ? 'PremiumGerenciarAssinatura' : 'PremiumAssinatura')
+            }
+          >
             <Text variant="md" weight="extraBold" color={theme.colors.accent.gold}>
               {premium ? 'Gerenciar assinatura' : 'Ver planos'}
             </Text>
