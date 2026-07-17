@@ -18,6 +18,7 @@ import {
   LockIcon,
   NetworkIcon,
   ProfileIcon,
+  SettingsIcon,
   ShieldIcon,
   StarIcon,
   ThemeIcon,
@@ -44,7 +45,8 @@ type HubRoute =
   | 'ConfiguracoesPremium'
   | 'Ajuda'
   | 'Sobre'
-  | 'ModoDesenvolvedor';
+  | 'ModoDesenvolvedor'
+  | 'AdminDashboard';
 
 const HUB_ITENS: { label: string; route: HubRoute; Icon: IconComponent }[] = [
   { label: 'Conta', route: 'Conta', Icon: ProfileIcon },
@@ -60,6 +62,7 @@ const HUB_ITENS: { label: string; route: HubRoute; Icon: IconComponent }[] = [
   { label: 'Ajuda', route: 'Ajuda', Icon: HelpIcon },
   { label: 'Sobre', route: 'Sobre', Icon: InfoCircleIcon },
   { label: 'Desenvolvedor', route: 'ModoDesenvolvedor', Icon: DevIcon },
+  { label: 'Painel administrativo', route: 'AdminDashboard', Icon: SettingsIcon },
 ];
 
 export function ConfiguracoesHubScreen({ navigation }: Props) {
