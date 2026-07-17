@@ -167,6 +167,23 @@ export type RootStackParamList = {
   GamificacaoRanking: undefined;
   GamificacaoTemporadas: undefined;
   GamificacaoObjetivos: undefined;
+  Configuracoes: undefined;
+  Conta: undefined;
+  ConfiguracoesPrivacidade: undefined;
+  Seguranca: undefined;
+  ConfiguracoesIA: undefined;
+  PreferenciasNotificacao: undefined;
+  Aparencia: undefined;
+  IdiomaRegiao: undefined;
+  Backup: undefined;
+  Compartilhamento: undefined;
+  ConfiguracoesPremium: undefined;
+  Ajuda: undefined;
+  Sobre: undefined;
+  ModoDesenvolvedor: undefined;
+  EditarInformacoes: undefined;
+  TrocarSenha: undefined;
+  Configurar2FA: undefined;
 };
 
 declare global {

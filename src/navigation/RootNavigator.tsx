@@ -140,6 +140,23 @@ import { GamificacaoLojaScreen } from '../screens/gamificacao/GamificacaoLojaScr
 import { GamificacaoRankingScreen } from '../screens/gamificacao/GamificacaoRankingScreen';
 import { GamificacaoTemporadasScreen } from '../screens/gamificacao/GamificacaoTemporadasScreen';
 import { GamificacaoObjetivosScreen } from '../screens/gamificacao/GamificacaoObjetivosScreen';
+import { ConfiguracoesHubScreen } from '../screens/configuracoes/ConfiguracoesHubScreen';
+import { ContaScreen } from '../screens/configuracoes/ContaScreen';
+import { ConfiguracoesPrivacidadeScreen } from '../screens/configuracoes/ConfiguracoesPrivacidadeScreen';
+import { SegurancaScreen } from '../screens/configuracoes/SegurancaScreen';
+import { ConfiguracoesIAScreen } from '../screens/configuracoes/ConfiguracoesIAScreen';
+import { PreferenciasNotificacaoScreen } from '../screens/configuracoes/PreferenciasNotificacaoScreen';
+import { AparenciaScreen } from '../screens/configuracoes/AparenciaScreen';
+import { IdiomaRegiaoScreen } from '../screens/configuracoes/IdiomaRegiaoScreen';
+import { BackupScreen } from '../screens/configuracoes/BackupScreen';
+import { CompartilhamentoScreen } from '../screens/configuracoes/CompartilhamentoScreen';
+import { ConfiguracoesPremiumScreen } from '../screens/configuracoes/ConfiguracoesPremiumScreen';
+import { AjudaScreen } from '../screens/configuracoes/AjudaScreen';
+import { SobreScreen } from '../screens/configuracoes/SobreScreen';
+import { ModoDesenvolvedorScreen } from '../screens/configuracoes/ModoDesenvolvedorScreen';
+import { EditarInformacoesScreen } from '../screens/configuracoes/EditarInformacoesScreen';
+import { TrocarSenhaScreen } from '../screens/configuracoes/TrocarSenhaScreen';
+import { Configurar2FAScreen } from '../screens/configuracoes/Configurar2FAScreen';
 import { AdicionarCavaloScreen } from '../screens/onboarding/AdicionarCavaloScreen';
 import { CadastroScreen } from '../screens/onboarding/CadastroScreen';
 import { CriarPerfilScreen } from '../screens/onboarding/CriarPerfilScreen';
@@ -318,6 +335,23 @@ export function RootNavigator() {
         <Stack.Screen name="GamificacaoRanking" component={GamificacaoRankingScreen} />
         <Stack.Screen name="GamificacaoTemporadas" component={GamificacaoTemporadasScreen} />
         <Stack.Screen name="GamificacaoObjetivos" component={GamificacaoObjetivosScreen} />
+        <Stack.Screen name="Configuracoes" component={ConfiguracoesHubScreen} />
+        <Stack.Screen name="Conta" component={ContaScreen} />
+        <Stack.Screen name="ConfiguracoesPrivacidade" component={ConfiguracoesPrivacidadeScreen} />
+        <Stack.Screen name="Seguranca" component={SegurancaScreen} />
+        <Stack.Screen name="ConfiguracoesIA" component={ConfiguracoesIAScreen} />
+        <Stack.Screen name="PreferenciasNotificacao" component={PreferenciasNotificacaoScreen} />
+        <Stack.Screen name="Aparencia" component={AparenciaScreen} />
+        <Stack.Screen name="IdiomaRegiao" component={IdiomaRegiaoScreen} />
+        <Stack.Screen name="Backup" component={BackupScreen} />
+        <Stack.Screen name="Compartilhamento" component={CompartilhamentoScreen} />
+        <Stack.Screen name="ConfiguracoesPremium" component={ConfiguracoesPremiumScreen} />
+        <Stack.Screen name="Ajuda" component={AjudaScreen} />
+        <Stack.Screen name="Sobre" component={SobreScreen} />
+        <Stack.Screen name="ModoDesenvolvedor" component={ModoDesenvolvedorScreen} />
+        <Stack.Screen name="EditarInformacoes" component={EditarInformacoesScreen} />
+        <Stack.Screen name="TrocarSenha" component={TrocarSenhaScreen} />
+        <Stack.Screen name="Configurar2FA" component={Configurar2FAScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
