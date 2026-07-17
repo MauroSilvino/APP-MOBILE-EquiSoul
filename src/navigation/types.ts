@@ -184,6 +184,30 @@ export type RootStackParamList = {
   EditarInformacoes: undefined;
   TrocarSenha: undefined;
   Configurar2FA: undefined;
+  AdminDashboard: undefined;
+  AdminUsuarios: undefined;
+  AdminCavalos: undefined;
+  AdminComunidade: undefined;
+  AdminModeracao: undefined;
+  AdminMarketplace: undefined;
+  AdminEventos: undefined;
+  AdminClubePremium: undefined;
+  AdminIA: undefined;
+  AdminAnalytics: undefined;
+  AdminFinanceiro: undefined;
+  AdminCMS: undefined;
+  AdminCampanhas: undefined;
+  AdminSuporte: undefined;
+  AdminAuditoria: undefined;
+  AdminConfiguracoesGlobais: undefined;
+  AdminLogs: undefined;
+  AdminAPIs: undefined;
+  AdminFeatureFlags: undefined;
+  AdminUsuarioDetalhe: { id: number };
+  AdminCavaloDetalhe: { id: number };
+  AdminChamadoDetalhe: { id: number };
+  AdminCmsEditor: { id: number };
+  AdminCriarEvento: undefined;
 };
 
 declare global {

@@ -157,6 +157,30 @@ import { ModoDesenvolvedorScreen } from '../screens/configuracoes/ModoDesenvolve
 import { EditarInformacoesScreen } from '../screens/configuracoes/EditarInformacoesScreen';
 import { TrocarSenhaScreen } from '../screens/configuracoes/TrocarSenhaScreen';
 import { Configurar2FAScreen } from '../screens/configuracoes/Configurar2FAScreen';
+import { AdminDashboardScreen } from '../screens/admin/AdminDashboardScreen';
+import { AdminUsuariosScreen } from '../screens/admin/AdminUsuariosScreen';
+import { AdminUsuarioDetalheScreen } from '../screens/admin/AdminUsuarioDetalheScreen';
+import { AdminCavalosScreen } from '../screens/admin/AdminCavalosScreen';
+import { AdminCavaloDetalheScreen } from '../screens/admin/AdminCavaloDetalheScreen';
+import { AdminComunidadeScreen } from '../screens/admin/AdminComunidadeScreen';
+import { AdminModeracaoScreen } from '../screens/admin/AdminModeracaoScreen';
+import { AdminMarketplaceScreen } from '../screens/admin/AdminMarketplaceScreen';
+import { AdminEventosScreen } from '../screens/admin/AdminEventosScreen';
+import { AdminCriarEventoScreen } from '../screens/admin/AdminCriarEventoScreen';
+import { AdminClubePremiumScreen } from '../screens/admin/AdminClubePremiumScreen';
+import { AdminIAScreen } from '../screens/admin/AdminIAScreen';
+import { AdminAnalyticsScreen } from '../screens/admin/AdminAnalyticsScreen';
+import { AdminFinanceiroScreen } from '../screens/admin/AdminFinanceiroScreen';
+import { AdminCMSScreen } from '../screens/admin/AdminCMSScreen';
+import { AdminCmsEditorScreen } from '../screens/admin/AdminCmsEditorScreen';
+import { AdminCampanhasScreen } from '../screens/admin/AdminCampanhasScreen';
+import { AdminSuporteScreen } from '../screens/admin/AdminSuporteScreen';
+import { AdminChamadoDetalheScreen } from '../screens/admin/AdminChamadoDetalheScreen';
+import { AdminAuditoriaScreen } from '../screens/admin/AdminAuditoriaScreen';
+import { AdminConfiguracoesGlobaisScreen } from '../screens/admin/AdminConfiguracoesGlobaisScreen';
+import { AdminLogsScreen } from '../screens/admin/AdminLogsScreen';
+import { AdminAPIsScreen } from '../screens/admin/AdminAPIsScreen';
+import { AdminFeatureFlagsScreen } from '../screens/admin/AdminFeatureFlagsScreen';
 import { AdicionarCavaloScreen } from '../screens/onboarding/AdicionarCavaloScreen';
 import { CadastroScreen } from '../screens/onboarding/CadastroScreen';
 import { CriarPerfilScreen } from '../screens/onboarding/CriarPerfilScreen';
@@ -352,6 +376,30 @@ export function RootNavigator() {
         <Stack.Screen name="EditarInformacoes" component={EditarInformacoesScreen} />
         <Stack.Screen name="TrocarSenha" component={TrocarSenhaScreen} />
         <Stack.Screen name="Configurar2FA" component={Configurar2FAScreen} />
+        <Stack.Screen name="AdminDashboard" component={AdminDashboardScreen} />
+        <Stack.Screen name="AdminUsuarios" component={AdminUsuariosScreen} />
+        <Stack.Screen name="AdminUsuarioDetalhe" component={AdminUsuarioDetalheScreen} />
+        <Stack.Screen name="AdminCavalos" component={AdminCavalosScreen} />
+        <Stack.Screen name="AdminCavaloDetalhe" component={AdminCavaloDetalheScreen} />
+        <Stack.Screen name="AdminComunidade" component={AdminComunidadeScreen} />
+        <Stack.Screen name="AdminModeracao" component={AdminModeracaoScreen} />
+        <Stack.Screen name="AdminMarketplace" component={AdminMarketplaceScreen} />
+        <Stack.Screen name="AdminEventos" component={AdminEventosScreen} />
+        <Stack.Screen name="AdminCriarEvento" component={AdminCriarEventoScreen} />
+        <Stack.Screen name="AdminClubePremium" component={AdminClubePremiumScreen} />
+        <Stack.Screen name="AdminIA" component={AdminIAScreen} />
+        <Stack.Screen name="AdminAnalytics" component={AdminAnalyticsScreen} />
+        <Stack.Screen name="AdminFinanceiro" component={AdminFinanceiroScreen} />
+        <Stack.Screen name="AdminCMS" component={AdminCMSScreen} />
+        <Stack.Screen name="AdminCmsEditor" component={AdminCmsEditorScreen} />
+        <Stack.Screen name="AdminCampanhas" component={AdminCampanhasScreen} />
+        <Stack.Screen name="AdminSuporte" component={AdminSuporteScreen} />
+        <Stack.Screen name="AdminChamadoDetalhe" component={AdminChamadoDetalheScreen} />
+        <Stack.Screen name="AdminAuditoria" component={AdminAuditoriaScreen} />
+        <Stack.Screen name="AdminConfiguracoesGlobais" component={AdminConfiguracoesGlobaisScreen} />
+        <Stack.Screen name="AdminLogs" component={AdminLogsScreen} />
+        <Stack.Screen name="AdminAPIs" component={AdminAPIsScreen} />
+        <Stack.Screen name="AdminFeatureFlags" component={AdminFeatureFlagsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

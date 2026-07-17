@@ -644,3 +644,11 @@ export function SettingsIcon({ size = 20, color = '#2B2924', strokeWidth = 1.8 }
     </Svg>
   );
 }
+
+export function MenuIcon({ size = 19, color = '#2B2924', strokeWidth = 2 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" />
+    </Svg>
+  );
+}
