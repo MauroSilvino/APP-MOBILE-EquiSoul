@@ -549,3 +549,98 @@ export function SealIcon({ size = 22, color = '#8A6E4B', strokeWidth = 1.8 }: Ic
     </Svg>
   );
 }
+
+export function ThemeIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Circle cx="12" cy="12" r="8" />
+      <Path d="M12 4v16" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+export function GlobeIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Circle cx="12" cy="12" r="9" />
+      <Path d="M3 12h18M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9c-2.5-2.5-4-6-4-9s1.5-6.5 4-9z" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function CloudIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M6 16a4 4 0 010-8 5 5 0 019.6-1.5A4.5 4.5 0 0118 16H6z" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function NetworkIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Circle cx="6" cy="12" r="2.4" />
+      <Circle cx="18" cy="6" r="2.4" />
+      <Circle cx="18" cy="18" r="2.4" />
+      <Path d="M8.1 10.8L15.9 7M8.1 13.2L15.9 17" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+export function HelpIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Circle cx="12" cy="12" r="9" />
+      <Path d="M9.5 9a2.5 2.5 0 015 .5c0 1.5-2.5 1.8-2.5 3.5" strokeLinecap="round" />
+      <Circle cx="12" cy="17" r="0.6" fill={color} />
+    </Svg>
+  );
+}
+
+export function InfoCircleIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Circle cx="12" cy="12" r="9" />
+      <Path d="M12 8v.5M12 11v5" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+export function DevIcon({ size = 17, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Path d="M8 9l-4 3 4 3M16 9l4 3-4 3M14 6l-4 12" strokeLinecap="round" strokeLinejoin="round" />
+    </Svg>
+  );
+}
+
+export function LaptopIcon({ size = 18, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Rect x="3" y="4" width="18" height="12" rx="2" />
+      <Path d="M2 20h20" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+export function PhoneIcon({ size = 18, color = '#8A6E4B', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Rect x="7" y="2" width="10" height="20" rx="2" />
+      <Path d="M11 18h2" strokeLinecap="round" />
+    </Svg>
+  );
+}
+
+export function SettingsIcon({ size = 20, color = '#2B2924', strokeWidth = 1.8 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Circle cx="12" cy="12" r="3" />
+      <Path
+        d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1 1.7 1.7 0 00-.3-1.9l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.9.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.9-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.9V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </Svg>
+  );
+}
