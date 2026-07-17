@@ -181,6 +181,34 @@ import { AdminConfiguracoesGlobaisScreen } from '../screens/admin/AdminConfigura
 import { AdminLogsScreen } from '../screens/admin/AdminLogsScreen';
 import { AdminAPIsScreen } from '../screens/admin/AdminAPIsScreen';
 import { AdminFeatureFlagsScreen } from '../screens/admin/AdminFeatureFlagsScreen';
+import { PortalDashboardScreen } from '../screens/portal/PortalDashboardScreen';
+import { PortalAgendaScreen } from '../screens/portal/PortalAgendaScreen';
+import { PortalClientesScreen } from '../screens/portal/PortalClientesScreen';
+import { PortalClienteDetalheScreen } from '../screens/portal/PortalClienteDetalheScreen';
+import { PortalCavalosAtendidosScreen } from '../screens/portal/PortalCavalosAtendidosScreen';
+import { PortalServicosScreen } from '../screens/portal/PortalServicosScreen';
+import { PortalReservasScreen } from '../screens/portal/PortalReservasScreen';
+import { PortalFinanceiroScreen } from '../screens/portal/PortalFinanceiroScreen';
+import { PortalAvaliacoesScreen } from '../screens/portal/PortalAvaliacoesScreen';
+import { PortalAnalyticsScreen } from '../screens/portal/PortalAnalyticsScreen';
+import { PortalPerfilPublicoScreen } from '../screens/portal/PortalPerfilPublicoScreen';
+import { PortalPortfolioScreen } from '../screens/portal/PortalPortfolioScreen';
+import { PortalConteudoScreen } from '../screens/portal/PortalConteudoScreen';
+import { PortalOrganizadorDashboardScreen } from '../screens/portal/PortalOrganizadorDashboardScreen';
+import { PortalCriarEventoScreen } from '../screens/portal/PortalCriarEventoScreen';
+import { PortalParticipantesScreen } from '../screens/portal/PortalParticipantesScreen';
+import { PortalCheckinScreen } from '../screens/portal/PortalCheckinScreen';
+import { PortalCertificadosScreen } from '../screens/portal/PortalCertificadosScreen';
+import { PortalLojaScreen } from '../screens/portal/PortalLojaScreen';
+import { PortalProdutosScreen } from '../screens/portal/PortalProdutosScreen';
+import { PortalPedidosScreen } from '../screens/portal/PortalPedidosScreen';
+import { PortalEstoqueScreen } from '../screens/portal/PortalEstoqueScreen';
+import { PortalPromocoesScreen } from '../screens/portal/PortalPromocoesScreen';
+import { PortalRelatoriosScreen } from '../screens/portal/PortalRelatoriosScreen';
+import { PortalNovoServicoScreen } from '../screens/portal/PortalNovoServicoScreen';
+import { PortalNovoProdutoScreen } from '../screens/portal/PortalNovoProdutoScreen';
+import { PortalNovaPromocaoScreen } from '../screens/portal/PortalNovaPromocaoScreen';
+import { PortalPedidoDetalheScreen } from '../screens/portal/PortalPedidoDetalheScreen';
 import { AdicionarCavaloScreen } from '../screens/onboarding/AdicionarCavaloScreen';
 import { CadastroScreen } from '../screens/onboarding/CadastroScreen';
 import { CriarPerfilScreen } from '../screens/onboarding/CriarPerfilScreen';
@@ -400,6 +428,34 @@ export function RootNavigator() {
         <Stack.Screen name="AdminLogs" component={AdminLogsScreen} />
         <Stack.Screen name="AdminAPIs" component={AdminAPIsScreen} />
         <Stack.Screen name="AdminFeatureFlags" component={AdminFeatureFlagsScreen} />
+        <Stack.Screen name="PortalDashboard" component={PortalDashboardScreen} />
+        <Stack.Screen name="PortalAgenda" component={PortalAgendaScreen} />
+        <Stack.Screen name="PortalClientes" component={PortalClientesScreen} />
+        <Stack.Screen name="PortalClienteDetalhe" component={PortalClienteDetalheScreen} />
+        <Stack.Screen name="PortalCavalosAtendidos" component={PortalCavalosAtendidosScreen} />
+        <Stack.Screen name="PortalServicos" component={PortalServicosScreen} />
+        <Stack.Screen name="PortalReservas" component={PortalReservasScreen} />
+        <Stack.Screen name="PortalFinanceiro" component={PortalFinanceiroScreen} />
+        <Stack.Screen name="PortalAvaliacoes" component={PortalAvaliacoesScreen} />
+        <Stack.Screen name="PortalAnalytics" component={PortalAnalyticsScreen} />
+        <Stack.Screen name="PortalPerfilPublico" component={PortalPerfilPublicoScreen} />
+        <Stack.Screen name="PortalPortfolio" component={PortalPortfolioScreen} />
+        <Stack.Screen name="PortalConteudo" component={PortalConteudoScreen} />
+        <Stack.Screen name="PortalOrganizadorDashboard" component={PortalOrganizadorDashboardScreen} />
+        <Stack.Screen name="PortalCriarEvento" component={PortalCriarEventoScreen} />
+        <Stack.Screen name="PortalParticipantes" component={PortalParticipantesScreen} />
+        <Stack.Screen name="PortalCheckin" component={PortalCheckinScreen} />
+        <Stack.Screen name="PortalCertificados" component={PortalCertificadosScreen} />
+        <Stack.Screen name="PortalLoja" component={PortalLojaScreen} />
+        <Stack.Screen name="PortalProdutos" component={PortalProdutosScreen} />
+        <Stack.Screen name="PortalPedidos" component={PortalPedidosScreen} />
+        <Stack.Screen name="PortalEstoque" component={PortalEstoqueScreen} />
+        <Stack.Screen name="PortalPromocoes" component={PortalPromocoesScreen} />
+        <Stack.Screen name="PortalRelatorios" component={PortalRelatoriosScreen} />
+        <Stack.Screen name="PortalNovoServico" component={PortalNovoServicoScreen} />
+        <Stack.Screen name="PortalNovoProduto" component={PortalNovoProdutoScreen} />
+        <Stack.Screen name="PortalNovaPromocao" component={PortalNovaPromocaoScreen} />
+        <Stack.Screen name="PortalPedidoDetalhe" component={PortalPedidoDetalheScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

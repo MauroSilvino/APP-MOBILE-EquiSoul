@@ -652,3 +652,14 @@ export function MenuIcon({ size = 19, color = '#2B2924', strokeWidth = 2 }: Icon
     </Svg>
   );
 }
+
+export function QrCodeIcon({ size = 90, color = '#C9A15A', strokeWidth = 1.4 }: IconProps) {
+  return (
+    <Svg viewBox="0 0 24 24" width={size} height={size} fill="none" stroke={color} strokeWidth={strokeWidth}>
+      <Rect x="3" y="3" width="7" height="7" />
+      <Rect x="14" y="3" width="7" height="7" />
+      <Rect x="3" y="14" width="7" height="7" />
+      <Path d="M14 14h3v3h-3zM19 14h2v2h-2zM14 19h2v2h-2zM19 19h2v2h-2z" />
+    </Svg>
+  );
+}
