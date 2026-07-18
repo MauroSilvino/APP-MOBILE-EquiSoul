@@ -21,6 +21,7 @@ import {
   SettingsIcon,
   ShieldIcon,
   StarIcon,
+  StoreIcon,
   ThemeIcon,
 } from '../../components/ui/icons';
 import { RootStackParamList } from '../../navigation/types';
@@ -46,7 +47,8 @@ type HubRoute =
   | 'Ajuda'
   | 'Sobre'
   | 'ModoDesenvolvedor'
-  | 'AdminDashboard';
+  | 'AdminDashboard'
+  | 'PortalDashboard';
 
 const HUB_ITENS: { label: string; route: HubRoute; Icon: IconComponent }[] = [
   { label: 'Conta', route: 'Conta', Icon: ProfileIcon },
@@ -63,6 +65,7 @@ const HUB_ITENS: { label: string; route: HubRoute; Icon: IconComponent }[] = [
   { label: 'Sobre', route: 'Sobre', Icon: InfoCircleIcon },
   { label: 'Desenvolvedor', route: 'ModoDesenvolvedor', Icon: DevIcon },
   { label: 'Painel administrativo', route: 'AdminDashboard', Icon: SettingsIcon },
+  { label: 'Portal profissional', route: 'PortalDashboard', Icon: StoreIcon },
 ];
 
 export function ConfiguracoesHubScreen({ navigation }: Props) {

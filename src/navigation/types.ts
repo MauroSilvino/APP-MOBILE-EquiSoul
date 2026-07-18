@@ -208,6 +208,34 @@ export type RootStackParamList = {
   AdminChamadoDetalhe: { id: number };
   AdminCmsEditor: { id: number };
   AdminCriarEvento: undefined;
+  PortalDashboard: undefined;
+  PortalAgenda: undefined;
+  PortalClientes: undefined;
+  PortalClienteDetalhe: { id: number };
+  PortalCavalosAtendidos: undefined;
+  PortalServicos: undefined;
+  PortalReservas: undefined;
+  PortalFinanceiro: undefined;
+  PortalAvaliacoes: undefined;
+  PortalAnalytics: undefined;
+  PortalPerfilPublico: undefined;
+  PortalPortfolio: undefined;
+  PortalConteudo: undefined;
+  PortalOrganizadorDashboard: undefined;
+  PortalCriarEvento: undefined;
+  PortalParticipantes: undefined;
+  PortalCheckin: undefined;
+  PortalCertificados: undefined;
+  PortalLoja: undefined;
+  PortalProdutos: undefined;
+  PortalPedidos: undefined;
+  PortalEstoque: undefined;
+  PortalPromocoes: undefined;
+  PortalRelatorios: undefined;
+  PortalNovoServico: undefined;
+  PortalNovoProduto: undefined;
+  PortalNovaPromocao: undefined;
+  PortalPedidoDetalhe: { id: number };
 };
 
 declare global {
